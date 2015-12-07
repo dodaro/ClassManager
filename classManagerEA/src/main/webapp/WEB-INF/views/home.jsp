@@ -8,7 +8,8 @@
 <h1>
 	Hello world!  
 </h1>
-
+	<a href="register">Register</a><br>
+	<a href="login">Login</a><br>
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

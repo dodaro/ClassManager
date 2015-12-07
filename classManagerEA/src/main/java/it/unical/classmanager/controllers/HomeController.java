@@ -1,4 +1,4 @@
-package it.unical.classmanager;
+package it.unical.classmanager.controllers;
 
 import java.text.DateFormat;
 import java.util.Date;

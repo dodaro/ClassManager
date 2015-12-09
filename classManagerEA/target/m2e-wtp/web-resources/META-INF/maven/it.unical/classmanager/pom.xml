@@ -40,6 +40,15 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>	
 		
+		<!-- new -->
+		<dependency><!-- spring mvc -->
+            <groupId>org.springframework</groupId><artifactId>spring-webmvc</artifactId><version>3.0.5.RELEASE</version>
+        </dependency>
+		<dependency><!-- jackson -->
+            <groupId>org.codehaus.jackson</groupId><artifactId>jackson-mapper-asl</artifactId><version>1.4.2</version>
+        </dependency>
+        <!-- new -->
+        
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -108,7 +117,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

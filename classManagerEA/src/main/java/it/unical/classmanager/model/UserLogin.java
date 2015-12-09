@@ -1,5 +1,9 @@
 package it.unical.classmanager.model;
-
+/**
+ * Class used to handle login request
+ * @author edge33
+ *
+ */
 public class UserLogin {
 
 	String username;

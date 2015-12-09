@@ -1,7 +1,5 @@
 package it.unical.classmanager;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.data.EditorStatus;
 import it.unical.classmanager.data.Environment;
 import it.unical.classmanager.data.concrete.CPPEnvironment;
 
@@ -23,14 +22,37 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Snippet snippet = new Snippet();
+		EditorStatus status = initEditorStatus();
+		model.addAttribute("status", status);
+			
+		return "home";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	public String compileSnippet(Locale locale, Model model, @ModelAttribute("status") EditorStatus status) {
+		logger.info("compiling...", locale);
+
+		Environment env = new CPPEnvironment();
+		status.setConsoleContent(env.compile(status.getCode()));
+		env.destroyEnvironment();
+		
+		System.out.println(status);
+		
+		model.addAttribute("status", status);
+		
+		return "home";
+	}
+	
+	
+	
+	
+	private EditorStatus initEditorStatus() {
+		
+		EditorStatus status = new EditorStatus();
 		String fileContent = "#include <iostream>\n"
 				+ "using namespace std;\n"
 				+ "\n"
@@ -39,26 +61,9 @@ public class HomeController {
 				+ "    cout << \"ahahhahahah\" << endl; \n"
 				+ "    return 0;\n"
 				+ "}";
-		snippet.setCode(fileContent);
-
-		model.addAttribute("snippet", snippet);
-			
-		return "home";
-	}
-	
-	@RequestMapping(value = "/home", method = RequestMethod.POST)
-	public String compileSnippet(Locale locale, Model model, @ModelAttribute("snippet") Snippet snippet) {
-		logger.info("initiate compile", locale);
-
-		Environment env = new CPPEnvironment();
-		String compileResult = env.compile(snippet.getCode());
-		env.destroyEnvironment();
+		status.setCode(fileContent);
 		
-		snippet.setConsole(compileResult);
-		
-		model.addAttribute("snippet", snippet);
-		
-		return "home";
+		return status;
 	}
 	
 }

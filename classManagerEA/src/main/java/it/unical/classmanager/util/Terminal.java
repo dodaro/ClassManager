@@ -53,6 +53,7 @@ public class Terminal {
 	static public Terminal getTerminal() {
 		
 		if(Terminal.instance == null) {
+			System.out.println("created terminal singleton");
 			Terminal.instance = new Terminal();
 		}
 		

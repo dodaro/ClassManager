@@ -1,7 +1,14 @@
 package it.unical.classmanager.model;
 
+/**
+ * Class representhing the user - used for register form, 
+ * the role field checks if the user is a student or a professor, we should decide how to implement it
+ * @author edge33
+ *
+ */
 public class UserRegister {
 	
+
 	String username;
 	String password;	
 	String role;

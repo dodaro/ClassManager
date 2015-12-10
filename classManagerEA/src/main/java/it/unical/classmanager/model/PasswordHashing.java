@@ -35,7 +35,6 @@ public class PasswordHashing {
 		r.nextBytes(salt);
 
 		byte[] key = null;
-	
 		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, KEYLENGTH * 8);
 		
 		SecretKeyFactory f;
@@ -45,6 +44,7 @@ public class PasswordHashing {
 		} catch ( NoSuchAlgorithmException e ) {
 			//TODO handle here 
 			e.printStackTrace();
+				
 		} catch (InvalidKeySpecException e) {
 			// TODO Honestly I don't know how to handle this
 			e.printStackTrace();

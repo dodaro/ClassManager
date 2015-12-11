@@ -39,6 +39,7 @@ $(document).ready(function() {
 
 			//shows the delete form and fill it with the id of the event to delete
 			$("#delete_event_form").show();
+			$("#update_event_div").show();
 			$("#id").val(event.id);
 		},
 		
@@ -81,6 +82,7 @@ $(document).ready(function() {
 	});
 
 	$("#delete_event_form").hide();
+	$("#update_event_div").hide();
 });
 
 

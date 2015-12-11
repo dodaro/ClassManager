@@ -32,7 +32,7 @@ public class UserRegister {
 	}
 
 	public void setPassword(String password) {
-		this.password = PasswordHashing.getHashAndSalt(password);
+		//this.password = PasswordHashing.getHashAndSalt(password);
 	}
 
 

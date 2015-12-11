@@ -3,6 +3,7 @@ package it.unical.classmanager.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class UserDAO {
@@ -43,6 +44,16 @@ public class UserDAO {
 		ArrayList<User> users = (ArrayList<User>) session.createQuery("FROM User").list();
 		session.close();
 		return users;
+	}
+
+	public User getUser(String username) {
+		Session session = dbHandler.getSessionFactory().openSession();
+		String queryString = "FROM User where username = :_username";
+		Query query = session.createQuery(queryString);
+		query.setParameter("_username", username);
+		User user = (User) query.uniqueResult();
+		session.close();
+		return user;
 	}
 
 }

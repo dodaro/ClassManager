@@ -36,6 +36,7 @@ public class DBHandler {
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}

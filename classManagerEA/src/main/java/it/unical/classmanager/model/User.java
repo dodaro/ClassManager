@@ -14,8 +14,7 @@ import org.springframework.context.ApplicationContext;
 @Entity
 @Table(name ="users")
 public class User {
-	
-	
+		
 	@Id
 	@Column(name="id", nullable=false, length=20)
 	@GeneratedValue(strategy = GenerationType.AUTO)

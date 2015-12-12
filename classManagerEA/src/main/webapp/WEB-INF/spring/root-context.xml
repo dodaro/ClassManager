@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"	
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,47 +12,116 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
-	
 
-	
-	<context:component-scan base-package="it.unical.classmanager.controllers.CalendarController" />
+
+
+	<context:component-scan
+		base-package="it.unical.classmanager.controllers.CalendarController" />
 	<mvc:annotation-driven />
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:./MyDB"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-    </bean> 
-	
-	
-	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource" />
-	    <property name="packagesToScan" value="it.unical.classmanager.model" />
-	    <property name="hibernateProperties">
-	        <props>
-	            <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-	            <prop key="hibernate.hbm2ddl.auto">create</prop>
-	            <prop key="hibernate.show_sql">true</prop>
-	        </props>
-	    </property>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:./MyDB" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
 	</bean>
-	
-	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler" >
-	    <property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="userDao" class="it.unical.classmanager.model.UserDAO" >
-	    <property name="dbHandler" ref="dbHandler" />
-	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-	    <property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	
 
-	
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="it.unical.classmanager.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- <bean id="userDao" class="it.unical.classmanager.model.UserDAO" > -->
+	<!-- <property name="dbHandler" ref="dbHandler" /> -->
+	<!-- </bean> -->
+
+	<bean id="answerAttachedContentDao"
+		class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
+	</bean>
+
+	<bean id="answerDao" class="it.unical.classmanager.model.dao.AnswerDAOImpl">
+	</bean>
+
+	<bean id="attendanceStudentLectureDao"
+		class="it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl">
+	</bean>
+
+	<bean id="communicationsDao" class="it.unical.classmanager.model.dao.CommunicationsDAOImpl">
+	</bean>
+
+	<bean id="courseClassDao" class="it.unical.classmanager.model.dao.CourseClassDAOImpl">
+	</bean>
+
+	<bean id="degreeCourseDao" class="it.unical.classmanager.model.dao.DegreeCourseDAOImpl">
+	</bean>
+
+	<bean id="departmentDao" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
+	</bean>
+
+	<bean id="eventDao" class="it.unical.classmanager.model.dao.EventDAOImpl">
+	</bean>
+
+	<bean id="examDao" class="it.unical.classmanager.model.dao.ExamDAOImpl">
+	</bean>
+
+	<bean id="homeworkAttachedDao"
+		class="it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl">
+	</bean>
+
+	<bean id="homeworkAttachedStudentSolvingDao"
+		class="it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl">
+	</bean>
+
+	<bean id="homeworkDao" class="it.unical.classmanager.model.dao.HomeworkDAOImpl">
+	</bean>
+
+	<bean id="homeworkStudentSolvingDao"
+		class="it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl">
+	</bean>
+
+	<bean id="lectureDao" class="it.unical.classmanager.model.dao.LectureDAOImpl">
+	</bean>
+
+	<bean id="materialDao" class="it.unical.classmanager.model.dao.MaterialDAOImpl">
+	</bean>
+
+	<bean id="questionAttachedContentDao"
+		class="it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl">
+	</bean>
+
+	<bean id="questionDao" class="it.unical.classmanager.model.dao.QuestionDAOImpl">
+	</bean>
+
+	<bean id="registrationStudentClassDao"
+		class="it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl">
+	</bean>
+
+	<bean id="studentExamPartecipationDao"
+		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
+	</bean>
+
+	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
 </beans>

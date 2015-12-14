@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.User;
 import it.unical.classmanager.model.UserDAO;
-import it.unical.classmanager.model.UserRegister;
 
 /**
  * Handles requests for the application home page.

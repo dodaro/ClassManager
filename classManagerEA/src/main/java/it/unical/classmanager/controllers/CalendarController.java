@@ -1,5 +1,7 @@
 package it.unical.classmanager.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,11 @@ public class CalendarController {
 	 * Manages the request related to the calendar
 	 */
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
-	public String getCalendar(Model model) {
+	public String getCalendar(Model model,HttpServletRequest request) {
+		
+		if ( request.getSession().getAttribute("loggedIn") == null ) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("FullCalendarEventBean", new FullCalendarEventBean());
 		logger.info("getCalendar");
@@ -52,7 +58,11 @@ public class CalendarController {
 	 * This path is invoked every time an event is updated (moved in another date or hour)
 	 */
 	@RequestMapping(value = "/update_event", method = RequestMethod.POST)
-	public @ResponseBody String updateEvent(Model model, @RequestBody FullCalendarEventBean event) {
+	public @ResponseBody String updateEvent(Model model, @RequestBody FullCalendarEventBean event,HttpServletRequest request) {
+		
+		if ( request.getSession().getAttribute("loggedIn") == null ) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("FullCalendarEventBean", new FullCalendarEventBean());
 		logger.info("updateEvent");
@@ -63,7 +73,11 @@ public class CalendarController {
 	 * This path is invoked every time an event is deleted
 	 */
 	@RequestMapping(value = "/delete_event", method = RequestMethod.POST)
-	public String deleteEvent(Model model, FullCalendarEventBean event) {
+	public String deleteEvent(Model model, FullCalendarEventBean event,HttpServletRequest request) {
+		
+		if ( request.getSession().getAttribute("loggedIn") == null ) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("FullCalendarEventBean", new FullCalendarEventBean());
 		logger.info("deleteEvent");
@@ -74,7 +88,11 @@ public class CalendarController {
 	 * This path is invoked every time an new event is created
 	 */
 	@RequestMapping(value = "/create_event", method = RequestMethod.POST)
-	public @ResponseBody String createEvent(Model model, @RequestBody FullCalendarEventBean event) {
+	public @ResponseBody String createEvent(Model model, @RequestBody FullCalendarEventBean event,HttpServletRequest request) {
+		
+		if ( request.getSession().getAttribute("loggedIn") == null ) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("FullCalendarEventBean", new FullCalendarEventBean());
 		logger.info("updateEvent");

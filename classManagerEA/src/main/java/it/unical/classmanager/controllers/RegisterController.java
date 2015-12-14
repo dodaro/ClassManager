@@ -3,6 +3,8 @@ package it.unical.classmanager.controllers;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,19 @@ public class RegisterController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(Locale locale, Model model) {
+	public String register(Locale locale, Model model,HttpServletRequest request) {
+		if ( request.getSession().getAttribute("loggedIn") != null ) {
+			return "redirect:/";
+		}
 		model.addAttribute("userRegisterForm",new User());
 		return "register";
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String handleRegistration(Locale locale, Model model,User user) {
+	public String handleRegistration(Locale locale, Model model,User user,HttpServletRequest request) {
+		if ( request.getSession().getAttribute("loggedIn") != null ) {
+			return "redirect:/";
+		}
 		((UserDAO)context.getBean("userDao")).create(user);
 		return "redirect:/";
 	}

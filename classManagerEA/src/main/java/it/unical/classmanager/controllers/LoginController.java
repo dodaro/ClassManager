@@ -4,6 +4,7 @@ package it.unical.classmanager.controllers;
 import java.util.Locale;
 
 import javax.crypto.spec.OAEPParameterSpec;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +36,20 @@ public class LoginController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String register(Locale locale, Model model) {
+	public String register(Locale locale, Model model,HttpServletRequest request) {
+		if ( request.getSession().getAttribute("loggedIn") != null ) {
+			return "redirect:/";
+		}
 		model.addAttribute("userLoginForm",new UserLogin());
 		return "login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String handleLogin(Locale locale, Model model,UserLogin user) {
+	public String handleLogin(Locale locale, Model model,UserLogin user,HttpServletRequest request) {
+		
+		if ( request.getSession().getAttribute("loggedIn") != null ) {
+			return "redirect:/";
+		}
 		
 		UserDAO userDao = (UserDAO) context.getBean("userDao");
 		
@@ -50,6 +58,11 @@ public class LoginController {
 		
 		
 		User userfromDB = userDao.getUser(username);
+		
+		//TODO: deserves better handling
+		if ( userfromDB == null ) {
+			return "redirect:/register";
+		}
 		
 		String passwordField = userfromDB.getPassword();
 		int separator = passwordField.lastIndexOf(":");
@@ -61,9 +74,7 @@ public class LoginController {
 		
 		logger.info(hash + " " + salt+ " "+ calculated); 
 		if ( calculated.equals(hash) ) {
-			
-			//TODO: handle session
-			
+			request.getSession().setAttribute("loggedIn", true);			
 		}
 		
 		return "redirect:/";

@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.unical.classmanager.model.data.User;
 
-public interface UserDAO{
+public interface UserDAO {
 
 	public void create(User user);
 
@@ -19,6 +19,8 @@ public interface UserDAO{
 	public int numberOfUsers();
 	
 	public List<User> getAllUsers();
+	
+	public User get(String userame);
 
 }
 

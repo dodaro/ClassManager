@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.PasswordHashing;
-import it.unical.classmanager.model.User;
-import it.unical.classmanager.model.UserDAO;
 import it.unical.classmanager.model.UserLogin;
 import it.unical.classmanager.model.UserRegister;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
+import it.unical.classmanager.model.data.User;
 
 /**
  * Handles requests for the application home page.
@@ -51,13 +52,13 @@ public class LoginController {
 			return "redirect:/";
 		}
 		
-		UserDAO userDao = (UserDAO) context.getBean("userDao");
+		UserDAO userDao = (UserDAOImpl) context.getBean("userDao");
 		
 		String username = user.getUsername();
 		String givenPassword = user.getPassword();
 		
 		
-		User userfromDB = userDao.getUser(username);
+		User userfromDB = userDao.get(username);
 		
 		//TODO: deserves better handling
 		if ( userfromDB == null ) {

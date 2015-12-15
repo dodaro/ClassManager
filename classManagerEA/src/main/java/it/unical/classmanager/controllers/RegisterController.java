@@ -14,8 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.model.User;
-import it.unical.classmanager.model.UserDAO;
+import it.unical.classmanager.model.data.User;
 
 /**
  * Handles requests for the application home page.
@@ -38,7 +37,9 @@ public class RegisterController {
 		if ( request.getSession().getAttribute("loggedIn") != null ) {
 			return "redirect:/";
 		}
-		model.addAttribute("userRegisterForm",new User());
+		
+
+		model.addAttribute("userRegisterForm", new User() );
 		return "register";
 	}
 	
@@ -47,7 +48,7 @@ public class RegisterController {
 		if ( request.getSession().getAttribute("loggedIn") != null ) {
 			return "redirect:/";
 		}
-		((UserDAO)context.getBean("userDao")).create(user);
+		((it.unical.classmanager.model.dao.UserDAO)context.getBean("userDao")).create(user);;
 		return "redirect:/";
 	}
 	

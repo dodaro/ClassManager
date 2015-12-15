@@ -115,7 +115,9 @@
 		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
 	</bean>
 
+	<!-- LUIGI: segui questo schema per gli altri DAO -->
 	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 
 	<bean id="transactionManager"

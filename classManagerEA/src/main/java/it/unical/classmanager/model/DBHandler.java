@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class DBHandler {
-	private static DBHandler instance = null;
+	
 	private SessionFactory sessionFactory;
 	
 	
@@ -13,15 +13,8 @@ public class DBHandler {
 		CREATE, UPDATE, DELETE
 	};
 
-	private DBHandler() {
+	public DBHandler() {
 		sessionFactory = null;
-	}
-	
-	public static DBHandler getInstance(){
-		if(instance==null){
-			instance = new DBHandler();
-		}
-		return instance;
 	}
 	
 	private void performOperation(Object obj, Operation op) {

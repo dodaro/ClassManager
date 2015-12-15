@@ -30,6 +30,7 @@
 	  			</a>
 			</div>			
 			<div class="navbar-header pull-right">
+            	<a class="nav-bar-button logout" href="aldo"><span class="glyphicon glyphicon-log-out"></span> Aldo Login</a>
             	<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
             </div>
 	  	</div>

@@ -105,6 +105,7 @@
 						</form:form>
 					</div>
 
+					<div id="updateCalendar_button"><button>Update</button></div>
 				</div>
 			</div>
 		</div>

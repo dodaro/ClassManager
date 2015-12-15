@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +30,7 @@ public class CalendarController {
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+	private static final short ID_EVENT_TEMP = -1;
 	
 	/**
 	 * Manages the request related to the calendar
@@ -102,5 +102,24 @@ public class CalendarController {
 		return "redirect:calendar";
 	}
 	
+	@RequestMapping(value = "/update_calendar", method = RequestMethod.POST)
+	public @ResponseBody String updateCalendar(Model model, @RequestBody List<Event> events) {
+		
+		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+		
+		for (Event event : events) {
+			//TODO connessione con utente
+			if(event.getId() == ID_EVENT_TEMP)
+				eventDao.create(event);
+			else
+				eventDao.update(event);
+				
+		}
+		
+		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+		
+		logger.info("updateEvent");
+		return "redirect:calendar";
+	}
 	
 }

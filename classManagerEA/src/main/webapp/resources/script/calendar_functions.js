@@ -1,8 +1,3 @@
-/*
- * Params:
- */
-toCreate = [];
-
 $(document).ready(function() {
 
 	/*
@@ -10,7 +5,7 @@ $(document).ready(function() {
 	 * the parameters of the calendar ar defined using a JSON.
 	 */
 	$('#calendar').fullCalendar({
-		
+
 		/*
 		 *defines the option to show in the header of the graphics component. Here are defined tree buttons to change
 		 *the time of the visulization (prev day or month, next day or month, today) and the granularity of the visualization
@@ -23,7 +18,7 @@ $(document).ready(function() {
 		},
 		lang: 'it',
 		defaultDate: '2015-12-12',
-		
+
 		//allows to modify the event shown
 		editable: true,
 		// allows "more" link when too many events
@@ -31,12 +26,12 @@ $(document).ready(function() {
 		views:{
 			titleFormat: 'MMM D YYYY'
 		},
-		
+
 		/*
 		 * loads the events from the server. The event should be represented in JSON format
 		 */
 		events: "/events",
-		
+
 		/*
 		 * Defines what happens when an event is clicked.
 		 */
@@ -47,20 +42,20 @@ $(document).ready(function() {
 			$("#update_event_div").show();
 			$("#id").val(event.id);
 		},
-		
+
 		/*
 		 * eventDrop and eventResize defines what happens when the graphical component representative of the event is moved,
 		 * stretched or compressed
 		 */
 		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc){
 
-			updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc);
+			//updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc);
 		},
 		eventResize: function(event,dayDelta,minuteDelta,allDay,revertFunc){
 
-			updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc);
+			//updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc);
 		},
-		
+
 		/*
 		 * these allows to select graphically a specific range of time. In this application, when a range is selected
 		 * a new event is created using the corresponding paramenters
@@ -72,6 +67,7 @@ $(document).ready(function() {
 			if (title) {
 				$('#calendar').fullCalendar('renderEvent',
 						{
+					id: "tmp",
 					title: title,
 					start: start,
 					end: end,
@@ -79,7 +75,7 @@ $(document).ready(function() {
 						true // make the event "stick"
 				);
 
-				createEvent(title,start,end);
+				//createEvent(title,start,end);
 
 			}
 			$('#calendar').fullCalendar('unselect');
@@ -105,10 +101,10 @@ function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
 
 		var end = event.end.format();//.split("-");
 		//var endDate = new Date(end[2], end[1] - 1, end[0]);
-		
+
 		var start = event.start.format();//.split("-");
 		//var startDate = new Date(start[2], start[1] - 1, start[0]);
-		
+
 		var event = {'endDate': start, 'id': event.id, 'startDate': end, 'title': event.title};
 
 		$.ajax({ 
@@ -136,20 +132,19 @@ function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
 }
 
 /*
-* sends an Ajax request to the server when an event is created in order to store the new information
-*/
+ * sends an Ajax request to the server when an event is created in order to store the new information
+ */
 function createEvent(title,start,end){
 
 
 	var end = end.format();//.split("-");
 	//var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
-	
+
 	var start = start.format();//.split("-");
 	//var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
-	
-	var event = {'endDate': end, 'startDate': start, 'title': title};
 
-	toCreate.push(event);
+	var event = {'endDate': start, 'id': tmpIds, 'startDate': end, 'title': event.title};
+
 	$.ajax({ 
 		headers: {
 			Accept : "text/plain; charset=utf-8"
@@ -172,7 +167,7 @@ function createEvent(title,start,end){
 
 }
 
-/*
+/**
  * called when the "delete" button is clicked
  */
 $(document).ready(function(){
@@ -182,6 +177,55 @@ $(document).ready(function(){
 		if (!confirm("Are you sure about this change?")) {
 			event.preventDefault();
 		}
+	});
+});
+
+/**
+ * called when the "confirm update" button is clicked
+ */
+$(document).ready(function(){
+
+	$("#updateCalendar_button").click(function(event){
+
+		if (!confirm("Are you sure about this change?")) {
+			window.redirect("/calendar");
+		}
+
+		var toSend = [];
+		var calendar = $('#calendar').fullCalendar('clientEvents');
+		$.each(calendar, function( index, value ) {
+			
+			var event = new Object();
+			
+			event.id = value.id === "tmp" ? -1 : value.id;
+			event.title = value.title;
+			event.startDate = value.start.format();
+			event.endDate = value.end.format();
+			
+			toSend.push(event);
+		});
+
+		calendar = JSON.stringify(toSend);
+		
+		$.ajax({ 
+			headers: {
+				Accept : "text/plain; charset=utf-8"
+			},
+			url: "/update_calendar", 
+			type: 'POST', 
+			dataType: 'json', 
+			data: calendar, 
+			contentType: 'application/json',
+			mimeType: 'application/json',
+			success: function(data) { 
+				window.redirect("/calendar");
+			},
+			error:function(data,status,er) { 
+				alert("error: "+data+" status: "+status+" er:"+er);
+				revertFunc();
+
+			}
+		});
 	});
 });
 

@@ -27,12 +27,15 @@ import it.unical.classmanager.model.PasswordHashing;
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
+	/*
 	@Id
 	@Column(name="id", nullable=false, length=32)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+	*/
+	@Id
 	@Column(name="username", nullable=false, length=32)
+	@Size
 	private String username;
 	
 	@Column(name="password", nullable=false, length=129)
@@ -53,7 +56,7 @@ public class User implements Serializable {
 	@Column(name="birthDate", nullable=false)
 	private Date birthDate;
 	
-	@Column(name="address", nullable=false, length=256)
+	@Column(name="address", nullable=true, length=256)
 	private String address;
 	
 	//	Foreign key section

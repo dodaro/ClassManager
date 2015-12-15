@@ -85,6 +85,14 @@
         </dependency>
         <!-- new -->
         
+        <!-- Hibernate Validator  -->
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.2.Final</version>
+		</dependency>
+        
+        
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

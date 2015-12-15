@@ -50,6 +50,10 @@
 	<!-- <property name="dbHandler" ref="dbHandler" /> -->
 	<!-- </bean> -->
 
+	<bean id="event" class="it.unical.classmanager.model.data.Event">
+	</bean>
+
+	<!-- DATABASE -->
 	<bean id="answerAttachedContentDao"
 		class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
 	</bean>
@@ -71,9 +75,6 @@
 	</bean>
 
 	<bean id="departmentDao" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
-	</bean>
-
-	<bean id="eventDao" class="it.unical.classmanager.model.dao.EventDAOImpl">
 	</bean>
 
 	<bean id="examDao" class="it.unical.classmanager.model.dao.ExamDAOImpl">
@@ -119,6 +120,12 @@
 	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
+
+	<bean id="eventDao" class="it.unical.classmanager.model.dao.EventDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+
+	<!-- DATABASE -->
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">

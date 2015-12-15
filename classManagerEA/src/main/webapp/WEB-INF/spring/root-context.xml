@@ -54,69 +54,6 @@
 	</bean>
 
 	<!-- DATABASE -->
-	<bean id="answerAttachedContentDao"
-		class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
-	</bean>
-
-	<bean id="answerDao" class="it.unical.classmanager.model.dao.AnswerDAOImpl">
-	</bean>
-
-	<bean id="attendanceStudentLectureDao"
-		class="it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl">
-	</bean>
-
-	<bean id="communicationsDao" class="it.unical.classmanager.model.dao.CommunicationsDAOImpl">
-	</bean>
-
-	<bean id="courseClassDao" class="it.unical.classmanager.model.dao.CourseClassDAOImpl">
-	</bean>
-
-	<bean id="degreeCourseDao" class="it.unical.classmanager.model.dao.DegreeCourseDAOImpl">
-	</bean>
-
-	<bean id="departmentDao" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
-	</bean>
-
-	<bean id="examDao" class="it.unical.classmanager.model.dao.ExamDAOImpl">
-	</bean>
-
-	<bean id="homeworkAttachedDao"
-		class="it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl">
-	</bean>
-
-	<bean id="homeworkAttachedStudentSolvingDao"
-		class="it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl">
-	</bean>
-
-	<bean id="homeworkDao" class="it.unical.classmanager.model.dao.HomeworkDAOImpl">
-	</bean>
-
-	<bean id="homeworkStudentSolvingDao"
-		class="it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl">
-	</bean>
-
-	<bean id="lectureDao" class="it.unical.classmanager.model.dao.LectureDAOImpl">
-	</bean>
-
-	<bean id="materialDao" class="it.unical.classmanager.model.dao.MaterialDAOImpl">
-	</bean>
-
-	<bean id="questionAttachedContentDao"
-		class="it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl">
-	</bean>
-
-	<bean id="questionDao" class="it.unical.classmanager.model.dao.QuestionDAOImpl">
-	</bean>
-
-	<bean id="registrationStudentClassDao"
-		class="it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl">
-	</bean>
-
-	<bean id="studentExamPartecipationDao"
-		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
-	</bean>
-
-	<!-- LUIGI: segui questo schema per gli altri DAO -->
 	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>

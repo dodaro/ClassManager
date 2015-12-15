@@ -97,10 +97,10 @@
 							<form:input type="hidden" path="id" />
 							<label for="title">Title:</label>
 							<form:input type="title" path="title" />
-							<label for="Start">Start:</label>
-							<form:input type="start" path="start" />
-							<label for="End">End:</label>
-							<form:input type="end" path="end" />
+							<label for="start">Start:</label>
+							<form:input type="start" path="startDate" />
+							<label for="end">End:</label>
+							<form:input type="end" path="endDate" />
 							<input id="update_event_submit" type="submit" value="Update">
 						</form:form>
 					</div>

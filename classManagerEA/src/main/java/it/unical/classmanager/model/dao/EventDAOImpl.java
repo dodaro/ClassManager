@@ -74,7 +74,7 @@ public class EventDAOImpl implements EventDAO{
 	}
 
 	@Override
-	public List<Event> getAllEventsOfUser(int userId) {
+	public List<Event> getAllEventsOfUser(String userId) {
 		
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		Query query = session.createQuery("FROM Event as event WHERE event.user.id = :user");

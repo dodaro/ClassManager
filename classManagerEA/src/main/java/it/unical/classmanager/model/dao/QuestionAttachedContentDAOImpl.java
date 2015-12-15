@@ -9,21 +9,32 @@ import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 
 public class QuestionAttachedContentDAOImpl {
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
+	}
+
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
+	}
 	
 	public void create(QuestionAttachedContent questionAttachedContent){
-		DBHandler.getInstance().create(questionAttachedContent);
+		this.dbHandler.create(questionAttachedContent);
 	}
 
 	public void update(QuestionAttachedContent questionAttachedContent){
-		DBHandler.getInstance().update(questionAttachedContent);
+		this.dbHandler.update(questionAttachedContent);
 	}
 
 	public void delete(QuestionAttachedContent questionAttachedContent){
-		DBHandler.getInstance().delete(questionAttachedContent);
+		this.dbHandler.delete(questionAttachedContent);
 	}
 
 	public QuestionAttachedContent get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		QuestionAttachedContent questionAttachedContent = 
 				(QuestionAttachedContent) session
 				.createSQLQuery("SELECT * FROM questionAttachedContent WHERE id = " + id)
@@ -34,13 +45,13 @@ public class QuestionAttachedContentDAOImpl {
 	}
 
 	public void deleteAllQuestionAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM QuestionAttachedContent").executeUpdate();
 		session.close();		
 	}
 
 	public int numberOfQuestionAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		int numQuestion= 
 				session.createQuery("FROM QuestionAttachedContent").list().size();
 		session.close();
@@ -49,7 +60,7 @@ public class QuestionAttachedContentDAOImpl {
 
 	@SuppressWarnings("unchecked")
 	public List<QuestionAttachedContent> getAllQuestionAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<QuestionAttachedContent> questionAttachedContents = 
 				session.createQuery("FROM QuestionAttachedContent").list();
 		session.close();

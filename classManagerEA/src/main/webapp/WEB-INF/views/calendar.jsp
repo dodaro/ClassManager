@@ -75,37 +75,52 @@
 				</div>
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
+
 				<div class="row row-content">
+
+					<div class="row row-content">
+
+						<div id="editCalendar_div">
+							<button id="editCalendar_btn">Edit Calendar</button>
+						</div>
+						<div id="updateCalendar_div">
+							<button id="confirm_btn">Confirm Update</button>
+							<button id="revert_btn">Revert</button>
+						</div>
+
+						<!-- When an event is clicked the "event" field of this form is filled. If the user
+	will click on the "update" button a delete request will be send to the server -->
+						<div id="update_event_div">
+							<form:form id="update_event_form" action="/update_event"
+								method="post" commandName="FullCalendarEventBean">
+								<form:input type="hidden" path="id" />
+								<label for="title">Title:</label>
+								<form:input type="title" path="title" />
+								<label for="start">Start:</label>
+								<form:input type="start" path="startDate" />
+								<label for="end">End:</label>
+								<form:input type="end" path="endDate" />
+								<input id="update_event_submit" type="submit" value="Update">
+							</form:form>
+						</div>
+
+						<!-- When an event is clicked the "event" field of this form is filled. If the user
+	will click on the "delete" button a delete request will be send to the server -->
+						<form:form id="delete_event_form" action="/delete_event"
+							method="post" commandName="FullCalendarEventBean">
+							<form:input type="hidden" path="id" />
+							<input id="delete_event_submit" type="submit" value="Delete">
+						</form:form>
+
+					</div>
+
+
+
 					<!-- contains the calendar -->
 					<div style="margin-left: 20%; margin-right: 20%;">
 						<div id='calendar'></div>
 					</div>
 
-					<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "delete" button a delete request will be send to the server -->
-					<form:form id="delete_event_form" action="/delete_event"
-						method="post" commandName="FullCalendarEventBean">
-						<form:input type="hidden" path="id" />
-						<input id="delete_event_submit" type="submit" value="Delete">
-					</form:form>
-
-					<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "update" button a delete request will be send to the server -->
-					<div id="update_event_div">
-						<form:form id="update_event_form" action="/update_event"
-							method="post" commandName="FullCalendarEventBean">
-							<form:input type="hidden" path="id" />
-							<label for="title">Title:</label>
-							<form:input type="title" path="title" />
-							<label for="start">Start:</label>
-							<form:input type="start" path="startDate" />
-							<label for="end">End:</label>
-							<form:input type="end" path="endDate" />
-							<input id="update_event_submit" type="submit" value="Update">
-						</form:form>
-					</div>
-
-					<div id="updateCalendar_button"><button>Update</button></div>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,14 @@
 $(document).ready(function() {
 
+	createCalendar(false);
+	$("#updateCalendar_div").hide();
+	$("#delete_event_form").hide();
+	$("#update_event_div").hide();
+});
+
+
+function createCalendar(editable){
+	
 	/*
 	 * The javascript script "fullCalendar" creates and initializes the calendar.
 	 * the parameters of the calendar ar defined using a JSON.
@@ -20,7 +29,7 @@ $(document).ready(function() {
 		defaultDate: '2015-12-12',
 
 		//allows to modify the event shown
-		editable: true,
+		editable: editable,
 		// allows "more" link when too many events
 		eventLimit: true,
 		views:{
@@ -60,14 +69,14 @@ $(document).ready(function() {
 		 * these allows to select graphically a specific range of time. In this application, when a range is selected
 		 * a new event is created using the corresponding paramenters
 		 */
-		selectable: true,
+		selectable: editable,
 		selectHelper: true,
 		select: function(start, end, allDay) {
 			var title = prompt('Event Title:'); //dialog
 			if (title) {
 				$('#calendar').fullCalendar('renderEvent',
 						{
-					id: "tmp",
+					id: 1,
 					title: title,
 					start: start,
 					end: end,
@@ -81,11 +90,7 @@ $(document).ready(function() {
 			$('#calendar').fullCalendar('unselect');
 		} 
 	});
-
-	$("#delete_event_form").hide();
-	$("#update_event_div").hide();
-});
-
+}
 
 /*
  * sends an Ajax request to the server when an event is modify in order to store the new information
@@ -181,11 +186,31 @@ $(document).ready(function(){
 });
 
 /**
+ * called when the "edit" button is clicked
+ */
+$(document).ready(function(){
+
+	$("#editCalendar_btn").click(function(event){
+		
+		$("#editCalendar_btn").hide();
+		$("#updateCalendar_div").show();
+		$('#calendar').fullCalendar('destroy');
+		createCalendar(true);
+		
+	});
+	
+	$("#revert_btn").click(function(event){
+		revertFunc();
+	});
+});
+
+
+/**
  * called when the "confirm update" button is clicked
  */
 $(document).ready(function(){
 
-	$("#updateCalendar_button").click(function(event){
+	$("#confirm_btn").click(function(event){
 
 		if (!confirm("Are you sure about this change?")) {
 			window.redirect("/calendar");
@@ -194,19 +219,19 @@ $(document).ready(function(){
 		var toSend = [];
 		var calendar = $('#calendar').fullCalendar('clientEvents');
 		$.each(calendar, function( index, value ) {
-			
+
 			var event = new Object();
-			
+
 			event.id = value.id === "tmp" ? -1 : value.id;
 			event.title = value.title;
 			event.startDate = value.start.format();
 			event.endDate = value.end.format();
-			
+
 			toSend.push(event);
 		});
 
 		calendar = JSON.stringify(toSend);
-		
+
 		$.ajax({ 
 			headers: {
 				Accept : "text/plain; charset=utf-8"
@@ -229,6 +254,9 @@ $(document).ready(function(){
 	});
 });
 
+function revertFunc(){
+	window.location.replace("/calendar");
+}
 /*
 events: [
 {

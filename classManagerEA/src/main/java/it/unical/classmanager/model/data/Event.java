@@ -30,10 +30,10 @@ public class Event implements Serializable  {
 	private String description;
 		
 	@Column(name="startDate", nullable=false)
-	private Date startDate;
+	private Date start;
 	
 	@Column(name="endDate", nullable=false)
-	private Date endDate;
+	private Date end;
 
 	@Column(name="place", nullable=false, length=32)
 	private String place;
@@ -53,26 +53,26 @@ public class Event implements Serializable  {
 		this.id = 0;
 		this.title = "";
 		this.description = "";
-		this.startDate = null;
-		this.endDate = null;
+		this.start = null;
+		this.end = null;
 		this.place = "";
 		this.hourBegin = null;
 		this.hourEnd = null;
 		this.user = null;
 	}
 
-	public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
+	/*public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
 			Time hourEnd, User user) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.start = startDate;
+		this.end = endDate;
 		this.place = place;
 		this.hourBegin = hourBegin;
 		this.hourEnd = hourEnd;
 		this.user = user;
-	}
+	}*/
 
 	public int getId() {
 		return id;
@@ -98,20 +98,20 @@ public class Event implements Serializable  {
 		this.description = description;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public Date getStart() {
+		return start;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStart(Date startDate) {
+		this.start = startDate;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getEnd() {
+		return end;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEnd(Date endDate) {
+		this.end = endDate;
 	}
 
 	public String getPlace() {

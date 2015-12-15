@@ -18,4 +18,6 @@ public interface EventDAO {
 	public int numberOfEvents();
 
 	public List<Event> getAllEvents();
+	
+	public List<Event> getAllEventsOfUser(int userId);
 }

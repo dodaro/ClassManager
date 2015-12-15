@@ -2,27 +2,42 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Event;
 
-public class EventDAOImpl {
-	
+public class EventDAOImpl implements EventDAO{
+
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler) {
+		this.dbHandler = dbHandler;
+	}
+
+	public DBHandler getDbHandler() {
+		return dbHandler;
+	}
+
+	@Override
 	public void create(Event event){
-		DBHandler.getInstance().create(event);
+		this.dbHandler.create(event);
 	}
 
+	@Override
 	public void update(Event event){
-		DBHandler.getInstance().update(event);
+		this.dbHandler.update(event);
 	}
 
+	@Override
 	public void delete(Event event){
-		DBHandler.getInstance().delete(event);
+		this.dbHandler.delete(event);
 	}
 
+	@Override
 	public Event get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		Event event = 
 				(Event) session
 				.createSQLQuery("SELECT * FROM event WHERE id = " + id)
@@ -32,27 +47,46 @@ public class EventDAOImpl {
 		return event;
 	}
 
+	@Override
 	public void deleteAllEvents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM Event").executeUpdate();
 		session.close();		
 	}
 
+	@Override
 	public int numberOfEvents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		int numEvent= 
 				session.createQuery("FROM Event").list().size();
 		session.close();
 		return numEvent;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Event> getAllEvents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<Event> event = 
 				session.createQuery("FROM Event").list();
 		session.close();
 		return event;
 	}
-	
+
+	@Override
+	public List<Event> getAllEventsOfUser(int userId) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM Event as event WHERE event.user.id = :user");
+		query.setParameter("user", userId);
+		
+		@SuppressWarnings("unchecked")
+		List<Event> event = query.list();
+		event.size();
+		
+		session.close();
+		return event;
+	}
+
+
 }

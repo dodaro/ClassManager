@@ -18,8 +18,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import it.unical.classmanager.model.User;
-import it.unical.classmanager.model.UserDAO;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.User;
 
 
 
@@ -36,8 +36,13 @@ public class DBTests{
 		UserDAO userDao  = (UserDAO) context.getBean("userDao");
 		for ( int i = 0 ; i < 10 ; i++ ) {
 			User u = new User();
-			u.setName(""+i+1);
-			u.setLastName(""+i+1);
+			u.setUsername(""+i);
+			u.setPassword(""+i);
+			u.setFirstName(""+1);
+			u.setLastName(""+1);
+			u.setRole(""+i);
+			u.setAddress("");
+			u.setBirthDate(new Date());
 			userDao.create(u);
 		}
 	}

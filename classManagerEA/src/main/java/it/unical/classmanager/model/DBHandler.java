@@ -5,8 +5,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class DBHandler {
-
+	
 	private SessionFactory sessionFactory;
+	
 	
 	private static enum Operation {
 		CREATE, UPDATE, DELETE
@@ -36,6 +37,7 @@ public class DBHandler {
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}

@@ -57,7 +57,7 @@ public class CalendarController {
 		
 		//TODO user session
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
-		List<Event> events = eventDao.getAllEventsOfUser(0);
+		List<Event> events = eventDao.getAllEventsOfUser("0");
 		
 		String json = new Gson().toJson(events);
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));

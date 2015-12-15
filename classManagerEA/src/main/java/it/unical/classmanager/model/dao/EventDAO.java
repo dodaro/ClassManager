@@ -19,5 +19,5 @@ public interface EventDAO {
 
 	public List<Event> getAllEvents();
 	
-	public List<Event> getAllEventsOfUser(int userId);
+	public List<Event> getAllEventsOfUser(String userId);
 }

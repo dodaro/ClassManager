@@ -98,7 +98,13 @@ function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
 	}
 	else{
 
-		var event = {'end': event.end.format(), 'id': event.id, 'start': event.start.format(), 'title': event.title};
+		var end = event.end.format().split("-");
+		var endDate = new Date(end[2], end[1] - 1, end[0]);
+		
+		var start = event.start.format().split("-");
+		var startDate = new Date(start[2], start[1] - 1, start[0]);
+		
+		var event = {'endDate': startDate, 'id': event.id, 'startDate': endDate, 'title': event.title};
 
 		$.ajax({ 
 			headers: {
@@ -130,7 +136,13 @@ function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
 function createEvent(title,start,end){
 
 
-	var event = {'end': end.format(), 'start': start.format(), 'title': title};
+	var end = end.format();//.split("-");
+	var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
+	
+	var start = start.format();//.split("-");
+	var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
+	
+	var event = {'endDate': end, 'startDate': start, 'title': title};
 
 	$.ajax({ 
 		headers: {

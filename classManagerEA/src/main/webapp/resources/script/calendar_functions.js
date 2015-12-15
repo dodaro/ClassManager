@@ -1,3 +1,8 @@
+/*
+ * Params:
+ */
+toCreate = [];
+
 $(document).ready(function() {
 
 	/*
@@ -98,13 +103,13 @@ function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
 	}
 	else{
 
-		var end = event.end.format().split("-");
-		var endDate = new Date(end[2], end[1] - 1, end[0]);
+		var end = event.end.format();//.split("-");
+		//var endDate = new Date(end[2], end[1] - 1, end[0]);
 		
-		var start = event.start.format().split("-");
-		var startDate = new Date(start[2], start[1] - 1, start[0]);
+		var start = event.start.format();//.split("-");
+		//var startDate = new Date(start[2], start[1] - 1, start[0]);
 		
-		var event = {'endDate': startDate, 'id': event.id, 'startDate': endDate, 'title': event.title};
+		var event = {'endDate': start, 'id': event.id, 'startDate': end, 'title': event.title};
 
 		$.ajax({ 
 			headers: {
@@ -137,13 +142,14 @@ function createEvent(title,start,end){
 
 
 	var end = end.format();//.split("-");
-	var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
+	//var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
 	
 	var start = start.format();//.split("-");
-	var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
+	//var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
 	
 	var event = {'endDate': end, 'startDate': start, 'title': title};
 
+	toCreate.push(event);
 	$.ajax({ 
 		headers: {
 			Accept : "text/plain; charset=utf-8"
@@ -178,6 +184,7 @@ $(document).ready(function(){
 		}
 	});
 });
+
 /*
 events: [
 {

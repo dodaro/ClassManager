@@ -8,21 +8,32 @@ import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.HomeworkAttached;
 
 public class HomeworkAttachedDAOImpl {
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
+	}
+
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
+	}
 	
 	public void create(HomeworkAttached homeworkAttached){
-		DBHandler.getInstance().create(homeworkAttached);
+		this.dbHandler.create(homeworkAttached);
 	}
 
 	public void update(HomeworkAttached homeworkAttached){
-		DBHandler.getInstance().update(homeworkAttached);
+		this.dbHandler.update(homeworkAttached);
 	}
 
 	public void delete(HomeworkAttached homeworkAttached){
-		DBHandler.getInstance().delete(homeworkAttached);
+		this.dbHandler.delete(homeworkAttached);
 	}
 
 	public HomeworkAttached get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		HomeworkAttached homeworkAttached = 
 				(HomeworkAttached) session
 				.createSQLQuery("SELECT * FROM homeworkAttached WHERE id = " + id)
@@ -33,13 +44,13 @@ public class HomeworkAttachedDAOImpl {
 	}
 
 	public void deleteAllHomeworkAttacheds(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM HomeworkAttached").executeUpdate();
 		session.close();		
 	}
 
 	public int numberOfHomeworkAttacheds(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		int numHomeworkAttached= 
 				session.createQuery("FROM HomeworkAttached").list().size();
 		session.close();
@@ -48,7 +59,7 @@ public class HomeworkAttachedDAOImpl {
 
 	@SuppressWarnings("unchecked")
 	public List<HomeworkAttached> getAllHomeworkAttacheds(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<HomeworkAttached> homeworkAttached = 
 				session.createQuery("FROM HomeworkAttached").list();
 		session.close();

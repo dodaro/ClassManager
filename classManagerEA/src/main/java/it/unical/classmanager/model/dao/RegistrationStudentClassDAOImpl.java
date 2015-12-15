@@ -8,21 +8,32 @@ import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.RegistrationStudentClass;
 
 public class RegistrationStudentClassDAOImpl {
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
+	}
+
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
+	}
 	
 	public void create(RegistrationStudentClass registrationStudentClass){
-		DBHandler.getInstance().create(registrationStudentClass);
+		this.dbHandler.create(registrationStudentClass);
 	}
 
 	public void update(RegistrationStudentClass registrationStudentClass){
-		DBHandler.getInstance().update(registrationStudentClass);
+		this.dbHandler.update(registrationStudentClass);
 	}
 
 	public void delete(RegistrationStudentClass registrationStudentClass){
-		DBHandler.getInstance().delete(registrationStudentClass);
+		this.dbHandler.delete(registrationStudentClass);
 	}
 
 	public RegistrationStudentClass get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		RegistrationStudentClass registrationStudentClass = 
 				(RegistrationStudentClass) session
 				.createSQLQuery("SELECT * FROM registrationStudentClass WHERE id = " + id)
@@ -33,13 +44,13 @@ public class RegistrationStudentClassDAOImpl {
 	}
 
 	public void deleteAllRegistrationStudentClasses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM RegistrationStudentClass").executeUpdate();
 		session.close();		
 	}
 
 	public int numberOfRegistrationStudentClasses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		int numRegistrationStudentClass = 
 				session.createQuery("FROM RegistrationStudentClass").list().size();
 		session.close();
@@ -48,7 +59,7 @@ public class RegistrationStudentClassDAOImpl {
 
 	@SuppressWarnings("unchecked")
 	public List<RegistrationStudentClass> getAllRegistrationStudentClasses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<RegistrationStudentClass> registrationStudentClasses = 
 				session.createQuery("FROM RegistrationStudentClass").list();
 		session.close();

@@ -7,52 +7,67 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
 
-public class HomeworkStudentSolvingDAOImpl {
-	
-	public void create(HomeworkStudentSolving homeworkStudentSolving){
-		DBHandler.getInstance().create(homeworkStudentSolving);
+public class HomeworkStudentSolvingDAOImpl
+{
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
 	}
 
-	public void update(HomeworkStudentSolving homeworkStudentSolving){
-		DBHandler.getInstance().update(homeworkStudentSolving);
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
 	}
 
-	public void delete(HomeworkStudentSolving homeworkStudentSolving){
-		DBHandler.getInstance().delete(homeworkStudentSolving);
+	public void create(HomeworkStudentSolving homeworkStudentSolving)
+	{
+		this.dbHandler.create(homeworkStudentSolving);
 	}
 
-	public HomeworkStudentSolving get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		HomeworkStudentSolving homeworkStudentSolving = 
-				(HomeworkStudentSolving) session
+	public void update(HomeworkStudentSolving homeworkStudentSolving)
+	{
+		this.dbHandler.update(homeworkStudentSolving);
+	}
+
+	public void delete(HomeworkStudentSolving homeworkStudentSolving)
+	{
+		this.dbHandler.delete(homeworkStudentSolving);
+	}
+
+	public HomeworkStudentSolving get(Integer id)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		HomeworkStudentSolving homeworkStudentSolving = (HomeworkStudentSolving) session
 				.createSQLQuery("SELECT * FROM homeworkStudentSolving WHERE id = " + id)
-				.addEntity(HomeworkStudentSolving.class)
-				.uniqueResult();
+				.addEntity(HomeworkStudentSolving.class).uniqueResult();
 		session.close();
 		return homeworkStudentSolving;
 	}
 
-	public void deleteAllHomeworkStudentSolvings(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+	public void deleteAllHomeworkStudentSolvings()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM HomeworkStudentSolving").executeUpdate();
-		session.close();		
+		session.close();
 	}
 
-	public int numberOfHomeworkStudentSolvings(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		int numHomeworkStudentSolving= 
-				session.createQuery("FROM HomeworkStudentSolving").list().size();
+	public int numberOfHomeworkStudentSolvings()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		int numHomeworkStudentSolving = session.createQuery("FROM HomeworkStudentSolving").list().size();
 		session.close();
 		return numHomeworkStudentSolving;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<HomeworkStudentSolving> getAllHomeworkStudentSolvings(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		List<HomeworkStudentSolving> homeworkStudentSolving = 
-				session.createQuery("FROM HomeworkStudentSolving").list();
+	public List<HomeworkStudentSolving> getAllHomeworkStudentSolvings()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<HomeworkStudentSolving> homeworkStudentSolving = session.createQuery("FROM HomeworkStudentSolving").list();
 		session.close();
 		return homeworkStudentSolving;
 	}
-	
+
 }

@@ -8,21 +8,32 @@ import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
 
 public class CourseClassDAOImpl {
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
+	}
+
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
+	}
 	
 	public void create(CourseClass courseClass){
-		DBHandler.getInstance().create(courseClass);
+		this.dbHandler.create(courseClass);
 	}
 
 	public void update(CourseClass courseClass){
-		DBHandler.getInstance().update(courseClass);
+		this.dbHandler.update(courseClass);
 	}
 
 	public void delete(CourseClass courseClass){
-		DBHandler.getInstance().delete(courseClass);
+		this.dbHandler.delete(courseClass);
 	}
 
 	public CourseClass get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		CourseClass courseClass = 
 				(CourseClass) session
 				.createSQLQuery("SELECT * FROM courseClass WHERE id = " + id)
@@ -33,13 +44,13 @@ public class CourseClassDAOImpl {
 	}
 
 	public void deleteAllCourseClasses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM CourseClass").executeUpdate();
 		session.close();		
 	}
 
 	public int numberOfCourseClasses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		int numCourseClass= 
 				session.createQuery("FROM CourseClass").list().size();
 		session.close();
@@ -48,7 +59,7 @@ public class CourseClassDAOImpl {
 
 	@SuppressWarnings("unchecked")
 	public List<CourseClass> getAllCourseClassess(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<CourseClass> courseClass = 
 				session.createQuery("FROM CourseClass").list();
 		session.close();

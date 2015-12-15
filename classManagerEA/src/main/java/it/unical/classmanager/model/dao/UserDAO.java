@@ -12,15 +12,15 @@ public interface UserDAO {
 
 	public void delete(User user);
 
-	public User get(Integer id);
-
 	public void deleteAllUser();
 
 	public int numberOfUsers();
 	
 	public List<User> getAllUsers();
 	
-	public User get(String userame);
+	public User get(String username);
+
+	public boolean exists(String username);
 
 }
 

@@ -15,15 +15,25 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import it.unical.classmanager.model.FieldMatch;
 import it.unical.classmanager.model.PasswordHashing;
 
 @Entity
 @Table(name ="user")
 @Inheritance(strategy = InheritanceType.JOINED)
+@FieldMatch.List({
+    @FieldMatch(first = "password", second = "confirmPassword"),
+})
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
@@ -34,26 +44,38 @@ public class User implements Serializable {
 	private int id;
 	*/
 	@Id
-	@Column(name="username", nullable=false, length=32)
-	@Size
+	@Column(name="username", nullable=false, length=20)
+	@Size(min=4,max=20)
 	private String username;
 	
-	@Column(name="password", nullable=false, length=129)
+	@Column(name="password", nullable=false, length=50)
+	@Size(min=6,max=50)
 	private String password;
+	
+	@Size(min=6,max=50)
+	private String confirmPassword;
 	
 	@Column(name="role", nullable=true, length=32)
 	private String role;
 	
-	@Column(name="firstName", nullable=false, length=32)
+	@Column(name="firstName", nullable=false, length=20)
+	@Size(min=3, max=20)
 	private String firstName;
 
-	@Column(name="lastName", nullable=false, length=32)
+	@Column(name="lastName", nullable=false, length=20)
+	@Size(min=3, max=20)
 	private String lastName;
 	
 	@Column(name="email", nullable=false, length=128)
+	@Size(max=200)
+	@Email()
+	@NotEmpty()
 	private String email;
 	
 	@Column(name="birthDate", nullable=false)
+	@NotNull(message="La data di nascita non è stata inserita.")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Past()	
 	private Date birthDate;
 	
 	@Column(name="address", nullable=true, length=256)
@@ -73,9 +95,9 @@ public class User implements Serializable {
 	private List<Answer> answers;
 		
 	public User(){
-		this.id = 0;
 		this.username = "";
 		this.password = "";
+		this.confirmPassword = "";
 		this.role = "";
 		this.firstName = "";
 		this.lastName = "";
@@ -89,7 +111,6 @@ public class User implements Serializable {
 	
 	public User(int id, String username, String password, String role, String firstName, String lastName, String email,
 			Date birthDate, String address, List<Event> events, List<Question> questions, List<Answer> answers) {
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.role = role;
@@ -101,14 +122,6 @@ public class User implements Serializable {
 		this.events = events;
 		this.questions = questions;
 		this.answers = answers;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -191,16 +204,21 @@ public class User implements Serializable {
 		this.answers = answers;
 	}
 
-	/**
-	 * here I hash the password
-	 * @param password to hash
-	 */
+	
 	public void setPassword(String password) {
-		this.password = PasswordHashing.getInstance().getHashAndSalt(password);
+		this.password = password;
 	}
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
 }

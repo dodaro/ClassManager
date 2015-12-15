@@ -71,6 +71,12 @@
       		<version>1.1</version>
   		</dependency>
 		
+		<!-- Apache commons BeanUtils -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.2</version>
+		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -91,6 +97,14 @@
             <groupId>org.codehaus.jackson</groupId><artifactId>jackson-mapper-asl</artifactId><version>1.4.2</version>
         </dependency>
         <!-- new -->
+        
+        <!-- Hibernate Validator  -->
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.2.Final</version>
+		</dependency>
+        
         
 		<!-- Logging -->
 		<dependency>

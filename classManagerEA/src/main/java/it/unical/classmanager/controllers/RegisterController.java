@@ -4,6 +4,7 @@ package it.unical.classmanager.controllers;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -44,12 +48,24 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String handleRegistration(Locale locale, Model model,User user,HttpServletRequest request) {
+	public String handleRegistration(@Valid @ModelAttribute("userRegisterForm")User user,BindingResult result,Locale locale, Model model,HttpServletRequest request) {
 		if ( request.getSession().getAttribute("loggedIn") != null ) {
 			return "redirect:/";
 		}
-		((it.unical.classmanager.model.dao.UserDAO)context.getBean("userDao")).create(user);;
-		return "redirect:/";
+		
+		if ( result.hasErrors() ) {
+			return "register";
+		}
+		
+		UserDAO userDao = (UserDAO) context.getBean("userDao");
+		if ( userDao.exists(user.getUsername()) ) {
+			model.addAttribute("error", "Username già presente.");
+			logger.info("presente");
+			return "register";
+		} else {
+			userDao.create(user);
+			return "redirect:/";
+		}
 	}
 	
 }

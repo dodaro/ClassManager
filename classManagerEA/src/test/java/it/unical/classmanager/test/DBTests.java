@@ -36,11 +36,12 @@ public class DBTests{
 		UserDAO userDao  = (UserDAO) context.getBean("userDao");
 		for ( int i = 0 ; i < 10 ; i++ ) {
 			User u = new User();
-			u.setUsername(""+i);
-			u.setPassword(""+i);
-			u.setFirstName(""+1);
-			u.setLastName(""+1);
-			u.setRole(""+i);
+			u.setUsername("user "+i);
+			u.setPassword("userPass "+i);
+			u.setFirstName("userName "+1);
+			u.setLastName("userLastName "+1);
+			u.setRole("user");
+			u.setEmail("userEmail@email.it");
 			u.setAddress("");
 			u.setBirthDate(new Date());
 			userDao.create(u);

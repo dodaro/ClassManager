@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Class Manager</title>
-<script src="resources/lib/jquery/jquery.min.js"></script>
+<script src='resources/lib/jquery/jquery.min.js'></script>
 <script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
@@ -27,7 +27,6 @@
 <link href='resources/lib/fullcalendar-2.5.0/fullcalendar.print.css'
 	rel='stylesheet' media='print' />
 
-<script src='resources/lib/jquery/jquery.min.js'></script>
 <script src='resources/lib/jquery-ui/jquery-ui.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/lib/moment.min.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/fullcalendar.min.js'></script>

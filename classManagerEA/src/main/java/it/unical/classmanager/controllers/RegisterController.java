@@ -63,6 +63,7 @@ public class RegisterController {
 			logger.info("presente");
 			return "register";
 		} else {
+			user.setHash(user.getPassword());
 			userDao.create(user);
 			return "redirect:/";
 		}

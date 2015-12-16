@@ -38,7 +38,9 @@ public class DBTests{
 			User u = new User();
 			u.setUsername("user "+i);
 			u.setPassword("userPass "+i);
+			u.setConfirmPassword("userPass "+i);
 			u.setFirstName("userName "+1);
+			u.setHash(u.getPassword());
 			u.setLastName("userLastName "+1);
 			u.setRole("user");
 			u.setEmail("userEmail@email.it");

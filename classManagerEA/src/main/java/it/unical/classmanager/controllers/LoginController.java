@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.UserLogin;
-import it.unical.classmanager.model.UserRegister;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.User;
@@ -75,7 +74,7 @@ public class LoginController {
 		
 		logger.info(hash + " " + salt+ " "+ calculated); 
 		if ( calculated.equals(hash) ) {
-			request.getSession().setAttribute("loggedIn", true);			
+			request.getSession().setAttribute("loggedIn", user.getUsername());			
 		}
 		
 		return "redirect:/";

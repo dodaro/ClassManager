@@ -1,3 +1,6 @@
+//used to store temporary new events
+var tmpIds = -1;
+
 $(document).ready(function() {
 
 	createCalendar(false);
@@ -8,7 +11,7 @@ $(document).ready(function() {
 
 
 function createCalendar(editable){
-	
+
 	/*
 	 * The javascript script "fullCalendar" creates and initializes the calendar.
 	 * the parameters of the calendar ar defined using a JSON.
@@ -44,12 +47,14 @@ function createCalendar(editable){
 		/*
 		 * Defines what happens when an event is clicked.
 		 */
-		eventClick: function(event, element) {
+		eventClick: function(calEvent, jsEvent, view) {
 
 			//shows the delete form and fill it with the id of the event to delete
 			$("#delete_event_form").show();
 			$("#update_event_div").show();
-			$("#id").val(event.id);
+			//$("#toDelete_input").val(event.id);
+
+			eventToRemove = calEvent._id;
 		},
 
 		/*
@@ -76,14 +81,15 @@ function createCalendar(editable){
 			if (title) {
 				$('#calendar').fullCalendar('renderEvent',
 						{
-					id: 1,
-					title: title,
-					start: start,
-					end: end,
+							id: tmpIds,
+							title: title,
+							start: start,
+							end: end,
 						},
 						true // make the event "stick"
 				);
 
+				tmpIds--;
 				//createEvent(title,start,end);
 
 			}
@@ -92,113 +98,20 @@ function createCalendar(editable){
 	});
 }
 
-/*
- * sends an Ajax request to the server when an event is modify in order to store the new information
- */
-function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
-
-	alert(event.title + " was dropped on " + event.start.format());
-
-	if (!confirm("Are you sure about this change?")) {
-		revertFunc();
-	}
-	else{
-
-		var end = event.end.format();//.split("-");
-		//var endDate = new Date(end[2], end[1] - 1, end[0]);
-
-		var start = event.start.format();//.split("-");
-		//var startDate = new Date(start[2], start[1] - 1, start[0]);
-
-		var event = {'endDate': start, 'id': event.id, 'startDate': end, 'title': event.title};
-
-		$.ajax({ 
-			headers: {
-				Accept : "text/plain; charset=utf-8"
-			},
-			url: "/update_event", 
-			type: 'POST', 
-			dataType: 'json', 
-			data: JSON.stringify(event), 
-			contentType: 'application/json',
-			mimeType: 'application/json',
-			success: function(data) { 
-				window.redirect("/calendar");
-			},
-			error:function(data,status,er) { 
-				alert("error: "+data+" status: "+status+" er:"+er);
-				revertFunc();
-
-			}
-		});
-
-
-	}
-}
-
-/*
- * sends an Ajax request to the server when an event is created in order to store the new information
- */
-function createEvent(title,start,end){
-
-
-	var end = end.format();//.split("-");
-	//var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
-
-	var start = start.format();//.split("-");
-	//var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
-
-	var event = {'endDate': start, 'id': tmpIds, 'startDate': end, 'title': event.title};
-
-	$.ajax({ 
-		headers: {
-			Accept : "text/plain; charset=utf-8"
-		},
-		url: "/create_event", 
-		type: 'POST', 
-		dataType: 'json', 
-		data: JSON.stringify(event), 
-		contentType: 'application/json',
-		mimeType: 'application/json',
-		success: function(data) { 
-			window.redirect("/calendar");
-		},
-		error:function(data,status,er) { 
-			alert("error: "+data+" status: "+status+" er:"+er);
-			revertFunc();
-
-		}
-	});
-
-}
-
-/**
- * called when the "delete" button is clicked
- */
-$(document).ready(function(){
-
-	$("#delete_event_submit").click(function(event){
-
-		if (!confirm("Are you sure about this change?")) {
-			event.preventDefault();
-		}
-	});
-});
-
 /**
  * called when the "edit" button is clicked
  */
 $(document).ready(function(){
 
 	$("#editCalendar_btn").click(function(event){
-		
+
 		$("#editCalendar_btn").hide();
 		$("#updateCalendar_div").show();
 		$('#calendar').fullCalendar('destroy');
 		createCalendar(true);
-		
+
 	});
-	
+
 	$("#revert_btn").click(function(event){
 		revertFunc();
 	});
@@ -222,7 +135,7 @@ $(document).ready(function(){
 
 			var event = new Object();
 
-			event.id = value.id === "tmp" ? -1 : value.id;
+			event.id = value.id;
 			event.title = value.title;
 			event.startDate = value.start.format();
 			event.endDate = value.end.format();
@@ -251,6 +164,22 @@ $(document).ready(function(){
 
 			}
 		});
+	});
+});
+
+/**
+ * called when the "delete" button is clicked
+ */
+$(document).ready(function(){
+
+	$("#delete_event_btn").click(function(event){
+
+		if (!confirm("Are you sure about this change?")) {
+			event.preventDefault();
+		}
+
+		var eventToRemove = $("toDelete_input").val();
+		$('#calendar').fullCalendar('removeEvents', eventToRemove);
 	});
 });
 
@@ -314,4 +243,100 @@ events: [
 	 url: 'http://google.com/',
 	 start: '2015-12-28'
 }
-]*/
+]
+
+ *
+ *
+/*
+ * sends an Ajax request to the server when an event is modify in order to store the new information
+ */
+/*function updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc){
+
+	alert(event.title + " was dropped on " + event.start.format());
+
+	if (!confirm("Are you sure about this change?")) {
+		revertFunc();
+	}
+	else{
+
+		var end = event.end.format();//.split("-");
+		//var endDate = new Date(end[2], end[1] - 1, end[0]);
+
+		var start = event.start.format();//.split("-");
+		//var startDate = new Date(start[2], start[1] - 1, start[0]);
+
+		var event = {'endDate': start, 'id': event.id, 'startDate': end, 'title': event.title};
+
+		$.ajax({ 
+			headers: {
+				Accept : "text/plain; charset=utf-8"
+			},
+			url: "/update_event", 
+			type: 'POST', 
+			dataType: 'json', 
+			data: JSON.stringify(event), 
+			contentType: 'application/json',
+			mimeType: 'application/json',
+			success: function(data) { 
+				window.redirect("/calendar");
+			},
+			error:function(data,status,er) { 
+				alert("error: "+data+" status: "+status+" er:"+er);
+				revertFunc();
+
+			}
+		});
+
+
+	}
+}
+
+/*
+ * sends an Ajax request to the server when an event is created in order to store the new information
+ */
+/*function createEvent(title,start,end){
+
+
+	var end = end.format();//.split("-");
+	//var endDate = JSON.stringify(new Date(end[2], end[1] - 1, end[0]));
+
+	var start = start.format();//.split("-");
+	//var startDate = new Date(start[2], start[1] - 1, start[0]).toString();
+
+	var event = {'endDate': start, 'id': tmpIds, 'startDate': end, 'title': event.title};
+
+	$.ajax({ 
+		headers: {
+			Accept : "text/plain; charset=utf-8"
+		},
+		url: "/create_event", 
+		type: 'POST', 
+		dataType: 'json', 
+		data: JSON.stringify(event), 
+		contentType: 'application/json',
+		mimeType: 'application/json',
+		success: function(data) { 
+			window.redirect("/calendar");
+		},
+		error:function(data,status,er) { 
+			alert("error: "+data+" status: "+status+" er:"+er);
+			revertFunc();
+
+		}
+	});
+
+}
+
+/**
+ * called when the "delete" button is clicked
+ */
+/*$(document).ready(function(){
+
+	$("#delete_event_submit").click(function(event){
+
+		if (!confirm("Are you sure about this change?")) {
+			event.preventDefault();
+		}
+	});
+});
+ */

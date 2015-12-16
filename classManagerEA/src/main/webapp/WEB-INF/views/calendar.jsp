@@ -11,12 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Class Manager</title>
-<script src="resources/lib/jquery/jquery.min.js"></script>
-<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/style.css" />
-<link rel="stylesheet" type="text/css"
+	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css"
 	href="resources/style/nav-bar.css" />
 <script src="resources/script/nav-bar.js"></script>
 
@@ -27,7 +25,6 @@
 <link href='resources/lib/fullcalendar-2.5.0/fullcalendar.print.css'
 	rel='stylesheet' media='print' />
 
-<script src='resources/lib/jquery/jquery.min.js'></script>
 <script src='resources/lib/jquery-ui/jquery-ui.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/lib/moment.min.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/fullcalendar.min.js'></script>
@@ -75,25 +72,13 @@
 				</div>
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
-
 				<div class="row row-content">
-
-					<div id="editCalendar_div">
-						<button id="editCalendar_btn">Edit Calendar</button>
-					</div>
-					<div id="updateCalendar_div">
-						<button id="confirm_btn">Confirm Update</button>
-						<button id="revert_btn">Revert</button>
-					</div>
-				</div>
-
-				<div class="row row-content">
-
-					<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "update" button a delete request will be send to the server -->
-					<div id="update_event_div">
-						<form:form id="update_event_form" action="/update_event"
-							method="post" commandName="FullCalendarEventBean">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<div id="editCalendar_div">
+							<button id="editCalendar_btn">Edit Calendar</button>
+						</div>
+						<div id="update_event_div">
+						<form:form id="update_event_form" action="/update_event" method="post" commandName="FullCalendarEventBean">
 							<form:input type="hidden" path="id" />
 							<label for="title">Title:</label>
 							<form:input type="title" path="title" />
@@ -108,19 +93,52 @@
 							<button id="delete_event_btn">Delete</button>
 						</div>
 					</div>
-
+						<div id="updateCalendar_div">
+							<button id="confirm_btn">Confirm Update</button>
+							<button id="revert_btn">Revert</button>
+						</div>
+					</div>
 				</div>
 
-
-
-				<!-- contains the calendar -->
-				<div style="margin-left: 20%; margin-right: 20%;">
-					<div id='calendar'></div>
+				<div class="row row-content">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<!-- When an event is clicked the "event" field of this form is filled. If the user
+		will click on the "update" button a delete request will be send to the server -->
+						
+					</div>
 				</div>
-
-			</div>
+				<div class="row row-content">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<!-- contains the calendar -->
+						<div style="margin-left: 20%; margin-right: 20%;">
+							<div id='calendar'></div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- DIV CONTENT -->
 		</div>
 	</div>
+	<!-- MODAL -->
+	<div id="mymodal" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+    		<!-- Modal content-->
+    		<div class="modal-content">
+    			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+        			<h4 class="modal-title">Create Event</h4>
+      			</div>
+      			<div class="modal-body">
+      					<div class="form-group">
+    						<label for="eventTitle">Title: </label>
+    						<input class="form-control" id="eventTitle" type="text" />
+  						</div>
+      			</div>
+      			<div class="modal-footer">
+      				<button id="modalButton_createEvent" type="button" class="btn btn-success">Create</button>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      			</div>
+    		</div>
+		</div>
 	</div>
 </body>
 

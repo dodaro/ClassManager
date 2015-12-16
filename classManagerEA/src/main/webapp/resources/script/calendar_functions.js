@@ -76,32 +76,65 @@ function createCalendar(editable){
 		 */
 		selectable: editable,
 		selectHelper: true,
-		select: function(start, end, allDay) {
-			var title = prompt('Event Title:'); //dialog
-			if (title) {
-				$('#calendar').fullCalendar('renderEvent',
-						{
-							id: tmpIds,
-							title: title,
-							start: start,
-							end: end,
-						},
-						true // make the event "stick"
-				);
-
-				tmpIds--;
-				//createEvent(title,start,end);
-
+		select: 		
+			function(start, end, allDay) 
+			{ 
+				// Aggiunta Alessandro
+				$("#mymodal").modal('show');
+				_start = start;
+				_end = end;
+				/*var title = prompt('Event Title:'); //dialog
+				if (title) 
+				{
+					$('#calendar').fullCalendar('renderEvent',
+							{
+								id: tmpIds,
+								title: title,
+								start: start,
+								end: end,
+							},
+							true // make the event "stick"
+					);
+	
+					tmpIds--;
+					//createEvent(title,start,end);
+	
+				}
+				$('#calendar').fullCalendar('unselect');*/
 			}
-			$('#calendar').fullCalendar('unselect');
-		} 
 	});
 }
+
+// TODO Aldo caccia sa porcheria e aggiusta a seconda di come funziona la libreria
+var _start;
+var _end;
 
 /**
  * called when the "edit" button is clicked
  */
-$(document).ready(function(){
+$(document).ready(function(){	
+	
+	$("#modalButton_createEvent").click(function(event)
+	{
+		var title = $("#eventTitle").val();
+		if (title) 
+		{
+			$('#calendar').fullCalendar('renderEvent',
+					{
+						id: tmpIds,
+						title: title,
+						start: _start,
+						end: _end
+					},
+					true // make the event "stick"
+			);
+
+			tmpIds--;
+			//createEvent(title,start,end);
+		}
+		$('#calendar').fullCalendar('unselect');
+		$("#mymodal").modal('hide');
+	});
 
 	$("#editCalendar_btn").click(function(event){
 

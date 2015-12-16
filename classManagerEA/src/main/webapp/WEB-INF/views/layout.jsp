@@ -38,7 +38,7 @@
 				</c:if>
 				<c:if test="${not empty user}">
 					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span><spring:message code="welcome.springmvc" text="default text" /> ${user}</a>
-    				<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+    				<a class="nav-bar-button logout" href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
 				</c:if>
             </div>
 	  	</div>

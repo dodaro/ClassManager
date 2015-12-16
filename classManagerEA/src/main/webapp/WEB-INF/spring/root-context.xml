@@ -46,9 +46,8 @@
 	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<!-- <bean id="userDao" class="it.unical.classmanager.model.UserDAO" > -->
-	<!-- <property name="dbHandler" ref="dbHandler" /> -->
-	<!-- </bean> -->
+
+	
 
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>
@@ -122,5 +121,9 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+  		<property name="basename" value="messages"/>
+	</bean>
 
 </beans>

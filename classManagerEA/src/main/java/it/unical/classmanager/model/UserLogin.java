@@ -1,4 +1,9 @@
 package it.unical.classmanager.model;
+
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * Class used to handle login request
  * @author edge33
@@ -6,7 +11,12 @@ package it.unical.classmanager.model;
  */
 public class UserLogin {
 
+
+	@Size(min=4,max=20)
+	@Pattern(regexp = "^[A-Za-z0-9]+$")
 	String username;
+	
+	@Size(min=6,max=50)
 	String password;
 	
 	public UserLogin() {

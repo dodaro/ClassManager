@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,9 @@ public class RegisterController {
 	
 	@Autowired
 	private ApplicationContext context;
+	
+	@Autowired  
+	private MessageSource messageSource;
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -59,8 +63,7 @@ public class RegisterController {
 		
 		UserDAO userDao = (UserDAO) context.getBean("userDao");
 		if ( userDao.exists(user.getUsername()) ) {
-			model.addAttribute("error", "Username già presente.");
-			logger.info("presente");
+			model.addAttribute("error",messageSource.getMessage("message.usernameTaken",null,locale));
 			return "register";
 		} else {
 			user.setHash(user.getPassword());

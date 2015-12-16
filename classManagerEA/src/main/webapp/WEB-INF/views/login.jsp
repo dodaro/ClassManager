@@ -18,7 +18,7 @@
 		  <form:input type="password" name="password" path="password"  class="form-control"/>
 		  <form:errors path="password" cssClass="error"/>
 		</div>
-		  <button type="submit" class="btn btn-default">Login</button>
+		  <button type="submit" class="btn btn-success">Login</button>
 		  <a href="register"><spring:message code="message.register" text="default text"/></a>
 		</form:form>
 		<div>${error}</div>	

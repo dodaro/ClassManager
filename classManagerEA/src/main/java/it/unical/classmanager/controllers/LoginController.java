@@ -58,7 +58,7 @@ public class LoginController {
 		}
 		
 		if ( result.hasErrors() ) {
-			return "login";
+			return "";
 		}
 		
 		UserDAO userDao = (UserDAOImpl) context.getBean("userDao");
@@ -72,7 +72,7 @@ public class LoginController {
 		//TODO: deserves better handling
 		if ( userfromDB == null ) {
 			model.addAttribute("error",messageSource.getMessage("message.invalidUser",null,locale));
-			return "login";
+			return "";
 		}
 		
 		String passwordField = userfromDB.getHash();

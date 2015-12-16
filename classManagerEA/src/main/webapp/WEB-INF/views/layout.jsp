@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="resources/style/style.css" />
 	<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />	
 	<script src="resources/script/nav-bar.js"></script>
+	<script src="resources/script/login_register_modal.js"></script>
 </head>
 
 <body>
@@ -33,7 +34,11 @@
 			</div>			
 			<div class="navbar-header pull-right">
             	<c:if test="${empty user}">
-    				<a class="nav-bar-button login" href="login"><span class="glyphicon glyphicon-log-out"></span>Login</a>
+<!--             		<button type="button" class="btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+            		
+            	
+           
+    				<a id="login-button" class="nav-bar-button login" href="#"><span class="glyphicon glyphicon-log-out" ></span>Login</a>
     				<a class="nav-bar-button logout" href="aldo"><span class="glyphicon glyphicon-log-out"></span>Aldo Login</a>
 				</c:if>
 				<c:if test="${not empty user}">
@@ -82,7 +87,7 @@
 						<h3>Loren Ipsum</h3>
 						<p>
 							<div style="text-align: center;margin-bottom:20px">
-								<iframe width="420" height="315" src="https://www.youtube.com/embed/kULdfetRDww?autoplay=1" frameborder="0" allowfullscreen></iframe><br>
+<!-- 								<iframe width="420" height="315" src="https://www.youtube.com/embed/kULdfetRDww?autoplay=1" frameborder="0" allowfullscreen></iframe><br> -->
 							</div>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
 						</p>					
@@ -97,6 +102,29 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Login</h4>
+	      </div>
+	      <div id="modal-body" class="modal-body">
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+	
+	
 </body>
 
 </html>

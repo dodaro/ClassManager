@@ -1,12 +1,15 @@
 //used to store temporary new events
 var tmpIds = -1;
 
+//init functions
 $(document).ready(function() {
 
 	createCalendar(false);
 	$("#updateCalendar_div").hide();
 	$("#delete_event_form").hide();
 	$("#update_event_div").hide();
+	
+	$('select[name="colorpicker-shortlist"]').simplecolorpicker();
 });
 
 
@@ -79,11 +82,15 @@ function createCalendar(editable){
 		select: 		
 			function(start, end, allDay) 
 			{ 
-				// Aggiunta Alessandro
-				$("#mymodal").modal('show');
-				_start = start;
-				_end = end;
-				/*var title = prompt('Event Title:'); //dialog
+			// Aggiunta Alessandro
+			$("#createEvent_modal").modal('show');
+			$("#eventTitle").val("");
+			$("#eventStart").val(start);
+			$("#eventEnd").val(end);
+			$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
+			//_start = start;
+			//_end = end;
+			/*var title = prompt('Event Title:'); //dialog
 				if (title) 
 				{
 					$('#calendar').fullCalendar('renderEvent',
@@ -95,36 +102,37 @@ function createCalendar(editable){
 							},
 							true // make the event "stick"
 					);
-	
+
 					tmpIds--;
 					//createEvent(title,start,end);
-	
+
 				}
 				$('#calendar').fullCalendar('unselect');*/
 			}
 	});
 }
 
-// TODO Aldo caccia sa porcheria e aggiusta a seconda di come funziona la libreria
-var _start;
-var _end;
+//TODO Aldo caccia sa porcheria e aggiusta a seconda di come funziona la libreria
+//var _start;
+//var _end;
 
 /**
  * called when the "edit" button is clicked
  */
 $(document).ready(function(){	
-	
+
 	$("#modalButton_createEvent").click(function(event)
-	{
+			{
 		var title = $("#eventTitle").val();
 		if (title) 
 		{
 			$('#calendar').fullCalendar('renderEvent',
 					{
-						id: tmpIds,
-						title: title,
-						start: _start,
-						end: _end
+				id: tmpIds,
+				title: title,
+				start: $("#eventStart").val(),
+				end: $("#eventEnd").val(),
+				color: $('select[name="colorpicker"]').val()
 					},
 					true // make the event "stick"
 			);
@@ -133,8 +141,8 @@ $(document).ready(function(){
 			//createEvent(title,start,end);
 		}
 		$('#calendar').fullCalendar('unselect');
-		$("#mymodal").modal('hide');
-	});
+		$("#createEvent_modal").modal('hide');
+			});
 
 	$("#editCalendar_btn").click(function(event){
 

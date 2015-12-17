@@ -73,8 +73,7 @@
 					<div class="col-sm-12 col-md-12 col-lg-12">
 
 
-						<form id="upload" method="post" action="/file"
-							enctype="multipart/form-data">
+						<form id="upload" method="post" action="/file" enctype="multipart/form-data">
 							<div id="drop">
 								Drop Here <a>Browse</a> <input type="file" name="file" multiple />
 							</div>

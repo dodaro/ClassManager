@@ -75,8 +75,8 @@ function createCalendar(editable){
 			if(editable){
 				
 				$("#updateEvent_modal").modal('show');
-				$("#eventStart_update").val(calEvent.start);
-				$("#eventEnd_update").val(calEvent.end);
+				$("#eventStart_update").val(calEvent.start.format());
+				$("#eventEnd_update").val(calEvent.end.format());
 				$("#eventId_update").val(calEvent.id)
 				$("#eventTitle_update").val(calEvent.title)
 				$('#colorPicker_update').simplecolorpicker('selectColor', calEvent.color);
@@ -108,8 +108,8 @@ function createCalendar(editable){
 			{ 
 			$("#createEvent_modal").modal('show');
 			$("#eventTitle_create").val("");
-			$("#eventStart_create").val(start);
-			$("#eventEnd_create").val(end);
+			$("#eventStart_create").val(start.format());
+			$("#eventEnd_create").val(end.format());
 			$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
 
 			$('#calendar').fullCalendar('unselect');
@@ -127,18 +127,15 @@ $(document).ready(function(){
 		var title = $("#eventTitle_create").val();
 		if (title) 
 		{
-			$('#calendar').fullCalendar('renderEvent',
-					{
-				id: eventTmp.getNextId(),
-				title: title,
-				start: $("#eventStart_create").val(),
-				end: $("#eventEnd_create").val(),
-				color: $('#colorPicker_create').val()
-					},
-					true // make the event "stick"
-			);
+			var id = eventTmp.getNextId();
+			var start = $("#eventStart_create").val();
+			var end = $("#eventEnd_create").val();
+			var color = $('#colorPicker_create').val();
+			
+			var eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color};
+			$('#calendar').fullCalendar('renderEvent',eventJson,true);
 		}
-		$('#calendar').fullCalendar('unselect');
+		//$('#calendar').fullCalendar('unselect');
 		$("#createEvent_modal").modal('hide');
 	});
 

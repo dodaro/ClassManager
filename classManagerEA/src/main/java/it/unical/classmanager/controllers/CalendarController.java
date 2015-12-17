@@ -71,6 +71,7 @@ public class CalendarController {
 			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
 		}
 		
+		
 		String json = new Gson().toJson(eventsAdaped);
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
 		

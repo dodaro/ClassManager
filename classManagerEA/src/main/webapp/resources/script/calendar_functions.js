@@ -1,19 +1,18 @@
 //used to store temporary new events
-
 var EventTmp = (function(){
-	
+
 	var tmpIds;
 	var EventTmp = function(){
-		
+
 		tmpIds = -1;
 		this.getNextId = getNextId;
 	}
-	
+
 	var getNextId = function(){
 		return tmpIds--;
 	}
-	return EventTmp();
-	
+	return EventTmp;
+
 })();
 
 //init functions
@@ -25,7 +24,7 @@ $(document).ready(function() {
 	$("#update_event_div").hide();
 
 	eventTmp = new EventTmp();
-	
+
 	$('select[name="colorpicker-shortlist"]').simplecolorpicker();
 });
 
@@ -70,11 +69,19 @@ function createCalendar(editable){
 		eventClick: function(calEvent, jsEvent, view) {
 
 			//shows the delete form and fill it with the id of the event to delete
-			$("#delete_event_form").show();
-			$("#update_event_div").show();
+			//$("#delete_event_form").show();
+			//$("#update_event_div").show();
 			//$("#toDelete_input").val(event.id);
+			if(editable){
+				
+				$("#updateEvent_modal").modal('show');
+				$("#eventStart_update").val(calEvent.start);
+				$("#eventEnd_update").val(calEvent.end);
+				$("#eventId_update").val(calEvent.id)
+				$("#eventTitle_update").val(calEvent.title)
+				$('#colorPicker_update').simplecolorpicker('selectColor', calEvent.color);
+			}
 
-			eventToRemove = calEvent._id;
 		},
 
 		/*
@@ -99,11 +106,10 @@ function createCalendar(editable){
 		select: 		
 			function(start, end, allDay) 
 			{ 
-			// Aggiunta Alessandro
 			$("#createEvent_modal").modal('show');
-			$("#eventTitle").val("");
-			$("#eventStart").val(start);
-			$("#eventEnd").val(end);
+			$("#eventTitle_create").val("");
+			$("#eventStart_create").val(start);
+			$("#eventEnd_create").val(end);
 			$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
 
 			$('#calendar').fullCalendar('unselect');
@@ -116,26 +122,43 @@ function createCalendar(editable){
  */
 $(document).ready(function(){	
 
-	$("#modalButton_createEvent").click(function(event)
-			{
-		var title = $("#eventTitle").val();
+	$("#modalButton_createEvent").click(function(event){
+
+		var title = $("#eventTitle_create").val();
 		if (title) 
 		{
 			$('#calendar').fullCalendar('renderEvent',
 					{
 				id: eventTmp.getNextId(),
 				title: title,
-				start: $("#eventStart").val(),
-				end: $("#eventEnd").val(),
-				color: $('#colorPicker').val()
+				start: $("#eventStart_create").val(),
+				end: $("#eventEnd_create").val(),
+				color: $('#colorPicker_create').val()
 					},
 					true // make the event "stick"
 			);
-
-			//createEvent(title,start,end);
 		}
 		$('#calendar').fullCalendar('unselect');
 		$("#createEvent_modal").modal('hide');
+	});
+
+
+
+	$("#modalButton_updateEvent").click(function(event)
+			{
+		$('#calendar').fullCalendar('removeEvents', $("#eventId_update").val());
+		$('#calendar').fullCalendar('renderEvent',
+				{
+			id: $("#eventId_update").val(),
+			title: $("#eventTitle_update").val(),
+			start: $("#eventStart_update").val(),
+			end: $("#eventEnd_update").val(),
+			color: $('#colorPicker_update').val()
+				},
+				true // make the event "stick"
+		);
+
+		$("#updateEvent_modal").modal('hide');
 			});
 
 	$("#editCalendar_btn").click(function(event){
@@ -174,6 +197,7 @@ $(document).ready(function(){
 			event.title = value.title;
 			event.startDate = value.start.format();
 			event.endDate = value.end.format();
+			event.color = value.color;
 
 			toSend.push(event);
 		});
@@ -209,11 +233,7 @@ $(document).ready(function(){
 
 	$("#delete_event_btn").click(function(event){
 
-		if (!confirm("Are you sure about this change?")) {
-			event.preventDefault();
-		}
-
-		var eventToRemove = $("toDelete_input").val();
+		var eventToRemove = $("#eventId_update").val();
 		$('#calendar').fullCalendar('removeEvents', eventToRemove);
 	});
 });
@@ -221,6 +241,11 @@ $(document).ready(function(){
 function revertFunc(){
 	window.location.replace("/calendar");
 }
+
+/* TODO USE DATE AND HOURS
+ * TODO CHECK INPUT AND DATE VALIDITY
+ */
+
 /*
 events: [
 {

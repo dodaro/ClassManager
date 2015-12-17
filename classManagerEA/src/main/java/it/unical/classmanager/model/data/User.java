@@ -102,19 +102,19 @@ public class User implements Serializable {
 	private List<Answer> answers;
 		
 	public User(){
-		this.username = "";
-		this.password = "";
-		this.confirmPassword = "";
-		this.hash = "";
-		this.role = "";
-		this.firstName = "";
-		this.lastName = "";
-		this.email = "";
-		this.birthDate = null;
-		this.address = null;
-		this.events = new ArrayList<Event>();
-		this.questions = new ArrayList<Question>();
-		this.answers = new ArrayList<Answer>();
+//		this.username = "";
+//		this.password = "";
+//		this.confirmPassword = "";
+//		this.hash = "";
+//		this.role = "";
+//		this.firstName = "";
+//		this.lastName = "";
+//		this.email = "";
+//		this.birthDate = null;
+//		this.address = null;
+//		this.events = new ArrayList<Event>();
+//		this.questions = new ArrayList<Question>();
+//		this.answers = new ArrayList<Answer>();
 	}	
 	
 	public User(int id, String username, String password, String role, String firstName, String lastName, String email,

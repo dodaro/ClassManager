@@ -15,7 +15,6 @@
 <script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/style.css" />
 <link rel="stylesheet" type="text/css"
 	href="resources/style/nav-bar.css" />
 <script src="resources/script/nav-bar.js"></script>
@@ -33,6 +32,10 @@
 <script src='resources/lib/fullcalendar-2.5.0/lang-all.js'></script>
 
 <script src='resources/script/calendar_functions.js'></script>
+
+<!-- colorpicker -->
+<script src="resources/lib/simplecolorpicker/jquery.simplecolorpicker.js"></script>
+<link rel="stylesheet" href="resources/lib/simplecolorpicker/jquery.simplecolorpicker.css">
 <!--  -->
 
 </head>
@@ -75,35 +78,91 @@
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<div class="row row-content">
-					<!-- contains the calendar -->
-					<div style="margin-left: 20%; margin-right: 20%;">
-						<div id='calendar'></div>
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<div id="editCalendar_div">
+							<button id="editCalendar_btn">Edit Calendar</button>
+						</div>
+						<div id="update_event_div">
+							<form:form id="update_event_form" action="/update_event"
+								method="post" commandName="FullCalendarEventBean">
+								<form:input type="hidden" path="id" />
+								<label for="title">Title:</label>
+								<form:input type="title" path="title" />
+								<label for="start">Start:</label>
+								<form:input type="start" path="startDate" />
+								<label for="end">End:</label>
+								<form:input type="end" path="endDate" />
+								<input id="update_event_submit" type="submit" value="Update">
+							</form:form>
+							<div>
+								<input type="hidden" id="toDelete_input" />
+								<button id="delete_event_btn">Delete</button>
+							</div>
+						</div>
+						<div id="updateCalendar_div">
+							<button id="confirm_btn">Confirm Update</button>
+							<button id="revert_btn">Revert</button>
+						</div>
 					</div>
+				</div>
 
-					<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "delete" button a delete request will be send to the server -->
-					<form:form id="delete_event_form" action="/delete_event"
-						method="post" commandName="FullCalendarEventBean">
-						<form:input type="hidden" path="id" />
-						<input id="delete_event_submit" type="submit" value="Delete">
-					</form:form>
+				<div class="row row-content">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<!-- When an event is clicked the "event" field of this form is filled. If the user
+		will click on the "update" button a delete request will be send to the server -->
 
-					<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "update" button a delete request will be send to the server -->
-					<div id="update_event_div">
-						<form:form id="update_event_form" action="/update_event"
-							method="post" commandName="FullCalendarEventBean">
-							<form:input type="hidden" path="id" />
-							<label for="title">Title:</label>
-							<form:input type="title" path="title" />
-							<label for="start">Start:</label>
-							<form:input type="start" path="startDate" />
-							<label for="end">End:</label>
-							<form:input type="end" path="endDate" />
-							<input id="update_event_submit" type="submit" value="Update">
-						</form:form>
 					</div>
-
+				</div>
+				<div class="row row-content">
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<!-- contains the calendar -->
+						<div style="margin-left: 20%; margin-right: 20%;">
+							<div id='calendar'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- DIV CONTENT -->
+		</div>
+	</div>
+	<!-- MODAL -->
+	<div id="createEvent_modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Create Event</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="eventTitle">Title: </label>
+						<input class="form-control" id="eventTitle" type="text" />
+						<label for="eventStart">Start: </label>
+						<input class="form-control" id="eventStart" type="text" />
+						<label for="eventEnd">End:</label>
+						<input class="form-control" id="eventEnd" type="text" />
+						<label for="colorPicker">Color:</label>
+						<select name="colorpicker-shortlist" id="colorPicker">
+							<option value="#7bd148">Green</option>
+							<option value="#5484ed">Bold blue</option>
+							<option value="#a4bdfc">Blue</option>
+							<option value="#46d6db">Turquoise</option>
+							<option value="#7ae7bf">Light green</option>
+							<option value="#51b749">Bold green</option>
+							<option value="#fbd75b">Yellow</option>
+							<option value="#ffb878">Orange</option>
+							<option value="#ff887c">Red</option>
+							<option value="#dc2127">Bold red</option>
+							<option value="#dbadff">Purple</option>
+							<option value="#e1e1e1">Gray</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="modalButton_createEvent" type="button"
+						class="btn btn-success">Create</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -111,3 +170,11 @@
 </body>
 
 </html>
+
+<!-- When an event is clicked the "event" field of this form is filled. If the user
+	will click on the "delete" button a delete request will be send to the server -->
+<!--<form:form id="delete_event_form" action="/delete_event"
+							method="post" commandName="FullCalendarEventBean">
+							<input type="hidden" path="id" />
+							<input id="delete_event_submit" type="submit" value="Delete">
+						</form:form>-->

@@ -36,6 +36,13 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+		String user = (String) request.getSession().getAttribute("loggedIn");
+		
+		if ( user != null ) {
+			model.addAttribute("user",user);
+		}
+		
+		
 		return "layout";
 	}
 	

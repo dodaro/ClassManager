@@ -15,8 +15,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
@@ -46,14 +48,19 @@ public class User implements Serializable {
 	@Id
 	@Column(name="username", nullable=false, length=20)
 	@Size(min=4,max=20)
+	@Pattern(regexp = "^[A-Za-z0-9]+$")
 	private String username;
 	
-	@Column(name="password", nullable=false, length=50)
+	@Transient
 	@Size(min=6,max=50)
 	private String password;
 	
+	@Transient
 	@Size(min=6,max=50)
 	private String confirmPassword;
+	
+	@Column(name="password",nullable=false, length=129)
+	private String hash;
 	
 	@Column(name="role", nullable=true, length=32)
 	private String role;
@@ -98,6 +105,7 @@ public class User implements Serializable {
 		this.username = "";
 		this.password = "";
 		this.confirmPassword = "";
+		this.hash = "";
 		this.role = "";
 		this.firstName = "";
 		this.lastName = "";
@@ -113,6 +121,7 @@ public class User implements Serializable {
 			Date birthDate, String address, List<Event> events, List<Question> questions, List<Answer> answers) {
 		this.username = username;
 		this.password = password;
+		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
 		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -219,6 +228,14 @@ public class User implements Serializable {
 	
 	public String getConfirmPassword() {
 		return confirmPassword;
+	}
+	
+	public void setHash(String hash) {
+		this.hash = PasswordHashing.getInstance().getHashAndSalt(hash);
+	}
+	
+	public String getHash() {
+		return hash;
 	}
 
 }

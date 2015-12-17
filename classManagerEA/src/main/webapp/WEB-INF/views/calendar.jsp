@@ -143,7 +143,7 @@
 						<label for="eventEnd">End:</label>
 						<input class="form-control" id="eventEnd" type="text" />
 						<label for="colorPicker">Color:</label>
-						<select name="colorpicker-shortlist">
+						<select name="colorpicker-shortlist" id="colorPicker">
 							<option value="#7bd148">Green</option>
 							<option value="#5484ed">Bold blue</option>
 							<option value="#a4bdfc">Blue</option>

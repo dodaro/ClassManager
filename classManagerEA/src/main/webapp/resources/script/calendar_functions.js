@@ -1,5 +1,20 @@
 //used to store temporary new events
-var tmpIds = -1;
+
+var EventTmp = (function(){
+	
+	var tmpIds;
+	var EventTmp = function(){
+		
+		tmpIds = -1;
+		this.getNextId = getNextId;
+	}
+	
+	var getNextId = function(){
+		return tmpIds--;
+	}
+	return EventTmp();
+	
+})();
 
 //init functions
 $(document).ready(function() {
@@ -8,6 +23,8 @@ $(document).ready(function() {
 	$("#updateCalendar_div").hide();
 	$("#delete_event_form").hide();
 	$("#update_event_div").hide();
+
+	eventTmp = new EventTmp();
 	
 	$('select[name="colorpicker-shortlist"]').simplecolorpicker();
 });
@@ -88,33 +105,11 @@ function createCalendar(editable){
 			$("#eventStart").val(start);
 			$("#eventEnd").val(end);
 			$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
-			//_start = start;
-			//_end = end;
-			/*var title = prompt('Event Title:'); //dialog
-				if (title) 
-				{
-					$('#calendar').fullCalendar('renderEvent',
-							{
-								id: tmpIds,
-								title: title,
-								start: start,
-								end: end,
-							},
-							true // make the event "stick"
-					);
 
-					tmpIds--;
-					//createEvent(title,start,end);
-
-				}
-				$('#calendar').fullCalendar('unselect');*/
+			$('#calendar').fullCalendar('unselect');
 			}
 	});
 }
-
-//TODO Aldo caccia sa porcheria e aggiusta a seconda di come funziona la libreria
-//var _start;
-//var _end;
 
 /**
  * called when the "edit" button is clicked
@@ -128,16 +123,15 @@ $(document).ready(function(){
 		{
 			$('#calendar').fullCalendar('renderEvent',
 					{
-				id: tmpIds,
+				id: eventTmp.getNextId(),
 				title: title,
 				start: $("#eventStart").val(),
 				end: $("#eventEnd").val(),
-				color: $('select[name="colorpicker"]').val()
+				color: $('#colorPicker').val()
 					},
 					true // make the event "stick"
 			);
 
-			tmpIds--;
 			//createEvent(title,start,end);
 		}
 		$('#calendar').fullCalendar('unselect');

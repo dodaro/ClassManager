@@ -58,7 +58,7 @@ public class LoginController {
 		}
 		
 		if ( result.hasErrors() ) {
-			return "";
+			return "login";
 		}
 		
 		UserDAO userDao = (UserDAOImpl) context.getBean("userDao");

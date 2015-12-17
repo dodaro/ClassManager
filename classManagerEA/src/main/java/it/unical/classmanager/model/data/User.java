@@ -34,8 +34,8 @@ import it.unical.classmanager.model.PasswordHashing;
 @Table(name ="user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @FieldMatch.List({
-    @FieldMatch(first = "password", second = "confirmPassword"),
-})
+    @FieldMatch(first = "password", second = "confirmPassword",message="ciao"),
+}) 
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 

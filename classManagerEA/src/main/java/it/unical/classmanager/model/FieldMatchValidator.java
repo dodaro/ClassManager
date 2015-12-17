@@ -8,13 +8,16 @@ import org.apache.commons.beanutils.BeanUtils;
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {
 	private String firstFieldName;
     private String secondFieldName;
+    private String errorMessage;
 
     @Override
     public void initialize(final FieldMatch constraintAnnotation)
     {
         firstFieldName = constraintAnnotation.first();
         secondFieldName = constraintAnnotation.second();
+        errorMessage = constraintAnnotation.message();
     }
+    
 
     @Override
     public boolean isValid(final Object value, final ConstraintValidatorContext context)
@@ -25,7 +28,7 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
             final Object firstObj = BeanUtils.getProperty(value, firstFieldName);
             final Object secondObj = BeanUtils.getProperty(value, secondFieldName);
             
-            toReturn = firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);        }
+            toReturn =  firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);        }
         catch (final Exception ignore)
         {
             // ignore
@@ -34,8 +37,8 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
         if(!toReturn) {
             context.disableDefaultConstraintViolation();
             //In the initialiaze method you get the errorMessage: constraintAnnotation.message();
-            context.buildConstraintViolationWithTemplate("Passwords and confirm must match").addPropertyNode(firstFieldName).addConstraintViolation();
-        }
+            context.buildConstraintViolationWithTemplate(errorMessage).addNode(firstFieldName).addConstraintViolation();
+         }
         return toReturn;
     }
 

@@ -58,8 +58,6 @@ public class CalendarController {
 	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching, HttpServletRequest request) {
 		
 		//is the string containing all the events of the calendar
-		
-		//TODO user session
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
@@ -120,6 +118,8 @@ public class CalendarController {
 		
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
+		
+		//TODO list of events to remove. If they are not contained in the events list must be added to another list
 		eventDao.deleteAllEvents();
 		
 		String username = (String) request.getSession().getAttribute("loggedIn"); 

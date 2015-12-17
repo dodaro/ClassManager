@@ -1,6 +1,9 @@
 package it.unical.classmanager.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +22,10 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.FullCalendarEventBean;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.User;
 
 /**
  * Handles requests for the application home page.
@@ -30,7 +36,6 @@ public class CalendarController {
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
-	private static final short ID_EVENT_TEMP = -1;
 	
 	/**
 	 * Manages the request related to the calendar
@@ -50,16 +55,23 @@ public class CalendarController {
 	 * input: String start, String end - the range of the events to retrieve
 	 */
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
-	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching) {
+	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching, HttpServletRequest request) {
 		
 		//is the string containing all the events of the calendar
-		//String json = "[{\"id\":\"1\",\"title\": \"Long Event\",\"start\": \"2015-12-07\",\"end\": \"2015-12-10\"}]";
 		
 		//TODO user session
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
-		List<Event> events = eventDao.getAllEventsOfUser("0");
 		
-		String json = new Gson().toJson(events);
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		List<Event> events = eventDao.getAllEventsOfUser(username);
+		
+		List<FullCalendarEventBean> eventsAdaped = new ArrayList<FullCalendarEventBean>();
+		
+		for (Event event : events) {
+			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+		}
+		
+		String json = new Gson().toJson(eventsAdaped);
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
 		
 		logger.info("getEvents");
@@ -103,16 +115,19 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value = "/update_calendar", method = RequestMethod.POST)
-	public @ResponseBody String updateCalendar(Model model, @RequestBody List<Event> events) {
+	public @ResponseBody String updateCalendar(Model model, @RequestBody List<Event> events, HttpServletRequest request) {
 		
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
+		eventDao.deleteAllEvents();
+		
+		String username = (String) request.getSession().getAttribute("loggedIn"); 
+		User user = userDao.get(username);
 		
 		for (Event event : events) {
-			//TODO connessione con utente
-			if(event.getId() == ID_EVENT_TEMP)
-				eventDao.create(event);
-			else
-				eventDao.update(event);
+			
+			event.setUser(user);
+			eventDao.create(event);
 				
 		}
 		

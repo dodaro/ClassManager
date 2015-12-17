@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Table(name ="event")
 public class Event implements Serializable  {
 	private static final long serialVersionUID = -7308089602591068853L;
+	public static final short ID_EVENT_TEMP = -1;
 	
 	@Id
 	@Column(name="id", nullable=false, length=32)
@@ -44,6 +45,9 @@ public class Event implements Serializable  {
 	@Column(name="hourEnd", nullable=true)
 	private Time hourEnd;
 	
+	@Column(name="color", nullable=true)
+	private String color;
+	
 	//	Foreign key section	
 	@ManyToOne
 	@JoinColumn(name = "user")
@@ -59,6 +63,7 @@ public class Event implements Serializable  {
 		this.hourBegin = null;
 		this.hourEnd = null;
 		this.user = null;
+		this.color = null;
 	}
 
 	/*public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
@@ -144,6 +149,14 @@ public class Event implements Serializable  {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

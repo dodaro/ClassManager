@@ -48,7 +48,7 @@ public @interface FieldMatch
      */
     String message() default "{constraints.fieldmatch}";
     
-    
+        
 
     /**
      * Defines several <code>@FieldMatch</code> annotations on the same element

@@ -1,7 +1,10 @@
 package it.unical.classmanager.controllers;
 
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -14,11 +17,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.PasswordHashing;
+import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.UserLogin;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
@@ -50,15 +56,29 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String handleLogin(@Valid @ModelAttribute("userLoginForm")UserLogin user,BindingResult result,Model model, Locale locale,HttpServletRequest request) {
+	@RequestMapping(value = "/loginajax", method = RequestMethod.POST)
+	public @ResponseBody UserJsonResponse handleLogin(@Valid @RequestBody UserLogin user,BindingResult result,Model model, Locale locale,HttpServletRequest request) {
+		
+		logger.info(user.toString());
 		
 		if ( request.getSession().getAttribute("loggedIn") != null ) {
-			return "redirect:/";
+			//return "redirect:/";
 		}
-		
+		UserJsonResponse userJsonResponse = new UserJsonResponse();
 		if ( result.hasErrors() ) {
-			return "login";
+			Map<String ,String> errors=new HashMap<String, String>();
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            for (FieldError fieldError : fieldErrors) {
+                String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+                String string = resolveMessageCodes[0];
+                //System.out.println("resolveMessageCodes : "+string);
+                String message = messageSource.getMessage(string+"."+fieldError.getField(), new Object[]{fieldError.getRejectedValue()}, locale);
+                //System.out.println("Meassage : "+message);
+                errors.put(fieldError.getField(), message)    ;
+            }
+            userJsonResponse.setErrorsMap(errors);
+            userJsonResponse.setStatus("ERROR");
+            return userJsonResponse;
 		}
 		
 		UserDAO userDao = (UserDAOImpl) context.getBean("userDao");
@@ -72,7 +92,12 @@ public class LoginController {
 		//TODO: deserves better handling
 		if ( userfromDB == null ) {
 			model.addAttribute("error",messageSource.getMessage("message.invalidUser",null,locale));
-			return "";
+			Map<String ,String> errors=new HashMap<String, String>();
+			String message = messageSource.getMessage("message.invalidUser", null, locale);
+			errors.put("password", message);
+			userJsonResponse.setErrorsMap(errors);
+			userJsonResponse.setStatus("ERROR");
+			return userJsonResponse;
 		}
 		
 		String passwordField = userfromDB.getHash();
@@ -88,7 +113,8 @@ public class LoginController {
 			request.getSession().setAttribute("loggedIn", user.getUsername());			
 		}
 		
-		return "redirect:/";
+		//return "redirect:/";
+		return null;
 	}
 	
 }

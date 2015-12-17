@@ -7,50 +7,65 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
 
-public class AnswerAttachedContentDAOImpl {
-	
-	public void create(AnswerAttachedContent answerAttachedContent){
-		DBHandler.getInstance().create(answerAttachedContent);
+public class AnswerAttachedContentDAOImpl
+{
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
 	}
 
-	public void update(AnswerAttachedContent answerAttachedContent){
-		DBHandler.getInstance().update(answerAttachedContent);
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
 	}
 
-	public void delete(AnswerAttachedContent answerAttachedContent){
-		DBHandler.getInstance().delete(answerAttachedContent);
+	public void create(AnswerAttachedContent answerAttachedContent)
+	{
+		this.dbHandler.create(answerAttachedContent);
 	}
 
-	public AnswerAttachedContent get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		AnswerAttachedContent answerAttachedContent = 
-				(AnswerAttachedContent) session
-				.createSQLQuery("SELECT answerAttachedContent FROM AnswerAttachedContent answerAttachedContent WHERE id = " + id)
-				.addEntity(AnswerAttachedContent.class)
-				.uniqueResult();
+	public void update(AnswerAttachedContent answerAttachedContent)
+	{
+		this.dbHandler.update(answerAttachedContent);
+	}
+
+	public void delete(AnswerAttachedContent answerAttachedContent)
+	{
+		this.dbHandler.delete(answerAttachedContent);
+	}
+
+	public AnswerAttachedContent get(Integer id)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		AnswerAttachedContent answerAttachedContent = (AnswerAttachedContent) session.createSQLQuery(
+				"SELECT answerAttachedContent FROM AnswerAttachedContent answerAttachedContent WHERE id = " + id)
+				.addEntity(AnswerAttachedContent.class).uniqueResult();
 		session.close();
 		return answerAttachedContent;
 	}
 
-	public void deleteAllAnswerAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+	public void deleteAllAnswerAttachedContents()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM AnswerAttachedContent").executeUpdate();
-		session.close();		
+		session.close();
 	}
 
-	public int numberOfAnswerAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		int numAnswerAttachedContent= 
-				session.createQuery("FROM AnswerAttachedContent").list().size();
+	public int numberOfAnswerAttachedContents()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		int numAnswerAttachedContent = session.createQuery("FROM AnswerAttachedContent").list().size();
 		session.close();
 		return numAnswerAttachedContent;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<AnswerAttachedContent> getAllAnswerAttachedContents(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		List<AnswerAttachedContent> answerAttachedContents = 
-				session.createQuery("FROM AnswerAttachedContent").list();
+	public List<AnswerAttachedContent> getAllAnswerAttachedContents()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<AnswerAttachedContent> answerAttachedContents = session.createQuery("FROM AnswerAttachedContent").list();
 		session.close();
 		return answerAttachedContents;
 	}

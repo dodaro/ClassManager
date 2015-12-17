@@ -7,52 +7,66 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Lecture;
 
-public class LectureDAOImpl {
-	
-	public void create(Lecture lecture){
-		DBHandler.getInstance().create(lecture);
+public class LectureDAOImpl
+{
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
 	}
 
-	public void update(Lecture lecture){
-		DBHandler.getInstance().update(lecture);
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
 	}
 
-	public void delete(Lecture lecture){
-		DBHandler.getInstance().delete(lecture);
+	public void create(Lecture lecture)
+	{
+		this.dbHandler.create(lecture);
 	}
 
-	public Lecture get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		Lecture lecture = 
-				(Lecture) session
-				.createSQLQuery("SELECT * FROM lecture WHERE id = " + id)
-				.addEntity(Lecture.class)
-				.uniqueResult();
+	public void update(Lecture lecture)
+	{
+		this.dbHandler.update(lecture);
+	}
+
+	public void delete(Lecture lecture)
+	{
+		this.dbHandler.delete(lecture);
+	}
+
+	public Lecture get(Integer id)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Lecture lecture = (Lecture) session.createSQLQuery("SELECT * FROM lecture WHERE id = " + id)
+				.addEntity(Lecture.class).uniqueResult();
 		session.close();
 		return lecture;
 	}
 
-	public void deleteAllLectures(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+	public void deleteAllLectures()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM Lecture").executeUpdate();
-		session.close();		
+		session.close();
 	}
 
-	public int numberOfLectures(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		int numLecture= 
-				session.createQuery("FROM Lecture").list().size();
+	public int numberOfLectures()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		int numLecture = session.createQuery("FROM Lecture").list().size();
 		session.close();
 		return numLecture;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Lecture> getAllLectures(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		List<Lecture> lecture = 
-				session.createQuery("FROM Lecture").list();
+	public List<Lecture> getAllLectures()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<Lecture> lecture = session.createQuery("FROM Lecture").list();
 		session.close();
 		return lecture;
 	}
-	
+
 }

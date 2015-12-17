@@ -23,6 +23,24 @@
 	
 	<context:component-scan base-package="it.unical.classmanager.controllers" />
 	
+	<beans:bean id="messageSource"
+	      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    <beans:property name="basename" value="/WEB-INF/messages" />
+	    <beans:property name="fallbackToSystemLocale" value="false" />
+	</beans:bean>		 
+     
+    <beans:bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <beans:property name="defaultLocale" value="it" />        
+    </beans:bean>
+ 
+    <interceptors>
+        <beans:bean
+            class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <beans:property name="paramName" value="locale" />
+        </beans:bean>
+    </interceptors>
+	
 	
 	
 </beans:beans>

@@ -7,50 +7,64 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.DegreeCourse;
 
-public class DegreeCourseDAOImpl {
-	
-	public void create(DegreeCourse degreeCourse){
-		DBHandler.getInstance().create(degreeCourse);
+public class DegreeCourseDAOImpl
+{
+	private DBHandler dbHandler;
+
+	public void setDbHandler(DBHandler dbHandler)
+	{
+		this.dbHandler = dbHandler;
 	}
 
-	public void update(DegreeCourse degreeCourse){
-		DBHandler.getInstance().update(degreeCourse);
+	public DBHandler getDbHandler()
+	{
+		return dbHandler;
 	}
 
-	public void delete(DegreeCourse degreeCourse){
-		DBHandler.getInstance().delete(degreeCourse);
+	public void create(DegreeCourse degreeCourse)
+	{
+		this.dbHandler.create(degreeCourse);
 	}
 
-	public DegreeCourse get(Integer id){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		DegreeCourse degreeCourse = 
-				(DegreeCourse) session
-				.createSQLQuery("SELECT * FROM degreeCourse WHERE id = " + id)
-				.addEntity(DegreeCourse.class)
-				.uniqueResult();
+	public void update(DegreeCourse degreeCourse)
+	{
+		this.dbHandler.update(degreeCourse);
+	}
+
+	public void delete(DegreeCourse degreeCourse)
+	{
+		this.dbHandler.delete(degreeCourse);
+	}
+
+	public DegreeCourse get(Integer id)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		DegreeCourse degreeCourse = (DegreeCourse) session.createSQLQuery("SELECT * FROM degreeCourse WHERE id = " + id)
+				.addEntity(DegreeCourse.class).uniqueResult();
 		session.close();
 		return degreeCourse;
 	}
 
-	public void deleteAllDegreeCourses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
+	public void deleteAllDegreeCourses()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
 		session.createQuery("DELETE FROM DegreeCourse").executeUpdate();
-		session.close();		
+		session.close();
 	}
 
-	public int numberOfDegreeCourses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		int numDegreeCourse= 
-				session.createQuery("FROM DegreeCourse").list().size();
+	public int numberOfDegreeCourses()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		int numDegreeCourse = session.createQuery("FROM DegreeCourse").list().size();
 		session.close();
 		return numDegreeCourse;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<DegreeCourse> getAllDegreeCourses(){
-		Session session = DBHandler.getInstance().getSessionFactory().openSession();
-		List<DegreeCourse> degreeCourse = 
-				session.createQuery("FROM DegreeCourse").list();
+	public List<DegreeCourse> getAllDegreeCourses()
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<DegreeCourse> degreeCourse = session.createQuery("FROM DegreeCourse").list();
 		session.close();
 		return degreeCourse;
 	}

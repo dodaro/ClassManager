@@ -28,7 +28,7 @@ public class AldoLoginController {
 	@RequestMapping(value = "/aldo", method = RequestMethod.GET)
 	public String getCalendar(Model model,HttpServletRequest request) {
 		
-		request.getSession().setAttribute("loggedIn", true);
+		request.getSession().setAttribute("loggedIn","Duca conte Aldo Serbelloni Mazzanti vien dal Mare");
 		return "redirect:/";
 			
 	}

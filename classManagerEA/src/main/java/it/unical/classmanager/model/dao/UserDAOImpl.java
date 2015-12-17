@@ -39,15 +39,6 @@ public class UserDAOImpl implements UserDAO {
 		this.dbHandler.delete(user);
 	}
 
-	@Override
-	public User get(Integer id){
-		Session session = this.dbHandler.getSessionFactory().openSession();
-		User user = (User) session.createSQLQuery("SELECT * FROM user WHERE id = " + id)
-				.addEntity(User.class)
-				.uniqueResult();
-		session.close();
-		return user;
-	}
 
 	@Override
 	public void deleteAllUser(){
@@ -74,14 +65,21 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public User get(String userame) {
+	public User get(String username) {
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		String queryString = "FROM User WHERE username =:username";
 		Query query = session.createQuery(queryString);
-		query.setParameter("username",userame);
+		query.setParameter("username",username);
 		User user = (User) query.uniqueResult();
 		session.close();
 		return user;
+	}
+
+	@Override
+	public boolean exists(String username) {
+		if ( get(username) != null ) 
+			return true;
+		return false;
 	}
 	
 }

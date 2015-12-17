@@ -46,82 +46,71 @@
 	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<!-- <bean id="userDao" class="it.unical.classmanager.model.UserDAO" > -->
-	<!-- <property name="dbHandler" ref="dbHandler" /> -->
-	<!-- </bean> -->
+
+	
 
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>
 
 	<!-- DATABASE -->
-	<bean id="answerAttachedContentDao"
-		class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
-	</bean>
-
-	<bean id="answerDao" class="it.unical.classmanager.model.dao.AnswerDAOImpl">
-	</bean>
-
-	<bean id="attendanceStudentLectureDao"
-		class="it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl">
-	</bean>
-
-	<bean id="communicationsDao" class="it.unical.classmanager.model.dao.CommunicationsDAOImpl">
-	</bean>
-
-	<bean id="courseClassDao" class="it.unical.classmanager.model.dao.CourseClassDAOImpl">
-	</bean>
-
-	<bean id="degreeCourseDao" class="it.unical.classmanager.model.dao.DegreeCourseDAOImpl">
-	</bean>
-
-	<bean id="departmentDao" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
-	</bean>
-
-	<bean id="examDao" class="it.unical.classmanager.model.dao.ExamDAOImpl">
-	</bean>
-
-	<bean id="homeworkAttachedDao"
-		class="it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl">
-	</bean>
-
-	<bean id="homeworkAttachedStudentSolvingDao"
-		class="it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl">
-	</bean>
-
-	<bean id="homeworkDao" class="it.unical.classmanager.model.dao.HomeworkDAOImpl">
-	</bean>
-
-	<bean id="homeworkStudentSolvingDao"
-		class="it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl">
-	</bean>
-
-	<bean id="lectureDao" class="it.unical.classmanager.model.dao.LectureDAOImpl">
-	</bean>
-
-	<bean id="materialDao" class="it.unical.classmanager.model.dao.MaterialDAOImpl">
-	</bean>
-
-	<bean id="questionAttachedContentDao"
-		class="it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl">
-	</bean>
-
-	<bean id="questionDao" class="it.unical.classmanager.model.dao.QuestionDAOImpl">
-	</bean>
-
-	<bean id="registrationStudentClassDao"
-		class="it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl">
-	</bean>
-
-	<bean id="studentExamPartecipationDao"
-		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
-	</bean>
-
-	<!-- LUIGI: segui questo schema per gli altri DAO -->
 	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
-
+	<bean id="answerAttachedContentDAO" class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="answerDAO" class="it.unical.classmanager.model.dao.AnswerDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="attendanceStudentLectureDAO" class="it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="communicationsDAO" class="it.unical.classmanager.model.dao.CommunicationsDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="courseClassDAO" class="it.unical.classmanager.model.dao.CourseClassDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="degreeCourseDAO" class="it.unical.classmanager.model.dao.DegreeCourseDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="departementDAO" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
 	<bean id="eventDao" class="it.unical.classmanager.model.dao.EventDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="examDAO" class="it.unical.classmanager.model.dao.ExamDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkAttachedDAO" class="it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkAttachedStudentSolvingDAO" class="it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkDAO" class="it.unical.classmanager.model.dao.HomeworkDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkStudentSolvingDAO" class="it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="lectureDAO" class="it.unical.classmanager.model.dao.LectureDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="materialDAO" class="it.unical.classmanager.model.dao.MaterialDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="questionAttachedContentDAO" class="it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="questionDAO" class="it.unical.classmanager.model.dao.QuestionDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="registrationStudentClassDAO" class="it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="studentExamPartecipationDAO" class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 
@@ -132,5 +121,9 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+  		<property name="basename" value="messages"/>
+	</bean>
 
 </beans>

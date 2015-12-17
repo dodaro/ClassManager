@@ -38,9 +38,9 @@ public class HomeController {
 
 		Environment env = new CPPEnvironment();
 		status.setConsoleContent(env.compile(status.getCode()));
-		env.destroyEnvironment();
+		//env.destroyEnvironment();
 		
-		System.out.println(status);
+		//System.out.println(status);
 		
 		model.addAttribute("status", status);
 		

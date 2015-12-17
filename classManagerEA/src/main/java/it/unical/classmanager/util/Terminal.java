@@ -85,6 +85,7 @@ public class Terminal {
 		
 		try {
 			this.executorService.invokeAny(calls, timeoutMinuteConsole, TimeUnit.MINUTES);
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {

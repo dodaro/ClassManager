@@ -1,9 +1,11 @@
 package it.unical.classmanager.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -28,6 +30,12 @@ public class Execution implements Runnable{
 	 * Is the result of the console operation
 	 */
 	private ExecutionResult executionResult;
+	
+	
+	/**
+	 * The timeout in second after that the execution invoke a break operation (Ctrl+C)
+	 */
+	private final long timeoutSecondExecution = 20;
 	
 	
 	public Execution(String directory, String... command) {
@@ -74,8 +82,16 @@ public class Execution implements Runnable{
 			pb.directory(new File(directory));
 			pb.redirectErrorStream(true);
 			Process proc = pb.start();
-			proc.waitFor();
 
+			boolean timeElapsed = !proc.waitFor(this.timeoutSecondExecution, TimeUnit.SECONDS);
+			if(timeElapsed) {
+				proc.destroy();
+				
+				String[] result = {"1", "ERROR: Time for the running is out...\nTIPS: Check for loops"};
+				return result;
+			}
+			
+			
 			Reader readerInput = new InputStreamReader(proc.getInputStream());
 			int ch;
 			while ((ch = readerInput.read()) != -1)
@@ -97,7 +113,7 @@ public class Execution implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		String[] result = {Integer.toString(exitVal), sb.toString()};
 		return result;
 	}

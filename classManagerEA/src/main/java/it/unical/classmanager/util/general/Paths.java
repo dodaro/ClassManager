@@ -9,6 +9,7 @@ package it.unical.classmanager.util.general;
  */
 public class Paths {
 
+	//TODO aggiungere fileSeparator
 	public static String root = "/home/sera/";
 	
 	public static String workspace = root + "Scrivania/EACompilerWorkspace/";

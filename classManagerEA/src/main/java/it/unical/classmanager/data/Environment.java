@@ -35,35 +35,11 @@ public abstract class Environment {
 	 */
 	protected String extension;
 	
-	//protected ArrayList<CompilingFile> compilationFiles;
-	
 	
 	public Environment() {
 
 		this.terminal = Terminal.getTerminal();
-		//this.compilationFiles = new ArrayList<CompilingFile>();
 	}
-	
-	
-	/*
-	protected int findAviableCompilingFile() {
-		
-		int aviableIndex = -1;
-		
-		int i = 0;
-		boolean found = false;
-		while(i < this.compilationFiles.size() && !found) {
-			if(!this.compilationFiles.get(i).isLocked()) {
-				found = true;
-				aviableIndex = i;
-			}
-			
-			i++;
-		}
-		
-		return aviableIndex;
-	}
-	*/
 	
 	
 	/**
@@ -74,6 +50,8 @@ public abstract class Environment {
 		if(!new File(this.directoryPath).exists()) {
 			new File(this.directoryPath).mkdirs();
 		}
+		
+		cleanMainDirectory();
 	}
 	
 	

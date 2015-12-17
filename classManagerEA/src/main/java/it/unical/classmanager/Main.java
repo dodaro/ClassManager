@@ -10,11 +10,13 @@ public class Main {
 		
 		Environment env = new CPPEnvironment();
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			String fileContent = "#include <iostream>\n"
 					+ "using namespace std;\n"
 					+ "\n"
 					+ "int main(){\n"
+					+ "int* hello = NULL;\n"
+					+ "cout << *hello << endl;\n\n"
 					+ "cout<<\"hello!!!\"<<endl;\n"
 					+ "cout << \"ahahhahahah\" << endl; \n"
 					+ "return 0;\n"

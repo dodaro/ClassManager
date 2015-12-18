@@ -1,8 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+
+	<context:component-scan base-package="it.unical.classmanager.controllers.CalendarController" />
+	<mvc:annotation-driven />
+
+	<!-- Configure the multipart resolver -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="1000000" />
+
+	<!-- http://stackoverflow.com/questions/6479712/why-is-jackson-wrapping-my-objects-with-an-extra-layer-named-after-the-class -->
+	<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:./MyDB" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="it.unical.classmanager.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	
+
+	<bean id="event" class="it.unical.classmanager.model.data.Event">
+	</bean>
+
+	<!-- DATABASE -->
+	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="answerAttachedContentDAO"
+		class="it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="answerDAO" class="it.unical.classmanager.model.dao.AnswerDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="attendanceStudentLectureDAO"
+		class="it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="communicationsDAO" class="it.unical.classmanager.model.dao.CommunicationsDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="courseClassDAO" class="it.unical.classmanager.model.dao.CourseClassDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="degreeCourseDAO" class="it.unical.classmanager.model.dao.DegreeCourseDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="departementDAO" class="it.unical.classmanager.model.dao.DepartementDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="eventDao" class="it.unical.classmanager.model.dao.EventDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="examDAO" class="it.unical.classmanager.model.dao.ExamDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkAttachedDAO"
+		class="it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkAttachedStudentSolvingDAO"
+		class="it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkDAO" class="it.unical.classmanager.model.dao.HomeworkDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="homeworkStudentSolvingDAO"
+		class="it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="lectureDAO" class="it.unical.classmanager.model.dao.LectureDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="materialDAO" class="it.unical.classmanager.model.dao.MaterialDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="questionAttachedContentDAO"
+		class="it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="questionDAO" class="it.unical.classmanager.model.dao.QuestionDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="registrationStudentClassDAO"
+		class="it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="studentExamPartecipationDAO"
+		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+
+	<!-- DATABASE -->
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+  		<property name="basename" value="messages"/>
+	</bean>
+
 </beans>

@@ -1,1 +1,6 @@
-*.DS_Store
+/classManagerEA/MyDB.mv.db
+/classManagerEA/MyDB.trace.db
+/classManagerEA/target/
+/classManagerEA/h2-1.4.190.jar
+/.DS_Store
+/classManagerEA/.DS_Store

@@ -1,0 +1,122 @@
+package it.unical.classmanager.model;
+
+import java.sql.Time;
+
+import it.unical.classmanager.model.data.Event;
+
+public class FullCalendarEventBean{
+	
+	private int id;
+	private String title;
+	private String description;
+	private String start;
+	private String end;
+	private String place;
+	private String username;
+	private String color;
+	
+	public FullCalendarEventBean(){
+		
+		this.id = 0;
+		this.title = "";
+		this.description = "";
+		this.start = null;
+		this.end = null;
+		this.place = "";
+		this.color = null;
+		this.setUsername(null);
+	}
+
+	/*public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
+			Time hourEnd, User user) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.start = startDate;
+		this.end = endDate;
+		this.place = place;
+		this.hourBegin = hourBegin;
+		this.hourEnd = hourEnd;
+		this.user = user;
+	}*/
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String startDate) {
+		this.start = startDate;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String endDate) {
+		this.end = endDate;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	public static FullCalendarEventBean toFullCalendarEventBean(Event event){
+		
+		FullCalendarEventBean toReturn = new FullCalendarEventBean();
+		toReturn.setId(event.getId());
+		toReturn.setTitle(event.getTitle());
+		toReturn.setDescription(event.getDescription());
+		toReturn.setStart(event.getStartDate());
+		toReturn.setEnd(event.getEndDate());
+		toReturn.setPlace(event.getPlace());
+		toReturn.setUsername(event.getUser().getUsername());
+		toReturn.setColor(event.getColor());
+		
+		return toReturn;
+	}
+
+}

@@ -1,8 +1,11 @@
 package it.unical.classmanager.data;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import it.unical.classmanager.data.concrete.CPPEnvironment;
 import it.unical.classmanager.util.Terminal;
@@ -75,6 +78,79 @@ public abstract class Environment {
 				new File(this.directoryPath+tmpFileName).delete();
 			}
 		}
+	}
+	
+	/**
+	 * Method for generate random name of a temporary file
+	 * 
+	 * @return a random generated String 
+	 */
+	protected String generateRandomFileName() {
+		
+		//TODO aggiungere session value per il valore random
+		int tmpIndex = new Random().nextInt(10000);
+		return this.fileName+tmpIndex;
+	}
+	
+	
+	/**
+	 * Create the folder in which will be created and executed the file
+	 * 
+	 * @param fileName the name of the folder and of the file
+	 * @param content the content of the file
+	 */
+	protected void createSandbox(String fileName, String content) {
+		
+		String tmpDir = this.directoryPath + fileName + "/";
+		new File(tmpDir).mkdir();
+		File file = new File(tmpDir + fileName + this.extension);
+		
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(file);
+			
+			writer.print(content);
+			writer.flush();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			
+			writer.close();
+		}
+	}
+	
+	
+	/**
+	 * Simple utility function for force deleting a directory
+	 * 
+	 * @param dir the string path of the directory to delete
+	 */
+	protected void removeDirectory(File dir) {
+	    if (dir.isDirectory()) {
+	        File[] files = dir.listFiles();
+	        if (files != null && files.length > 0) {
+	            for (File aFile : files) {
+	                removeDirectory(aFile);
+	            }
+	        }
+	        dir.delete();
+	    } else {
+	        dir.delete();
+	    }
+	}
+	
+	
+	/**
+	 * Destroy the temporary folder of a sandbox
+	 * 
+	 * @param fileName
+	 */
+	protected void destroySandBox(String fileName) {
+		
+		String tmpDir = this.directoryPath + fileName + "/";
+		removeDirectory(new File(tmpDir));
 	}
 	
 	

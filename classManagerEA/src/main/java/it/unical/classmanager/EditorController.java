@@ -12,39 +12,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.data.EditorStatus;
 import it.unical.classmanager.data.Environment;
-import it.unical.classmanager.data.concrete.CPPEnvironment;
+import it.unical.classmanager.managers.EnvironmentManger;
+import it.unical.classmanager.util.enumative.EnvironmentEnum;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class EditorController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		EditorStatus status = initEditorStatus();
 		model.addAttribute("status", status);
 			
-		return "home";
+		return "editor";
 	}
 	
-	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	@RequestMapping(value = "/editor", method = RequestMethod.POST)
 	public String compileSnippet(Locale locale, Model model, @ModelAttribute("status") EditorStatus status) {
-		logger.info("compiling...", locale);
 
-		Environment env = new CPPEnvironment();
+		String lang = status.getLanguage();
+
+		Environment env = EnvironmentManger.getInstance().getEnvironment(EnvironmentEnum.getEnumFromString(lang));
 		status.setConsoleContent(env.compile(status.getCode()));
-		//env.destroyEnvironment();
-		
-		//System.out.println(status);
 		
 		model.addAttribute("status", status);
 		
-		return "home";
+		return "editor";
 	}
 	
 	

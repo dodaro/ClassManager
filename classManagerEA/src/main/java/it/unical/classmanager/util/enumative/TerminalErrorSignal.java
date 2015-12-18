@@ -4,6 +4,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * An enumerative class that represent the signal of the UNIX system
+ * 
+ * @author sera
+ *
+ */
 public enum TerminalErrorSignal {
 	
 	SIGHUP(1, "Hangup detected on controlling terminal or death of controlling process"),

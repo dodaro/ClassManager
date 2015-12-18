@@ -4,11 +4,11 @@
 <html>
 <head>
 	<title>Editor page</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/home.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/editor.css">
 	<script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="resources/js/ace/ext-language_tools.js"></script>
-	<script src="resources/js/home.js"></script>
+	<script src="resources/js/editor.js"></script>
 </head>
 <body>
 
@@ -23,8 +23,11 @@
         <div>
           <select id="editorLang" class="centered">
             <option value="c_cpp">C/C++</option>
-            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
             <option value="html">HTML</option>
+            <option value="javascript">Javascript</option>
+            <option value="pytohn">Python</option>
+            <option value="perl">Perl</option>
           </select> 
         </div>
 
@@ -78,7 +81,7 @@
       	<div class="editor" id="console"></div>
     </div>
     
-    <form:form id="editorForm" action="/home" method="post" commandName="status" >
+    <form:form id="editorForm" action="/editor" method="post" commandName="status" >
 		<form:textarea id="codeTextarea" path="code"></form:textarea>
 		<form:textarea id="consoleTextarea" path="consoleContent"></form:textarea>
 		<form:input id="themeInput" path="theme"/>

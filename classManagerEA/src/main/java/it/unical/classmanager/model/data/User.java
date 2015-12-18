@@ -27,6 +27,10 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers.DateDeserializer;
+
+import it.unical.classmanager.controllers.CustomDateDeserializer;
 import it.unical.classmanager.model.FieldMatch;
 import it.unical.classmanager.model.PasswordHashing;
 
@@ -81,7 +85,7 @@ public class User implements Serializable {
 	
 	@Column(name="birthDate", nullable=false)
 	@NotNull(message="La data di nascita non è stata inserita.")
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	@Past()	
 	private Date birthDate;
 	
@@ -236,6 +240,11 @@ public class User implements Serializable {
 	
 	public String getHash() {
 		return hash;
+	}
+	
+	@Override
+	public String toString() {
+		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
 
 }

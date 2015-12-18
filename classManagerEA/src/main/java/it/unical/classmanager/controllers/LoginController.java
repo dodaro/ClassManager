@@ -113,8 +113,8 @@ public class LoginController {
 			request.getSession().setAttribute("loggedIn", user.getUsername());			
 		}
 		
-		//return "redirect:/";
-		return null;
+		userJsonResponse.setStatus("SUCCESS");
+		return userJsonResponse;
 	}
 	
 }

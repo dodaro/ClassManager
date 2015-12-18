@@ -3,7 +3,7 @@ $(function() {
 		event.preventDefault();
 		var form = $("#login-form");
 		var data = {};
-		
+
 		$.each(this, function(i, v) {
             var input = $(v);
 	        data[input.attr("name")] = input.val();
@@ -26,14 +26,28 @@ $(function() {
 			if(data.status==="ERROR")	{
                 for(var key in data.errorsMap)	{
                 	var error = data.errorsMap[key];
-                    console.log(key + " " + error);
                     var formGroup =  $("input[name=" + key + "]").parent();
                     formGroup.append('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
                     formGroup.addClass("has-error has-feedback");
                     var errorDiv = formGroup.find(".errors");
                     errorDiv.append('<span class="help-inline">' + error + '</span>');
                 }
+			} else if ( data.status === "SUCCESS" ) {
+				window.location.replace("/");
 			}
 		});
 	});
+	
+	$("#register-link").click(function(event) {
+		event.preventDefault();
+		var registerModal = $("#register-modal");
+		var loginModal = $("#login-modal").modal("toggle");
+//		loginModal.on("hidden.bs.modal",function(){
+			registerModal.find(".modal-body").load("register",function() {
+				registerModal.modal("toggle");
+			});
+//		});
+		
+	});
+	
 });

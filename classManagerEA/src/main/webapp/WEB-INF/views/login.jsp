@@ -22,7 +22,7 @@
 		  <form:errors path="password" cssClass="error"/>
 		</div>
 		  <button type="submit" class="btn btn-success">Login</button>
-		  <a href="register"><spring:message code="message.register" text="default text"/></a>
+		  <a id="register-link" href="register"><spring:message code="message.register" text="default text"/></a>
 		</form:form>
 		<div>${error}</div>	
 <!-- 	</body> -->

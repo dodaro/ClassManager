@@ -18,33 +18,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class LogoutController {
+public class DBInitializatorController {
 	
-	@Autowired
-	private ApplicationContext context;
+	private boolean initialized = false;
+	
+//	@Autowired
+//	private ApplicationContext context;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Destroys the session relying on the common method called in GET
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String getLogout(Locale locale, Model model,HttpServletRequest request) {
-		return handleRequest(locale,model,request);
-	}
-
-	/**
-	 * Destroys the session relying on the common method called in POST
-	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public String postLogout(Locale locale, Model model,HttpServletRequest request) {
-		return handleRequest(locale, model, request);
-	}
-	
-	private String handleRequest(Locale locale, Model model, HttpServletRequest request) {
-		request.getSession().setAttribute("loggedIn", null);
+	@RequestMapping(value = "/db_init", method = RequestMethod.GET)
+	public String initDB(Locale locale, Model model,HttpServletRequest request) {
+		
+		if(!initialized){
+			logger.info("DB initializing...", locale);
+			initialized = true;
+		} else {
+			logger.info("The DB is initialized!", locale);
+		}
+		
 		return "redirect:/";
 	}
-	
-	
 }

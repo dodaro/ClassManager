@@ -2,8 +2,6 @@ package it.unical.classmanager.model;
 
 import java.util.Map;
 
-import it.unical.classmanager.model.data.User;
-
 public class UserJsonResponse{
    
 	private String status;

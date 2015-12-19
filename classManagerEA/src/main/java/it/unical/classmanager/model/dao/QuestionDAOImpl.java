@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Question;
 
-public class QuestionDAOImpl
+public class QuestionDAOImpl implements QuestionDAO
 {
 	private DBHandler dbHandler;
 

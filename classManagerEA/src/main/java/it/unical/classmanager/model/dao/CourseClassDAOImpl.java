@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
 
-public class CourseClassDAOImpl {
+public class CourseClassDAOImpl implements CourseClassDAO {
 	private DBHandler dbHandler;
 
 	public void setDbHandler(DBHandler dbHandler)
@@ -64,6 +64,12 @@ public class CourseClassDAOImpl {
 				session.createQuery("FROM CourseClass").list();
 		session.close();
 		return courseClass;
+	}
+
+	@Override
+	public List<CourseClass> getAllCourseClasses() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

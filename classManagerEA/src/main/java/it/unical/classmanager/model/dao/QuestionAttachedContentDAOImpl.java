@@ -8,7 +8,7 @@ import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 
-public class QuestionAttachedContentDAOImpl {
+public class QuestionAttachedContentDAOImpl implements QuestionAttachedContentDAO {
 	private DBHandler dbHandler;
 
 	public void setDbHandler(DBHandler dbHandler)

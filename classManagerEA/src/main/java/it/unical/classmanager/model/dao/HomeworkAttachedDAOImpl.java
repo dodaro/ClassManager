@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.HomeworkAttached;
 
-public class HomeworkAttachedDAOImpl {
+public class HomeworkAttachedDAOImpl implements HomeworkAttachedDAO {
 	private DBHandler dbHandler;
 
 	public void setDbHandler(DBHandler dbHandler)

@@ -3,10 +3,10 @@ package it.unical.classmanager.managers;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unical.classmanager.data.Environment;
-import it.unical.classmanager.data.concrete.CPPEnvironment;
-import it.unical.classmanager.data.concrete.JavaEnvironment;
-import it.unical.classmanager.util.enumative.EnvironmentEnum;
+import it.unical.classmanager.editorData.Environment;
+import it.unical.classmanager.editorData.concrete.CPPEnvironment;
+import it.unical.classmanager.editorData.concrete.JavaEnvironment;
+import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 
 /**

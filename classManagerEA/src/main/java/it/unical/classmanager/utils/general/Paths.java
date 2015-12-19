@@ -1,4 +1,4 @@
-package it.unical.classmanager.util.general;
+package it.unical.classmanager.utils.general;
 
 
 /**

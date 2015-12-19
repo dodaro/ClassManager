@@ -4,15 +4,15 @@
 <html>
 <head>
 	<title>Editor page</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/editor.css">
+	<link rel="stylesheet" type="text/css" href="resources/style/editor.css">
 	<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
 
 	<script src="resources/lib/jquery/jquery.min.js"></script>
 	
-	<script src="resources/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script src="resources/js/ace/ext-language_tools.js"></script>
-	<script src="resources/js/editor.js"></script>
+	<script src="resources/lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="resources/lib/ace/ext-language_tools.js"></script>
+	<script src="resources/script/editor.js"></script>
 	
 	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 	<script src="resources/script/nav-bar.js"></script>
@@ -62,10 +62,11 @@
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						
-						<div>
 							<div class="row">
 								<div class="col-md-2">
 								
+								<div class="form-group">
+								<label for="editorLang">Language:</label>
 								<select id="editorLang" class="form-control">
 						            <option value="c_cpp">C/C++</option>
 						            <option value="java">Java</option>
@@ -74,8 +75,10 @@
 						            <option value="pytohn">Python</option>
 						            <option value="perl">Perl</option>
 						          </select> 
+						          </div>
 						          
-						          
+						          <div class="form-group">
+						          <label for="editorTheme">Theme:</label>
 						          <select id="editorTheme" class="form-control">
 						
 						            <option value="monokai">Monokai</option>
@@ -103,10 +106,14 @@
 						            <option value="twilight">Twilight</option>
 						            <option value="vibrant_ink">Vibrant Ink</option>
 						          </select>
-						          
-						          <input type="button" id="tryCodeBtn" class="btn btn-primary" value="try code" />
-						        <input type="button" id="toggleConsole" class="btn btn-primary" value="toggle console" />
-						        <input type="button" id="clearConsole" class="btn btn-primary" value="clear console" />
+						          </div>
+						         
+						        <div class="form-group">
+						        <input type="button" id="tryCodeBtn" class="btn btn-primary btn-block" value="try code" />
+						        <input type="button" id="toggleConsole" class="btn btn-primary btn-block" value="toggle console" />
+						        <input type="button" id="clearConsole" class="btn btn-primary btn-block" value="clear console" />
+								</div>
+								
 								
 								</div>
 								<div class="col-md-10">
@@ -131,7 +138,6 @@
 								
 								</div>
 							</div>
-						</div>
 						
 
 						

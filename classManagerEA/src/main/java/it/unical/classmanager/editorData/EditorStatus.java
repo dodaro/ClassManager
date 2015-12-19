@@ -1,4 +1,4 @@
-package it.unical.classmanager.data;
+package it.unical.classmanager.editorData;
 
 public class EditorStatus {
 

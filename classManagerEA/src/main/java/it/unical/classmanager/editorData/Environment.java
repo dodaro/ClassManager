@@ -1,4 +1,4 @@
-package it.unical.classmanager.data;
+package it.unical.classmanager.editorData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import it.unical.classmanager.data.concrete.CPPEnvironment;
-import it.unical.classmanager.util.Terminal;
+import it.unical.classmanager.editorData.concrete.CPPEnvironment;
+import it.unical.classmanager.utils.Terminal;
 
 /**
  * Abstract class that represent an environment

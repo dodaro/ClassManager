@@ -1,4 +1,4 @@
-package it.unical.classmanager.data.concrete;
+package it.unical.classmanager.editorData.concrete;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,10 +6,10 @@ import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import it.unical.classmanager.data.Environment;
-import it.unical.classmanager.util.ExecutionResult;
-import it.unical.classmanager.util.enumative.ExitCode;
-import it.unical.classmanager.util.general.Paths;
+import it.unical.classmanager.editorData.Environment;
+import it.unical.classmanager.utils.ExecutionResult;
+import it.unical.classmanager.utils.enumative.ExitCode;
+import it.unical.classmanager.utils.general.Paths;
 
 public class JavaEnvironment extends Environment{
 	

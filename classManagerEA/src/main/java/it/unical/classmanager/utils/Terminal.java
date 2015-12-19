@@ -1,4 +1,4 @@
-package it.unical.classmanager.util;
+package it.unical.classmanager.utils;
 
 import java.util.ArrayList;
 import java.util.List;

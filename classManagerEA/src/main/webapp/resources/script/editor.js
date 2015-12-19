@@ -80,6 +80,7 @@ var EditorManager = (function(){
 			    theme: 'ace/theme/' + editorStatusInfo.theme,
 			    mode: 'ace/mode/' + editorStatusInfo.language
 			});
+			ace_editor.$blockScrolling = Infinity;
 	
 			//console init
 			ace_console = ace.edit("console");
@@ -91,6 +92,7 @@ var EditorManager = (function(){
 				showGutter: false,
 				showPrintMargin: false
 			});
+			ace_console.$blockScrolling = Infinity;
 			
 			updateEditorContent();
 		}
@@ -179,10 +181,10 @@ var ListenersManager = (function(){
 				$("#console").toggle();
 
 				if($("#console").is(":visible")) {
-					$("#editor").css("height", "80%")			
+					$("#editor").css("height", "70%")			
 				}
 				else {
-					$("#editor").css("height", "100%")
+					$("#editor").css("height", "90%")
 				}
 			
 			});

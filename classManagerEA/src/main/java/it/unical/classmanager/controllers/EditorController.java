@@ -4,22 +4,28 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.data.EditorStatus;
-import it.unical.classmanager.data.Environment;
+import it.unical.classmanager.editorData.EditorStatus;
+import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
-import it.unical.classmanager.util.enumative.EnvironmentEnum;
+import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class EditorController {
+	
+	@Autowired
+	ApplicationContext appContext;
+	
 	
 	@RequestMapping(value = "/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {

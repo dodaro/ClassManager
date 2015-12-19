@@ -1,4 +1,4 @@
-package it.unical.classmanager.util.enumative;
+package it.unical.classmanager.utils.enumative;
 
 import java.util.Collections;
 import java.util.HashMap;

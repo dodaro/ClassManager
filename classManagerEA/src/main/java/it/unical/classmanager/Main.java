@@ -1,8 +1,8 @@
 package it.unical.classmanager;
 
-import it.unical.classmanager.data.Environment;
-import it.unical.classmanager.data.concrete.CPPEnvironment;
-import it.unical.classmanager.util.Terminal;
+import it.unical.classmanager.editorData.Environment;
+import it.unical.classmanager.editorData.concrete.CPPEnvironment;
+import it.unical.classmanager.utils.Terminal;
 
 public class Main {
 

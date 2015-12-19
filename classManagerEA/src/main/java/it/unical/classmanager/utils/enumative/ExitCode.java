@@ -1,10 +1,10 @@
-package it.unical.classmanager.util.enumative;
+package it.unical.classmanager.utils.enumative;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unical.classmanager.util.Terminal;
+import it.unical.classmanager.utils.Terminal;
 
 /**
  * An enumerative class that represent the exit code of a {@link Terminal} execution

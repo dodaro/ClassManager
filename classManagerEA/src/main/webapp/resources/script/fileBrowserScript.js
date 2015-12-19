@@ -1,19 +1,19 @@
 $(function(){
 
 	var filemanager = $('.filemanager'),
-		breadcrumbs = $('.breadcrumbs'),
-		fileList = filemanager.find('.data');
+	breadcrumbs = $('.breadcrumbs'),
+	fileList = filemanager.find('.data');
 
 	// Start by fetching the file data from scan.php with an AJAX request
 
 	$.getJSON('/files?dir=root',function(data) {
 
 		var response = [data],
-			currentPath = '',
-			breadcrumbsUrls = [];
+		currentPath = '',
+		breadcrumbsUrls = [];
 
 		var folders = [],
-			files = [];
+		files = [];
 
 		// This event listener monitors changes on the URL. We use it to
 		// capture back/forward navigation in the browser.
@@ -128,7 +128,7 @@ $(function(){
 			e.preventDefault();
 
 			var index = breadcrumbs.find('a').index($(this)),
-				nextDir = breadcrumbsUrls[index];
+			nextDir = breadcrumbsUrls[index];
 
 			breadcrumbsUrls.length = Number(index);
 
@@ -209,8 +209,8 @@ $(function(){
 
 		function searchByPath(dir) {
 			var path = dir.split('/'),
-				demo = response,
-				flag = 0;
+			demo = response,
+			flag = 0;
 
 			for(var i=0;i<path.length;i++){
 				for(var j=0;j<demo.length;j++){
@@ -255,7 +255,7 @@ $(function(){
 		function render(data) {
 
 			var scannedFolders = [],
-				scannedFiles = [];
+			scannedFiles = [];
 
 			if(Array.isArray(data)) {
 
@@ -295,8 +295,8 @@ $(function(){
 				scannedFolders.forEach(function(f) {
 
 					var itemsLength = f.items.length,
-						name = escapeHTML(f.name),
-						icon = '<span class="icon folder"></span>';
+					name = escapeHTML(f.name),
+					icon = '<span class="icon folder"></span>';
 
 					if(itemsLength) {
 						icon = '<span class="icon folder full"></span>';
@@ -313,7 +313,24 @@ $(function(){
 					}
 
 					var folder = $('<li class="folders"><a href="'+ f.path +'" title="'+ f.path +'" class="folders">'+icon+'<span class="name">' + name + '</span> <span class="details">' + itemsLength + '</span></a></li>');
+
 					folder.appendTo(fileList);
+					if(f.evaluable){
+						//TODO CSS PROGRESS
+						$(folder).append("<div class=circle  data-size=60><div class='.score_label'></div></div>");
+						$('.circle').circleProgress({
+						    value: 0.30,
+					        size: 80,
+					        thickness: 20,
+					        fill: {
+					            gradient: ["red", "orange"]
+					        }
+						}).on('circle-animation-progress', function(event, progress) {
+							var score = $(this).circleProgress('value');
+						    $(this).find('div').html(score*100);
+						});
+					}
+
 				});
 
 			}
@@ -323,9 +340,9 @@ $(function(){
 				scannedFiles.forEach(function(f) {
 
 					var fileSize = bytesToSize(f.size),
-						name = escapeHTML(f.name),
-						fileType = name.split('.'),
-						icon = '<span class="icon file"></span>';
+					name = escapeHTML(f.name),
+					fileType = name.split('.'),
+					icon = '<span class="icon file"></span>';
 
 					fileType = fileType[fileType.length-1];
 
@@ -357,7 +374,7 @@ $(function(){
 					var name = u.split('/');
 
 					if (i !== breadcrumbsUrls.length - 1) {
-						url += '<a href="'+u+'"><span class="folderName">' + name[name.length-1] + '</span></a> <span class="arrow">→</span> ';
+						url += '<a href="'+u+'"><span class="folderName">' + name[name.length-1] + '</span></a> <span class="arrow">></span> ';
 					}
 					else {
 						url += '<span class="folderName">' + name[name.length-1] + '</span>';

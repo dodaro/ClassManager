@@ -53,8 +53,8 @@ public class FileBrowserController {
 		File folder = new File(DIRECTORY);
 		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
 		
-		addTree(folder, files);
-		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files);
+		addTree(folder, files, false);
+		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files, false);
 		
 		logger.info("getFiles");
 		
@@ -62,7 +62,7 @@ public class FileBrowserController {
 	
 	}
 	
-	static void addTree(File folder, List<AbstractFileBean> files) {
+	static void addTree(File folder, List<AbstractFileBean> files, boolean evaluable) {
 		
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -74,12 +74,9 @@ public class FileBrowserController {
 		      } else if (listOfFiles[i].isDirectory()) {
 		        
 		    	  List<AbstractFileBean> flyweight = new ArrayList<AbstractFileBean>();
-		    	  //for (File file : listOfFiles[i].listFiles()) {
-					//flyweight.add(FileBean.toFileBean(file));
-		    	  //}
 		    	  
-		    	  addTree(listOfFiles[i], flyweight);
-		    	  FolderBean file = new FolderBean(listOfFiles[i].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[i].getPath(), flyweight);
+		    	  addTree(listOfFiles[i], flyweight, true);
+		    	  FolderBean file = new FolderBean(listOfFiles[i].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[i].getPath(), flyweight, evaluable);
 		    	  files.add(file);
 		      }
 		    }

@@ -11,11 +11,12 @@ public class FolderBean extends AbstractFileBean{
 		
 	}
 	
-	public FolderBean(String name, String type, String path, List<AbstractFileBean> files){
+	public FolderBean(String name, String type, String path, List<AbstractFileBean> files, boolean evaluable){
 		this.name = name;
 		this.type = type;
 		this.path = path;
-		this.items = files;		
+		this.items = files;
+		this.evaluable = evaluable;
 	}
 
 	public List<AbstractFileBean> getItems() {

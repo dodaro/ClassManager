@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
 
-public class HomeworkStudentSolvingDAOImpl
+public class HomeworkStudentSolvingDAOImpl implements HomeworkStudentSolvingDAO
 {
 	private DBHandler dbHandler;
 

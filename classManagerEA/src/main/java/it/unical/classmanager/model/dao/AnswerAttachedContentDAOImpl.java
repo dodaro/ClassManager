@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
 
-public class AnswerAttachedContentDAOImpl
+public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 {
 	private DBHandler dbHandler;
 

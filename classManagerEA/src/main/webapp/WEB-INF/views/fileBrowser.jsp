@@ -18,7 +18,9 @@
 <link href="resources/style/fileBrowser.css" rel="stylesheet" />
 
 <script src="resources/script/fileBrowserScript.js"></script>
-<script src="resources/lib/jquery-circle-progress-1.1.3/dist/circle-progress.js"></script>
+<script
+	src="resources/lib/jquery-circle-progress-1.1.3/dist/circle-progress.js"></script>
+<script src="resources/lib/docsViewer/jquery.gdocsviewer.js"></script>
 
 </head>
 
@@ -63,23 +65,39 @@
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
-						
-						<div class="filemanager">
 
+
+						<!-- MODAL -->
+						<div id="visualizer_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Create Event</h4>
+									</div>
+									<div class="modal-body">
+										<a id="visualizer" href=https://www.ieee.org/documents/ieeecopyrightform.doc></a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- browser -->
+						<div class="filemanager">
 							<div class="search">
 								<input type="search" placeholder="Find a file.." />
 							</div>
-
 							<div class="breadcrumbs"></div>
-
 							<ul class="data"></ul>
-
 							<div class="nothingfound">
 								<div class="nofiles"></div>
 								<span>No files here.</span>
 							</div>
-
 						</div>
+						<!-- browser -->
+
 					</div>
 				</div>
 			</div>

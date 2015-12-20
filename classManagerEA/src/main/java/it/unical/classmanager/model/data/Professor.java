@@ -40,19 +40,19 @@ public class Professor extends User implements Serializable  {
 		this.courseClasses = new ArrayList<CourseClass>();
 	}
 
-	public Professor(int id, String username, String password, String role, String firstName, String lastName,
+	public Professor(int id, String username, String password, String confirmPassword, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers) {
-		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, confirmPassword, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = 0;
 		this.communications = new ArrayList<Communications>();
 		this.courseClasses = new ArrayList<CourseClass>();
 	}
 
-	public Professor(int id, String username, String password, String role, String firstName, String lastName,
+	public Professor(int id, String username, String password, String confirmPassword, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers, int identificationNumber, List<Communications> communications, List<CourseClass> courseClasses) {
-		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, confirmPassword, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = identificationNumber;
 		this.communications = communications;
 		this.courseClasses = courseClasses;

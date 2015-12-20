@@ -54,10 +54,10 @@ public class Student extends User implements Serializable  {
 		this.homeworkStudentSolvings = new ArrayList<HomeworkStudentSolving>();
 	}
 
-	public Student(int id, String username, String password, String role, String firstName, String lastName,
+	public Student(int id, String username, String password, String confirmPassword, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers) {
-		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, confirmPassword, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = 0;
 		this.subscriptionDate = null;
 		this.studentExamPartecipations = new ArrayList<StudentExamPartecipation>();
@@ -66,14 +66,14 @@ public class Student extends User implements Serializable  {
 		this.homeworkStudentSolvings = new ArrayList<HomeworkStudentSolving>();
 	}
 
-	public Student(int id, String username, String password, String role, String firstName, String lastName,
+	public Student(int id, String username, String password, String confirmPassword, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers, int identificationNumber, Date subscriptionDate,
 			List<StudentExamPartecipation> studentExamPartecipations,
 			List<AttendanceStudentLecture> attendanceStudentLectures,
 			List<RegistrationStudentClass> registrationStudentClasses,
 			List<HomeworkStudentSolving> homeworkStudentSolvings) {
-		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, confirmPassword, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = identificationNumber;
 		this.subscriptionDate = subscriptionDate;
 		this.studentExamPartecipations = studentExamPartecipations;

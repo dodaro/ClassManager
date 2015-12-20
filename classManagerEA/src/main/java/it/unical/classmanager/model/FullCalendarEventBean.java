@@ -1,7 +1,5 @@
 package it.unical.classmanager.model;
 
-import java.sql.Time;
-
 import it.unical.classmanager.model.data.Event;
 
 public class FullCalendarEventBean{

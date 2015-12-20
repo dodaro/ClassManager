@@ -109,10 +109,11 @@ public class User implements Serializable {
 		this.answers = new ArrayList<Answer>();
 	}	
 	
-	public User(String username, String password, String role, String firstName, String lastName, String email,
+	public User(String username, String password, String confirmPassword, String role, String firstName, String lastName, String email,
 			Date birthDate, String address, List<Event> events, List<Question> questions, List<Answer> answers) {
 		this.username = username;
 		this.password = password;
+		this.confirmPassword = confirmPassword;
 		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
 		this.role = role;
 		this.firstName = firstName;
@@ -128,6 +129,7 @@ public class User implements Serializable {
 	public User(User user) {
 		this.username = user.username;
 		this.password = user.password;
+		this.confirmPassword = user.confirmPassword;
 		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
 		this.role = user.role;
 		this.firstName = user.firstName;
@@ -247,6 +249,6 @@ public class User implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
+		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
 }

@@ -46,7 +46,7 @@ public class HomeController {
 			model.addAttribute("user",user);
 		}
 		
-		
+		//return "redirect:/db_init";
 		return "layout";
 	}
 	

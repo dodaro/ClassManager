@@ -17,7 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="professor")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="username")
 public class Professor extends User implements Serializable  {
 	private static final long serialVersionUID = -8604798186579488323L;
 	
@@ -43,7 +43,7 @@ public class Professor extends User implements Serializable  {
 	public Professor(int id, String username, String password, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers) {
-		super(id, username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = 0;
 		this.communications = new ArrayList<Communications>();
 		this.courseClasses = new ArrayList<CourseClass>();
@@ -52,7 +52,21 @@ public class Professor extends User implements Serializable  {
 	public Professor(int id, String username, String password, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers, int identificationNumber, List<Communications> communications, List<CourseClass> courseClasses) {
-		super();
+		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		this.identificationNumber = identificationNumber;
+		this.communications = communications;
+		this.courseClasses = courseClasses;
+	}
+	
+	public Professor(User user){
+		super(user);
+		this.identificationNumber = 0;
+		this.communications = new ArrayList<Communications>();
+		this.courseClasses = new ArrayList<CourseClass>();
+	}
+	
+	public Professor(User user, int identificationNumber, List<Communications> communications, List<CourseClass> courseClasses){
+		super(user);
 		this.identificationNumber = identificationNumber;
 		this.communications = communications;
 		this.courseClasses = courseClasses;

@@ -17,7 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="student")
-@PrimaryKeyJoinColumn(name="id")  
+@PrimaryKeyJoinColumn(name="username")
 public class Student extends User implements Serializable  {
 	private static final long serialVersionUID = -8091594666965016805L;
 
@@ -57,7 +57,7 @@ public class Student extends User implements Serializable  {
 	public Student(int id, String username, String password, String role, String firstName, String lastName,
 			String email, Date birthDate, String address, List<Event> events, List<Question> questions,
 			List<Answer> answers) {
-		super(id, username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
 		this.identificationNumber = 0;
 		this.subscriptionDate = null;
 		this.studentExamPartecipations = new ArrayList<StudentExamPartecipation>();
@@ -73,7 +73,31 @@ public class Student extends User implements Serializable  {
 			List<AttendanceStudentLecture> attendanceStudentLectures,
 			List<RegistrationStudentClass> registrationStudentClasses,
 			List<HomeworkStudentSolving> homeworkStudentSolvings) {
-		super(id, username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		super(username, password, role, firstName, lastName, email, birthDate, address, events, questions, answers);
+		this.identificationNumber = identificationNumber;
+		this.subscriptionDate = subscriptionDate;
+		this.studentExamPartecipations = studentExamPartecipations;
+		this.attendanceStudentLectures = attendanceStudentLectures;
+		this.registrationStudentClasses = registrationStudentClasses;
+		this.homeworkStudentSolvings = homeworkStudentSolvings;
+	}
+	
+	public Student(User user){
+		super(user);
+		this.identificationNumber = 0;
+		this.subscriptionDate = null;
+		this.studentExamPartecipations = new ArrayList<StudentExamPartecipation>();
+		this.attendanceStudentLectures = new ArrayList<AttendanceStudentLecture>();
+		this.registrationStudentClasses = new ArrayList<RegistrationStudentClass>();
+		this.homeworkStudentSolvings = new ArrayList<HomeworkStudentSolving>();
+	}
+	
+	public Student(User user, int identificationNumber, Date subscriptionDate,
+			List<StudentExamPartecipation> studentExamPartecipations,
+			List<AttendanceStudentLecture> attendanceStudentLectures,
+			List<RegistrationStudentClass> registrationStudentClasses,
+			List<HomeworkStudentSolving> homeworkStudentSolvings){
+		super(user);
 		this.identificationNumber = identificationNumber;
 		this.subscriptionDate = subscriptionDate;
 		this.studentExamPartecipations = studentExamPartecipations;

@@ -1,6 +1,7 @@
 package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,12 +37,6 @@ import it.unical.classmanager.model.PasswordHashing;
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
-	/*
-	@Id
-	@Column(name="id", nullable=false, length=32)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	*/
 	@Id
 	@Column(name="username", nullable=false, length=20)
 	@Size(min=4,max=20)
@@ -99,22 +94,22 @@ public class User implements Serializable {
 	private List<Answer> answers;
 		
 	public User(){
-//		this.username = "";
-//		this.password = "";
-//		this.confirmPassword = "";
-//		this.hash = "";
-//		this.role = "";
-//		this.firstName = "";
-//		this.lastName = "";
-//		this.email = "";
-//		this.birthDate = null;
-//		this.address = null;
-//		this.events = new ArrayList<Event>();
-//		this.questions = new ArrayList<Question>();
-//		this.answers = new ArrayList<Answer>();
+		this.username = "";
+		this.password = "";
+		this.confirmPassword = "";
+		this.hash = "";
+		this.role = "";
+		this.firstName = "";
+		this.lastName = "";
+		this.email = "";
+		this.birthDate = null;
+		this.address = null;
+		this.events = new ArrayList<Event>();
+		this.questions = new ArrayList<Question>();
+		this.answers = new ArrayList<Answer>();
 	}	
 	
-	public User(int id, String username, String password, String role, String firstName, String lastName, String email,
+	public User(String username, String password, String role, String firstName, String lastName, String email,
 			Date birthDate, String address, List<Event> events, List<Question> questions, List<Answer> answers) {
 		this.username = username;
 		this.password = password;
@@ -128,6 +123,21 @@ public class User implements Serializable {
 		this.events = events;
 		this.questions = questions;
 		this.answers = answers;
+	}
+	
+	public User(User user) {
+		this.username = user.username;
+		this.password = user.password;
+		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
+		this.role = user.role;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.email = user.email;
+		this.birthDate = user.birthDate;
+		this.address = user.address;
+		this.events = new ArrayList<Event>(user.events);
+		this.questions = new ArrayList<Question>(user.questions);
+		this.answers = new ArrayList<Answer>(user.answers);
 	}
 
 	public String getUsername() {
@@ -239,5 +249,4 @@ public class User implements Serializable {
 	public String toString() {
 		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
-
 }

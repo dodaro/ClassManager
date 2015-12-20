@@ -6,6 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 public class UserDAOImpl implements UserDAO {
@@ -27,6 +29,16 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void create(User user){
 		this.dbHandler.create(user);
+	}
+	
+	@Override
+	public void create(Professor professor){
+		this.dbHandler.create(professor);
+	}
+	
+	@Override
+	public void create(Student student) {
+		this.dbHandler.create(student);		
 	}
 
 	@Override

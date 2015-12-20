@@ -73,11 +73,16 @@
 								<!-- Modal content-->
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title">Create Event</h4>
+										<h4 id="fileTitle_model" class="modal-title"></h4>
 									</div>
 									<div class="modal-body">
-										<a id="visualizer" href=https://www.ieee.org/documents/ieeecopyrightform.doc></a>
+										<a id="visualizer" href="#"></a>
+									</div>
+									<div class="modal-footer">
+										<button id="download_btn_modal" type="button" class="btn btn-default"
+											data-dismiss="modal">Download</button>
+										<button id="delete_btn_modal" type="button" class="btn btn-default"
+											data-dismiss="modal">Delete</button>
 									</div>
 								</div>
 							</div>

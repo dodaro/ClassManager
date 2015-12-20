@@ -6,7 +6,7 @@ $(function(){
 
 	// Start by fetching the file data from scan.php with an AJAX request
 
-	$.getJSON('/files?dir=root',function(data) {
+	$.getJSON('/contents?dir=root',function(data) {
 
 		var response = [data],
 		currentPath = '',
@@ -319,15 +319,15 @@ $(function(){
 						//TODO CSS PROGRESS
 						$(folder).append("<div class=circle  data-size=60><div class='.score_label'></div></div>");
 						$('.circle').circleProgress({
-						    value: 0.30,
-					        size: 80,
-					        thickness: 20,
-					        fill: {
-					            gradient: ["red", "orange"]
-					        }
+							value: 0.30,
+							size: 80,
+							thickness: 20,
+							fill: {
+								gradient: ["red", "orange"]
+							}
 						}).on('circle-animation-progress', function(event, progress) {
 							var score = $(this).circleProgress('value');
-						    $(this).find('div').html(score*100);
+							$(this).find('div').html(score*100);
 						});
 					}
 
@@ -350,11 +350,13 @@ $(function(){
 
 					var file = $('<li class="files"><a path="'+ f.path+'" title="'+ f.path +'" class="files visualizable">'+icon+'<span class="name">'+ name +'</span> <span class="details">'+fileSize+'</span></a></li>');
 					file.appendTo(fileList);
-					
+
 					$(".visualizable").click(function(){
-						
+
+						var path = $(this).attr("path");
+						$("#visualizer").attr("href", "download?path=" + path);
 						$('#visualizer_modal').modal('show');
-						$("#visualizer").gdocsViewer();
+						$("#visualizer").gdocsViewer({ width: '100%', height: '100%' });
 						event.preventDefault();
 					});
 				});
@@ -417,5 +419,37 @@ $(function(){
 			return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 		}
 
+	});
+});
+
+/**
+ * called when the download button is clicked
+ */
+$(document).ready(function(){
+
+	$("#download_btn_modal").click(function(){
+		var url = $("#visualizer").attr("href");
+		var blob = new Blob([url]);
+		var evt = document.createEvent("HTMLEvents");
+		evt.initEvent("click");
+		$("<a>", {
+			download: url,
+			href: webkitURL.createObjectURL(blob)
+		}).get(0).dispatchEvent(evt);
+	});
+});
+
+/**
+ * called when the download button is clicked
+ */
+$(document).ready(function(){
+
+	$("#delete_btn_modal").click(function(){
+		var url = $("#visualizer").attr("href");
+		$.get( "/contents/delete", {"path" : url}, function(data){
+			
+			if(data == true)
+				window.location.replace("fileBrowser");
+		});	
 	});
 });

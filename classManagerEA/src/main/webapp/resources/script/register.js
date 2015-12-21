@@ -1,5 +1,12 @@
 $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+    	changeYear: true,
+    	dateFormat: "dd/mm/yy",
+    	yearRange: "-100:+100",
+    	minDate: "-100y",
+    	maxDate: "-18y",
+    	
+    });
     
     $("#register-form").submit(function(event) {
 		event.preventDefault();
@@ -12,7 +19,7 @@ $(function() {
 	        delete data["undefined"];
 		});
 		
-		data["birthdate"] = $("#datepicker").datepicker( 'getDate' );
+		//data["birthdate"] = $("#datepicker").datepicker( 'getDate' );
 		
 		console.log(data);
 		

@@ -25,15 +25,20 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import it.unical.classmanager.model.FieldMatch;
+import it.unical.classmanager.model.MaxDate;
 import it.unical.classmanager.model.PasswordHashing;
 
 @Entity
 @Table(name ="user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @FieldMatch.List({
-    @FieldMatch(first = "password", second = "confirmPassword",message="ciao"),
+    @FieldMatch(first = "password", second = "confirmPassword"),
 }) 
+
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
@@ -72,8 +77,10 @@ public class User implements Serializable {
 	private String email;
 	
 	@Column(name="birthDate", nullable=false)
+	@MaxDate
 	@NotNull(message="La data di nascita non è stata inserita.")
 	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	@Past()	
 	private Date birthDate;
 	

@@ -150,3 +150,7 @@ a:hover.nav-bar-button
 {
     width: 70%;
 }
+
+.modal{
+    overflow-y: scroll
+}

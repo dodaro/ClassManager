@@ -108,8 +108,8 @@ public class FullCalendarEventBean{
 		toReturn.setId(event.getId());
 		toReturn.setTitle(event.getTitle());
 		toReturn.setDescription(event.getDescription());
-		toReturn.setStart(event.getStartDate());
-		toReturn.setEnd(event.getEndDate());
+		toReturn.setStart(event.getStartDate().toString());
+		toReturn.setEnd(event.getEndDate().toString());
 		toReturn.setPlace(event.getPlace());
 		toReturn.setUsername(event.getUser().getUsername());
 		toReturn.setColor(event.getColor());

@@ -2,6 +2,7 @@ package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +31,10 @@ public class Event implements Serializable  {
 	private String description;
 		
 	@Column(name="startDate", nullable=false)
-	private String startDate;
+	private Date startDate;
 	
 	@Column(name="endDate", nullable=false)
-	private String endDate;
+	private Date endDate;
 
 	@Column(name="place", nullable=true, length=32)
 	private String place;
@@ -56,8 +57,8 @@ public class Event implements Serializable  {
 		this.id = 0;
 		this.title = "";
 		this.description = "";
-		this.startDate = null;
-		this.endDate = null;
+		this.setStartDate(null);
+		this.setEndDate(null);
 		this.place = "";
 		this.hourBegin = null;
 		this.hourEnd = null;
@@ -65,18 +66,18 @@ public class Event implements Serializable  {
 		this.color = null;
 	}
 
-	/*public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
+	public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
 			Time hourEnd, User user) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.start = startDate;
-		this.end = endDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.place = place;
 		this.hourBegin = hourBegin;
 		this.hourEnd = hourEnd;
 		this.user = user;
-	}*/
+	}
 
 	public int getId() {
 		return id;
@@ -102,21 +103,6 @@ public class Event implements Serializable  {
 		this.description = description;
 	}
 
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStart(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
 
 	public String getPlace() {
 		return place;
@@ -156,6 +142,22 @@ public class Event implements Serializable  {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

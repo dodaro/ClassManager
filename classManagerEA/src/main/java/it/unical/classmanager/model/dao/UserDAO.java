@@ -9,8 +9,6 @@ import it.unical.classmanager.model.data.User;
 public interface UserDAO {
 
 	public void create(User user);
-	public void create(Professor professor);
-	public void create(Student student);
 
 	public void update(User user);
 
@@ -21,6 +19,10 @@ public interface UserDAO {
 	public int numberOfUsers();
 	
 	public List<User> getAllUsers();
+
+	public List<Student> getAllStudents();
+
+	public List<Professor> getAllProfessors();
 	
 	public User get(String username);
 

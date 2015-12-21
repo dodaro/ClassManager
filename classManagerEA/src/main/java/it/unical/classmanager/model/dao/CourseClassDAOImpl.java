@@ -58,18 +58,13 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CourseClass> getAllCourseClassess(){
+	@Override
+	public List<CourseClass> getAllCourseClasses() {
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<CourseClass> courseClass = 
 				session.createQuery("FROM CourseClass").list();
 		session.close();
 		return courseClass;
-	}
-
-	@Override
-	public List<CourseClass> getAllCourseClasses() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

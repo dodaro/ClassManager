@@ -26,7 +26,7 @@ public class CourseClass implements Serializable  {
 	@Column(name="id", nullable=false, length=32)
 	private int id;
 	
-	@Column(name="name", nullable=false, length=32)
+	@Column(name="name", nullable=false, length=64)
 	private String name;
 	
 	@Column(name="cfu", nullable=false)
@@ -35,7 +35,7 @@ public class CourseClass implements Serializable  {
 	@Column(name="activationDate", nullable=false)
 	private Date activationDate;
 
-	@Column(name="endDate", nullable=false)
+	@Column(name="endDate", nullable=true)
 	private Date endDate;
 
 	@Column(name="referenceYear", nullable=false)

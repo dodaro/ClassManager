@@ -35,7 +35,7 @@ public class Exam implements Serializable  {
 	@Column(name="date", nullable=false)
 	private Date date;
 	
-	@Column(name="tipology", nullable=false, length=16)
+	@Column(name="tipology", nullable=false, length=32)
 	private String tipology;
 	
 	//	Foreign key section

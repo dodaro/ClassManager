@@ -1,9 +1,5 @@
 package it.unical.classmanager.utils.enumative;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import it.unical.classmanager.utils.Terminal;
 
 /**

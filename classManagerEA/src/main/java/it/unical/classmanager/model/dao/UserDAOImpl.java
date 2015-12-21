@@ -6,14 +6,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 public class UserDAOImpl implements UserDAO {
 
-	
-	/**
-	 * Luigi, parametro privato con setters and getters leggi anche il root context
-	 */
 	private DBHandler dbHandler;
 	
 	public void setDbHandler(DBHandler dbHandler) {
@@ -62,6 +60,24 @@ public class UserDAOImpl implements UserDAO {
 		List<User> users = session.createQuery("FROM User").list();
 		session.close();
 		return users;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Student> getAllStudents() {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<Student> students = session.createQuery("FROM Student").list();
+		session.close();
+		return students;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Professor> getAllProfessors() {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		List<Professor> professors = session.createQuery("FROM Professor").list();
+		session.close();
+		return professors;
 	}
 	
 	@Override

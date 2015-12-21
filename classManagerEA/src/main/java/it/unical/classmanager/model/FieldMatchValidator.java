@@ -19,7 +19,8 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
     }
     
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean isValid(final Object value, final ConstraintValidatorContext context)
     {
     	boolean toReturn = false;

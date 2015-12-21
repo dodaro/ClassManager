@@ -19,7 +19,7 @@
 <script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <script src="resources/script/nav-bar.js"></script>
 <script type="text/javascript" src="resources/script/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="resources/script/forum.js"></script>
+<script type="text/javascript" src="resources/script/forum/insertAnswer.js"></script>
 </head>
 
 <body>

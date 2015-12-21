@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers;
+package it.unical.classmanager.controllers.forum;
 
 import java.util.Locale;
 
@@ -21,20 +21,20 @@ import it.unical.classmanager.utils.enumative.EnvironmentEnum;
  * Handles requests for the forum page.
  */
 @Controller
-public class ForumController {
+public class InsertAnswerController {
 	
 	@Autowired
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/forum", method = RequestMethod.GET)
+	@RequestMapping(value = "/insertAnswer", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		
 		String content = initQuestion();
 		model.addAttribute("content", content);
 			
-		return "forum";
+		return "forum/insertAnswer";
 	}
 	
 	private String initQuestion() {

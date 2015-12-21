@@ -2,6 +2,8 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import it.unical.classmanager.model.data.Exam;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.StudentExamPartecipation;
 
 public interface StudentExamPartecipationDAO {
@@ -18,4 +20,6 @@ public interface StudentExamPartecipationDAO {
 	public int numberOfStudentExamPartecipations();
 
 	public List<StudentExamPartecipation> getAllStudentExamPartecipations();
+	
+	public List<StudentExamPartecipation> getPartecipationBy(Student student, Exam exam);
 }

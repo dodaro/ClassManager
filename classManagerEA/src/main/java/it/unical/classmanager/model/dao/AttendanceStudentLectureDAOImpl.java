@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.AttendanceStudentLecture;
 
-public class AttendanceStudentLectureDAOImpl
+public class AttendanceStudentLectureDAOImpl implements AttendanceStudentLectureDAO
 {
 	private DBHandler dbHandler;
 

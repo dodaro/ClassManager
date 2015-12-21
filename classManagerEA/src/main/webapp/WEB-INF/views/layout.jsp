@@ -37,14 +37,15 @@
 	  			</a>
 			</div>			
 			<div class="navbar-header pull-right">
-            	<c:if test="${empty user}">
+        		<a class="nav-bar-button logout" href="./db_init"><span class="glyphicon glyphicon-log-out"></span>InitDB</a>
+				<c:if test="${empty user}">
 <!--             		<button type="button" class="btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
             		
             	
            
     				<a id="login-button" class="nav-bar-button login" href="#"><span class="glyphicon glyphicon-log-out" ></span>Login</a>
     				<a class="nav-bar-button logout" href="aldo"><span class="glyphicon glyphicon-log-out"></span>Aldo Login</a>
-				</c:if>
+    			</c:if>
 				<c:if test="${not empty user}">
 					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span><spring:message code="welcome.springmvc" text="default text" /> ${user}</a>
     				<a class="nav-bar-button logout" href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
@@ -72,7 +73,7 @@
 						    <a href="#"><span class="glyphicon glyphicon-list"></span> Discussions</a>
 						</li>
 						<li>
-						    <a href="#"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
+						    <a href="./statistics"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
 						</li>
 					</ul>
 				</div>

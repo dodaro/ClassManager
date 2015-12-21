@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Departement;
 
-public class DepartementDAOImpl
+public class DepartementDAOImpl implements DepartementDAO
 {
 	private DBHandler dbHandler;
 

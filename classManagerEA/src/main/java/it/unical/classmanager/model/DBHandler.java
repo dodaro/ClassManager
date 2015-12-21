@@ -7,8 +7,7 @@ import org.hibernate.Transaction;
 public class DBHandler {
 	
 	private SessionFactory sessionFactory;
-	
-	
+		
 	private static enum Operation {
 		CREATE, UPDATE, DELETE
 	};

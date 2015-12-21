@@ -14,12 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.model.PasswordHashing;
-import it.unical.classmanager.model.UserLogin;
-import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.dao.UserDAOImpl;
-import it.unical.classmanager.model.data.User;
-
 /**
  * Handles requests for the application home page.
  */

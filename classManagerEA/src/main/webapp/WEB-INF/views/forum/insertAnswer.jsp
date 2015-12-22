@@ -59,7 +59,7 @@
 				</div>
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
-				<div class="row row-content">
+				<div class="row row-content" style="background-color: #E6E6E6">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						
 						<div class="row">
@@ -67,21 +67,22 @@
 								<div class="panel panel-warning">
 								  <div class="panel-heading">Question preview</div>
 								  <div class="panel-body">
-								    ${content}
+								    ${question}
 								  </div>
 								</div>
 							</div>
 							
-							<div id="responseArea" class="col-md-12">
-								<form>
+							<div id="answerArea" class="col-md-12">
+								<form:form commandName="answer" accept-charset="utf-8">
 									<hr />
-									<h3 style="margin-left: 10px;">Your Answer</h3>
+									<h3 style="margin-left: 10px;">
+										Your Answer
+										<input class="btn btn-primary" type="submit" value="send answer" >
+									</h3>
 						        	<div id="area">
-							            <textarea id="textEditor" rows="10" cols="80">
-							                This is my textarea to be replaced with CKEditor.
-							            </textarea>
+							            <form:textarea path="description" id="textEditor" rows="10" cols="80"></form:textarea>
 						        	</div>
-						        </form>
+						        </form:form>
 							</div>						
 						</div>
 						

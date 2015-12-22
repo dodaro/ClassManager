@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
+import it.unical.classmanager.model.data.Answer;
 import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 /**
@@ -28,14 +29,34 @@ public class InsertAnswerController {
 	
 	
 	@RequestMapping(value = "/insertAnswer", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String getQuestion(Locale locale, Model model) {
 		
 		
-		String content = initQuestion();
-		model.addAttribute("content", content);
+		String question = initQuestion();
+		model.addAttribute("question", question);
+		
+		//risposta a spregio
+		Answer answer = new Answer();
+		answer.setDescription("<p>scrivi please...</p>");
+		model.addAttribute("answer", answer);
 			
 		return "forum/insertAnswer";
 	}
+	
+	
+	@RequestMapping(value = "/insertAnswer", method = RequestMethod.POST)
+	public String getAnswer(Locale locale, Model model, @ModelAttribute("answer") Answer answer) {
+		
+		
+		String question = initQuestion();
+		model.addAttribute("question", question);
+		model.addAttribute("answer", answer);
+		
+		System.out.println(answer.getDescription());
+			
+		return "forum/insertAnswer";
+	}
+	
 	
 	private String initQuestion() {
 		return "<h3><b>Java jdbc:mysql get client ( java.exe ) Port to Database in the source code</b></h3>\n"

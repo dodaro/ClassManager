@@ -98,6 +98,18 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsersByLastName(String lastName) {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		String queryString = "FROM User WHERE lower(lastName) like :lastName";
+		Query query = session.createQuery(queryString);
+		query.setParameter("lastName",  "%" + lastName + "%");
+		List<User> users = query.list();
+		session.close();
+		return users;
+	}
+	
 }
 
 

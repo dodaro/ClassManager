@@ -7,7 +7,7 @@
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Class Manager</title>
+	<title>Users</title>
 	<script src="resources/lib/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/lib/jquery-ui/jquery-ui.js"></script>
 	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>	
@@ -20,6 +20,7 @@
 	
 	<script src="resources/script/nav-bar.js"></script>
 	<script src="resources/script/layout.js"></script>
+	<script src="resources/script/users_list.js"></script>
 </head>
 
 <body>
@@ -51,7 +52,7 @@
     				<a class="nav-bar-button logout" href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
 				</c:if>
 				<c:if test="${not empty user && role == 'admin' }">
-					<a class="nav-bar-button logout" href="userslist"><span class="glyphicon glyphicon-log-out">User List</a>
+					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out">User List</a>
 				</c:if>
             </div>
 	  	</div>
@@ -82,37 +83,48 @@
 				</div>
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
-				<div class="row row-content">
-					<div class="col-sm-12 col-md-12 col-lg-12">
-						<h3>Loren Ipsum</h3>
-						<p>
-							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
-						</p>					
-					</div>
-				</div>
-				<div class="row row-content">
-					<div class="col-sm-6 col-md-6 col-lg-6">
-						<h3>Loren Ipsum</h3>
-							<div style="text-align: center;margin-bottom:20px">
-<!-- 								<iframe width="420" height="315" src="https://www.youtube.com/embed/kULdfetRDww?autoplay=0" frameborder="0" allowfullscreen></iframe><br> -->
-							</div>
-							<div style="text-align:center">
-								<h3><a href="" target="_blank">NON DIMENTICHIAMOLI</a></h3>
-							</div>
-						<p>
-							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
-						</p>					
-					</div>
-					<div class="col-sm-6 col-md-6 col-lg-6">
-						<h3>Loren Ipsum</h3>
-						<div style="text-align:center;margin-bottom:20px">
-<!-- 							<img src="https://avatars1.githubusercontent.com/u/2989586?v=3&s=460"/> -->
-						</div>
-						<p>
-							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
-						</p>					
-					</div>
-				</div>
+				<h3>Users List</h3>
+				<form class="form-inline" action="searchusers" method="POST">
+				  <div class="form-group">
+				    <label for="lastname"><spring:message code="message.lastName" text="default text"/></label>
+				    <input type="text" class="form-control" name="lastname" placeholder="Rossi">
+				  	<button type="submit" class="btn btn-default">Search</button>
+				    <c:if test="${not empty inputError}">
+				    	<span class="help-block">${inputError}</span>
+				    	<script>$(".form-group").addClass("has-error")</script>
+				    </c:if> 
+				  </div>
+				    
+				</form>
+				
+				<table class="table table-striped">
+					<thead>
+					      <tr>
+					        <th>User</th>
+					        <th><spring:message code="message.firstName" text="default text" /> </th>
+					        <th><spring:message code="message.lastName" text="default text" /></th>
+					        <th>Role</th>
+					        <th>Action</th>
+					      </tr>
+    				</thead>
+    				<tbody>
+    					<c:forEach var="user" items="${users}">
+							<tr>
+								<td class="user">${user.username}</td>
+								<td class="firstname">${user.firstName}</td>
+								<td class="lastname">${user.lastName}</td>
+								<td class="role">${user.role}</td>
+								<td><button type="submit" class="btn btn-danger"><spring:message code="message.delete" text="default text"/></button>
+								<c:if test="${user.role == 'Student'}">
+									<button type="submit" class="btn btn-success"><spring:message code="message.professor" text="default text"/></button>
+								</c:if>
+								
+								</td>
+							</tr>
+						</c:forEach>
+    				</tbody>
+				</table>
+				
 			</div>
 		</div>
 	</div>

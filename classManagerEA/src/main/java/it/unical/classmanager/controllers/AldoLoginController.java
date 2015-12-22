@@ -47,7 +47,7 @@ public class AldoLoginController {
 		user.setFirstName("aldo");
 		user.setLastName("aldo");
 		
-		Calendar date = new GregorianCalendar(2011, Calendar.JULY, 3);
+		Calendar date = new GregorianCalendar(1996, Calendar.JULY, 3);
 	    date.add(Calendar.DAY_OF_MONTH, -7);
 	    
 		user.setBirthDate(date.getTime());
@@ -55,9 +55,11 @@ public class AldoLoginController {
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
 		user.setHash(user.getPassword());
+		user.setRole("admin");
 		
 		userDao.create(user);
 		request.getSession().setAttribute("loggedIn",username);
+		request.getSession().setAttribute("role",user.getRole());
 		return "redirect:/";
 			
 	}

@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -27,28 +25,23 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.deser.std.DateDeserializers.DateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import it.unical.classmanager.controllers.CustomDateDeserializer;
 import it.unical.classmanager.model.FieldMatch;
+import it.unical.classmanager.model.MaxDate;
 import it.unical.classmanager.model.PasswordHashing;
 
 @Entity
 @Table(name ="user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @FieldMatch.List({
-    @FieldMatch(first = "password", second = "confirmPassword",message="ciao"),
+    @FieldMatch(first = "password", second = "confirmPassword"),
 }) 
+
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
-	/*
-	@Id
-	@Column(name="id", nullable=false, length=32)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	*/
 	@Id
 	@Column(name="username", nullable=false, length=20)
 	@Size(min=4,max=20)
@@ -84,8 +77,10 @@ public class User implements Serializable {
 	private String email;
 	
 	@Column(name="birthDate", nullable=false)
+	@MaxDate
 	@NotNull(message="La data di nascita non è stata inserita.")
 	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	@Past()	
 	private Date birthDate;
 	
@@ -106,25 +101,26 @@ public class User implements Serializable {
 	private List<Answer> answers;
 		
 	public User(){
-//		this.username = "";
-//		this.password = "";
-//		this.confirmPassword = "";
-//		this.hash = "";
-//		this.role = "";
-//		this.firstName = "";
-//		this.lastName = "";
-//		this.email = "";
-//		this.birthDate = null;
-//		this.address = null;
-//		this.events = new ArrayList<Event>();
-//		this.questions = new ArrayList<Question>();
-//		this.answers = new ArrayList<Answer>();
+		this.username = "";
+		this.password = "";
+		this.confirmPassword = "";
+		this.hash = "";
+		this.role = "";
+		this.firstName = "";
+		this.lastName = "";
+		this.email = "";
+		this.birthDate = null;
+		this.address = null;
+		this.events = new ArrayList<Event>();
+		this.questions = new ArrayList<Question>();
+		this.answers = new ArrayList<Answer>();
 	}	
 	
-	public User(int id, String username, String password, String role, String firstName, String lastName, String email,
+	public User(String username, String password, String confirmPassword, String role, String firstName, String lastName, String email,
 			Date birthDate, String address, List<Event> events, List<Question> questions, List<Answer> answers) {
 		this.username = username;
 		this.password = password;
+		this.confirmPassword = confirmPassword;
 		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
 		this.role = role;
 		this.firstName = firstName;
@@ -135,6 +131,22 @@ public class User implements Serializable {
 		this.events = events;
 		this.questions = questions;
 		this.answers = answers;
+	}
+	
+	public User(User user) {
+		this.username = user.username;
+		this.password = user.password;
+		this.confirmPassword = user.confirmPassword;
+		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
+		this.role = user.role;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.email = user.email;
+		this.birthDate = user.birthDate;
+		this.address = user.address;
+		this.events = new ArrayList<Event>(user.events);
+		this.questions = new ArrayList<Question>(user.questions);
+		this.answers = new ArrayList<Answer>(user.answers);
 	}
 
 	public String getUsername() {
@@ -244,7 +256,6 @@ public class User implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
+		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
-
 }

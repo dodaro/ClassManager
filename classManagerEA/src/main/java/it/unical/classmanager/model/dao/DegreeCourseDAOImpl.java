@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.DegreeCourse;
 
-public class DegreeCourseDAOImpl
+public class DegreeCourseDAOImpl implements DegreeCourseDAO
 {
 	private DBHandler dbHandler;
 

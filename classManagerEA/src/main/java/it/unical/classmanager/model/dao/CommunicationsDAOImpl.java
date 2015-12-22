@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Communications;
 
-public class CommunicationsDAOImpl
+public class CommunicationsDAOImpl implements CommunicationsDAO
 {
 	private DBHandler dbHandler;
 

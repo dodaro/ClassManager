@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Material;
 
-public class MaterialDAOImpl
+public class MaterialDAOImpl implements MaterialDAO
 {
 	private DBHandler dbHandler;
 

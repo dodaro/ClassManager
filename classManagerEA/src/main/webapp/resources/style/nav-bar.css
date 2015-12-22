@@ -79,6 +79,7 @@ a:hover.nav-bar-button
 {    
     background-color: #404040;
     color: black;  
+    z-index: 1;
 }
 .sidebar-nav 
 {
@@ -149,4 +150,8 @@ a:hover.nav-bar-button
 .sidebar-mobile.active
 {
     width: 70%;
+}
+
+.modal{
+    overflow-y: scroll
 }

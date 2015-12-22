@@ -128,7 +128,6 @@
 		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
-
 	<!-- DATABASE -->
 
 	<bean id="transactionManager"

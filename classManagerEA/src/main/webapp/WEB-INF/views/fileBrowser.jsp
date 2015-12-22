@@ -66,6 +66,26 @@
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 
+						<!-- SET SCORE MODAL -->
+						<div id="scoreUpdate_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Update Score</h4>
+									</div>
+									<div class="modal-body">
+										<input id="oldScore_modal" type="number" min="0" max="30" required>
+									</div>
+									<div class="modal-footer">
+										<button id="score_confirm" type="button"
+											class="btn btn-success">Update Score</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<!-- MODAL -->
 						<div id="visualizer_modal" class="modal fade" role="dialog">
@@ -79,10 +99,10 @@
 										<a id="visualizer" href="#"></a>
 									</div>
 									<div class="modal-footer">
-										<button id="download_btn_modal" type="button" class="btn btn-default"
-											data-dismiss="modal">Download</button>
-										<button id="delete_btn_modal" type="button" class="btn btn-default"
-											data-dismiss="modal">Delete</button>
+										<button id="download_btn_modal" type="button"
+											class="btn btn-default" data-dismiss="modal">Download</button>
+										<button id="delete_btn_modal" type="button"
+											class="btn btn-default" data-dismiss="modal">Delete</button>
 									</div>
 								</div>
 							</div>

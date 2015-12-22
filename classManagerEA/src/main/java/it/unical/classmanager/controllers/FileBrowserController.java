@@ -37,7 +37,7 @@ import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 
 /**
- * Handles requests for the application home page.
+ * Is called when is necessary retrieve files starting from a root
  */
 @Controller
 public class FileBrowserController {
@@ -46,28 +46,31 @@ public class FileBrowserController {
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(FileBrowserController.class);
 
-	private static final String DIRECTORY = "files";
-
 	/**
 	 * Manages the request related to the file browser
 	 */
 	@RequestMapping(value = "/fileBrowser", method = RequestMethod.GET)
 	public String getFileBrowserPage(Model model) {
 
-		//List<String> files = new ArrayList<String>();
-
-
 		logger.info("getFiles");
 		return "fileBrowser";
 
 	}
 
+	/**
+	 * This method is called to construct a three of files, starting from a root
+	 * 
+	 * @param rootDir : starting from this folder a tree of files is build and returned as a JSON
+	 * @return JSON
+	 */
 	@RequestMapping(value = "/contents", method = RequestMethod.GET)
 	public @ResponseBody String getFiles(Model model, @RequestParam("dir") String rootDir) {
 
-		File folder = new File(DIRECTORY);
+		//TODO Controllare il proprietario della cartella
+		File folder = new File(rootDir);
 		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
 
+		
 		addTree(folder, files, false);
 		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files, false);
 
@@ -77,12 +80,14 @@ public class FileBrowserController {
 
 	}
 
-	/*
-	 * Download a file 
+	/**
+	 * This method allows the user to download the file contained in the parameter "path"
+	 * @param path : is the parameter of the GET request, that is the path of the file to dowload
 	 */ 
 	@RequestMapping(value="/contents/download", method = RequestMethod.GET)
 	public void downloadFile(HttpServletResponse response, @RequestParam("path") String path) throws IOException {
 
+		//TODO Security check
 		File file = null;
 
 		String workingDir = System.getProperty("user.dir");
@@ -126,6 +131,10 @@ public class FileBrowserController {
 
 
 	//TODO database connection. Delete returns false
+	/**
+	 * This method is called when a particular file needs to be deleted
+	 * @params path : the complete path of the file to delete
+	 */
 	@RequestMapping(value = "/contents/delete", method = RequestMethod.GET)
 	public @ResponseBody String deleteFile(Model model, @RequestParam("path") String path) {
 
@@ -148,11 +157,18 @@ public class FileBrowserController {
 
 	}
 
-	static void addTree(File folder, List<AbstractFileBean> files, boolean evaluable) {
+	/**
+	 * This method create recursively a tree of files
+	 * 
+	 * @param folder : is the root folder
+	 * @param files	: is the list of the files contained in {@link @param folder}
+	 * @param evaluable : indicates if the file is evaluable or not and if it has a score
+	 */
+	private void addTree(File folder, List<AbstractFileBean> files, boolean evaluable) {
 
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
+			if (listOfFiles[i].isFile() && !listOfFiles[i].isHidden()) {
 
 				FileBean file = FileBean.toFileBean(listOfFiles[i]);
 				files.add(file);

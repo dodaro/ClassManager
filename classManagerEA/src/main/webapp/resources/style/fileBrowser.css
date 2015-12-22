@@ -165,7 +165,7 @@ body {
 .filemanager .data li {
 	border-radius: 3px;
 	background-color: #373743;
-	width: 100%;
+	width: 80%;
 	height: 118px;
 	list-style-type: none;
 	margin: 10px;
@@ -188,7 +188,7 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: 80%;
 	height: 100%;
 }
 
@@ -478,7 +478,22 @@ body {
 -----------------------------*/
 
 .circle {
-	margin-left:80%;
-	margin-top:2%;
-	z-index: 100;
+
+  position: relative;
+  text-align: center;
+  float:right;
+}
+
+.circle .score_label {
+  font: 11px/1 sans-serif;
+  color: #aaa;
+}
+
+
+.circle:hover {
+	transform: translateY(-8px);
+}
+*/
+.score_label{
+	color: white; !important
 }

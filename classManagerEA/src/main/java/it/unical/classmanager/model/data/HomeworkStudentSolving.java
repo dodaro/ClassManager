@@ -18,6 +18,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+/**
+ * Every time a student upload a file referred to an {@link Homework} an instance of this class is created.
+ */
 @Entity
 @Table(name ="homeworkStudentSolving")
 public class HomeworkStudentSolving implements Serializable  {

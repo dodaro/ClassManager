@@ -224,7 +224,7 @@ public class DBInitializatorController {
 				user.setUsername(username+i);
 				user.setFirstName("ProfAldo_FirstName");
 				user.setLastName("ProfAldo_LastName");
-				user.setRole("Professor");	
+				user.setRole(User.PROFESSOR);	
 				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 						Calendar.getInstance().get(Calendar.YEAR)-ageForProfessor).getTime());
 				user.setEmail("profaldo@profaldo.it");
@@ -248,7 +248,7 @@ public class DBInitializatorController {
 				user.setUsername(username+i);
 				user.setFirstName("Aldo_FirstName");
 				user.setLastName("Aldo_LastName");
-				user.setRole("Student");				    	
+				user.setRole(User.STUDENT);				    	
 				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 						Calendar.getInstance().get(Calendar.YEAR)-ageForStudent).getTime());
 				user.setEmail("studentaldo@profaldo.it");

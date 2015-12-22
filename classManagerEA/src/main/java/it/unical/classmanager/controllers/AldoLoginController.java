@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.FullCalendarEventBean;
+import it.unical.classmanager.model.dao.EventDAO;
+import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
+import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -52,11 +55,20 @@ public class AldoLoginController {
 	    
 		user.setBirthDate(date.getTime());
 		user.setEmail("aldo@aldo.it");
+		user.setRole(User.PROFESSOR);
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
 		user.setHash(user.getPassword());
 		
 		userDao.create(user);
+		
+		
+		EventDAO eventDao = context.getBean("eventDao",EventDAOImpl.class);
+		Date startDate = date.getTime();
+		Date endDate = date.getTime();
+		
+		Event event = new Event(0, "event", "", startDate, endDate, "", null, null, user);
+		eventDao.create(event);
 		request.getSession().setAttribute("loggedIn",username);
 		return "redirect:/";
 			

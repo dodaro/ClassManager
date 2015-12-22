@@ -42,6 +42,9 @@ import it.unical.classmanager.model.PasswordHashing;
 public class User implements Serializable {
 	private static final long serialVersionUID = 7720914354560371125L;
 
+	public final static String PROFESSOR = "Professor";
+	public final static String STUDENT = "Student";
+	
 	@Id
 	@Column(name="username", nullable=false, length=20)
 	@Size(min=4,max=20)

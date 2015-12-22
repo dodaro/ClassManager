@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.AttendanceStudentLecture;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 
 public class LectureDAOImpl implements LectureDAO
@@ -65,6 +67,16 @@ public class LectureDAOImpl implements LectureDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<Lecture> lecture = session.createQuery("FROM Lecture").list();
+		session.close();
+		return lecture;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lecture> getAllLecturesOfACourse(CourseClass course)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<Lecture> lecture = session.createQuery("FROM Lecture WHERE courseClass = :course ").setParameter("course", course).list();
 		session.close();
 		return lecture;
 	}

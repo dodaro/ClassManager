@@ -86,17 +86,21 @@
 							<h3>${lecture.number} ${lecture.topic} - Attendances</h3>
 							<div class="table-responsive">
 								<table class="table">
-									<c:forEach items="${attendanceStudentLectures}" var="asl">
+									<tr>
+										<th>Student</th>
+										<th>Attendence</th>
+									</tr>
+									<c:forEach items="${studentsPresent}" var="student">
 										<tr>
 											<td>
-												<label>${asl.student.username}</label>
+												<label>${student.username}</label>
 											</td>
 											<td>
-												<form:checkbox path="attendanceStudentLectures"	value="${asl.student.username}"	checked="checked" />
+												<form:checkbox path="attendanceStudentLectures"	value="${student.username}"	checked="checked" />
 											</td>
 										</tr>
 									</c:forEach>
-									<c:forEach items="${students}" var="student">
+									<c:forEach items="${studentsNotPresent}" var="student">
 										<tr>
 											<td>
 												<label>${student.username}</label>

@@ -79,6 +79,7 @@ a:hover.nav-bar-button
 {    
     background-color: #404040;
     color: black;  
+    z-index: 1;
 }
 .sidebar-nav 
 {

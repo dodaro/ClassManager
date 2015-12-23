@@ -3,10 +3,36 @@
 <html>
 <head>
 <%@include file="head.jsp"%>
-
 <c:forEach items="${cartList.carts}" var="singleCart">
-${singleCart.cartScript}
+	${singleCart.cartScript}
 </c:forEach>
+
+<script type="text/javascript">
+	$('#totalAvgLectureProfessor').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#totalAvgLectureProfessors').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#noLectureProfessor').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#noLectureProfessors').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#avgLectureProfessor').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#avgLectureProfessors').click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
@@ -34,54 +60,150 @@ ${singleCart.cartScript}
 				<c:if test="${not empty student}">
 					<h1>Student: ${student.username}</h1>
 					<br>
+					<%-- 					<%@include file="statisticsStudent.jsp"%> --%>
 				</c:if>
 				<c:if test="${not empty professor}">
 					<h1>Professor: ${professor.username}</h1>
 					<br>
+					<%-- 					<%@include file="statisticsProfessor.jsp"%> --%>
 				</c:if>
 
-				<div class="row row-content">
-					<div class="panel-group col-sm-12 col-md-12 col-lg-12"
-						id="accordion" role="tablist" aria-multiselectable="true">
-						<c:forEach items="${cartList.carts}" var="singleCart">
-							<div class="panel panel-default">
-								<div class="panel-heading" role="tab"
-									id="heading${singleCart.name}">
-									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse"
-											data-parent="#accordion" href="#collapse${singleCart.name}"
-											aria-expanded="false"
-											aria-controls="collapse${singleCart.name}">
-											${singleCart.name} </a>
-									</h4>
-								</div>
-								<div id="collapse${singleCart.name}"
-									class="panel-collapse collapse in" role="tabpanel"
-									aria-labelledby="heading${singleCart.name}">
-									<div class="panel-body">
-										<div id="${singleCart.idContainer}"></div>
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<br>
+					<div class="col-sm-5 col-md-5 col-lg-5">
+						<div id="idCartContainer1"></div>
+					</div>
+					<div class="panel panel-default col-sm-7 col-md-7 col-lg-7">
+						<div class="panel-heading">
+							<h3 class="panel-title">Negli anni</h3>
+						</div>
+						<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
+							<div class="panel-body">
+								<div>
+									<!-- Nav tabs -->
+									<ul class="nav nav-tabs" role="tablist">
+										<li role="presentation" class="active"><a
+											href="#totalAvgLectureProfessor"
+											aria-controls="totalAvgLectureProfessor" role="tab"
+											data-toggle="tab">Media lezioni per professore </a></li>
+										<li role="presentation"><a
+											href="#totalAvgLectureProfessors"
+											aria-controls="totalAvgLectureProfessors" role="tab"
+											data-toggle="tab"> Media lezioni tra professori</a></li>
+									</ul>
+									<!-- Tab panes -->
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane active"
+											id="totalAvgLectureProfessor">
+											<div id="idCartContainer4"></div>
+										</div>
+										<div role="tabpanel" class="tab-pane"
+											id="totalAvgLectureProfessors">
+											<div id="idCartContainer7"></div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</c:forEach>
+						</div>
 					</div>
-					
-					<div id="container" style="display: none;">
-					<table>
-						<tr>
-							<td>Alpha Angle</td>
-							<td><input id="R0" type="range" min="0" max="45" value="15" />
-								<span id="R0-value" class="value"></span></td>
-						</tr>
-						<tr>
-							<td>Beta Angle</td>
-							<td><input id="R1" type="range" min="0" max="45" value="15" />
-								<span id="R1-value" class="value"></span></td>
-						</tr>
-					</table>
-					</div>
-					
 				</div>
+
+
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
+						<div class="panel-heading">
+							<h3 class="panel-title">Per anno</h3>
+						</div>
+						<div class="panel-body">
+							<div>
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a
+										href="#noLectureProfessor" aria-controls="noLectureProfessor"
+										role="tab" data-toggle="tab">Numero lezioni per professore</a></li>
+									<li role="presentation"><a href="#noLectureProfessors"
+										aria-controls="noLectureProfessors" role="tab"
+										data-toggle="tab"> Numero lezioni tra professori</a></li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active"
+										id="noLectureProfessor">
+										<div id="idCartContainer2"></div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="noLectureProfessors">
+										<div id="idCartContainer5"></div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
+						<div class="panel-heading">
+							<h3 class="panel-title">Per anno</h3>
+						</div>
+						<div class="panel-body">
+							<div>
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a
+										href="#avgLectureProfessor"
+										aria-controls="avgLectureProfessor" role="tab"
+										data-toggle="tab">Media lezioni per professore</a></li>
+									<li role="presentation"><a href="#avgLectureProfessors"
+										aria-controls="avgLectureProfessors" role="tab"
+										data-toggle="tab">Media lezioni tra professori</a></li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active"
+										id="avgLectureProfessor">
+										<div id="idCartContainer3"></div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="avgLectureProfessors">
+										<div id="idCartContainer6"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
+						<div class="panel-heading">
+							<h3 class="panel-title">Homeworks Analysis</h3>
+						</div>
+						<div class="panel-body">
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<div id="idCartContainer8"></div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<div id="idCartContainer9"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
+						<div class="panel-heading">
+							<h3 class="panel-title">Attendances Analysis</h3>
+						</div>
+						<div class="panel-body">
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<div id="idCartContainer10"></div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<div id="idCartContainer11"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

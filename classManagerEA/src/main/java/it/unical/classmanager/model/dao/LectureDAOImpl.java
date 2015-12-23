@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
@@ -65,6 +66,16 @@ public class LectureDAOImpl implements LectureDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<Lecture> lecture = session.createQuery("FROM Lecture").list();
+		session.close();
+		return lecture;
+	}
+
+	@Override
+	public Lecture getLastLectureAdded() {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM Lecture as lecture order by lecture.id DESC");
+		Lecture lecture = (Lecture) query.uniqueResult();
 		session.close();
 		return lecture;
 	}

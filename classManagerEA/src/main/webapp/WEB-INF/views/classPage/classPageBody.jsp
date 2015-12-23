@@ -67,6 +67,7 @@
 									class="form-control" />
 							</div>
 						</div>
+
 						<div class="modal-footer">
 							<button id="modalButton_createEvent" type="submit"
 								class="btn btn-success">Create</button>
@@ -89,6 +90,20 @@
 
 			<div class="row row-content">
 				<div id="createNewClass_btn" class="btn btn-default">Add New</div>
+				<div id="uploadFile_btn" class="btn btn-default">Upload</div>
+				<div id="uploadFile_div">
+					<form id="upload" method="post" action="/uploadFile"
+						enctype="multipart/form-data">
+						<div id="drop">
+							Drop Here <a>Browse</a> 
+							<input type="file" name="file" multiple />
+						</div>
+						<ul>
+							<!-- The file uploads will be shown here -->
+						</ul>
+						<input id="toUpload_input" type="hidden" name="path"/>
+					</form>
+				</div>
 			</div>
 
 			<ul class="data"></ul>

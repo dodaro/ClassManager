@@ -18,4 +18,6 @@ public interface LectureDAO {
 	public int numberOfLectures();
 
 	public List<Lecture> getAllLectures();	
+	
+	public Lecture getLastLectureAdded();
 }

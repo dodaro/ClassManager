@@ -507,7 +507,7 @@ $(document).ready(function(){
 });
 
 /**
- * called when the download button is clicked
+ * called when the delete button is clicked
  */
 $(document).ready(function(){
 

@@ -14,7 +14,7 @@ $(function(){
 	breadcrumbs = $('.breadcrumbs'),
 	fileList = filemanager.find('.data');
 
-	var root = "files"
+	var root = "files/enterpriseApplication/lectures"
 		$.getJSON('/contents?dir=' + root ,function(data) {
 
 			var response = [data],

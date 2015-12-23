@@ -37,6 +37,10 @@ import it.unical.classmanager.model.data.User;
 @Controller
 public class CalendarController {
 
+	private final static String HEADER = "calendar/calendarHeader.jsp";
+	private final static String BODY = "calendar/calendarBody.jsp";
+	
+	
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
@@ -48,8 +52,16 @@ public class CalendarController {
 	public String getCalendar(Model model) {
 
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+		
+		/*
+		 * You can return the layout.jsp setting your custom header and body
+		 * using the parameters "customHeader" and "customBody"
+		 */
+		model.addAttribute("customHeader",CalendarController.HEADER);
+		model.addAttribute("customBody",CalendarController.BODY);
+		
 		logger.info("getCalendar");
-		return "calendar";
+		return "layout";
 
 	}
 

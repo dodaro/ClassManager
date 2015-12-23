@@ -179,5 +179,15 @@ public class CourseClass implements Serializable  {
 	public void setLectures(List<Lecture> lectures) {
 		this.lectures = lectures;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "CourseClass [id=" + id + ", name=" + name + ", cfu=" + cfu + ", activationDate=" + activationDate
+				+ ", endDate=" + endDate + ", referenceYear=" + referenceYear + ", professor=" + professor
+				+ ", degreeCourse=" + degreeCourse + ", exams=" + exams + ", registrationStudentClasses="
+				+ registrationStudentClasses + ", lectures=" + lectures + "]";
+	}
+	
 	
 }

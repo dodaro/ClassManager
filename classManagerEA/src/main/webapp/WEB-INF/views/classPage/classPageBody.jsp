@@ -1,3 +1,5 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 
@@ -44,30 +46,37 @@
 
 		<!-- MODAL -->
 		<div id="createNewClass_modal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 id="fileTitle_model" class="modal-title"></h4>
-					</div>
-
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="eventTitle_create">Title: </label> <input
-								class="form-control" id="eventTitle_create" type="text" /> <label
-								for="eventStart">Start: </label> <input class="form-control"
-								id="eventStart_create" type="text" /> <label for="eventEnd">End:</label>
-							<input class="form-control" id="eventEnd_create" type="text" />
-							<label for="colorPicker">Color:</label>
+			<form:form id="login-form" action="/createClass" method="POST"
+				commandName="lecture" role="form">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 id="fileTitle_model" class="modal-title"></h4>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button id="modalButton_createEvent" type="button" class="btn btn-success">Create</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
 
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="topic">Topic:</label>
+								<form:input type="text" name="topic" path="topic"
+									class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="description">Description:</label>
+								<form:input type="text" name="description" path="description"
+									class="form-control" />
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button id="modalButton_createEvent" type="submit"
+								class="btn btn-success">Create</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
 				</div>
-			</div>
+			</form:form>
 		</div>
 
 		<!-- browser -->

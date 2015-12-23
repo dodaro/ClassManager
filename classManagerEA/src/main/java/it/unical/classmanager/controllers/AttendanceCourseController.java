@@ -38,6 +38,9 @@ import it.unical.classmanager.model.data.Student;
 @Controller
 public class AttendanceCourseController
 {
+	private final static String HEADER = "attendance/attendanceCourseHeader.jsp";
+	private final static String BODY = "attendance/attendanceCourseBody.jsp";
+	
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceLessonController.class);
 
 	@Autowired
@@ -64,7 +67,6 @@ public class AttendanceCourseController
 		{
 			student.setAttendanceStudentLectures(attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfACourse(student, course));
 		}
-		logger.info("" + students.size());
 								
 		// Viene utilizzata casomai il professore intende modificare le presenze di una lezione
 		Lecture lecture = new Lecture();
@@ -74,6 +76,8 @@ public class AttendanceCourseController
 		model.addAttribute("students", students);
 		model.addAttribute("lecture", lecture);		
 		
-		return "attendanceCourse";
+		model.addAttribute("customHeader", AttendanceCourseController.HEADER);
+		model.addAttribute("customBody", AttendanceCourseController.BODY);
+		return "layout";
 	}
 }

@@ -40,6 +40,9 @@ import it.unical.classmanager.model.data.Student;
 @Controller
 public class AttendanceLessonController
 {
+	private final static String HEADER = "attendance/attendanceLessonHeader.jsp";
+	private final static String BODY = "attendance/attendanceLessonBody.jsp";
+	
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceCourseController.class);
 	
 	@Autowired
@@ -73,7 +76,10 @@ public class AttendanceLessonController
 		model.addAttribute("lecture", currentLecture);
 		model.addAttribute("studentsPresent", studentsPresent);
 		model.addAttribute("studentsNotPresent", studentsNotPresent);
-		return "attendanceLesson";
+		
+		model.addAttribute("customHeader", AttendanceLessonController.HEADER);
+		model.addAttribute("customBody", AttendanceLessonController.BODY);
+		return "layout";
 	}
 	
 	@RequestMapping(value = "/attendance", method = RequestMethod.POST)
@@ -108,7 +114,9 @@ public class AttendanceLessonController
 		lectureDAO.update(currentLecture);	
 		
 		// TODO Effettuare l'update della lezione
-		return "attendanceLesson";
+		model.addAttribute("customHeader", AttendanceLessonController.HEADER);
+		model.addAttribute("customBody", AttendanceLessonController.BODY);
+		return "layout";
 	}
 	
 	/**

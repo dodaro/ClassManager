@@ -54,7 +54,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	
 
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>

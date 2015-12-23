@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -84,15 +85,22 @@
 			</div>
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<h3>Users List</h3>
-				<form class="form-inline" action="searchusers" method="POST">
+				<form class="form-inline" action="searchusers" method="GET" role="form">
 				  <div class="form-group">
 				    <label for="lastname"><spring:message code="message.lastName" text="default text"/></label>
-				    <input type="text" class="form-control" name="lastname" placeholder="Rossi">
+				    <input type="text"  class="form-control" name="query" placeholder="Rossi"/>
+				    	<label for="select"><spring:message code="message.usersperpage" text="default text"/></label>
+						  <select class="form-control" name="users">
+						    <option>10</option>
+						    <option>25</option>
+						    <option>50</option>
+						    <option>100</option>
+						  </select>
 				  	<button type="submit" class="btn btn-default">Search</button>
-				    <c:if test="${not empty inputError}">
-				    	<span class="help-block">${inputError}</span>
-				    	<script>$(".form-group").addClass("has-error")</script>
-				    </c:if> 
+				    	<c:if test="${not empty error}" >
+				    		<span class="help-block"><spring:message code="searchField.length.error" text="default text"/></span>
+					    	<script>$(".form-group").addClass("has-error")</script>
+				    	</c:if>
 				  </div>
 				    
 				</form>
@@ -108,7 +116,8 @@
 					      </tr>
     				</thead>
     				<tbody>
-    					<c:forEach var="user" items="${users}">
+    					<c:forEach var="user" items="${users.getPageList()}">
+    						
 							<tr>
 								<td class="user">${user.username}</td>
 								<td class="firstname">${user.firstName}</td>
@@ -124,7 +133,25 @@
 						</c:forEach>
     				</tbody>
 				</table>
-				
+				<nav>
+				  <ul class="pagination">
+				    <li>
+				      <a href="searchusers?nav=prev" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+<!-- 				    <li><a href="#">1</a></li> -->
+<!-- 				    <li><a href="#">2</a></li> -->
+<!-- 				    <li><a href="#">3</a></li> -->
+<!-- 				    <li><a href="#">4</a></li> -->
+<!-- 				    <li><a href="#">5</a></li> -->
+				    <li>
+				      <a href="searchusers?nav=next" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
 			</div>
 		</div>
 	</div>

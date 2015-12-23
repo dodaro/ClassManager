@@ -257,6 +257,6 @@ public class User implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
+		return "[ " + this.username + ", " + hash + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
 }

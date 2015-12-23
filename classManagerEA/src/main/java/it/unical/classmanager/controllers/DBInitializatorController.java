@@ -185,23 +185,23 @@ public class DBInitializatorController {
 
 			dbDegreeCourseDepartmentInit(locale, model, request);
 			dbUserStudentProfessorInit(locale, model, request);
-			dbCourseClassInit(locale, model, request);
-			dbLectureInit(locale, model, request);
-			dbRegistrationStudentClassInit(locale, model, request);
-			dbAttendanceStudentLectureInit(locale, model, request);
-			dbMaterialInit(locale, model, request);
-			dbHomeworkInit(locale, model, request);
-			dbHomeworkStudentSolvingInit(locale, model, request);
-			dbQuestionAnswerInit(locale, model, request);
-			dbExamInit(locale, model, request);
-			dbStudentExamPartecipationInit(locale, model, request);
-			dbEventInit(locale, model, request);
-			dbCommunicationInit(locale, model, request);
+//			dbCourseClassInit(locale, model, request);
+//			dbLectureInit(locale, model, request);
+//			dbRegistrationStudentClassInit(locale, model, request);
+//			dbAttendanceStudentLectureInit(locale, model, request);
+//			dbMaterialInit(locale, model, request);
+//			dbHomeworkInit(locale, model, request);
+//			dbHomeworkStudentSolvingInit(locale, model, request);
+//			dbQuestionAnswerInit(locale, model, request);
+//			dbExamInit(locale, model, request);
+//			dbStudentExamPartecipationInit(locale, model, request);
+//			dbEventInit(locale, model, request);
+//			dbCommunicationInit(locale, model, request);
 			// Attached contents
-			dbQuestionAttachedContentInit(locale, model, request);
-			dbAnswerAttachedContentInit(locale, model, request);
-			dbHomeworkAttachedInit(locale, model, request);
-			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+//			dbQuestionAttachedContentInit(locale, model, request);
+//			dbAnswerAttachedContentInit(locale, model, request);
+//			dbHomeworkAttachedInit(locale, model, request);
+//			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
 
 			initialized = true;
 		} else {
@@ -224,7 +224,7 @@ public class DBInitializatorController {
 				user.setUsername(username+i);
 				user.setFirstName("ProfAldo_FirstName");
 				user.setLastName("ProfAldo_LastName");
-				user.setRole(User.PROFESSOR);	
+				user.setRole("Professor");	
 				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 						Calendar.getInstance().get(Calendar.YEAR)-ageForProfessor).getTime());
 				user.setEmail("profaldo@profaldo.it");
@@ -248,7 +248,7 @@ public class DBInitializatorController {
 				user.setUsername(username+i);
 				user.setFirstName("Aldo_FirstName");
 				user.setLastName("Aldo_LastName");
-				user.setRole(User.STUDENT);				    	
+				user.setRole("Student");				    	
 				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 						Calendar.getInstance().get(Calendar.YEAR)-ageForStudent).getTime());
 				user.setEmail("studentaldo@profaldo.it");

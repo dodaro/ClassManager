@@ -31,15 +31,6 @@ ${singleCart.cartScript}
 			<!-- END SIDEBAR -->
 
 			<div class="col-sm-9 col-md-9 col-lg-10">
-				<c:if test="${not empty student}">
-					<h1>Student: ${student.username}</h1>
-					<br>
-				</c:if>
-				<c:if test="${not empty professor}">
-					<h1>Professor: ${professor.username}</h1>
-					<br>
-				</c:if>
-
 				<div class="row row-content">
 					<div class="panel-group col-sm-12 col-md-12 col-lg-12"
 						id="accordion" role="tablist" aria-multiselectable="true">

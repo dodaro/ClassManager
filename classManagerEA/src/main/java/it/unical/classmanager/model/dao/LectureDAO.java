@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 
 public interface LectureDAO {
@@ -18,4 +19,6 @@ public interface LectureDAO {
 	public int numberOfLectures();
 
 	public List<Lecture> getAllLectures();	
+	
+	public List<Lecture> getAllLecturesOfACourse(CourseClass course);	
 }

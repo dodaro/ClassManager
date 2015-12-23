@@ -98,12 +98,16 @@
 										<td>
 											${student.username}
 										</td>
+										
 										<c:set var="count" value="0" scope="page" />
-										<c:forEach items="${student.attendanceStudentLectures}" var="asl">
+										<c:set var="index" value="0" scope="page" />
+										<c:set var="lecturesArray" value="${student.attendanceStudentLectures}" scope="page" />
+										<c:forEach items="${lectures}" var="lecture">
 											<c:set var="count" value="${count + 1}" scope="page"/>
 											<c:choose>
-											    <c:when test="${asl.lecture.number == count}">					        
-											        <td>v</td>
+											    <c:when test="${lecturesArray[index].lecture.number == count}">					        
+											        <td>v</td>											        
+													<c:set var="index" value="${index + 1}" scope="page"/>
 											    </c:when>
 											    <c:otherwise>
 											    	<td></td>

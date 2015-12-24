@@ -58,27 +58,29 @@ public class StatisticsController {
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
 	
-	if ( username == null ) {			
-	    return "redirect:/";
-	}	
+	return statisticsForStudent(locale, model, request, null);
 	
-	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	User user = userDao.get(username);
-	model.addAttribute("user",user.getUsername());
-	
-	if(user instanceof Student){
-	    logger.info("Student statistics page accessed by "+user.getUsername(), locale);
-	    model.addAttribute("student", (Student)user);
-	    return statisticsForStudent(locale, model, request, (Student)user);
-	    
-	}
-	if(user instanceof Professor){
-	    logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
-	    model.addAttribute("professor", (Professor)user);
-	    return statisticsForProfessor(locale, model, request, (Professor)user);
-	}
-	
-	return "redirect:/";
+	//	if ( username == null ) {			
+	//	    return "redirect:/";
+	//	}	
+	//	
+	//	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
+	//	User user = userDao.get(username);
+	//	model.addAttribute("user",user.getUsername());
+	//	
+	//	if(user instanceof Student){
+	//	    logger.info("Student statistics page accessed by "+user.getUsername(), locale);
+	//	    model.addAttribute("student", (Student)user);
+	//	    return statisticsForStudent(locale, model, request, (Student)user);
+	//	    
+	//	}
+	//	if(user instanceof Professor){
+	//	    logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
+	//	    model.addAttribute("professor", (Professor)user);
+	//	    return statisticsForProfessor(locale, model, request, (Professor)user);
+	//	}
+	//	
+	//	return "redirect:/";
     }
     
     public String statisticsForStudent(Locale locale, Model model,HttpServletRequest request, Student student) {

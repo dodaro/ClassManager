@@ -13,10 +13,7 @@
    		/*background-color: #F0F0F0;*/
    		box-shadow: 0px 0px 10px #888888;
    	}
-   	.iconButton
-   	{
-   		width: 100px;
-   		height: 100px;
-   		background-color: green;
-   	}
+   	.error {
+        color: red; font-weight: bold;
+    }
 </style>

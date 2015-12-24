@@ -13,9 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name ="courseClass")
@@ -26,18 +32,27 @@ public class CourseClass implements Serializable  {
 	@Column(name="id", nullable=false, length=32)
 	private int id;
 	
+	@Size(min = 4, max = 64)
+	@Pattern(regexp = "^[A-Za-z0-9]+$")
 	@Column(name="name", nullable=false, length=64)
 	private String name;
 	
+	@Min(3)
+	@Max(12)
 	@Column(name="cfu", nullable=false)
 	private int cfu;
 
+	@NotNull
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="activationDate", nullable=false)
 	private Date activationDate;
 
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="endDate", nullable=true)
 	private Date endDate;
 
+	@Min(1)
+	@Max(5)
 	@Column(name="referenceYear", nullable=false)
 	private short referenceYear;
 	

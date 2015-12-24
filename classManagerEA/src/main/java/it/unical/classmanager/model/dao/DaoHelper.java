@@ -1,5 +1,10 @@
 package it.unical.classmanager.model.dao;
 
+/**
+ * @author Aloisius92
+ * This is a class that behave
+ * like a global point to access all daos.
+ */
 public class DaoHelper {    
     private static DaoHelper instance;
     private  AnswerAttachedContentDAO answerAttachedContentDAO;

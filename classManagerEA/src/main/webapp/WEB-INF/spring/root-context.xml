@@ -150,17 +150,18 @@
 		<property name="eventDAO" ref="eventDao" />
 		<property name="examDAO" ref="examDAO" />
 		<property name="homeworkAttachedDAO" ref="homeworkAttachedDAO" />
+		<property name="homeworkAttachedStudentSolvingDAO" ref="homeworkAttachedStudentSolvingDAO" />
+		<property name="homeworkDAO" ref="homeworkDAO" />
 		<property name="homeworkStudentSolvingDAO" ref="homeworkStudentSolvingDAO" />
 		<property name="lectureDAO" ref="lectureDAO" />
 		<property name="materialDAO" ref="materialDAO" />
-		<property name="homeworkDAO" ref="homeworkDAO" />
 		<property name="questionAttachedContentDAO" ref="questionAttachedContentDAO" />
+		<property name="questionDAO" ref="questionDAO" />
 		<property name="registrationStudentClassDAO" ref="registrationStudentClassDAO" />
 		<property name="studentExamPartecipationDAO" ref="studentExamPartecipationDAO" />
 		<property name="userDAO" ref="userDao" />
 		<property name="instance" ref="daoHelper" />
 	</bean>
-	
 	<!-- DATABASE -->
 
 	<bean id="transactionManager"

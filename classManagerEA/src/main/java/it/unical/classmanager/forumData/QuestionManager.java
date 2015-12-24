@@ -1,0 +1,87 @@
+package it.unical.classmanager.forumData;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.ApplicationContext;
+
+import it.unical.classmanager.model.dao.QuestionDAOImpl;
+import it.unical.classmanager.model.data.Question;
+
+public class QuestionManager {
+	
+	private QuestionDAOImpl questionDao;
+	private PagedListHolder<Question> paginationHolder;
+	
+	private int pageSize;
+	private final int INITIAL_PAGE_SIZE = 2;
+	
+	
+	public QuestionManager(QuestionDAOImpl questionDao) {
+		
+		this.questionDao = questionDao;
+		this.pageSize = INITIAL_PAGE_SIZE;
+		initPagination();
+	}
+
+	private void initPagination() {
+		
+		this.paginationHolder = new PagedListHolder<Question>(questionDao.getAllQuestions());
+		this.paginationHolder.setPageSize(this.pageSize);
+	}
+	
+	
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public List<Question> getPreviousPageQuestions() {
+		
+		this.paginationHolder.previousPage();
+		return this.paginationHolder.getPageList();
+	}
+	
+	public List<Question> getNextPageQuestions() {
+		
+		this.paginationHolder.nextPage();
+		return this.paginationHolder.getPageList();
+	}
+	
+	public List<Question> getCurrentPageQuestions() {
+		return this.paginationHolder.getPageList();
+	}
+	
+	
+	public int getCurrentPageNumber() {
+		return this.paginationHolder.getPage();
+	}
+	
+	public int getPageCount() {
+		return this.paginationHolder.getPageCount();
+	}
+	
+	
+	
+	
+	public List<Question> getSpecificPageQuestions(int index) {
+		
+		if(index >= 0 && index < this.getPageCount()) {
+			
+			while(index < this.getCurrentPageNumber()) {
+				this.paginationHolder.previousPage();
+			}
+			
+			while(index > this.getCurrentPageNumber()) {
+				this.paginationHolder.nextPage();
+			}
+		}
+		
+		return this.getCurrentPageQuestions();
+	}
+	
+}

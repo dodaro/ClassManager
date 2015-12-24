@@ -10,19 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add a response</title>
+<title>Questions</title>
 
 <link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
+<link rel="stylesheet" type="text/css" href="resources/style/questions.css" />
 
 <script src='resources/lib/jquery/jquery.min.js'></script>
 <script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <script src="resources/script/nav-bar.js"></script>
-<script type="text/javascript" src="resources/script/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="resources/script/forum/insertAnswer.js"></script>
+<script src="resources/script/forum/questions.js"></script>
 </head>
 
-<body style="background-color: #E6E6E6">
+<body>
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header pull-left">
@@ -34,6 +34,10 @@
 			<div class="navbar-header pull-right">
 				<a class="nav-bar-button logout" href="#"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
+			</div>
+			<div class="navbar-header pull-right">
+				<a id="initializeDBBtn" class="nav-bar-button logout" href="db_init"><span
+					class="glyphicon glyphicon-log-out"></span> Init db</a>
 			</div>
 		</div>
 	</nav>
@@ -63,35 +67,48 @@
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						
 						<div class="row">
-							<div id="previewQuestionArea" class="col-md-12">
-								<div class="panel panel-warning">
-								  <div class="panel-heading">Question preview</div>
-								  <div class="panel-body">
-								    ${question}
-								  </div>
-								</div>
-							</div>
 							
-							<div id="answerArea" class="col-md-12">
-								<form:form commandName="answer" accept-charset="utf-8">
-									<hr />
-									<h3 style="margin-left: 10px;">
-										Your Answer
-										<input class="btn btn-primary" type="submit" value="send answer" >
-									</h3>
-						        	<div id="area">
-							            <form:textarea path="description" id="textEditor" rows="10" cols="80"></form:textarea>
-						        	</div>
-						        </form:form>
-							</div>						
+							<div class="col-sm-12 col-md-12 col-lg-12">
+							
+								<div class="panel panel-default">
+								  <div class="panel-heading">Domanda</div>
+								  <div class="panel-body">
+								    <p>ID: ${question.getId()}</p>
+									<p>Title: ${question.getTitle()}</p>
+									<p>Description: ${question.getDescription()}</p>
+									<p>User: ${question.getUser().getUsername()}</p>
+								  </div>
+								</div>	
+								
+								<div>
+								
+								<form action="insertAnswer">
+									<input type="submit" value="insert answer" />
+								</form>
+								
+								<div>Risposte:</div>
+								<c:forEach var="answer" items="${question.getAnswers()}">
+									<div class="well">
+										<p>ID: ${answer.getId() }</p>
+										<p>Description: ${answer.getDescription() }</p>
+										<p>User: ${answer.getUser() }</p>
+									</div>
+								</c:forEach>
+								
+								<form action="insertAnswer">
+									<input type="submit" value="insert answer" />
+								</form>
+							
+							</div>
+
 						</div>
 						
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
-	
 	
 	
 	

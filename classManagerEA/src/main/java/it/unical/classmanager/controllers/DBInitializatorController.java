@@ -202,7 +202,11 @@ public class DBInitializatorController {
 			dbAnswerAttachedContentInit(locale, model, request);
 			dbHomeworkAttachedInit(locale, model, request);
 			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+			
+			
 
+			logger.info("INITIALIZATION DONE!!!", locale);
+			
 			initialized = true;
 		} else {
 			logger.info("The DB is up!", locale);

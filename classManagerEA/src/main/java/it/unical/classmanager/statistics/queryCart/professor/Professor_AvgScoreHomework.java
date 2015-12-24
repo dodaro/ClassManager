@@ -3,6 +3,7 @@
  */
 package it.unical.classmanager.statistics.queryCart.professor;
 
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnStackedAndGroupedCart;
 import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
@@ -17,7 +18,11 @@ import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 public class Professor_AvgScoreHomework extends AbstractQueryCart {
     
     public Professor_AvgScoreHomework() {
-	
+	super();
+    }
+    
+    public Professor_AvgScoreHomework(User user){
+	super(user);
     }
     
     /* (non-Javadoc)

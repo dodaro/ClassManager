@@ -1,5 +1,6 @@
 package it.unical.classmanager.statistics.queryCart;
 
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 
 /**
@@ -8,9 +9,16 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
  */
 public abstract class AbstractQueryCart {
     protected AbstractCart cart = null;
+    private User user;
     
     public AbstractQueryCart(){
 	cart = null;
+	user = null;
+    }
+
+    public AbstractQueryCart(User user){
+	cart = null;
+	this.user = user;
     }
    
     /**
@@ -31,5 +39,13 @@ public abstract class AbstractQueryCart {
     
     public void setCart( AbstractCart cart) {
 	this.cart = cart;
+    }
+
+    public User getUser() {
+	    return user;
+    }
+
+    public void setUser( User user) {
+	    this.user = user;
     }
 }

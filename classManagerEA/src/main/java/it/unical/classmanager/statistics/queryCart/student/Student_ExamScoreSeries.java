@@ -3,6 +3,13 @@
  */
 package it.unical.classmanager.statistics.queryCart.student;
 
+import java.util.Date;
+import java.util.List;
+
+import it.unical.classmanager.model.dao.CartQueryDAO;
+import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.SplineIrregularTimeCart;
 import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
@@ -14,7 +21,11 @@ import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 public class Student_ExamScoreSeries extends AbstractQueryCart {
     
     public Student_ExamScoreSeries() {
-	
+	super();
+    }
+    
+    public Student_ExamScoreSeries(User user){
+	super(user);
     }
     
     /* (non-Javadoc)
@@ -25,9 +36,23 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	return buildCartFromQuery(new SplineIrregularTimeCart());
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     protected AbstractCart buildCartFromQuery(AbstractCart cart) {
-	// Do query!
+	//	Query
+	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
+	List<Object[]> examScoreSeriesByStudent = cartQueryDAO.getExamScoreSeriesByStudent((Student)this.getUser());
+	
+	/*
+	 * avgHomeworksByStudent
+	 * Anno, Date, ExamName, Score
+	 * Anno, Date, ExamName, Score
+	 * Anno, Date, ExamName, Score
+	 * Anno, Date, ExamName, Score
+	 * ...
+	 * Anno, Date, ExamName, Score
+	 */
+	
 	cart.setTitle("Voti esami");
 	cart.setSubTitle("La serie dei voti degli esami");
 	cart.setxAxisTitle("Time");
@@ -35,42 +60,49 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	cart.setyAxisMinValue(0);
 	cart.setyAxisMaxValue(30);
 	StringBuilder seriesContent = new StringBuilder("");
-	seriesContent.append("{");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("name: \'1° anno\',\n");
-	    seriesContent.append("data: [\n");
-	    seriesContent.append("[Date.UTC(2012, 2, 5), 26],\n");
-	    seriesContent.append("[Date.UTC(2012, 2, 10), 30],\n");
-	    seriesContent.append("[Date.UTC(2012, 2, 15), 28],\n");
-	    seriesContent.append("[Date.UTC(2012, 2, 20), 24]\n");
-	    seriesContent.append("]\n");
-	    seriesContent.append("}");
+	
+	int currentYear = 0;
+	
+	if(examScoreSeriesByStudent.size()>0){
+	    for(int i=0; i<examScoreSeriesByStudent.size(); i++){
+		int year = Integer.parseInt(examScoreSeriesByStudent.get(i)[0].toString());
+		Date date = (Date) examScoreSeriesByStudent.get(i)[1];
+		//String examName = examScoreSeriesByStudent.get(i)[2].toString();
+		float score = Float.parseFloat(examScoreSeriesByStudent.get(i)[3].toString());
+		
+		currentYear = year;
+		
+		if(i==0){
+		    seriesContent.append("{name: \'"+currentYear+"\',\n");
+		} else {
+		    seriesContent.append(", {name: \'"+currentYear+"\',\n");
+		}		
+		
+		StringBuilder data = new StringBuilder("");
+		data.append("[Date.UTC("+date.getYear()+", "+(date.getMonth()-1)+", "+date.getDate()+"), "+score+"]\n");		
+		
+		i++;
+		if(i<examScoreSeriesByStudent.size()){
+		    do {
+			year = Integer.parseInt(examScoreSeriesByStudent.get(i)[0].toString());
+			date = (Date) examScoreSeriesByStudent.get(i)[1];
+			//examName = examScoreSeriesByStudent.get(i)[2].toString();
+			score = Float.parseFloat(examScoreSeriesByStudent.get(i)[3].toString());
+			
+			if(currentYear == year){
+			    data.append(",[Date.UTC("+date.getYear()+", "+(date.getMonth()-1)+", "+date.getDate()+"), "+score+"]\n");		
+			    i++;
+			} else if(!(currentYear == year) && i<examScoreSeriesByStudent.size()){
+			    i--;
+			}
+		    }
+		    while((currentYear == year) && i<examScoreSeriesByStudent.size());
+		}
+		
+		seriesContent.append("data: ["+data+"]}\n");
+	    }
 	}
-	seriesContent.append(", {");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("name: \'2° Anno\',\n");
-	    seriesContent.append("data: [\n");
-	    seriesContent.append("[Date.UTC(2013, 2, 2), 29],\n");
-	    seriesContent.append("[Date.UTC(2013, 2, 7), 27],\n");
-	    seriesContent.append("[Date.UTC(2013, 2, 19), 30],\n");
-	    seriesContent.append("[Date.UTC(2013, 2, 24), 25]\n");
-	    seriesContent.append("]\n");
-	    seriesContent.append("}");
-	}
-	seriesContent.append(", {");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("name: \'3° Anno\',\n");
-	    seriesContent.append("data: [\n");
-	    seriesContent.append("[Date.UTC(2014, 3, 1), 26],\n");
-	    seriesContent.append("[Date.UTC(2014, 3, 14), 26],\n");
-	    seriesContent.append("[Date.UTC(2014, 3, 25), 29],\n");
-	    seriesContent.append("[Date.UTC(2014, 3, 28), 30]\n");
-	    seriesContent.append("]\n");
-	    seriesContent.append("}");
-	}
+	
 	cart.setSeriesContent(seriesContent);
 	
 	return cart;

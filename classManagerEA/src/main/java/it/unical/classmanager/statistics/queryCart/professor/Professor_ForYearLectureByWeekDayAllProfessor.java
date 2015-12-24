@@ -3,6 +3,7 @@
  */
 package it.unical.classmanager.statistics.queryCart.professor;
 
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnStackedAndGroupedCart;
 import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
@@ -14,7 +15,11 @@ import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 public class Professor_ForYearLectureByWeekDayAllProfessor extends AbstractQueryCart {
     
     public Professor_ForYearLectureByWeekDayAllProfessor() {
-	
+	super();
+    }
+    
+    public Professor_ForYearLectureByWeekDayAllProfessor(User user){
+	super(user);
     }
     
     /* (non-Javadoc)

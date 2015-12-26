@@ -17,15 +17,11 @@ import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.statistics.CartsList;
 import it.unical.classmanager.statistics.cart.AbstractCart;
-import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgAttendanceAllStudent;
-import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgAttendanceSingleStudent;
+import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgAttendanceStudent;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgLectureByWeekDayAllProfessor;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgLectureByWeekDaySingleProfessor;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgScoreHomework;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgTimeDeliveryHomework;
-import it.unical.classmanager.statistics.queryCart.professor.Professor_ForYearAvgLectureByWeekDayAllProfessor;
-import it.unical.classmanager.statistics.queryCart.professor.Professor_ForYearAvgLectureByWeekDaySingleProfessor;
-import it.unical.classmanager.statistics.queryCart.professor.Professor_ForYearLectureByWeekDayAllProfessor;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_ForYearLectureByWeekDaySingleProfessor;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_NumberCourses;
 import it.unical.classmanager.statistics.queryCart.student.Student_AvgAttendance;
@@ -55,7 +51,7 @@ public class StatisticsController {
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
 	
-	return statisticsForStudent(locale, model, request, null);
+	return statisticsForProfessor(locale, model, request, null);
 	
 	//	if ( username == null ) {			
 	//	    return "redirect:/";
@@ -116,27 +112,11 @@ public class StatisticsController {
     public String statisticsForProfessor(Locale locale, Model model,HttpServletRequest request, Professor professor) {
 	Professor_NumberCourses q1 = new Professor_NumberCourses(professor);
 	Professor_ForYearLectureByWeekDaySingleProfessor q2 = new Professor_ForYearLectureByWeekDaySingleProfessor(professor);
-	Professor_ForYearAvgLectureByWeekDaySingleProfessor q3 = new Professor_ForYearAvgLectureByWeekDaySingleProfessor(professor);
-	Professor_AvgLectureByWeekDaySingleProfessor q4 = new Professor_AvgLectureByWeekDaySingleProfessor(professor);
-	Professor_ForYearLectureByWeekDayAllProfessor q6 = new Professor_ForYearLectureByWeekDayAllProfessor(professor);	
-	Professor_ForYearAvgLectureByWeekDayAllProfessor q5 = new Professor_ForYearAvgLectureByWeekDayAllProfessor(professor);
-	Professor_AvgLectureByWeekDayAllProfessor q7 = new Professor_AvgLectureByWeekDayAllProfessor(professor);
-	Professor_AvgTimeDeliveryHomework q8 = new Professor_AvgTimeDeliveryHomework(professor);
-	Professor_AvgScoreHomework q9 = new Professor_AvgScoreHomework(professor);
-	Professor_AvgAttendanceAllStudent q10 = new Professor_AvgAttendanceAllStudent(professor);
-	Professor_AvgAttendanceSingleStudent q11 = new Professor_AvgAttendanceSingleStudent(professor);	
-	
-	//	q1.getCart().setName("NumberCourses");
-	//	q2.getCart().setName("ForYearLectureByWeekDaySingleProfessor");
-	//	q3.getCart().setName("ForYearAvgLectureByWeekDaySingleProfessor");
-	//	q4.getCart().setName("AvgLectureByWeekDaySingleProfessor");
-	//	q6.getCart().setName("ForYearLectureByWeekDayAllProfessor");
-	//	q5.getCart().setName("ForYearAvgLectureByWeekDayAllProfessor");
-	//	q7.getCart().setName("AvgLectureByWeekDayAllProfessor");
-	//	q8.getCart().setName("AvgTimeDeliveryHomework");
-	//	q9.getCart().setName("AvgScoreHomework");
-	//	q10.getCart().setName("AvgAttendanceAllStudent");
-	//	q11.getCart().setName("AvgAttendanceSingleStudent");
+	Professor_AvgLectureByWeekDaySingleProfessor q3 = new Professor_AvgLectureByWeekDaySingleProfessor(professor);
+	Professor_AvgLectureByWeekDayAllProfessor q4 = new Professor_AvgLectureByWeekDayAllProfessor(professor);
+	Professor_AvgTimeDeliveryHomework q5 = new Professor_AvgTimeDeliveryHomework(professor);
+	Professor_AvgScoreHomework q6 = new Professor_AvgScoreHomework(professor);
+	Professor_AvgAttendanceStudent q7 = new Professor_AvgAttendanceStudent(professor);
 	
 	AbstractCart[] cartsArray = {
 		q1.getCart(),
@@ -146,10 +126,6 @@ public class StatisticsController {
 		q5.getCart(),
 		q6.getCart(),
 		q7.getCart(),
-		q8.getCart(),
-		q9.getCart(),
-		q10.getCart(),
-		q11.getCart()
 	};
 	
 	CartsList carts = new CartsList();

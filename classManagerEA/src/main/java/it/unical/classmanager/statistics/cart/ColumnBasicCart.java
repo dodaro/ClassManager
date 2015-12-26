@@ -44,18 +44,6 @@ public class ColumnBasicCart extends AbstractCart {
 		    cartScript.append("\n");
 		    cartScript.append("categories: [\n");
 		    cartScript.append(xAxisCategories);
-		    //		    cartScript.append("\'Jan\',\n");
-		    //		    cartScript.append("\'Feb\',\n");
-		    //		    cartScript.append("\'Mar\',\n");
-		    //		    cartScript.append("\'Apr\',\n");
-		    //		    cartScript.append("\'May\',\n");
-		    //		    cartScript.append("\'Jun\',\n");
-		    //		    cartScript.append("\'Jul\',\n");
-		    //		    cartScript.append("\'Aug\',\n");
-		    //		    cartScript.append("\'Sep\',\n");
-		    //		    cartScript.append("\'Oct\',\n");
-		    //		    cartScript.append("\'Nov\',\n");
-		    //		    cartScript.append("\'Dec\'\n");
 		    cartScript.append("],\n");
 		    cartScript.append("crosshair: true\n");
 		    cartScript.append("}");
@@ -87,16 +75,16 @@ public class ColumnBasicCart extends AbstractCart {
 		    {
 			cartScript.append("series.color}");
 		    }
-		    cartScript.append(";padding:0\">{");
+		    cartScript.append(";padding:0\">");
 		    {
-			cartScript.append("series.name}");
+			//cartScript.append("{series.name} :");
 		    }
-		    cartScript.append(": </td>\' +\n");
+		    cartScript.append(" </td>\' +\n");
 		    cartScript.append("\'<td style=\"padding:0\"><b>{");
 		    {
 			cartScript.append("point.y:.1f}");
 		    }
-		    cartScript.append(" mm</b></td></tr>\',\n");
+		    cartScript.append("</b></td></tr>\',\n");
 		    cartScript.append("footerFormat: \'</table>\',\n");
 		    cartScript.append("shared: true,\n");
 		    cartScript.append("useHTML: true\n");

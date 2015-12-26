@@ -31,19 +31,8 @@ public interface CartQueryDAO {
      * @param professor
      * @return
      */
-    public List<Object[]> getForYearLectureByWeekDaySingleProfessor(Professor professor);
-    
-    /**Per professore: 
-     * Per ogni anno, 
-     * il numero medio di lezioni
-     * per ogni giorno della settimana
-     * di un professore.
-     * 
-     * @param professor
-     * @return
-     */
-    public List<Object[]> getForYearAvgLectureByWeekDaySingleProfessor(Professor professor);
-    
+    public List<Object[]> getForYearLectureByWeekDay(Professor professor);
+       
     /**Per professore: 
      * Negli anni, 
      * il numero medio di lezioni
@@ -54,29 +43,7 @@ public interface CartQueryDAO {
      * @return
      */
     public List<Object[]> getAvgLectureByWeekDaySingleProfessor(Professor professor);
-    
-    
-    /********** Tra professori **********/
-    /**Tra professori: 
-     * Per ogni anno, 
-     * il numero totale di lezioni
-     * per ogni giorno della settimana.
-     * 
-     * @param professor
-     * @return
-     */
-    public List<Object[]> getForYearLectureByWeekDayAllProfessor(List<Professor> professors);
-    
-    /**Tra professori: 
-     * Per ogni anno, 
-     * il numero medio di lezioni
-     * per ogni giorno della settimana.
-     * 
-     * @param professor
-     * @return
-     */
-    public List<Object[]> getForYearAvgLectureByWeekDayAllProfessor(List<Professor> professors);
-    
+     
     /**Tra professori: 
      * Negli anni, 
      * il numero medio di lezioni
@@ -118,18 +85,8 @@ public interface CartQueryDAO {
      * @param professor
      * @return
      */
-    public List<Object[]> getAvgAttendanceAllStudent(Professor professor);
- 
-    /**Grafico presenze Studenti
-     * Per ogni corso
-     * il numero medio di presenze
-     * di ogni studente.
-     * 
-     * @param professor
-     * @return
-     */
-    public List<Object[]> getAvgAttendanceSingleStudent(Professor professor); 
-
+    public List<Object[]> getAvgAttendanceStudent(Professor professor);
+       
     /********************************************/
     /**********      Student Query     **********/
     /********************************************/
@@ -179,5 +136,5 @@ public interface CartQueryDAO {
      * @return
      */
     public List<Object[]> getAvgAttendanceByStudent(Student student); 
-
+    
 }

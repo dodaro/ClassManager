@@ -32,26 +32,108 @@ public class CartQueryDAOImpl implements CartQueryDAO
      */
     @Override
     public List<Object[]> getCourseByProfessor( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * Professor, NumberCourse
+	 * Professor, numberCourse
+	 * Professor, numberCourse
+	 * Professor, numberCourse
+	 * 
+	 */
+	
+	Object[] res1 = {"Professor1", 4};
+	Object[] res2 = {"Professor2", 2};
+	Object[] res3 = {"Professor3", 1};	
+	Object[] res4 = {"Professor4", 3};
+	Object[] res5 = {"Professor5", 2};
+	Object[] res6 = {"Professor6", 4};
+	result.add(res1);	
+	result.add(res2);	
+	result.add(res3);
+	result.add(res4);	
+	result.add(res5);	
+	result.add(res6);
+	
+	return result;
     }
     
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getForYearLectureByWeekDaySingleProfessor( Professor professor)
      */
     @Override
-    public List<Object[]> getForYearLectureByWeekDaySingleProfessor( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.unical.classmanager.model.dao.CartQueryDAO#getForYearAvgLectureByWeekDaySingleProfessor( Professor professor)
-     */
-    @Override
-    public List<Object[]> getForYearAvgLectureByWeekDaySingleProfessor( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
+    public List<Object[]> getForYearLectureByWeekDay( Professor professor) {
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * 2012, Monday, NumberLecture
+	 * 2012, Tuesday, NumberLecture
+	 * 2012, Wednesday, NumberLecture
+	 * 2012, Thursday, NumberLecture
+	 * 2012, Friday, NumberLecture
+	 * 2012, Saturday, NumberLecture
+	 * 2012, Sunday, NumberLecture
+	 * 2013, Monday, NumberLecture
+	 * 2013, Tuesday, NumberLecture
+	 * 2013, Wednesday, NumberLecture
+	 * 2013, Thursday, NumberLecture
+	 * 2013, Friday, NumberLecture
+	 * 2013, Saturday, NumberLecture
+	 * 2013, Sunday, NumberLecture
+	 * 2014, Monday, NumberLecture
+	 * 2014, Tuesday, NumberLecture
+	 * 2014, Wednesday, NumberLecture
+	 * 2014, Thursday, NumberLecture
+	 * 2014, Friday, NumberLecture
+	 * 2014, Saturday, NumberLecture
+	 * 2014, Sunday, NumberLecture
+	 * 
+	 */
+	
+	Object[] res11 = {2012, "Monday", 40};
+	Object[] res12 = {2012, "Tuesday", 38};
+	Object[] res13 = {2012, "Wednesday", 26};	
+	Object[] res14 = {2012, "Thursday", 24};
+	Object[] res15 = {2012, "Friday", 26};
+	Object[] res16 = {2012, "Saturday", 30};
+	Object[] res17 = {2012, "Sunday", 0};
+	result.add(res11);	
+	result.add(res12);	
+	result.add(res13);
+	result.add(res14);	
+	result.add(res15);	
+	result.add(res16);	
+	result.add(res17);
+	Object[] res21 = {2013, "Monday", 40};
+	Object[] res22 = {2013, "Tuesday", 38};
+	Object[] res23 = {2013, "Wednesday", 26};	
+	Object[] res24 = {2013, "Thursday", 24};
+	Object[] res25 = {2013, "Friday", 26};
+	Object[] res26 = {2013, "Saturday", 30};
+	Object[] res27 = {2013, "Sunday", 0};
+	result.add(res21);	
+	result.add(res22);	
+	result.add(res23);
+	result.add(res24);	
+	result.add(res25);	
+	result.add(res26);	
+	result.add(res27);
+	Object[] res31 = {2014, "Monday", 40};
+	Object[] res32 = {2014, "Tuesday", 38};
+	Object[] res33 = {2014, "Wednesday", 26};	
+	Object[] res34 = {2014, "Thursday", 24};
+	Object[] res35 = {2014, "Friday", 26};
+	Object[] res36 = {2014, "Saturday", 30};
+	Object[] res37 = {2014, "Sunday", 0};
+	result.add(res31);	
+	result.add(res32);	
+	result.add(res33);
+	result.add(res34);	
+	result.add(res35);	
+	result.add(res36);	
+	result.add(res37);
+	
+	return result;
     }
     
     /* (non-Javadoc)
@@ -59,26 +141,34 @@ public class CartQueryDAOImpl implements CartQueryDAO
      */
     @Override
     public List<Object[]> getAvgLectureByWeekDaySingleProfessor( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.unical.classmanager.model.dao.CartQueryDAO#getForYearLectureByWeekDayAllProfessor( List<Professor> professors)
-     */
-    @Override
-    public List<Object[]> getForYearLectureByWeekDayAllProfessor( List<Professor> professors) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.unical.classmanager.model.dao.CartQueryDAO#getForYearAvgLectureByWeekDayAllProfessor( List<Professor> professors)
-     */
-    @Override
-    public List<Object[]> getForYearAvgLectureByWeekDayAllProfessor( List<Professor> professors) {
-	// TODO Auto-generated method stub
-	return null;
+	List<Object[]> result = new ArrayList<Object[]>();
+	/*
+	 * Monday, NumberLecture
+	 * Tuesday, NumberLecture
+	 * Wednesday, NumberLecture
+	 * Thursday, NumberLecture
+	 * Friday, NumberLecture
+	 * Saturday, NumberLecture
+	 * Sunday, NumberLecture
+	 * 
+	 */
+	
+	Object[] res1 = {"Monday", 40};
+	Object[] res2 = {"Tuesday", 38};
+	Object[] res3 = {"Wednesday", 26};	
+	Object[] res4 = {"Thursday", 24};
+	Object[] res5 = {"Friday", 26};
+	Object[] res6 = {"Saturday", 30};
+	Object[] res7 = {"Sunday", 0};
+	result.add(res1);	
+	result.add(res2);	
+	result.add(res3);
+	result.add(res4);	
+	result.add(res5);	
+	result.add(res6);	
+	result.add(res7);
+	
+	return result;
     }
     
     /* (non-Javadoc)
@@ -86,8 +176,68 @@ public class CartQueryDAOImpl implements CartQueryDAO
      */
     @Override
     public List<Object[]> getAvgLectureByWeekDayAllProfessor( List<Professor> professors) {
-	// TODO Auto-generated method stub
-	return null;
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * Professor, Monday, NumberLecture
+	 * Professor, Tuesday, NumberLecture
+	 * Professor, Wednesday, NumberLecture
+	 * Professor, Thursday, NumberLecture
+	 * Professor, Friday, NumberLecture
+	 * Professor, Saturday, NumberLecture
+	 * Professor, Sunday, NumberLecture
+	 * 
+	 */
+	
+	// Professor1
+	Object[] professor1_11 = {"Professor1" , "Monday", 40};
+	Object[] professor1_12 = {"Professor1" , "Tuesday", 38};
+	Object[] professor1_13 = {"Professor1" , "Wednesday", 26};	
+	Object[] professor1_14 = {"Professor1" , "Thursday", 24};
+	Object[] professor1_15 = {"Professor1" , "Friday", 26};
+	Object[] professor1_16 = {"Professor1" , "Saturday", 30};
+	Object[] professor1_17 = {"Professor1" , "Sunday", 0};
+	result.add(professor1_11);	
+	result.add(professor1_12);	
+	result.add(professor1_13);
+	result.add(professor1_14);	
+	result.add(professor1_15);	
+	result.add(professor1_16);	
+	result.add(professor1_17);
+	
+	// Professor2
+	Object[] professor2_11 = {"professor2" , "Monday", 60};
+	Object[] professor2_12 = {"professor2" , "Tuesday", 28};
+	Object[] professor2_13 = {"professor2" , "Wednesday", 16};	
+	Object[] professor2_14 = {"professor2" , "Thursday", 25};
+	Object[] professor2_15 = {"professor2" , "Friday", 23};
+	Object[] professor2_16 = {"professor2" , "Saturday", 40};
+	Object[] professor2_17 = {"professor2" , "Sunday", 0};
+	result.add(professor2_11);	
+	result.add(professor2_12);	
+	result.add(professor2_13);
+	result.add(professor2_14);	
+	result.add(professor2_15);	
+	result.add(professor2_16);	
+	result.add(professor2_17);
+	
+	// Professor3
+	Object[] professor3_11 = {"professor3" , "Monday", 10};
+	Object[] professor3_12 = {"professor3" , "Tuesday", 18};
+	Object[] professor3_13 = {"professor3" , "Wednesday", 16};	
+	Object[] professor3_14 = {"professor3" , "Thursday", 14};
+	Object[] professor3_15 = {"professor3" , "Friday", 16};
+	Object[] professor3_16 = {"professor3" , "Saturday", 10};
+	Object[] professor3_17 = {"professor3" , "Sunday", 0};
+	result.add(professor3_11);	
+	result.add(professor3_12);	
+	result.add(professor3_13);
+	result.add(professor3_14);	
+	result.add(professor3_15);	
+	result.add(professor3_16);	
+	result.add(professor3_17);
+	
+	return result;
     }
     
     /* (non-Javadoc)
@@ -95,8 +245,53 @@ public class CartQueryDAOImpl implements CartQueryDAO
      */
     @Override
     public List<Object[]> getAvgTimeDeliveryHomework( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * CourseClass, Student, AvgTime
+	 * CourseClass, Student, AvgTime
+	 * CourseClass, Student, AvgTime
+	 */
+	
+	// Select only the course of the professor	
+	Object[] res11 = {"Course1", "Student1", 4};
+	Object[] res21 = {"Course1", "Student2", 2};
+	Object[] res31 = {"Course1", "Student3", 1};	
+	Object[] res41 = {"Course1", "Student4", 3};
+	Object[] res51 = {"Course1", "Student5", 2};
+	Object[] res61 = {"Course1", "Student6", 4};
+	result.add(res11);	
+	result.add(res21);	
+	result.add(res31);
+	result.add(res41);	
+	result.add(res51);	
+	result.add(res61);
+	Object[] res12 = {"Course2", "Student1", 6};
+	Object[] res22 = {"Course2", "Student2", 8};
+	Object[] res32 = {"Course2", "Student3", 9};	
+	Object[] res42 = {"Course2", "Student4", 2};
+	Object[] res52 = {"Course2", "Student5", 1};
+	Object[] res62 = {"Course2", "Student6", 2};
+	result.add(res12);	
+	result.add(res22);	
+	result.add(res32);
+	result.add(res42);	
+	result.add(res52);	
+	result.add(res62);
+	Object[] res13 = {"Course3", "Student1", 4};
+	Object[] res23 = {"Course3", "Student2", 6};
+	Object[] res33 = {"Course3", "Student3", 6};	
+	Object[] res43 = {"Course3", "Student4", 4};
+	Object[] res53 = {"Course3", "Student5", 2};
+	Object[] res63 = {"Course3", "Student6", 9};
+	result.add(res13);	
+	result.add(res23);	
+	result.add(res33);
+	result.add(res43);	
+	result.add(res53);	
+	result.add(res63);	
+	
+	return result;
     }
     
     /* (non-Javadoc)
@@ -104,26 +299,86 @@ public class CartQueryDAOImpl implements CartQueryDAO
      */
     @Override
     public List<Object[]> getAvgScoreHomework( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * CourseClass, Student, AvgScore
+	 * CourseClass, Student, AvgScore
+	 * CourseClass, Student, AvgScore
+	 */
+	
+	// Select only the course of the professor	
+	Object[] res11 = {"Course1", "Student1", 24};
+	Object[] res21 = {"Course1", "Student2", 22};
+	Object[] res31 = {"Course1", "Student3", 21};	
+	Object[] res41 = {"Course1", "Student4", 23};
+	Object[] res51 = {"Course1", "Student5", 22};
+	Object[] res61 = {"Course1", "Student6", 24};
+	result.add(res11);	
+	result.add(res21);	
+	result.add(res31);
+	result.add(res41);	
+	result.add(res51);	
+	result.add(res61);
+	Object[] res12 = {"Course2", "Student1", 26};
+	Object[] res22 = {"Course2", "Student2", 28};
+	Object[] res32 = {"Course2", "Student3", 29};	
+	Object[] res42 = {"Course2", "Student4", 20};
+	Object[] res52 = {"Course2", "Student5", 21};
+	Object[] res62 = {"Course2", "Student6", 22};
+	result.add(res12);	
+	result.add(res22);	
+	result.add(res32);
+	result.add(res42);	
+	result.add(res52);	
+	result.add(res62);
+	Object[] res13 = {"Course3", "Student1", 24};
+	Object[] res23 = {"Course3", "Student2", 26};
+	Object[] res33 = {"Course3", "Student3", 26};	
+	Object[] res43 = {"Course3", "Student4", 24};
+	Object[] res53 = {"Course3", "Student5", 22};
+	Object[] res63 = {"Course3", "Student6", 29};
+	result.add(res13);	
+	result.add(res23);	
+	result.add(res33);
+	result.add(res43);	
+	result.add(res53);	
+	result.add(res63);	
+	
+	return result;
     }
     
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getAvgAttendanceAllStudent( Professor professor)
      */
     @Override
-    public List<Object[]> getAvgAttendanceAllStudent( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.unical.classmanager.model.dao.CartQueryDAO#getAvgAttendanceSingleStudent( Professor professor)
-     */
-    @Override
-    public List<Object[]> getAvgAttendanceSingleStudent( Professor professor) {
-	// TODO Auto-generated method stub
-	return null;
+    public List<Object[]> getAvgAttendanceStudent( Professor professor) {
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	/*
+	 * CourseClass, AvgAttendance
+	 * CourseClass, AvgAttendance
+	 * CourseClass, AvgAttendance
+	 */
+	
+	// Select only the course of the professor
+	
+	// This data are percentual!
+	
+	Object[] res1 = {"Course1", 24};
+	Object[] res2 = {"Course2", 22};
+	Object[] res3 = {"Course3", 21};	
+	Object[] res4 = {"Course4", 23};
+	Object[] res5 = {"Course5", 22};
+	Object[] res6 = {"Course6", 24};
+	result.add(res1);	
+	result.add(res2);	
+	result.add(res3);
+	result.add(res4);	
+	result.add(res5);	
+	result.add(res6);
+	
+	return result;
     }
     
     /* (non-Javadoc)
@@ -163,7 +418,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
     @Override
     public List<Object[]> getAvgTimeDeliveryHomeworksByStudent( Student student) {
 	List<Object[]> result = new ArrayList<Object[]>();
-
+	
 	/*
 	 * avgTimeDeliveryHomeworksByStudent
 	 * Course, AvgTime
@@ -291,7 +546,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	result.add(exam33);
 	result.add(exam34);
 	result.add(exam35);
-		
+	
 	return result;
     }
     

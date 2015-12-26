@@ -19,5 +19,5 @@ public interface LectureDAO {
 
 	public List<Lecture> getAllLectures();	
 	
-	public Lecture getLastLectureAdded();
+	public Lecture getLastLectureAdded(String username);
 }

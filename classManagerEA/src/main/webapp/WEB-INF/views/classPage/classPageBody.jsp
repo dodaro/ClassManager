@@ -44,7 +44,7 @@
 			</div>
 		</div>
 
-		<!-- MODAL -->
+		<!-- MODAL Create class-->
 		<div id="createNewClass_modal" class="modal fade" role="dialog">
 			<form:form id="login-form" action="/createClass" method="POST"
 				commandName="lecture" role="form">
@@ -69,8 +69,7 @@
 						</div>
 
 						<div class="modal-footer">
-							<button id="modalButton_createEvent" type="submit"
-								class="btn btn-success">Create</button>
+							<button type="submit" class="btn btn-success">Create</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Close</button>
 						</div>
@@ -79,6 +78,7 @@
 				</div>
 			</form:form>
 		</div>
+
 
 		<!-- browser -->
 		<div class="filemanager">
@@ -91,17 +91,18 @@
 			<div class="row row-content">
 				<div id="createNewClass_btn" class="btn btn-default">Add New</div>
 				<div id="uploadFile_btn" class="btn btn-default">Upload</div>
+				<div id="addHomework_btn" class="btn btn-default">add Homework</div>
+				
 				<div id="uploadFile_div">
 					<form id="upload" method="post" action="/uploadFile"
 						enctype="multipart/form-data">
 						<div id="drop">
-							Drop Here <a>Browse</a> 
-							<input type="file" name="file" multiple />
+							Drop Here <a>Browse</a> <input type="file" name="file" multiple />
 						</div>
 						<ul>
 							<!-- The file uploads will be shown here -->
 						</ul>
-						<input id="toUpload_input" type="hidden" name="path"/>
+						<input id="toUpload_input" type="hidden" name="path" />
 					</form>
 				</div>
 			</div>
@@ -113,6 +114,47 @@
 			</div>
 		</div>
 		<!-- browser -->
+
+
+
+
+		<!-- MODAL Create class-->
+		<div id="addHomework_modal" class="modal fade" role="dialog">
+			<form:form id="login-form" action="/addHomework" method="POST"
+				commandName="homework" role="form">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 id="homeworkTopic_modal" class="modal-title"></h4>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="name">Name:</label>
+								<form:input type="text" name="name" path="name"
+									class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="description">Description:</label>
+								<form:input type="text" name="description" path="description"
+									class="form-control" />
+							</div>
+							<input id="referredLesson_input" type="hidden" name="referredLesson"></input>
+						</div>
+
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">Add</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</form:form>
+		</div>
+
+
 
 	</div>
 </div>

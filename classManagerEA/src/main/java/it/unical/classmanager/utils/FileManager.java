@@ -14,18 +14,19 @@ import it.unical.classmanager.model.FolderBean;
 public class FileManager {
 
 	public final static String RESOURCES_PATH = "files";
-	public final static String HOMEWORK_PATH = "homework";
+	public final static String HOMEWORK_PATH = "homeworks";
 	public final static String MATERIALS_PATH = "materials";
 	
 	/**
-	 * This method creates a directory in the specified path
+	 * This method creates a directory in the specified path (without the file separator at the end, without RESOURCES_PATH)
 	 * @param path : the path where the directory must be created
 	 * @param name : the name of the new directory
 	 * @return boolean : false if the operation fails
 	 */
 	public boolean mkDir(String path, String name){
 		
-		return new File(RESOURCES_PATH + File.separator + path + File.separator + name).mkdir();
+		final String completePath = RESOURCES_PATH + File.separator + path + File.separator + name;
+		return new File(completePath).mkdir();
 	}
 	
 	/**

@@ -3,8 +3,6 @@
  */
 package it.unical.classmanager.statistics.queryCart.professor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import it.unical.classmanager.model.dao.CartQueryDAO;
@@ -17,15 +15,15 @@ import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 
 /**
  * @author Aloisius92
- * Query: "Per ogni anno il numero totale di lezioni per ogni giorno della settimana"
+ * Query: "Per ogni corso la media delle presenze di tutti gli studenti"
  */
-public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQueryCart {
+public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
     
-    public Professor_ForYearLectureByWeekDaySingleProfessor() {
+    public Professor_AvgAttendanceStudent() {
 	super();
     }
     
-    public Professor_ForYearLectureByWeekDaySingleProfessor(User user){
+    public Professor_AvgAttendanceStudent(User user){
 	super(user);
     }
     
@@ -41,61 +39,31 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
     protected AbstractCart buildCartFromQuery(AbstractCart cart) {
 	// Query
 	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
-	List<Object[]> queryData = cartQueryDAO.getForYearLectureByWeekDay((Professor)this.getUser());
-	HashMap<String, List<Float>> dayLecture = new HashMap<String, List<Float>>();
-	String days[] = {"Monday", "Tuesday","Wednesday",
-		"Thursday", "Friday", "Saturday", "Sunday"};
-	for(int i=0; i<days.length; i++){
-	    dayLecture.put(days[i], new ArrayList<Float>());
-	}
+	List<Object[]> avgAttendanceStudent = cartQueryDAO.getAvgAttendanceStudent((Professor)this.getUser());
 	
 	/*
-	 * 2012, Monday, NumberLecture
-	 * 2012, Tuesday, NumberLecture
-	 * 2012, Wednesday, NumberLecture
-	 * 2012, Thursday, NumberLecture
-	 * 2012, Friday, NumberLecture
-	 * 2012, Saturday, NumberLecture
-	 * 2012, Sunday, NumberLecture
-	 * 2013, Monday, NumberLecture
-	 * 2013, Tuesday, NumberLecture
-	 * 2013, Wednesday, NumberLecture
-	 * 2013, Thursday, NumberLecture
-	 * 2013, Friday, NumberLecture
-	 * 2013, Saturday, NumberLecture
-	 * 2013, Sunday, NumberLecture
-	 * 2014, Monday, NumberLecture
-	 * 2014, Tuesday, NumberLecture
-	 * 2014, Wednesday, NumberLecture
-	 * 2014, Thursday, NumberLecture
-	 * 2014, Friday, NumberLecture
-	 * 2014, Saturday, NumberLecture
-	 * 2014, Sunday, NumberLecture
-	 * 
+	 * CourseClass, AvgAttendance
+	 * CourseClass, AvgAttendance
+	 * CourseClass, AvgAttendance
 	 */
 	
-	cart.setTitle("Numero lezioni per giorno della settimana");
-	cart.setSubTitle("Per ogni anno il numero totale di lezioni per ogni giorno della settimana");
+	cart.setTitle("Media delle presenze");
+	cart.setSubTitle("Per ogni corso la media delle presenze di tutti gli studenti");
 	cart.setxAxisTitle("");
-	cart.setyAxisTitle("Lectures");
+	cart.setyAxisTitle("Average Attendance");
 	cart.setxAxisMinValue(0);
 	cart.setxAxisMaxValue(0);
 	
-	StringBuilder categories = new StringBuilder("");
-	String lastYear = "";
-	for(int i=0; i<queryData.size(); i++){
-	    String currentData = "\'"+queryData.get(i)[0].toString()+"\'";
-	    if(!lastYear.equals(currentData)){
-		lastYear = currentData;
-		if(i==0){
-		    categories.append(currentData);
-		} else {
-		    categories.append(", "+currentData);		
-		}
+	StringBuilder categories = new StringBuilder("");	
+	for(int i=0; i<avgAttendanceStudent.size(); i++){
+	    String currentData = "\'"+avgAttendanceStudent.get(i)[0]+"\'";
+	    if(i==0){
+		categories.append(currentData);
+	    } else {
+		categories.append(", "+currentData);		
 	    }
 	}	
 	cart.setxAxisCategories(categories.toString());
-	
 	cart.setyAxisMinValue(0);
 	cart.setyAxisMaxValue(0);
 	cart.setyAxisCategories("");
@@ -108,34 +76,17 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	cart.setyPointTooltip("");
 	cart.setzPointTooltip("");
 	cart.setToolTipValueSuffix("");
-	StringBuilder seriesContent = new StringBuilder("");
-	
-	for(int i=0; i<queryData.size(); i++){
-	    String day = queryData.get(i)[1].toString();
-	    Float value = Float.parseFloat(queryData.get(i)[2].toString());	 
-	    dayLecture.get(day).add(value);
-	}
-	
-	for(int i=0; i<days.length; i++){
+	StringBuilder seriesContent = new StringBuilder("");	
+	seriesContent.append("{name: \'All Courses\', data: [");
+	for(int i=0; i<avgAttendanceStudent.size(); i++){
+	    float currentData = Float.parseFloat(avgAttendanceStudent.get(i)[1].toString());
 	    if(i==0){
-		seriesContent.append("{");			
+		seriesContent.append(currentData);
 	    } else {
-		seriesContent.append(", {");		
+		seriesContent.append(", "+currentData);		
 	    }
-	    seriesContent.append("name: \'"+days[i]+"\',");
-	    seriesContent.append("data: [");
-	    
-	    List<Float> list = dayLecture.get(days[i]);
-	    for(int j=0; j<list.size(); j++){
-		float currentValue = list.get(j);
-		if(j==0){
-		    seriesContent.append(currentValue);			
-		} else {
-		    seriesContent.append(", "+currentValue);		
-		}
-	    }		    
-	    seriesContent.append("]}");
 	}
+	seriesContent.append("]}");	
 	
 	//	seriesContent.append("{");
 	//	{

@@ -14,7 +14,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 
-	<context:component-scan base-package="it.unical.classmanager.controllers.CalendarController" />
+	<context:component-scan
+		base-package="it.unical.classmanager.controllers.CalendarController" />
 	<mvc:annotation-driven />
 
 	<!-- Configure the multipart resolver -->
@@ -23,7 +24,8 @@
 		p:maxUploadSize="1000000" />
 
 	<!-- http://stackoverflow.com/questions/6479712/why-is-jackson-wrapping-my-objects-with-an-extra-layer-named-after-the-class -->
-	<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	<bean
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -44,8 +46,9 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop> 
+<!-- 				create -->
+				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 	</bean>
@@ -53,9 +56,7 @@
 	<bean id="dbHandler" class="it.unical.classmanager.model.DBHandler">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
 	
-
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>
 
@@ -128,6 +129,39 @@
 		class="it.unical.classmanager.model.dao.StudentExamPartecipationDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
+	<!-- CartQueryDAO: This is a DAO for perform queries related to statistics 
+		carts -->
+	<bean id="cartQueryDAO"
+		class="it.unical.classmanager.model.dao.CartQueryDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<!-- End CartQueryDAO -->
+	
+	<!-- DAO Helper -->
+		<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
+		<property name="answerAttachedContentDAO" ref="answerAttachedContentDAO" />
+		<property name="answerDAO" ref="answerDAO" />
+		<property name="attendanceStudentLectureDAO" ref="attendanceStudentLectureDAO" />
+		<property name="cartQueryDAO" ref="cartQueryDAO" />
+		<property name="communicationsDAO" ref="communicationsDAO" />
+		<property name="courseClassDAO" ref="courseClassDAO" />
+		<property name="degreeCourseDAO" ref="degreeCourseDAO" />
+		<property name="departementDAO" ref="departementDAO" />
+		<property name="eventDAO" ref="eventDao" />
+		<property name="examDAO" ref="examDAO" />
+		<property name="homeworkAttachedDAO" ref="homeworkAttachedDAO" />
+		<property name="homeworkAttachedStudentSolvingDAO" ref="homeworkAttachedStudentSolvingDAO" />
+		<property name="homeworkDAO" ref="homeworkDAO" />
+		<property name="homeworkStudentSolvingDAO" ref="homeworkStudentSolvingDAO" />
+		<property name="lectureDAO" ref="lectureDAO" />
+		<property name="materialDAO" ref="materialDAO" />
+		<property name="questionAttachedContentDAO" ref="questionAttachedContentDAO" />
+		<property name="questionDAO" ref="questionDAO" />
+		<property name="registrationStudentClassDAO" ref="registrationStudentClassDAO" />
+		<property name="studentExamPartecipationDAO" ref="studentExamPartecipationDAO" />
+		<property name="userDAO" ref="userDao" />
+		<property name="instance" ref="daoHelper" />
+	</bean>
 	<!-- DATABASE -->
 
 	<bean id="transactionManager"
@@ -135,9 +169,10 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-  		<property name="basename" value="messages"/>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
 	</bean>
 
 </beans>

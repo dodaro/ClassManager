@@ -3,8 +3,14 @@
  */
 package it.unical.classmanager.statistics.queryCart.student;
 
+import java.util.List;
+
+import it.unical.classmanager.model.dao.CartQueryDAO;
+import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
-import it.unical.classmanager.statistics.cart.PolarCart;
+import it.unical.classmanager.statistics.cart.PolarSpiderCart;
 import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 
 /**
@@ -14,7 +20,11 @@ import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 public class Student_AvgHomeworks extends AbstractQueryCart {
     
     public Student_AvgHomeworks() {
-	
+	super();
+    }
+    
+    public Student_AvgHomeworks(User user){
+	super(user);
     }
     
     /* (non-Javadoc)
@@ -22,45 +32,98 @@ public class Student_AvgHomeworks extends AbstractQueryCart {
      */
     @Override
     protected AbstractCart buildCartFromQuery() {
-	return buildCartFromQuery(new PolarCart());
+	//return buildCartFromQuery(new PolarCart());
+	return buildCartFromQuery(new PolarSpiderCart());
     }
     
     @Override
     protected AbstractCart buildCartFromQuery(AbstractCart cart) {
-	//	Do query to DB and get the results!
-	cart.setTitle("Media compiti per corso");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(360);
+	//	Query
+	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
+	List<Object[]> avgHomeworksByStudent = cartQueryDAO.getAvgHomeworksByStudent((Student)this.getUser());
+	
+	/*
+	 * avgHomeworksByStudent
+	 * Course1, AvgScore
+	 * Course2, AvgScore
+	 * Course3, AvgScore
+	 * ...
+	 * CourseN, AvgScore
+	 */
+	
+	cart.setTitle("Media compiti");
+	
+	StringBuilder categories = new StringBuilder("");
+	for(int i=0; i<avgHomeworksByStudent.size(); i++){
+	    if(i==0){
+		categories.append("\'"+avgHomeworksByStudent.get(i)[0].toString()+"\'");
+	    } else {
+		categories.append(", \'"+avgHomeworksByStudent.get(i)[0].toString()+"\'");		
+	    }
+	}
+	cart.setxAxisCategories(categories.toString());
 	cart.setyAxisMinValue(0);
 	StringBuilder seriesContent = new StringBuilder("");
-	seriesContent.append("{");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("type: \'column\',\n");
-	    seriesContent.append("name: \'Column\',\n");
-	    seriesContent.append("data: [8, 7, 6, 5, 4, 3, 2, 1],\n");
-	    seriesContent.append("pointPlacement: \'between\'\n");
-	    seriesContent.append("}");
+	
+	seriesContent.append("{name: \'All Courses\', data: [");
+	for(int i=0; i<avgHomeworksByStudent.size(); i++){
+	    float avgValue = Float.parseFloat(avgHomeworksByStudent.get(i)[1].toString());
+	    if(i==0){
+		seriesContent.append(avgValue);
+	    } else {
+		seriesContent.append(", "+avgValue);		
+	    }
 	}
-	seriesContent.append(", {");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("type: \'line\',\n");
-	    seriesContent.append("name: \'Line\',\n");
-	    seriesContent.append("data: [1, 2, 3, 4, 5, 6, 7, 8]\n");
-	    seriesContent.append("}");
-	}
-	seriesContent.append(", {");
-	{
-	    seriesContent.append("\n");
-	    seriesContent.append("type: \'area\',\n");
-	    seriesContent.append("name: \'Area\',\n");
-	    seriesContent.append("data: [1, 8, 2, 7, 3, 6, 4, 5]\n");
-	    seriesContent.append("}");
-	}
+	seriesContent.append("], pointPlacement: \'on\'}");
 	cart.setSeriesContent(seriesContent);
 	
 	return cart;
     }
+    
+    //    @Override
+    //    protected AbstractCart buildCartFromQuery(AbstractCart cart) {
+    //	//	Query
+    //	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
+    //	List<Object[]> avgHomeworksByStudent = cartQueryDAO.getAvgHomeworksByStudent((Student)this.getUser());
+    //	
+    //	/*
+    //	 * avgHomeworksByStudent
+    //	 * Course1, AvgScore
+    //	 * Course2, AvgScore
+    //	 * Course3, AvgScore
+    //	 * ...
+    //	 * CourseN, AvgScore
+    //	 */
+    //	
+    //	cart.setTitle("Media compiti per corso");
+    //	cart.setxAxisMinValue(0);
+    //	cart.setxAxisMaxValue(360);
+    //	cart.setyAxisMinValue(0);
+    //	cart.setyAxisMaxValue(30);
+    //	StringBuilder seriesContent = new StringBuilder("");
+    //	
+    //	if(avgHomeworksByStudent.size()>0){
+    //	    StringBuilder data = new StringBuilder("");
+    //	    for(int i=0; i<avgHomeworksByStudent.size(); i++){
+    //		//String courseName = avgHomeworksByStudent.get(i)[0].toString();
+    //		float score = Float.parseFloat(avgHomeworksByStudent.get(i)[1].toString());
+    //		
+    //		if(i==0){
+    //		    seriesContent.append("{type: \'line\',\n");
+    //		    seriesContent.append("name: \'All Courses\',\n");
+    //		    data.append(score);
+    //		} else if(i==avgHomeworksByStudent.size()-1){
+    //		    seriesContent.append("data: ["+data+"],\n");
+    //		    seriesContent.append("pointPlacement: \'between\'}\n");
+    //		} else {
+    //		    data.append(", "+score);
+    //		}
+    //	    }
+    //	}
+    //	
+    //	cart.setSeriesContent(seriesContent);
+    //	
+    //	return cart;
+    //    }
     
 }

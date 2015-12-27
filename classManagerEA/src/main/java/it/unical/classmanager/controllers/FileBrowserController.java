@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
 
 /**
@@ -46,17 +47,9 @@ public class FileBrowserController {
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(FileBrowserController.class);
-
-	/**
-	 * Manages the request related to the file browser
-	 */
-	@RequestMapping(value = "/fileBrowser", method = RequestMethod.GET)
-	public String getFileBrowserPage(Model model) {
-
-		logger.info("getFiles");
-		return "fileBrowser";
-
-	}
+	
+	public static final String LECTURES_ROOT_TYPE = "lectures";
+	public static final String STUDENTS_HOMEWORKS_ROOT_TYPE = "students";
 
 	/**
 	 * This method is called to construct a three of files, starting from a root
@@ -65,20 +58,60 @@ public class FileBrowserController {
 	 * @return JSON
 	 */
 	@RequestMapping(value = "/contents", method = RequestMethod.GET)
-	public @ResponseBody String getFiles(Model model, @RequestParam("dir") String rootDir) {
+	public @ResponseBody String getFiles(Model model, @RequestParam("type") String type) {
 
-		//TODO Controllare il proprietario della cartella
-		File folder = new File(rootDir);
-		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
+		User user = new User();
+		if(type.equals(LECTURES_ROOT_TYPE))
+			return getLectures(user);
+		else if (type.equals(STUDENTS_HOMEWORKS_ROOT_TYPE))
+			return getStudentsHomeworks(user);
+				
 
+		return "{}";
+	}
+	
+	public String getLectures(User professor){
 		
-		new FileManager().addTree(folder, files, false);
-		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files, false);
+		boolean isProfessor = true;
+
+		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
+		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, FileManager.RESOURCES_PATH, files, false);
+
+		if(isProfessor){
+
+			//TODO Replace with DAO
+			List<String> courses = new ArrayList<String>();
+			String coursePath1 = "enterpriseApplication";
+			courses.add(FileManager.RESOURCES_PATH + File.separator + coursePath1);
+			
+			createTreeFromCourses(courses, files);
+		}
 
 		logger.info("getFiles");
 
 		return new Gson().toJson(root);
+	}
+	
+	public String getStudentsHomeworks(User professor){
+		
+		boolean isProfessor = true;
 
+		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
+		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, FileManager.RESOURCES_PATH, files, false);
+
+		if(isProfessor){
+
+			//TODO Replace with DAO
+			List<String> students = new ArrayList<String>();
+			String studentPath = "student1";
+			students.add(FileManager.RESOURCES_PATH + File.separator + FileManager.STUDENTS_PATH + File.separator + studentPath);
+			
+			createTreeFromCourses(students, files);
+		}
+
+		logger.info("getFiles");
+
+		return new Gson().toJson(root);
 	}
 
 	/**
@@ -156,6 +189,23 @@ public class FileBrowserController {
 
 		return Boolean.toString(delete);
 
+	}
+
+	/**
+	 * Should be used after a query about the courses of a specific Professor. 
+	 * For each root directory "course" in courses the sub tree is added to the folder list
+	 * @param courses
+	 * @param folder
+	 * @param files
+	 */
+	private void createTreeFromCourses(List<String> courses, List<AbstractFileBean> files){
+
+		FileManager fm = new FileManager();
+		for (String course : courses) {	
+
+			File folder = new File(course);
+			fm.addTree(folder, files, false);
+		}
 	}
 
 }

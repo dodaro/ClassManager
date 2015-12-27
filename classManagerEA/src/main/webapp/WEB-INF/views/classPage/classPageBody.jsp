@@ -1,5 +1,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<script type="text/javascript">
+	var filesType = "${filesType}";	
+</script>
+
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 

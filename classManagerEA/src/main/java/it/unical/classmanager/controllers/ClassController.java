@@ -1,6 +1,5 @@
 package it.unical.classmanager.controllers;
 
-
 import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +18,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkDAO;
-import it.unical.classmanager.model.dao.HomeworkDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
-import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.utils.FileManager;
 
 /**
- * Is called when a professor wants to create a new Lecture
+ * This class allows to: 
+ * - get Files starting from a root (students, lectures)
+ * - create a new Lecture
+ * - add an Homework (Professor)
+ * - upload an Homework or a material for a lecture
  */
 @Controller
 public class ClassController {
@@ -44,7 +44,27 @@ public class ClassController {
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(ClassController.class);
 
+	/*
+	 * this path is used when a professor wants to see the folder of his students
+	 */
+	@RequestMapping(value = "/students", method = RequestMethod.GET)
+	public String getStudents(Model model) {
 
+		model.addAttribute("customHeader", ClassController.HEADER);
+		model.addAttribute("customBody", ClassController.BODY);
+
+		model.addAttribute("lecture", new Lecture());
+		model.addAttribute("homework", new Homework());
+		
+		model.addAttribute("filesType",FileBrowserController.LECTURES_ROOT_TYPE);
+		logger.info("getClassPage");
+		return "layout";
+
+	}
+	
+	/*
+	 * this path is used when a professor wants to see files related to his lectures
+	 */
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
 	public String getClasses(Model model) {
 
@@ -53,7 +73,8 @@ public class ClassController {
 
 		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());
-
+		
+		model.addAttribute("filesType",FileBrowserController.LECTURES_ROOT_TYPE);
 		logger.info("getClassPage");
 		return "layout";
 
@@ -112,7 +133,8 @@ public class ClassController {
 
 		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());
-		
+
+		model.addAttribute("filesType",FileBrowserController.LECTURES_ROOT_TYPE);	
 		logger.info("createClass");
 
 		return "layout";
@@ -139,7 +161,8 @@ public class ClassController {
 
 		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());
-		
+
+				
 		logger.info("createHomework");
 
 		return "redirect:classes#files/enterpriceApplication/lectures/" + lesson + "/" + FileManager.HOMEWORK_PATH;

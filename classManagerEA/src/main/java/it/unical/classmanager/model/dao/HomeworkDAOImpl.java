@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Homework;
+import it.unical.classmanager.model.data.Student;
 
 public class HomeworkDAOImpl implements HomeworkDAO
 {

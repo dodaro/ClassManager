@@ -43,8 +43,8 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
 	List<Object[]> queryData = cartQueryDAO.getForYearLectureByWeekDay((Professor)this.getUser());
 	HashMap<String, List<Float>> dayLecture = new HashMap<String, List<Float>>();
-	String days[] = {"Monday", "Tuesday","Wednesday",
-		"Thursday", "Friday", "Saturday", "Sunday"};
+	String days[] = {"Sunday", "Monday", "Tuesday","Wednesday",
+		"Thursday", "Friday", "Saturday"};
 	for(int i=0; i<days.length; i++){
 	    dayLecture.put(days[i], new ArrayList<Float>());
 	}
@@ -111,9 +111,10 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	StringBuilder seriesContent = new StringBuilder("");
 	
 	for(int i=0; i<queryData.size(); i++){
-	    String day = queryData.get(i)[1].toString();
+	    //String day = queryData.get(i)[1].toString();
+	    int dayIndex = Integer.parseInt(queryData.get(i)[1].toString())-1;
 	    Float value = Float.parseFloat(queryData.get(i)[2].toString());	 
-	    dayLecture.get(day).add(value);
+	    dayLecture.get(days[dayIndex]).add(value);
 	}
 	
 	for(int i=0; i<days.length; i++){

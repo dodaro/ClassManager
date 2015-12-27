@@ -29,10 +29,10 @@
 			<!-- END SIDEBAR -->
 
 
-			<div class="col-sm-9 col-md-9 col-lg-10">
+<!-- 			<div class="col-sm-9 col-md-9 col-lg-10"> -->
 <%-- 				<%@include file="statisticsProfessor.jsp"%> --%>
-					<%@include file="statisticsStudent.jsp"%>
-			</div>
+<%-- 					<%@include file="statisticsStudent.jsp"%> --%>
+<!-- 			</div> -->
 
 
 			<div class="col-sm-9 col-md-9 col-lg-10">

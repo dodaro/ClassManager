@@ -46,7 +46,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop> 
+				<prop key="hibernate.hbm2ddl.auto">update</prop> 
 <!-- 				create -->
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
@@ -139,6 +139,7 @@
 	
 	<!-- DAO Helper -->
 		<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
+		<property name="dbHandler" ref="dbHandler" />
 		<property name="answerAttachedContentDAO" ref="answerAttachedContentDAO" />
 		<property name="answerDAO" ref="answerDAO" />
 		<property name="attendanceStudentLectureDAO" ref="attendanceStudentLectureDAO" />

@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
@@ -30,9 +33,10 @@ public class CartQueryDAOImpl implements CartQueryDAO
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getCourseByProfessor(Professor professor)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Object[]> getCourseByProfessor( Professor professor) {
-	List<Object[]> result = new ArrayList<Object[]>();
+	List<Object[]> result = new ArrayList<Object[]>();	
 	
 	/*
 	 * Professor, NumberCourse
@@ -42,18 +46,39 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	 * 
 	 */
 	
-	Object[] res1 = {"Professor1", 4};
-	Object[] res2 = {"Professor2", 2};
-	Object[] res3 = {"Professor3", 1};	
-	Object[] res4 = {"Professor4", 3};
-	Object[] res5 = {"Professor5", 2};
-	Object[] res6 = {"Professor6", 4};
-	result.add(res1);	
-	result.add(res2);	
-	result.add(res3);
-	result.add(res4);	
-	result.add(res5);	
-	result.add(res6);
+	// Dummy data
+	//	Object[] res1 = {"Professor1", 4};
+	//	Object[] res2 = {"Professor2", 2};
+	//	Object[] res3 = {"Professor3", 1};	
+	//	Object[] res4 = {"Professor4", 3};
+	//	Object[] res5 = {"Professor5", 2};
+	//	Object[] res6 = {"Professor6", 4};
+	//	result.add(res1);	
+	//	result.add(res2);	
+	//	result.add(res3);
+	//	result.add(res4);	
+	//	result.add(res5);	
+	//	result.add(res6);
+	
+	// Query execution
+	/*
+	 * select C.professor, count(*)
+	 * from CourseClass C
+	 * group by C.professor
+	 */
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	String hql = "SELECT C.professor.username, count(*) "
+		+ "FROM CourseClass C "
+		+ "GROUP BY C.professor";
+	Query query = session.createQuery(hql);
+	result = query.list();
+	session.close();
+	
+	System.err.println("getCourseByProfessor(professor)");
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    System.out.println("Prof: "+objects[0]+", NumCourse: "+objects[1]);
+	}
 	
 	return result;
     }
@@ -62,7 +87,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getForYearLectureByWeekDaySingleProfessor( Professor professor)
      */
     @Override
-    public List<Object[]> getForYearLectureByWeekDay( Professor professor) {
+    public List<Object[]> getForYearLectureByWeekDay(Professor professor) {
 	List<Object[]> result = new ArrayList<Object[]>();
 	
 	/*
@@ -244,7 +269,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getAvgTimeDeliveryHomework( Professor professor)
      */
     @Override
-    public List<Object[]> getAvgTimeDeliveryHomework( Professor professor) {
+    public List<Object[]> getAvgTimeDeliveryHomework(Professor professor) {
 	List<Object[]> result = new ArrayList<Object[]>();
 	
 	/*
@@ -384,6 +409,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getAvgHomeworksByStudent( Student student)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Object[]> getAvgHomeworksByStudent( Student student) {
 	List<Object[]> result = new ArrayList<Object[]>();
@@ -396,18 +422,47 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	 * CourseN, AvgScore
 	 */
 	
-	Object[] res1 = {"Course1", 26.33};
-	Object[] res2 = {"Course2", 22.33};
-	Object[] res3 = {"Course3", 28.33};	
-	Object[] res4 = {"Course4", 26.33};
-	Object[] res5 = {"Course5", 22.33};
-	Object[] res6 = {"Course6", 28.33};
-	result.add(res1);	
-	result.add(res2);	
-	result.add(res3);
-	result.add(res4);	
-	result.add(res5);	
-	result.add(res6);
+	// Dummy data
+	//	Object[] res1 = {"Course1", 26.33};
+	//	Object[] res2 = {"Course2", 22.33};
+	//	Object[] res3 = {"Course3", 28.33};	
+	//	Object[] res4 = {"Course4", 26.33};
+	//	Object[] res5 = {"Course5", 22.33};
+	//	Object[] res6 = {"Course6", 28.33};
+	//	result.add(res1);	
+	//	result.add(res2);	
+	//	result.add(res3);
+	//	result.add(res4);	
+	//	result.add(res5);	
+	//	result.add(res6);
+	
+	// Query execution
+	/*
+	 * select C.name, avg(HSS.score)
+	 * from CourseClass C, Lecture L, Homework H, HomeworkStudentSolving HSS
+	 * where C.lectures = L.id and
+	 * 	L.homeworks=H.id and
+	 * 	H.homeworkStudentSolvings=HSS.id
+	 * group by C.name
+	 */
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	String hql = "select C.name, avg(HSS.score) "
+		+ "from CourseClass C join C.lectures L "
+		+ "join L.homeworks H join H.homeworkStudentSolvings HSS "
+		+ "where HSS.student.username = :username_student "
+		+ "group by C.name";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("username_student", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	System.err.println("getAvgHomeworksByStudent(student)");
+	System.out.println("Student: "+student.getUsername());
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    System.out.println("CourseName: "+objects[0]+", AvgScore: "+objects[1]);
+	}
 	
 	return result;
     }
@@ -415,6 +470,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getAvgTimeDeliveryHomeworksByStudent( Student student)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Object[]> getAvgTimeDeliveryHomeworksByStudent( Student student) {
 	List<Object[]> result = new ArrayList<Object[]>();
@@ -446,6 +502,42 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	result.add(res7);	
 	result.add(res8);	
 	result.add(res9);
+	
+	// Query execution
+	/*
+	 * select C.name, avg(HSS.score)
+	 * from CourseClass C, Lecture L, Homework H, HomeworkStudentSolving HSS
+	 * where C.lectures = L.id and
+	 * 	L.homeworks=H.id and
+	 * 	H.homeworkStudentSolvings=HSS.id
+	 * group by C.name
+	 */
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	
+	String hql = "select C.name, avg("
+		+ "DATEDIFF(DAY, HSS.date, L.date)"
+		+ ") "
+		+ "from CourseClass C join C.lectures L "
+		+ "join L.homeworks H join H.homeworkStudentSolvings HSS "
+		+ "where HSS.student.username = :username_student "
+		+ "group by C.name";
+	//	String hql = "select C.name, HSS.date, dayofweek(HSS.date), L.date, DATEDIFF(DAY, HSS.date, L.date) "
+	//		+ "from CourseClass C join C.lectures L "
+	//		+ "join L.homeworks H join H.homeworkStudentSolvings HSS "
+	//		+ "where HSS.student.username = :username_student ";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("username_student", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	System.err.println("getAvgTimeDeliveryHomeworksByStudent(student)");
+	System.out.println("Student: "+student.getUsername());
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    //System.out.println("CourseName: "+objects[0]+", HSS: "+objects[1]+", DayWeek: "+objects[2]+", L: "+objects[3]+", DIFF: "+objects[4]);
+	    System.out.println("CourseName: "+objects[0]+", Avg: "+objects[1]);
+	}
 	
 	return result;
     }
@@ -568,6 +660,40 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	result.add(res3);
 	result.add(res4);
 	result.add(res5);
+	
+	// Query execution
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+
+	String hql = "select C.name, (count(*)*100.0)/(select count(*) from L where L.courseClass.name=C.name) "
+		+ "from RegistrationStudentClass R join R.courseClass C join C.lectures L "
+		+ "join L.attendanceStudentLectures A "
+		+ "where R.student.username=:username_student and  A.student.username = :username_student "
+		+ "group by C.name";
+	
+	//	String hql = "select  A.student.username, L.id "
+	//		+ "from RegistrationStudentClass R join R.courseClass C join C.lectures L "
+	//		+ "join L.attendanceStudentLectures A "
+	//		+ "where R.student.username=:username_student and  A.student.username = :username_student ";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("username_student", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	System.err.println("getAvgAttendanceByStudent(student)");
+	System.out.println("Student: "+student.getUsername());
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    for(int j=0; j<objects.length; j++){
+		if(j>0){
+		    System.out.print(", ");
+		}
+		System.out.print("Prop "+(j+1)+": "+objects[j]);		
+	    }
+	    System.out.println();
+	    //System.out.println("CourseName: "+objects[0]+", Count: "+objects[1]+", NumLecture: "+objects[2]);
+	    //System.out.println("CourseName: "+objects[0]+", NumLecture: "+objects[1]);
+	}
 	
 	return result;
     }

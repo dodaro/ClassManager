@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.CartsList;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgAttendanceStudent;
@@ -51,7 +53,11 @@ public class StatisticsController {
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
 	
-	return statisticsForProfessor(locale, model, request, null);
+	//return statisticsForProfessor(locale, model, request, null);
+	
+	User user = DaoHelper.getUserDAO().get("StudentAldo2");
+	
+	return statisticsForStudent(locale, model, request, (Student) user);
 	
 	//	if ( username == null ) {			
 	//	    return "redirect:/";

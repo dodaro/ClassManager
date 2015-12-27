@@ -5,8 +5,12 @@ package it.unical.classmanager.statistics.queryCart.professor;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import it.unical.classmanager.model.dao.CartQueryDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
@@ -53,7 +57,7 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	cart.setTitle("Professori/numero corsi che sostengono");
 	StringBuilder seriesContent = new StringBuilder("");
 	StringBuilder data = new StringBuilder("");
-		
+	
 	for(int i=0; i<courseByProfessor.size(); i++){	    
 	    String currentData = "{name: \'"+
 		    courseByProfessor.get(i)[0]+"\', y: "+

@@ -173,11 +173,11 @@ public class DBInitializatorController {
 	    dbMaterialInit(locale, model, request);
 	    dbHomeworkInit(locale, model, request);
 	    dbHomeworkStudentSolvingInit(locale, model, request);
-	    //			dbQuestionAnswerInit(locale, model, request);
-	    //			dbExamInit(locale, model, request);
-	    //			dbStudentExamPartecipationInit(locale, model, request);
-	    //			dbEventInit(locale, model, request);
-	    //			dbCommunicationInit(locale, model, request);
+	    dbExamInit(locale, model, request);
+	    dbStudentExamPartecipationInit(locale, model, request);
+	    dbEventInit(locale, model, request);
+	    dbCommunicationInit(locale, model, request);
+	    //dbQuestionAnswerInit(locale, model, request);
 	    // Attached contents
 	    //			dbQuestionAttachedContentInit(locale, model, request);
 	    //			dbAnswerAttachedContentInit(locale, model, request);
@@ -315,6 +315,7 @@ public class DBInitializatorController {
 	int deltaYear;
 	// ---------------------------------------- //
 	deltaYear = random.nextInt(6)-3;
+	
 	CourseClass courseClass1 = new CourseClass(
 		1, 
 		"EnterpriseApplications", 
@@ -470,7 +471,7 @@ public class DBInitializatorController {
 	    int deltaDay = random.nextInt(3);
 	    int day = date.getDay()-deltaDay;
 	    day = day <= 0 ? 1 : day;
-	    Date invitationDate = new Date(date.getYear(), date.getMonth(), day);
+	    Date invitationDate = new Date(date.getYear()+1900, date.getMonth(), day);
 	    for(Student student : userDao.getAllStudents()){
 		if(random.nextInt()%2==0){
 		    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
@@ -509,13 +510,13 @@ public class DBInitializatorController {
 	    if(courseClass.getEndDate()==null){
 		// Course still active
 		year = DateTimeFactory.getRandomYearBetween(
-			courseClass.getActivationDate().getYear(), 
+			courseClass.getActivationDate().getYear()+1900, 
 			Calendar.getInstance().get(Calendar.YEAR));
 	    } else {
 		// Course terminated
 		year = DateTimeFactory.getRandomYearBetween(
-			courseClass.getActivationDate().getYear(), 
-			courseClass.getEndDate().getYear());
+			courseClass.getActivationDate().getYear()+1900, 
+			courseClass.getEndDate().getYear()+1900);
 	    }
 	    
 	    Calendar lectureDateStart = DateTimeFactory.getRandomDate(year);
@@ -565,13 +566,18 @@ public class DBInitializatorController {
 	    for(Lecture lecture: courseClass.getLectures()){
 		// In this part i create a random attendances distribution
 		if(random.nextFloat()<=attendanceStudentProbability){
-		    AttendanceStudentLecture attendanceStudentLecture = new AttendanceStudentLecture(
-			    k, 
-			    registrationStudentClass.getStudent(), 
-			    lecture);
-		    attendanceStudentLectureDAO.create(attendanceStudentLecture);
-		    logger.info("Created "+attendanceStudentLecture, locale);
-		    k++;
+		    List<AttendanceStudentLecture> allAttendanceStudentLecturesOfAStudentAndALecture = attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfAStudentAndALecture(registrationStudentClass.getStudent(), lecture);
+		    
+		    if(allAttendanceStudentLecturesOfAStudentAndALecture.size()<=0){		    
+			AttendanceStudentLecture attendanceStudentLecture = new AttendanceStudentLecture(
+				k, 
+				registrationStudentClass.getStudent(), 
+				lecture);
+			attendanceStudentLectureDAO.create(attendanceStudentLecture);
+			System.out.println("Inserted attendance for: "+registrationStudentClass.getStudent().getUsername()+", Lecture: "+lecture.getId());
+			logger.info("Created "+attendanceStudentLecture, locale);
+			k++;
+		    }
 		}
 	    }
 	}
@@ -646,9 +652,17 @@ public class DBInitializatorController {
 	    for(Lecture lecture : registrationStudentClass.getCourseClass().getLectures()){
 		for(Homework homework : lecture.getHomeworks()){
 		    if(random.nextFloat()<=homeworkStudentProbability){
+			Date date = lecture.getDate();	
+			Calendar cal = new GregorianCalendar(date.getYear()+1900, date.getMonth(), date.getDay());
+			int nextInt = random.nextInt(10);
+			cal.add(Calendar.DAY_OF_MONTH, nextInt);
+			Date newDate = cal.getTime();
+			System.err.println("Added:"+nextInt+", begin: "+date+", after: "+newDate);
+			
 			HomeworkStudentSolving homeworkStudentSolving = new HomeworkStudentSolving(
 				k, 
 				18+random.nextInt(13), 
+				cal.getTime(),
 				registrationStudentClass.getStudent(), 
 				homework, 
 				new ArrayList<HomeworkAttachedStudentSolving>());
@@ -758,7 +772,7 @@ public class DBInitializatorController {
 	    Lecture lecture = courseClass.getLectures().get(courseClass.getLectures().size()-1);
 	    Date lastLectureDate = lecture.getDate();
 	    Calendar date = new GregorianCalendar(
-		    lastLectureDate.getYear(), 
+		    lastLectureDate.getYear()+1900, 
 		    lastLectureDate.getMonth(),
 		    lastLectureDate.getDay());
 	    date.add(Calendar.DAY_OF_MONTH, +14);			
@@ -779,7 +793,7 @@ public class DBInitializatorController {
 	    Lecture lecture = courseClass.getLectures().get(courseClass.getLectures().size()-1);
 	    Date lastLectureDate = lecture.getDate();
 	    Calendar date = new GregorianCalendar(
-		    lastLectureDate.getYear(), 
+		    lastLectureDate.getYear()+1900, 
 		    lastLectureDate.getMonth(),
 		    lastLectureDate.getDay());
 	    date.add(Calendar.MONTH, +2);			
@@ -853,7 +867,7 @@ public class DBInitializatorController {
 	    if(random.nextFloat()<=eventUserProbability){
 		int numEvents = random.nextInt(10);
 		for(int i=0; i<numEvents; i++){
-		    Calendar randomDate = DateTimeFactory.getRandomDate(date.getYear());
+		    Calendar randomDate = DateTimeFactory.getRandomDate(date.getYear()+1900);
 		    Time beginTime = DateTimeFactory.getRandomTimeBetween(
 			    new Time(8,0,0), 
 			    new Time(15,0,0));

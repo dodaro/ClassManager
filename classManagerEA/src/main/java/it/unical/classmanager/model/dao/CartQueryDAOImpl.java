@@ -545,6 +545,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
     /* (non-Javadoc)
      * @see it.unical.classmanager.model.dao.CartQueryDAO#getHomeworkScoreSeriesByStudent( Student student)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Object[]> getHomeworkScoreSeriesByStudent( Student student) {
 	List<Object[]> result = new ArrayList<Object[]>();
@@ -557,36 +558,63 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	 * Course, Homework, Score
 	 */
 	
-	Object[] hw11 = {"Course1", "Homework1",  25};
-	Object[] hw12 = {"Course1", "Homework2",  26};
-	Object[] hw13 = {"Course1", "Homework3",  27};
-	Object[] hw14 = {"Course1", "Homework4",  28};
-	Object[] hw15 = {"Course1", "Homework5",  29};
-	result.add(hw11);
-	result.add(hw12);
-	result.add(hw13);
-	result.add(hw14);
-	result.add(hw15);
-	Object[] hw21 = {"Course2", "Homework1",  29};
-	Object[] hw22 = {"Course2", "Homework2",  28};
-	Object[] hw23 = {"Course2", "Homework3",  27};
-	Object[] hw24 = {"Course2", "Homework4",  26};
-	Object[] hw25 = {"Course2", "Homework5",  25};
-	result.add(hw21);
-	result.add(hw22);
-	result.add(hw23);
-	result.add(hw24);
-	result.add(hw25);
-	Object[] hw31 = {"Course3", "Homework1",  29};
-	Object[] hw32 = {"Course3", "Homework2",  22};
-	Object[] hw33 = {"Course3", "Homework3",  30};
-	Object[] hw34 = {"Course3", "Homework4",  26};
-	Object[] hw35 = {"Course3", "Homework5",  28};
-	result.add(hw31);
-	result.add(hw32);
-	result.add(hw33);
-	result.add(hw34);
-	result.add(hw35);
+	//	Object[] hw11 = {"Course1", "Homework1",  25};
+	//	Object[] hw12 = {"Course1", "Homework2",  26};
+	//	Object[] hw13 = {"Course1", "Homework3",  27};
+	//	Object[] hw14 = {"Course1", "Homework4",  28};
+	//	Object[] hw15 = {"Course1", "Homework5",  29};
+	//	result.add(hw11);
+	//	result.add(hw12);
+	//	result.add(hw13);
+	//	result.add(hw14);
+	//	result.add(hw15);
+	//	Object[] hw21 = {"Course2", "Homework1",  29};
+	//	Object[] hw22 = {"Course2", "Homework2",  28};
+	//	Object[] hw23 = {"Course2", "Homework3",  27};
+	//	Object[] hw24 = {"Course2", "Homework4",  26};
+	//	Object[] hw25 = {"Course2", "Homework5",  25};
+	//	result.add(hw21);
+	//	result.add(hw22);
+	//	result.add(hw23);
+	//	result.add(hw24);
+	//	result.add(hw25);
+	//	Object[] hw31 = {"Course3", "Homework1",  29};
+	//	Object[] hw32 = {"Course3", "Homework2",  22};
+	//	Object[] hw33 = {"Course3", "Homework3",  30};
+	//	Object[] hw34 = {"Course3", "Homework4",  26};
+	//	Object[] hw35 = {"Course3", "Homework5",  28};
+	//	result.add(hw31);
+	//	result.add(hw32);
+	//	result.add(hw33);
+	//	result.add(hw34);
+	//	result.add(hw35);
+	
+	// Query execution
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	String hql = "select C.name, H.name, HSS.score "
+		+ "from CourseClass C join C.lectures L "
+		+ "join L.homeworks H join H.homeworkStudentSolvings HSS "
+		+ "where HSS.student.username = :username_student "
+		+ "group by C.name, H.name, HSS.score "
+		+ "order by C.name";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("username_student", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	System.err.println("getHomeworkScoreSeriesByStudent(student)");
+	System.out.println("Student: "+student.getUsername());
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    for(int j=0; j<objects.length; j++){
+		if(j>0){
+		    System.out.print(", ");
+		}
+		System.out.print("Prop "+(j+1)+": "+objects[j]);		
+	    }
+	    System.out.println();
+	}
 	
 	return result;
     }
@@ -639,6 +667,33 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	result.add(exam34);
 	result.add(exam35);
 	
+	// Query execution
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	String hql = "select year(E.date), E.date, E.name, EP.score "
+		+ "from CourseClass C join C.exams E "
+		+ "join E.studentExamPartecipations EP "
+		+ "where EP.student.username = :username_student "
+		+ "group by year(E.date), E.date, E.name, EP.score "
+		+ "order by year(E.date), E.date, E.name, EP.score ";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("username_student", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	System.err.println("getExamScoreSeriesByStudent(student)");
+	System.out.println("Student: "+student.getUsername());
+	for(int i=0; i<result.size(); i++){
+	    Object[] objects = result.get(i);
+	    for(int j=0; j<objects.length; j++){
+		if(j>0){
+		    System.out.print(", ");
+		}
+		System.out.print("Prop "+(j+1)+": "+objects[j]);		
+	    }
+	    System.out.println();
+	}
+	
 	return result;
     }
     
@@ -663,7 +718,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 	
 	// Query execution
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
-
+	
 	String hql = "select C.name, (count(*)*100.0)/(select count(*) from L where L.courseClass.name=C.name) "
 		+ "from RegistrationStudentClass R join R.courseClass C join C.lectures L "
 		+ "join L.attendanceStudentLectures A "
@@ -686,8 +741,6 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		System.out.print("Prop "+(j+1)+": "+objects[j]);		
 	    }
 	    System.out.println();
-	    //System.out.println("CourseName: "+objects[0]+", Count: "+objects[1]+", NumLecture: "+objects[2]);
-	    //System.out.println("CourseName: "+objects[0]+", NumLecture: "+objects[1]);
 	}
 	
 	return result;

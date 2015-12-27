@@ -670,11 +670,6 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		+ "where R.student.username=:username_student and  A.student.username = :username_student "
 		+ "group by C.name";
 	
-	//	String hql = "select  A.student.username, L.id "
-	//		+ "from RegistrationStudentClass R join R.courseClass C join C.lectures L "
-	//		+ "join L.attendanceStudentLectures A "
-	//		+ "where R.student.username=:username_student and  A.student.username = :username_student ";
-	
 	Query query = session.createQuery(hql);
 	query.setParameter("username_student", student.getUsername());
 	result = query.list();

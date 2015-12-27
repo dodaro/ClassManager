@@ -116,6 +116,7 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 	    List<Float> list = studentTime.get(key);
 	    for(int i=0; i<list.size(); i++){
 		float currentValue = list.get(i);
+		currentValue = (float) (((int)(currentValue*100.0f))/100.0f);
 		if(i==0){
 		    seriesContent.append(currentValue);			
 		} else {

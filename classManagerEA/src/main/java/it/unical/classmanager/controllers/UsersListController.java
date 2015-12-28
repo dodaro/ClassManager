@@ -53,7 +53,7 @@ public class UsersListController {
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
 		
 		
-		for ( int i = 0 ; i < 10 ; i++ ) {
+		for ( int i = 0 ; i < 100 ; i++ ) {
 			String username = "StudentAldo";
 	
 			User user = new User();
@@ -86,7 +86,13 @@ public class UsersListController {
 	    usersList.setPageSize(10);
 	    request.getSession().setAttribute("UserListController_usersList", usersList);
 		
+	    int pageCount = usersList.getPageCount();
+	    int pageNumber = usersList.getPage() + 1; 
 		model.addAttribute("users",usersList);
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+		
+		
 		
 		return "userslist";
 	}
@@ -108,13 +114,33 @@ public class UsersListController {
 			handleSessionTimeOut();
 		}
 		
-		String nav = request.getParameter("nav");
+		String nav = request.getParameter("page");
 		if ( nav != null ) {
+			//if the nav parameter is the next page
 			if ( nav.equals("prev") ) {
 				usersList.previousPage();
+				//or the previous page
 			} else if ( nav.equals("next") ) {
 				usersList.nextPage();
+				//or a page number
+			} else {
+				int pageToGet = 0;
+				try {
+					pageToGet = Integer.parseUnsignedInt(nav);
+					logger.info("asked for " + pageToGet);
+					pageToGet -= 1;
+				} catch ( NumberFormatException e ) {
+					pageToGet = 0;
+				}
+				usersList.setPage(pageToGet);
 			}
+			
+			int pageCount = usersList.getPageCount();
+		    int pageNumber = usersList.getPage() + 1; 
+			model.addAttribute("users",usersList);
+			model.addAttribute("pageNumber",pageNumber);
+			model.addAttribute("pageCount",pageCount);
+			logger.info("pagenumber: " + pageNumber + " pageCount: " + pageCount);
 			model.addAttribute("users", usersList);
 		    return "userslist";
 		}
@@ -137,6 +163,13 @@ public class UsersListController {
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
 		usersList.setSource(userDao.getUsersByLastName(lastname));
 	    usersList.setPageSize(usersPerPage);
+	    
+	    int pageCount = usersList.getPageCount();
+	    int pageNumber = usersList.getPage() + 1; 
+		model.addAttribute("users",usersList);
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+	    
 	    model.addAttribute("users", usersList);
 	    return "userslist";
 	}

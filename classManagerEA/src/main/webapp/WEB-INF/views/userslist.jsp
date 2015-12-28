@@ -12,11 +12,13 @@
 	<script src="resources/lib/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/lib/jquery-ui/jquery-ui.js"></script>
 	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>	
+	<script src="resources/lib/bootpag/jquery.bootpag.min.js"></script>	
 	
 	<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/style/style.css" />
 	<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />	
 	<link rel="stylesheet" type="text/css" href="resources/lib/jquery-ui/jquery-ui.css"	 />
+	
 		
 	
 	<script src="resources/script/nav-bar.js"></script>
@@ -53,7 +55,7 @@
     				<a class="nav-bar-button logout" href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
 				</c:if>
 				<c:if test="${not empty user && role == 'admin' }">
-					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out">User List</a>
+					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out">User List</span></a>
 				</c:if>
             </div>
 	  	</div>
@@ -133,25 +135,46 @@
 						</c:forEach>
     				</tbody>
 				</table>
-				<nav>
-				  <ul class="pagination">
-				    <li>
-				      <a href="searchusers?nav=prev" aria-label="Previous">
-				        <span aria-hidden="true">&laquo;</span>
-				      </a>
-				    </li>
-<!-- 				    <li><a href="#">1</a></li> -->
-<!-- 				    <li><a href="#">2</a></li> -->
-<!-- 				    <li><a href="#">3</a></li> -->
-<!-- 				    <li><a href="#">4</a></li> -->
-<!-- 				    <li><a href="#">5</a></li> -->
-				    <li>
-				      <a href="searchusers?nav=next" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
-				  </ul>
-				</nav>
+				<form id="options">
+					<input name="total-pages" type="hidden" value="${pageCount}"/> 
+					<input name="page-number" type="hidden" value="${pageNumber}"/> 
+				</form>
+				<div id="paginator">
+				</div>
+				
+				
+<!-- 				<nav> -->
+<!-- 				  <ul class="pagination"> -->
+<!-- 				    <li> -->
+<!-- 				      <a href="searchusers?nav=prev" aria-label="Previous"> -->
+<!-- 				        <span aria-hidden="true">&laquo;</span> -->
+<!-- 				      </a> -->
+<!-- 				    </li> -->
+				 
+<!-- 	 				    <li><a href="searchusers?page=0">First</a></li> -->
+<!-- 	 				    <li><a href="#">2</a></li>  -->
+<!-- 	 				    <li><a href="#">3</a></li>  -->
+<!--  					    <li><a href="#">4</a></li>  -->
+<!--  					    <li><a href="#">6</a></li>  -->
+<!--  					    <li><a href="#">7</a></li>  -->
+<!--  					    <li><a href="#">8</a></li>  -->
+<!--  					    <li><a href="#">9</a></li>  -->
+<!--  					    <li><a href="#">10</a></li>  -->
+<!--  					    <li><a href="#">11</a></li>  -->
+<!--  					    <li><a href="#">12</a></li>  -->
+<!--  					    <li><a href="#">13</a></li>  -->
+<!--  					    <li><a href="#">14</a></li>  -->
+<!--  					    <li><a href="#">15</a></li>  -->
+<!--  					    <li><a href="#">16</a></li>  -->
+<!--  					    <li><a href="#">17</a></li>  -->
+<%-- 	 				    <li><a href="searchusers?page=${pageCount}">Last</a></li> --%>
+<!-- 				    <li> -->
+<!-- 				      <a href="searchusers?nav=next" aria-label="Next"> -->
+<!-- 				        <span aria-hidden="true">&raquo;</span> -->
+<!-- 				      </a> -->
+<!-- 				    </li> -->
+<!-- 				  </ul> -->
+<!-- 				</nav> -->
 			</div>
 		</div>
 	</div>

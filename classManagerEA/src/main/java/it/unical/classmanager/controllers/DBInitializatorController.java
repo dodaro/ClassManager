@@ -107,7 +107,7 @@ public class DBInitializatorController {
     /**
      * The probability for a student that has done a homework
      */
-    private static float homeworkStudentProbability = 0.75f;
+    private static float homeworkStudentProbability = 1.0f;
     /**
      * The probability that a student ask a question
      */

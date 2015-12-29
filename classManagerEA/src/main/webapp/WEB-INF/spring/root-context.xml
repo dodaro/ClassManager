@@ -57,6 +57,13 @@
 
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>
+	
+	<bean id="mutableSortDefinition" class="org.springframework.beans.support.MutableSortDefinition">
+		<property name="property" value="lastName"></property>
+		<property name="ignoreCase" value="true"></property>
+		<property name="ascending" value="true"></property>
+		<property name="toggleAscendingOnProperty" value="true"></property>
+	</bean>
 
 	<!-- DATABASE -->
 	<bean id="userDao" class="it.unical.classmanager.model.dao.UserDAOImpl">

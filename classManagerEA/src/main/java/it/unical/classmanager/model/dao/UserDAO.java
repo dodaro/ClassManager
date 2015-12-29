@@ -29,6 +29,8 @@ public interface UserDAO {
 	public boolean exists(String username);
 	
 	public List<User> getUsersByLastName(String lastName);
+	
+	public void promoteUser(User user);
 
 
 }

@@ -19,6 +19,8 @@
 	<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />	
 	<link rel="stylesheet" type="text/css" href="resources/lib/jquery-ui/jquery-ui.css"	 />
 	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	
 		
 	
 	<script src="resources/script/nav-bar.js"></script>
@@ -93,6 +95,9 @@
 				    <input type="text"  class="form-control" name="query" placeholder="Rossi"/>
 				    	<label for="select"><spring:message code="message.usersperpage" text="default text"/></label>
 						  <select class="form-control" name="users">
+						  	<c:if test="${not empty pageSize}">
+						  		<option selected="selected">${pageSize}</option>
+						  	</c:if>
 						    <option>10</option>
 						    <option>25</option>
 						    <option>50</option>
@@ -107,13 +112,72 @@
 				    
 				</form>
 				
-				<table class="table table-striped">
+				<table class="table table-striped table-bordered">
 					<thead>
 					      <tr>
-					        <th>User</th>
-					        <th><spring:message code="message.firstName" text="default text" /> </th>
-					        <th><spring:message code="message.lastName" text="default text" /></th>
-					        <th>Role</th>
+					        <th>User
+					        	<a href="sort?prop=username">
+					        	<c:choose>
+					        		<c:when test="${prop == 'username' && asc == true }">
+						        		<i class="sort fa fa-sort-asc"></i>
+					        		</c:when>
+					        		<c:when test="${prop == 'username' && asc != true }">
+						        		<i class="sort fa fa-sort-desc"></i>
+						        	</c:when>
+						        	<c:otherwise>
+						        		<i class="sort fa fa-sort"></i>
+						        	</c:otherwise>
+					        	</c:choose>
+					        		
+					        	</a>
+					        </th>
+					        <th>
+					        	<spring:message code="message.firstName" text="default text" /> 
+					        	<a href="sort?prop=firstName">
+						        	<c:choose>
+						        		<c:when test="${prop == 'firstName' && asc == true }">
+							        		<i class="sort fa fa-sort-asc"></i>
+						        		</c:when>
+						        		<c:when test="${prop == 'firstName' && asc != true }">
+							        		<i class="sort fa fa-sort-desc"></i>
+							        	</c:when>
+							        	<c:otherwise>
+							        		<i class="sort fa fa-sort"></i>
+							        	</c:otherwise>
+						        	</c:choose>
+					        	</a>
+					        </th>
+					        <th>
+					        	<spring:message code="message.lastName" text="default text" /> 
+					        	<a href="sort?prop=lastName">
+					        		<c:choose>
+					        		<c:when test="${prop == 'lastName' && asc == true }">
+						        		<i class="sort fa fa-sort-asc"></i>
+					        		</c:when>
+					        		<c:when test="${prop == 'lastName' && asc != true }">
+						        		<i class="sort fa fa-sort-desc"></i>
+						        	</c:when>
+						        	<c:otherwise>
+						        		<i class="sort fa fa-sort"></i>
+						        	</c:otherwise>
+					        	</c:choose>
+					        	</a>
+					        </th>
+					        <th>Role
+					        	<a href="sort?prop=role">
+					        		<c:choose>
+					        		<c:when test="${prop == 'role' && asc == true }">
+						        		<i class="sort fa fa-sort-asc"></i>
+					        		</c:when>
+					        		<c:when test="${prop == 'role' && asc != true }">
+						        		<i class="sort fa fa-sort-desc"></i>
+						        	</c:when>
+						        	<c:otherwise>
+						        		<i class="sort fa fa-sort"></i>
+						        	</c:otherwise>
+					        	</c:choose>
+					        	</a>
+					        </th>
 					        <th>Action</th>
 					      </tr>
     				</thead>
@@ -125,11 +189,14 @@
 								<td class="firstname">${user.firstName}</td>
 								<td class="lastname">${user.lastName}</td>
 								<td class="role">${user.role}</td>
-								<td><button type="submit" class="btn btn-danger"><spring:message code="message.delete" text="default text"/></button>
+								
+								<td>
+								<c:if test="${user.username != loggedIn }">
+									<button type="submit" class="btn btn-danger"><spring:message code="message.delete" text="default text"/></button>
+								</c:if>
 								<c:if test="${user.role == 'Student'}">
 									<button type="submit" class="btn btn-success"><spring:message code="message.professor" text="default text"/></button>
 								</c:if>
-								
 								</td>
 							</tr>
 						</c:forEach>
@@ -141,40 +208,6 @@
 				</form>
 				<div id="paginator">
 				</div>
-				
-				
-<!-- 				<nav> -->
-<!-- 				  <ul class="pagination"> -->
-<!-- 				    <li> -->
-<!-- 				      <a href="searchusers?nav=prev" aria-label="Previous"> -->
-<!-- 				        <span aria-hidden="true">&laquo;</span> -->
-<!-- 				      </a> -->
-<!-- 				    </li> -->
-				 
-<!-- 	 				    <li><a href="searchusers?page=0">First</a></li> -->
-<!-- 	 				    <li><a href="#">2</a></li>  -->
-<!-- 	 				    <li><a href="#">3</a></li>  -->
-<!--  					    <li><a href="#">4</a></li>  -->
-<!--  					    <li><a href="#">6</a></li>  -->
-<!--  					    <li><a href="#">7</a></li>  -->
-<!--  					    <li><a href="#">8</a></li>  -->
-<!--  					    <li><a href="#">9</a></li>  -->
-<!--  					    <li><a href="#">10</a></li>  -->
-<!--  					    <li><a href="#">11</a></li>  -->
-<!--  					    <li><a href="#">12</a></li>  -->
-<!--  					    <li><a href="#">13</a></li>  -->
-<!--  					    <li><a href="#">14</a></li>  -->
-<!--  					    <li><a href="#">15</a></li>  -->
-<!--  					    <li><a href="#">16</a></li>  -->
-<!--  					    <li><a href="#">17</a></li>  -->
-<%-- 	 				    <li><a href="searchusers?page=${pageCount}">Last</a></li> --%>
-<!-- 				    <li> -->
-<!-- 				      <a href="searchusers?nav=next" aria-label="Next"> -->
-<!-- 				        <span aria-hidden="true">&raquo;</span> -->
-<!-- 				      </a> -->
-<!-- 				    </li> -->
-<!-- 				  </ul> -->
-<!-- 				</nav> -->
 			</div>
 		</div>
 	</div>

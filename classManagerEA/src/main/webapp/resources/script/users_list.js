@@ -1,18 +1,20 @@
 $(function() {
 	
 	$(".btn-success").click(function(event) {
-		
+		event.preventDefault();
 		var user = $(this).closest("tr").find(".user").html();
-		console.log(user)
-		
-		
-		$.post( "promoteuser", { user: user } );
+		$.post( "edituser", { user: user,action :"promote" }, function(data){
+			location.href=data;	
+		});
 
 	});
 	
 	$(".btn-danger").click(function(event) {
-		e.preventDefault();
-		alert("prevented remove");
+		event.preventDefault();
+		var user = $(this).closest("tr").find(".user").html();
+		$.post( "edituser", { user: user,action :"delete" }, function(data){
+			location.href=data;	
+		});
 	});
 	
 	var totalPages = parseInt($("#options :input[name='total-pages']").val());

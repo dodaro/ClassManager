@@ -10,8 +10,10 @@
 					class="glyphicon glyphicon-folder-open"></span> Materials</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-list"></span>
 					Discussions</a></li>
-			<li><a href="./statistics"><span class="glyphicon glyphicon-stats"></span>
-					Statistics</a></li>
+			<li><a href="./statistics"><span
+					class="glyphicon glyphicon-stats"></span> Statistics</a></li>
+			<li><a href="./allCarts"><span
+					class="glyphicon glyphicon-stats"></span> AllCarts</a></li>
 		</ul>
 	</div>
 </div>

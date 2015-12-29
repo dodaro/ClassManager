@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -31,7 +32,6 @@ public interface UserDAO {
 	public List<User> getUsersByLastName(String lastName);
 	
 	public void promoteUser(User user);
-
 
 }
 

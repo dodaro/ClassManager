@@ -19,8 +19,8 @@ public class ScoresPageTransformView {
 	private HashMap<Integer, Integer> scores;
 	//contains the association homeworkId - homeworkname
 	private HashMap<Integer, String> homeworksName;
-	//contains the association homeworkId - homeworkStudentSolvingId
-	private HashMap<Integer, Integer> homeworkSolution;
+	//contains the association (studentId + "-" homeworkId) - homeworkStudentSolvingId
+	private HashMap<String, Integer> homeworkSolution;
 
 	public ScoresPageTransformView() {
 		
@@ -28,12 +28,12 @@ public class ScoresPageTransformView {
 		setStudentHomeworks(new HashMap<String, List<Integer>>());
 		setScores(new HashMap<Integer, Integer>());
 		setHomeworksName(new HashMap<Integer, String>());
-		setHomeworksSolved(new HashMap<Integer, Integer>());
+		setHomeworksSolved(new HashMap<String, Integer>());
 	}
 	
-	public void addHomeworkSolution(int idHomework, int idSolution){
+	public void addHomeworkSolution(String key, int idSolution){
 		
-		this.getHomeworksSolved().put(idHomework, idSolution);
+		this.getHomeworksSolved().put(key, idSolution);
 	}
 	
 	public void addStudent(String id, String name){
@@ -111,11 +111,11 @@ public class ScoresPageTransformView {
 		this.homeworksName = homeworksName;
 	}
 
-	public HashMap<Integer, Integer> getHomeworksSolved() {
+	public HashMap<String, Integer> getHomeworksSolved() {
 		return homeworkSolution;
 	}
 
-	public void setHomeworksSolved(HashMap<Integer, Integer> homeworksSolved) {
+	public void setHomeworksSolved(HashMap<String, Integer> homeworksSolved) {
 		this.homeworkSolution = homeworksSolved;
 	}
 }

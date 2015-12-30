@@ -40,6 +40,7 @@ public class ScoreController {
 	/**
 	 * This controller handles requests related to the visualization and evaluation of homeworks
 	 */
+	//TODO ADD ALSO EXAM EVALUATION
 	@RequestMapping(value = "/scores", method = RequestMethod.GET)
 	public String getScores(Model model) {
 
@@ -65,11 +66,12 @@ public class ScoreController {
 				transformView.addStudent(username, name);
 				
 				transformView.addHomework(username, solution.getHomework().getId());
-				transformView.addScore(solution.getHomework().getId(), solution.getScore());
+				transformView.addScore(solution.getId(), solution.getScore());
 				
 				transformView.addHomeworkName(solution.getHomework().getId(),solution.getHomework().getName());
 				
-				transformView.addHomeworkSolution(solution.getHomework().getId(), solution.getId());
+				String key = solution.getHomework().getId() + "-" + username;
+				transformView.addHomeworkSolution(key, solution.getId());
 			}
 		}
 		
@@ -81,18 +83,24 @@ public class ScoreController {
 	}
 	
 	@RequestMapping(value = "/update_scores", method = RequestMethod.POST)
-	public String getScoresData(Model model, @RequestBody List<HomeworkStudentSolving> homeworkStudentSolvings) {
+	public @ResponseBody String getScoresData(Model model, @RequestBody List<HomeworkStudentSolving> homeworkStudentSolvings) {
 
 		for (HomeworkStudentSolving homeworkStudentSolving : homeworkStudentSolvings) {
 			
 			int id = homeworkStudentSolving.getId();
 			int score = homeworkStudentSolving.getScore();
 			
+			HomeworkStudentSolvingDAO dao = appContext.getBean("homeworkStudentSolvingDAO",HomeworkStudentSolvingDAOImpl.class);
+			HomeworkStudentSolving original = dao.get(id);
+			original.setScore(score);
+			
+			dao.update(original);
+			
 			//update db;
 		}
 		
 		logger.info("update_score");
-		return "{'status':'200'}";
+		return "200";
 
 	}		
 }

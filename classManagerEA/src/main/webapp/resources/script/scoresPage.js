@@ -1,4 +1,44 @@
-var toSend = new Array();
+var ScoreContainer = (function(){
+
+	var toSend;
+	var isEmpty;
+	var addScore;
+	var getScores;
+	var ScoreContainer = function(){
+
+		this.toSend = {};
+		this.isEmpty = isEmpty;
+		this.addScore = addScore;
+		this.getScores = getScores;
+	}
+
+	var getScores = function(){
+		
+		var res = new Array();
+		$.each(this.toSend, function(id, data){
+			
+			res.push({'id':data.id, 'score':data.score});
+		});
+		
+		return res;
+	}
+
+	var isEmpty = function(){
+
+		if(this.toSend.length == 0)
+			return true;
+		return false;
+	}
+
+	var addScore = function(data){
+
+		var homeworkStudentSolving = {'id':data.pk, 'score':data.value};
+		this.toSend[data.pk] = homeworkStudentSolving;
+	}
+
+	return ScoreContainer;
+
+})();
 
 /**
  * This functions uses the informations stored in the "data" model object, that is an instance of the "scoresPageTransformView"
@@ -13,55 +53,60 @@ function init(){
 	var homeworkSolution = JSON.parse(JSON.stringify(data.homeworkSolution));
 
 	var map_scores = {};
-	
-	//TODO ids seems to be worng
+
 	$.each(studentHomeworks, function(student, homeworks){
-		
+
 		if(!(student in map_scores))
 			map_scores[student] = {};
-		
+
 		$.each(homeworks, function(num, homework){
-			
+
 			if(!homework in map_scores[student])
 				map_scores[student][homework] = {};
-			
-			map_scores[student][homework] = {'id': homeworkSolution[homework], 'score': scores[homework]};
-			
+
+			var keyHS = homework + "-" + student;
+			var id_ = homeworkSolution[keyHS]
+			map_scores[student][homework] = {'id': id_, 'score': scores[id_]};
+
 		});
 	});
 
-	
+
 	//starting from the hash map an html table is created
 	var content = "<tr><td></td>";
 	$.each(homeworksName, function(id, name){
-		
+
 		content += "<td>" + name + "</td>";
 	});
 	content += "</tr>";
-	
+
 	$.each(map_scores, function(student, homeworks){
-		
+
 		content += "<tr>";
 		content += "<td>" + students[student] + "</td>";
-		
+
 		$.each(homeworks, function(key, val){
 
 			content += "<td><a href=# data-pk=" + val.id + ">" + val.score + "</a></td>";
 		});
 		content += "</tr>";
 	});
-	
+
 	$('#scores_table').append(content);
 
+	scoreContainer = new ScoreContainer();
 }
 
 /*
  *	Sends data to the server for the update 
  */
 function sendData(){
-	
-	toSend = JSON.stringify(toSend);
-	
+
+	if(scoreContainer.isEmpty())
+		return;
+
+	var toSend = JSON.stringify(scoreContainer.getScores());
+
 	$.ajax({ 
 		headers: {
 			Accept : "text/plain; charset=utf-8"
@@ -73,7 +118,8 @@ function sendData(){
 		contentType: 'application/json',
 		mimeType: 'application/json',
 		success: function(data) { 
-			alert("success");
+			if(data == "200")
+				window.location.replace("/scores");
 		},
 		error:function(data,status,er) { 
 			alert("error: "+data+" status: "+status+" er:"+er);
@@ -84,9 +130,8 @@ function sendData(){
  * stores temporary information about the score update. Called every time a score changes
  */
 function updateData(data){
-	
-	var homeworkStudentSolving = {'id':data.pk, 'score':data.value};
-	toSend.push(homeworkStudentSolving);
+
+	scoreContainer.addScore(data);
 }
 
 

@@ -1,3 +1,5 @@
+var toSend = new Array();
+
 /**
  * This functions uses the informations stored in the "data" model object, that is an instance of the "scoresPageTransformView"
  * class and organizes them in an bidimensional hash map of the form map[studentID][homeworkID] = score
@@ -12,6 +14,7 @@ function init(){
 
 	var map_scores = {};
 	
+	//TODO ids seems to be worng
 	$.each(studentHomeworks, function(student, homeworks){
 		
 		if(!(student in map_scores))
@@ -43,7 +46,7 @@ function init(){
 		
 		$.each(homeworks, function(key, val){
 
-			content += "<td><a href=#>" + val.score + "</a></td>";
+			content += "<td><a href=# data-pk=" + val.id + ">" + val.score + "</a></td>";
 		});
 		content += "</tr>";
 	});
@@ -51,6 +54,41 @@ function init(){
 	$('#scores_table').append(content);
 
 }
+
+/*
+ *	Sends data to the server for the update 
+ */
+function sendData(){
+	
+	toSend = JSON.stringify(toSend);
+	
+	$.ajax({ 
+		headers: {
+			Accept : "text/plain; charset=utf-8"
+		},
+		url: "/update_scores", 
+		type: 'POST', 
+		dataType: 'json', 
+		data: toSend, 
+		contentType: 'application/json',
+		mimeType: 'application/json',
+		success: function(data) { 
+			alert("success");
+		},
+		error:function(data,status,er) { 
+			alert("error: "+data+" status: "+status+" er:"+er);
+		}
+	});
+}
+/*
+ * stores temporary information about the score update. Called every time a score changes
+ */
+function updateData(data){
+	
+	var homeworkStudentSolving = {'id':data.pk, 'score':data.value};
+	toSend.push(homeworkStudentSolving);
+}
+
 
 /*
  * The html table stored information is handled using a bootstrap plug-in: "x-editable"
@@ -67,7 +105,7 @@ $(document).ready(function() {
 		type: 'text',
 		placement: 'right',
 		url: function(params){
-			alert(params);
+			updateData(params);
 		},
 		title: 'Change score'
 	});

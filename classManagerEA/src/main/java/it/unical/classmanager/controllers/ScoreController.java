@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import it.unical.classmanager.model.dao.HomeworkDAO;
 import it.unical.classmanager.model.dao.HomeworkDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
+import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
 import it.unical.classmanager.model.data.User;
@@ -65,6 +68,8 @@ public class ScoreController {
 				transformView.addScore(solution.getHomework().getId(), solution.getScore());
 				
 				transformView.addHomeworkName(solution.getHomework().getId(),solution.getHomework().getName());
+				
+				transformView.addHomeworkSolution(solution.getHomework().getId(), solution.getId());
 			}
 		}
 		
@@ -75,11 +80,19 @@ public class ScoreController {
 
 	}
 	
-	@RequestMapping(value = "/scoresData", method = RequestMethod.GET)
-	public @ResponseBody String getScoresData(Model model) {
+	@RequestMapping(value = "/update_scores", method = RequestMethod.POST)
+	public String getScoresData(Model model, @RequestBody List<HomeworkStudentSolving> homeworkStudentSolvings) {
 
-		logger.info("getScoresData");
-		return "{\"name\":  \"username\",\"pk\":\"1\",\"value\":\"superuser!\"}";
+		for (HomeworkStudentSolving homeworkStudentSolving : homeworkStudentSolvings) {
+			
+			int id = homeworkStudentSolving.getId();
+			int score = homeworkStudentSolving.getScore();
+			
+			//update db;
+		}
+		
+		logger.info("update_score");
+		return "{'status':'200'}";
 
 	}		
 }

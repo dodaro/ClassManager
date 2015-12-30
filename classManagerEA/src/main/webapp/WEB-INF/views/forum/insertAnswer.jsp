@@ -77,9 +77,9 @@
 									<hr />
 									<h3 style="margin-left: 10px;">
 										Your Answer
-										<input class="btn btn-primary" type="submit" value="send answer" >
+										<input class="btn btn-primary" type="submit" value="send answer" style="float: right; margin-right: 5px;">
 									</h3>
-						        	<div id="area">
+						        	<div id="area" style="margin-top: 15px;">
 							            <form:textarea path="description" id="textEditor" rows="10" cols="80"></form:textarea>
 						        	</div>
 						        </form:form>

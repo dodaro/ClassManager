@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Questions</title>
+<title>${question.getTitle()}</title>
 
 <link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
@@ -71,35 +71,69 @@
 							<div class="col-sm-12 col-md-12 col-lg-12">
 							
 								<div class="panel panel-default">
-								  <div class="panel-heading">Domanda</div>
 								  <div class="panel-body">
-								    <p>ID: ${question.getId()}</p>
-									<p>Title: ${question.getTitle()}</p>
-									<p>Description: ${question.getDescription()}</p>
-									<p>User: ${question.getUser().getUsername()}</p>
+								  
+								  	<div class="row">
+								  		<div class="col-sm-12 col-md-12 col-lg-12">
+									  		<h3><b>${question.getTitle()}</b></h3>
+								  			<hr />
+								  		</div>
+								  	</div>
+								  	<div class="row">
+								  		<div class="col-sm-12 col-md-12 col-lg-12">
+								  			<p>${question.getDescription()}</p>
+								  		</div>
+								  	</div>
+								  	<div class="row">
+								  		<div class="col-sm-12 col-md-12 col-lg-12">
+								  			<p class="pull-right" style="background-color: #E0EAF1; padding: 10 10 10 10">
+									  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								  			${question.getUser().getUsername()}
+								  			</p>
+								  		</div>
+								  	</div>
 								  </div>
 								</div>	
 								
-								<div>
 								
-								<form action="insertAnswer">
-									<input type="submit" value="insert answer" />
-								</form>
 								
-								<div>Risposte:</div>
-								<c:forEach var="answer" items="${question.getAnswers()}">
-									<div class="well">
-										<p>ID: ${answer.getId() }</p>
-										<p>Description: ${answer.getDescription() }</p>
-										<p>User: ${answer.getUser() }</p>
+								<div class="row">
+									<div class="col-xs-6 col-sm-10 col-md-10 col-lg-10">
+										<h4 style="margin-left: 10px;"><span class="badge">${question.getAnswers().size()}</span> Answers</h4>
 									</div>
-								</c:forEach>
+									<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+										<form action="insertAnswer">
+											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right; margin-right: 10px" />
+										</form>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-12">
+										<c:forEach var="answer" items="${question.getAnswers()}">
+											<div class="well">
+												<div class="row">
+											  		<div class="col-sm-12 col-md-12 col-lg-12">
+											  			<p>${answer.getDescription() }</p>
+											  		</div>
+											  	</div>
+											  	<div class="row">
+											  		<div class="col-sm-12 col-md-12 col-lg-12">
+											  			<p class="pull-right" style="background-color: #E0EAF1; padding: 10 10 10 10">
+												  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+											  			${answer.getUser().getUsername()}
+											  			</p>
+											  		</div>
+											  	</div>
+											</div>
+										</c:forEach>
+										
+									</div>
+								</div>
 								
 								<form action="insertAnswer">
-									<input type="submit" value="insert answer" />
+									<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style=""/>
 								</form>
-							
-							</div>
 
 						</div>
 						
@@ -108,6 +142,7 @@
 				
 			</div>
 		</div>
+	  </div>
 	</div>
 	
 	

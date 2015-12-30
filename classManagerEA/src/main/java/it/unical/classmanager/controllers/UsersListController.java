@@ -1,8 +1,6 @@
 package it.unical.classmanager.controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -23,17 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.data.AttendanceStudentLecture;
-import it.unical.classmanager.model.data.HomeworkStudentSolving;
-import it.unical.classmanager.model.data.RegistrationStudentClass;
-import it.unical.classmanager.model.data.Student;
-import it.unical.classmanager.model.data.StudentExamPartecipation;
 import it.unical.classmanager.model.data.User;
-import it.unical.classmanager.utils.DateTimeFactory;
 
 @Controller
 public class UsersListController {
 
+	
+	private final static String HEADER = "userslist/userslistHeader.jsp";
+	private final static String BODY = "userslist/userslistBody.jsp";
+	
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -74,9 +70,10 @@ public class UsersListController {
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("prop",this.mutableSortDefiniton.getProperty());
 		model.addAttribute("asc",this.mutableSortDefiniton.isAscending());
-		
-		
-		return "userslist";
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+
+		return "layout";
 	}
 	
 	
@@ -140,7 +137,12 @@ public class UsersListController {
 			model.addAttribute("pageNumber",pageNumber);
 			model.addAttribute("pageCount",pageCount);
 			model.addAttribute("users", usersList);
-		    return "userslist";
+			
+			
+			model.addAttribute("customHeader", UsersListController.HEADER);
+			model.addAttribute("customBody", UsersListController.BODY);
+			
+		    return "layout";
 		}
 		
 		
@@ -175,7 +177,10 @@ public class UsersListController {
 		model.addAttribute("pageSize", usersPerPage);
 	    
 	    model.addAttribute("users", usersList);
-	    return "userslist";
+	    
+	    model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+	    return "layout";
 	}
 	
 	/**
@@ -201,6 +206,9 @@ public class UsersListController {
 		} else if ( action.equals("promote") ) {
 			userDao.promoteUser(user);
 		}
+		
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
 		
 		return "userslist";
 	}
@@ -240,7 +248,10 @@ public class UsersListController {
 		model.addAttribute("pageCount",pageCount);
 		model.addAttribute("pageSize", usersList.getPageSize());
 		
-		return "userslist";
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+		
+		return "layout";
 	}
 	
 	private String handleSessionTimeOut() {

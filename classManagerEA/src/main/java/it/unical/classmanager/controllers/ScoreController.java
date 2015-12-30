@@ -1,6 +1,5 @@
 package it.unical.classmanager.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -22,10 +20,8 @@ import it.unical.classmanager.model.dao.HomeworkDAO;
 import it.unical.classmanager.model.dao.HomeworkDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
-import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
-import it.unical.classmanager.model.data.User;
 
 @Controller
 public class ScoreController {

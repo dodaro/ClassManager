@@ -1,51 +1,51 @@
 
 $(document).ready(function() {
 	
-	answerManager = AnswerManager.getInstance();
+	questionManager = QuestionManager.getInstance();
 	listenersManager = ListenersManager.getInstance();
 	
-	answerManager.initAnswerArea();
+	questionManager.initQuestionArea();
 	listenersManager.initListeners();
 	
 });
 
 
 
-var AnswerManager = (function() {
+var QuestionManager = (function() {
 	
-	var answerArea;
-	var answerAreaName = 'textEditor';
+	var questionArea;
+	var questionAreaName = 'textEditor';
 	var alreadyInitialized = false;
 	
 	var instance;
 	
-	var AnswerManager = function() {
+	var QuestionManager = function() {
 		
-		this.getAnswerArea = getAnswerArea;
-		this.initAnswerArea = initAnswerArea
+		this.getQuestionArea = getQuestionArea;
+		this.initQuestionArea = initQuestionArea
 	};
 	
-	var initAnswerArea = function() {
+	var initQuestionArea = function() {
 		
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 			
-			answerArea = CKEDITOR.replace(answerAreaName);
+			questionArea = CKEDITOR.replace(questionAreaName);
 		}
 		else {
 			console.log("Operation not permitted!! Init function can be called one time.");
 		}
 	};
 	
-	var getAnswerArea = function() {
-		return answerArea;
+	var getQuestionArea = function() {
+		return questionArea;
 	};
 	
 
 	var getInstance = function() {
     	
     	if (!instance) {
-            instance = new AnswerManager(); 
+            instance = new QuestionManager(); 
         } 
         return instance; 
     };
@@ -78,6 +78,7 @@ var ListenersManager = (function(){
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 			
+
 			
 		}
 		else {

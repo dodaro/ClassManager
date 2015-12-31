@@ -102,9 +102,10 @@
 										<h4 style="margin-left: 10px;"><span class="badge">${question.getAnswers().size()}</span> Answers</h4>
 									</div>
 									<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-										<form action="insertAnswer">
-											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right; margin-right: 10px" />
-										</form>
+										<form:form commandName="question" action="createAnswer">
+											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right;"/>
+											<form:input path="id" style="display:none;"/>
+										</form:form>
 									</div>
 								</div>
 								
@@ -131,9 +132,12 @@
 									</div>
 								</div>
 								
-								<form action="insertAnswer">
-									<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style=""/>
-								</form>
+								<c:if test="${question.getAnswers().size() > 0}">
+									<form:form commandName="question" action="createAnswer">
+										<input class="btn btn-primary btn-sm" type="submit" value="insert answer"/>
+										<form:input path="id" style="display:none;"/>
+									</form:form>
+							  	</c:if>
 
 						</div>
 						
@@ -150,11 +154,3 @@
 </body>
 
 </html>
-
-<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "delete" button a delete request will be send to the server -->
-<!--<form:form id="delete_event_form" action="/delete_event"
-							method="post" commandName="FullCalendarEventBean">
-							<input type="hidden" path="id" />
-							<input id="delete_event_submit" type="submit" value="Delete">
-						</form:form>-->

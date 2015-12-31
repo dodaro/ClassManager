@@ -86,6 +86,47 @@
 								</div>
 								
 								<div class="row">
+									<div class="col-md-12">
+										<form action="insertQuestion">
+											<input class="btn btn-primary btn-sm" type="submit" value="insert question" style="float:right;"/>
+										</form>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-12">
+										<ul id="" class="pagination">
+										  <li>
+										    <a href="questionsPrevious" aria-label="Previous">
+										      <span aria-hidden="true">&laquo;</span>
+										    </a>
+										  </li>
+										  
+										  
+										  <c:forEach begin="0" end="${pageCount-1}" var="i">
+										  
+										  	<c:choose>
+											  <c:when test="${i eq currPage}">
+											    <li class="active"><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
+											  </c:when>
+											  <c:otherwise>
+											    <li><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
+											  </c:otherwise>
+											</c:choose>
+											
+									 	  </c:forEach>
+									 	  
+									 	  
+										  <li>
+										    <a href="questionsNext" aria-label="Next">
+										      <span aria-hidden="true">&raquo;</span>
+										    </a>
+										  </li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
 										<ul id="questionsList" class="list-group">
 											<c:forEach var="question" items="${questions}">
@@ -116,7 +157,7 @@
 								
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
-										<ul id="" class="pagination">
+										<ul class="pagination">
 										  <li>
 										    <a href="questionsPrevious" aria-label="Previous">
 										      <span aria-hidden="true">&laquo;</span>
@@ -136,6 +177,7 @@
 											</c:choose>
 											
 									 	  </c:forEach>
+									 	  
 									 	  
 										  <li>
 										    <a href="questionsNext" aria-label="Next">
@@ -163,11 +205,3 @@
 </body>
 
 </html>
-
-<!-- When an event is clicked the "event" field of this form is filled. If the user
-	will click on the "delete" button a delete request will be send to the server -->
-<!--<form:form id="delete_event_form" action="/delete_event"
-							method="post" commandName="FullCalendarEventBean">
-							<input type="hidden" path="id" />
-							<input id="delete_event_submit" type="submit" value="Delete">
-						</form:form>-->

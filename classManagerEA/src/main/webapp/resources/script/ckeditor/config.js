@@ -34,4 +34,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Save,NewPage,Templates,PasteFromWord,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,RemoveFormat,CreateDiv,Language,BidiLtr,BidiRtl,Anchor,Flash,PageBreak,About';
 
 	config.uploadUrl = '/uploader/upload.php';
+
+	config.extraPlugins = 'autogrow';
 };

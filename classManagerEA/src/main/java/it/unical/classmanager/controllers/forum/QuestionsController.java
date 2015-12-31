@@ -48,6 +48,7 @@ public class QuestionsController {
 		
 		model.addAttribute("questions", this.questionManager.getCurrentPageQuestions());
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
+		
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()));
 		
 		return "forum/questions";
@@ -58,6 +59,7 @@ public class QuestionsController {
 	@RequestMapping(value = "/questionsNext", method = RequestMethod.GET)
 	public String nextPage(Locale locale, Model model) {
 		
+		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
 		
 		model.addAttribute("questions", this.questionManager.getNextPageQuestions());
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
@@ -69,6 +71,7 @@ public class QuestionsController {
 	@RequestMapping(value = "/questionsPrevious", method = RequestMethod.GET)
 	public String previousPage(Locale locale, Model model) {
 		
+		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
 		
 		model.addAttribute("questions", this.questionManager.getPreviousPageQuestions());
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
@@ -81,6 +84,7 @@ public class QuestionsController {
 	@RequestMapping(value = "/questionsPage", method = RequestMethod.GET)
 	public String getSpecificPage(Locale locale, Model model, @RequestParam("page") int pageNumber) {
 		
+		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
 		
 		model.addAttribute("questions", this.questionManager.getSpecificPageQuestions(pageNumber));
 		model.addAttribute("pageCount", this.questionManager.getPageCount());

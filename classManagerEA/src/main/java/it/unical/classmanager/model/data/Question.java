@@ -28,10 +28,10 @@ public class Question implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 		
-	@Column(name="title", nullable=false, length=20)
+	@Column(name="title", nullable=false, length=100)
 	private String title;
 	
-	@Column(name="description", nullable=false, length=256)	
+	@Column(name="description", nullable=false, length=1000)	
 	private String description;
 
 	//	Foreign key section

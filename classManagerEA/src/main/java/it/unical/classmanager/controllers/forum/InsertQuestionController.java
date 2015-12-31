@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
-import it.unical.classmanager.model.dao.AnswerDAO;
-import it.unical.classmanager.model.dao.AnswerDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
@@ -32,55 +30,43 @@ import it.unical.classmanager.utils.enumative.EnvironmentEnum;
  * Handles requests for the forum page.
  */
 @Controller
-public class InsertAnswerController {
+public class InsertQuestionController {
 	
 	@Autowired
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/createAnswer", method = RequestMethod.POST)
-	public String createAnswer(Locale locale, Model model, @ModelAttribute("question") Question question, HttpServletRequest request) {
-		
-		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
-		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-
+	@RequestMapping(value = "/insertQuestion", method = RequestMethod.GET)
+	public String createQuestion(Locale locale, Model model, HttpServletRequest request) {
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
-		User tmpUser = userDao.get(username);
+		model.addAttribute("username", username);
 		
-		question = questionDAO.get(question.getId());
-		
+		Question question = new Question();
 		model.addAttribute("question", question);
 		
-		Answer answer = new Answer();
-		model.addAttribute("answer", answer);
-			
-		return "forum/insertAnswer";
+		return "forum/insertQuestion";
 	}
 	
 	
-	@RequestMapping(value = "/insertAnswer", method = RequestMethod.POST)
-	public String insertAnswer(Locale locale, Model model, @ModelAttribute("answer") Answer answer, HttpServletRequest request) {
+	@RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
+	public String insertQuestion(Locale locale, Model model, @ModelAttribute("question") Question question, HttpServletRequest request) {
 		
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-		AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
-		
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		User tmpUser = userDao.get(username);
 		
-		int qid = Integer.parseInt((String) request.getParameter("qid"));
-		Question tmpQuestion = questionDAO.get(qid);
 		
-		answer.setUser(tmpUser);
-		answer.setQuestion(tmpQuestion);
+		question.setUser(tmpUser);
+		questionDAO.create(question);
 		
-		answerDAO.create(answer);
 		
-			
-		return "redirect:detailedQuestion?qid=" + qid;
+		return "redirect:questions";
 	}
+	
+	
 	
 	
 	

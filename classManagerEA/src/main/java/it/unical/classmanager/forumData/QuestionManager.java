@@ -15,7 +15,7 @@ public class QuestionManager {
 	private PagedListHolder<Question> paginationHolder;
 	
 	private int pageSize;
-	private final int INITIAL_PAGE_SIZE = 2;
+	private final int INITIAL_PAGE_SIZE = 5;
 	
 	
 	public QuestionManager(QuestionDAOImpl questionDao) {

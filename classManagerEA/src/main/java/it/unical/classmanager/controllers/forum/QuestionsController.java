@@ -41,7 +41,7 @@ public class QuestionsController {
 	//private static PagedListHolder<String> holders;
 	
 	
-	@RequestMapping(value = "/questions", method = RequestMethod.GET)
+	@RequestMapping(value = {"/forum/questions", "/forum"}, method = RequestMethod.GET)
 	public String getQuestions(Locale locale, Model model) {
 		
 		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
@@ -56,7 +56,7 @@ public class QuestionsController {
 	
 	
 	
-	@RequestMapping(value = "/questionsNext", method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/questionsNext", method = RequestMethod.GET)
 	public String nextPage(Locale locale, Model model) {
 		
 		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
@@ -68,7 +68,7 @@ public class QuestionsController {
 		return "forum/questions";
 	}
 	
-	@RequestMapping(value = "/questionsPrevious", method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/questionsPrevious", method = RequestMethod.GET)
 	public String previousPage(Locale locale, Model model) {
 		
 		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));
@@ -81,7 +81,7 @@ public class QuestionsController {
 	}
 	
 	
-	@RequestMapping(value = "/questionsPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/questionsPage", method = RequestMethod.GET)
 	public String getSpecificPage(Locale locale, Model model, @RequestParam("page") int pageNumber) {
 		
 		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));

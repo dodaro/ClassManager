@@ -76,13 +76,6 @@ var ListenersManager = (function(){
 			alreadyInitialized = true;
 			
 			
-			$(".questionLink").on("click", function(event) {
-
-				var id = $(this).closest("li").data("qid");
-				
-				$(location).attr("href", "detailedQuestion?qid=" + id);
-			});
-
 			
 		}
 		else {

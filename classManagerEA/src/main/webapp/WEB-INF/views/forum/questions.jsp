@@ -12,14 +12,14 @@
 
 <title>Questions</title>
 
-<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/questions.css" />
+<link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
+<link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
-<script src='resources/lib/jquery/jquery.min.js'></script>
-<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-<script src="resources/script/nav-bar.js"></script>
-<script src="resources/script/forum/questions.js"></script>
+<script src='/resources/lib/jquery/jquery.min.js'></script>
+<script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+<script src="/resources/script/nav-bar.js"></script>
+<script src="/resources/script/forum/questions.js"></script>
 </head>
 
 <body>
@@ -144,7 +144,7 @@
 													</div>
 													<div class="col-md-9">
 														<div class="row"><div class="col-md-12"><h4>
-														<a class="questionLink">${question.getTitle()}</a>
+														<a class="questionLink" href="/forum/detailedQuestion?qid=${question.getId()}">${question.getTitle()}</a>
 														</h4></div></div>
 														<div class="row"><div class="col-md-12 text-right">${question.getUser().getUsername() }</div></div>
 													</div>

@@ -36,7 +36,7 @@ public class InsertQuestionController {
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/insertQuestion", method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/insertQuestion", method = RequestMethod.GET)
 	public String createQuestion(Locale locale, Model model, HttpServletRequest request) {
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
@@ -49,7 +49,7 @@ public class InsertQuestionController {
 	}
 	
 	
-	@RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
+	@RequestMapping(value = "/forum/insertQuestion", method = RequestMethod.POST)
 	public String insertQuestion(Locale locale, Model model, @ModelAttribute("question") Question question, HttpServletRequest request) {
 		
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);

@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers.forum;
+package it.unical.classmanager.controllers.errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +29,16 @@ import it.unical.classmanager.utils.enumative.EnvironmentEnum;
  * Handles requests for the forum page.
  */
 @Controller
-public class DetailedQuestionController {
+public class PrivilegeErrorsController {
 	
 	@Autowired
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/forum/detailedQuestion", method = RequestMethod.GET)
+	@RequestMapping(value = "/privilegeError", method = RequestMethod.GET)
 	public String getQuestion(Locale locale, Model model, HttpServletRequest request) {
 		
-		int questionID = Integer.parseInt(request.getParameter("qid"));
-		System.out.println("ID: " + questionID);
-		
-		QuestionDAOImpl dao = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-		Question question = dao.get(questionID);
-		
-		
-		model.addAttribute("question", question);
-		
-		
-		return "forum/detailedQuestion";
+		return "errors/privilegeError";
 	}
 	
 	

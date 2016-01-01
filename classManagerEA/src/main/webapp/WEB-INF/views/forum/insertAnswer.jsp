@@ -12,14 +12,14 @@
 
 <title>Add a response</title>
 
-<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
+<link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
 
-<script src='resources/lib/jquery/jquery.min.js'></script>
-<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-<script src="resources/script/nav-bar.js"></script>
-<script type="text/javascript" src="resources/script/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="resources/script/forum/insertAnswer.js"></script>
+<script src='/resources/lib/jquery/jquery.min.js'></script>
+<script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+<script src="/resources/script/nav-bar.js"></script>
+<script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/resources/script/forum/insertAnswer.js"></script>
 </head>
 
 <body style="background-color: #E6E6E6">

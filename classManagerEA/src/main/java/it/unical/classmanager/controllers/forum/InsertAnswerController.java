@@ -38,16 +38,13 @@ public class InsertAnswerController {
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/createAnswer", method = RequestMethod.POST)
-	public String createAnswer(Locale locale, Model model, @ModelAttribute("question") Question question, HttpServletRequest request) {
+	@RequestMapping(value = "/forum/createAnswer", method = RequestMethod.POST)
+	public String createAnswer(Locale locale, Model model, HttpServletRequest request) {
 		
-		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-
 		
-		String username = (String) request.getSession().getAttribute("loggedIn");
-		User tmpUser = userDao.get(username);
-		
+		int qid = Integer.parseInt(request.getParameter("qid"));
+		Question question = questionDAO.get(qid);
 		question = questionDAO.get(question.getId());
 		
 		model.addAttribute("question", question);
@@ -59,7 +56,7 @@ public class InsertAnswerController {
 	}
 	
 	
-	@RequestMapping(value = "/insertAnswer", method = RequestMethod.POST)
+	@RequestMapping(value = "/forum/insertAnswer", method = RequestMethod.POST)
 	public String insertAnswer(Locale locale, Model model, @ModelAttribute("answer") Answer answer, HttpServletRequest request) {
 		
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);

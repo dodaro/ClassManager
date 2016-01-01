@@ -12,14 +12,14 @@
 
 <title>${question.getTitle()}</title>
 
-<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/questions.css" />
+<link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
+<link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
-<script src='resources/lib/jquery/jquery.min.js'></script>
-<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-<script src="resources/script/nav-bar.js"></script>
-<script src="resources/script/forum/questions.js"></script>
+<script src='/resources/lib/jquery/jquery.min.js'></script>
+<script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+<script src="/resources/script/nav-bar.js"></script>
+<script src="/resources/script/forum/questions.js"></script>
 </head>
 
 <body>
@@ -90,6 +90,14 @@
 									  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								  			${question.getUser().getUsername()}
 								  			</p>
+								  			
+								  		</div>
+								  	</div>
+								  	<div class="row">
+								  		<div class="col-sm-12 col-md-12 col-lg-12">
+								  			<form action="modifyAnswer" method="POST">
+								  				<input type="submit" class="btn btn-sm btn-warning" value="modify Answer"/>
+								  			</form>
 								  		</div>
 								  	</div>
 								  </div>
@@ -102,10 +110,10 @@
 										<h4 style="margin-left: 10px;"><span class="badge">${question.getAnswers().size()}</span> Answers</h4>
 									</div>
 									<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-										<form:form commandName="question" action="createAnswer">
-											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right;"/>
-											<form:input path="id" style="display:none;"/>
-										</form:form>
+										<form action="createAnswer" method="POST">
+											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right; margin-right: 10px"/>
+											<input name="qid" value="${question.getId() }" style="display:none;"/>
+										</form>
 									</div>
 								</div>
 								
@@ -133,10 +141,10 @@
 								</div>
 								
 								<c:if test="${question.getAnswers().size() > 0}">
-									<form:form commandName="question" action="createAnswer">
+									<form action="createAnswer" method="POST">
 										<input class="btn btn-primary btn-sm" type="submit" value="insert answer"/>
-										<form:input path="id" style="display:none;"/>
-									</form:form>
+										<input name="qid" value="${question.getId() }" style="display:none;"/>
+									</form>
 							  	</c:if>
 
 						</div>

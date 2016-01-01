@@ -38,10 +38,14 @@ public class QuestionsController {
 	
 	private QuestionManager questionManager;
 	
-	//private static PagedListHolder<String> holders;
+
+	@RequestMapping(value = {"/questions", "/forum"}, method = RequestMethod.GET)
+	public String redirectToQuestions(Locale locale, Model model) {
+		return "redirect:/forum/questions";
+	}
 	
 	
-	@RequestMapping(value = {"/forum/questions", "/forum"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/forum/questions", method = RequestMethod.GET)
 	public String getQuestions(Locale locale, Model model) {
 		
 		this.questionManager = new QuestionManager((QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class));

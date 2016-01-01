@@ -45,7 +45,6 @@ public class InsertAnswerController {
 		
 		int qid = Integer.parseInt(request.getParameter("qid"));
 		Question question = questionDAO.get(qid);
-		question = questionDAO.get(question.getId());
 		
 		model.addAttribute("question", question);
 		
@@ -79,6 +78,49 @@ public class InsertAnswerController {
 		return "redirect:detailedQuestion?qid=" + qid;
 	}
 	
+	
+	@RequestMapping(value = "/forum/modifyAnswer", method = RequestMethod.POST)
+	public String modifyAnswer(Locale locale, Model model, HttpServletRequest request) {
+		
+		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		int qid = Integer.parseInt(request.getParameter("qid"));
+		Question question = questionDAO.get(qid);
+
+		model.addAttribute("question", question);
+		
+		AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		Answer answer = answerDAO.get(aid);
+		
+		model.addAttribute("answer", answer);
+		
+			
+		return "forum/modifyAnswer";
+	}
+	
+	
+	@RequestMapping(value = "/forum/updateAnswer", method = RequestMethod.POST)
+	public String updateAnswer(Locale locale, Model model, @ModelAttribute("answer") Answer answer, HttpServletRequest request) {
+		
+		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
+		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
+		
+		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		User tmpUser = userDao.get(username);
+		
+		int qid = Integer.parseInt((String) request.getParameter("qid"));
+		Question tmpQuestion = questionDAO.get(qid);
+		
+		answer.setUser(tmpUser);
+		answer.setQuestion(tmpQuestion);
+		
+		answerDAO.update(answer);
+		
+			
+		return "redirect:detailedQuestion?qid=" + qid;
+	}
 	
 	
 }

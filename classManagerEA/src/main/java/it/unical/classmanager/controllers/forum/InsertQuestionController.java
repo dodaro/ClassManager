@@ -67,6 +67,40 @@ public class InsertQuestionController {
 	}
 	
 	
+	@RequestMapping(value = "/forum/modifyQuestion", method = RequestMethod.POST)
+	public String modifyQuestion(Locale locale, Model model, HttpServletRequest request) {
+		
+		int questionID = Integer.parseInt(request.getParameter("qid"));
+		System.out.println("ID: " + questionID);
+		
+		QuestionDAOImpl dao = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		Question question = dao.get(questionID);
+		
+		model.addAttribute("question", question);
+		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		model.addAttribute("username", username);
+		
+		
+		return "forum/modifyQuestion";
+	}
+	
+	
+	@RequestMapping(value = "/forum/updateQuestion", method = RequestMethod.POST)
+	public String updateQuestion(Locale locale, Model model, @ModelAttribute("question") Question question, HttpServletRequest request) {
+		
+		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
+		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		User tmpUser = userDao.get(username);
+
+		question.setUser(tmpUser);
+		questionDAO.update(question);
+		
+		
+		return "redirect:questions";
+	}
 	
 	
 	

@@ -10,22 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<c:set var="timeForRefresh" value="5"/>
-<meta http-equiv="refresh" content="${timeForRefresh };url=/" />
-
-<title>Privilege Error</title>
+<title>Add a question</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
-<link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
 <script src='/resources/lib/jquery/jquery.min.js'></script>
 <script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <script src="/resources/script/nav-bar.js"></script>
-<script src="/resources/script/forum/questions.js"></script>
+<script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/resources/script/forum/insertQuestion.js"></script>
 </head>
 
-<body>
+<body style="background-color: #E6E6E6">
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header pull-left">
@@ -37,10 +34,6 @@
 			<div class="navbar-header pull-right">
 				<a class="nav-bar-button logout" href="#"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
-			</div>
-			<div class="navbar-header pull-right">
-				<a id="initializeDBBtn" class="nav-bar-button logout" href="db_init"><span
-					class="glyphicon glyphicon-log-out"></span> Init db</a>
 			</div>
 		</div>
 	</nav>
@@ -68,51 +61,74 @@
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
-					
+						
+						<form:form action="updateQuestion" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
+							<form:input path="id" style="display:none;"/>
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<h4 style="text-align: center;">Non hai i privilegi per vedere questa pagina stai per essere reindirizzato sulla home</h4>
-									<h4 style="text-align: center;">Clicca <a href="/">qui</a> per essere reindirizzato subito</h4>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-12 col-lg-12">
-									<div class="progress">
-									  <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">
-									  </div>
+									<div class="panel panel-default">
+										<div class="panel-heading">Question info</div>
+										<div class="panel-body">
+										
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-7">
+														<label for="questionTitleInpt">Question title</label>
+														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="insert title..."/>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<fieldset disabled>
+													<div class="form-group">
+														<div class="col-md-3">
+															<label for="questionUsrInpt">User</label>
+															<input name="user" id="questionUsrInpt" class="form-control" type="text" value="${username }" />
+														</div>
+													</div>
+												</fieldset>
+											</div>
+										</div>
 									</div>
+								
 								</div>
 							</div>
 							
 							<div class="row">
-								<div class="col-sm-12 col-md-12 col-lg-12">
-									<img class="img-responsive center-block" src="http://www.dawgpoundnation.com/wp-content/uploads/2014/09/wpid-experiment-cat-scientist.jpeg" />
-								</div>
-							</div>
 							
+								<div id="questionArea" class="col-md-12">
+								 		<hr />
+										<div class="row">
+											<div class="col-md-10">
+												<h3 style="margin-left: 10px;">
+													Question description
+												</h3>
+											</div>
+											<div class="col-md-2">
+												<h3><input class="btn btn-primary" type="submit" value="Update question" style="float: right; margin-right: 5px;"></h3>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+									        	<div id="area" style="margin-top: 15px;">
+										            <form:textarea path="description" id="textEditor"></form:textarea>
+									        	</div>
+									        </div>
+										</div>
+								</div>			
+							
+							</div>
+						</form:form>
+						
+						
 						
 					</div>
-					
-					<script type="text/javascript">
-					
-						
-						var count = 1;
-						var second = ${timeForRefresh}*10;
-						
-						window.setInterval(function() {
-							
-							var val = (count++/second)*100;
-							$("#progressBar").css("width", val+"%");
-							
-						}, 100);
-						
-					
-					</script>
-					
 				</div>
 			</div>
-		  </div>
 		</div>
+	</div>
+	
 	
 	
 	

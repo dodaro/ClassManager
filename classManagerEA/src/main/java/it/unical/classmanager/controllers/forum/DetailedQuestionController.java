@@ -47,6 +47,16 @@ public class DetailedQuestionController {
 		
 		model.addAttribute("question", question);
 		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		if(question.getUser().getUsername().equals(username)) {
+			model.addAttribute("owner", true);
+		}
+		else {
+			model.addAttribute("owner", false);
+		}
+		
+		model.addAttribute("loggedUser", username);
+		
 		
 		return "forum/detailedQuestion";
 	}

@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false"%>
 
 <html>
@@ -98,7 +99,7 @@
 										<div class="row">
 									  		<div class="col-sm-12 col-md-12 col-lg-12">
 									  			<form action="/forum/modifyQuestion" method="POST">
-									  				<input type="submit" class="btn btn-sm btn-warning" value="modify Question"/>
+									  				<input type="submit" class="btn btn-sm btn-warning" value="<spring:message code="message.forum.modifyQuestionBtn"/>"/>
 									  				<input name="qid" value="${question.getId() }" style="display:none;"/>
 									  			</form>
 									  		</div>
@@ -112,11 +113,11 @@
 								
 								<div class="row">
 									<div class="col-xs-6 col-sm-10 col-md-10 col-lg-10">
-										<h4 style="margin-left: 10px;"><span class="badge">${question.getAnswers().size()}</span> Answers</h4>
+										<h4 style="margin-left: 10px;"><span class="badge">${question.getAnswers().size()}</span> <spring:message code="message.forum.answers"/></h4>
 									</div>
 									<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
 										<form action="createAnswer" method="POST">
-											<input class="btn btn-primary btn-sm" type="submit" value="insert answer" style="float:right; margin-right: 10px"/>
+											<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertAnswer"/>" style="float:right; margin-right: 10px"/>
 											<input name="qid" value="${question.getId() }" style="display:none;"/>
 										</form>
 									</div>
@@ -136,7 +137,7 @@
 													  <c:when test="${answer.getUser().getUsername() eq loggedUser}">
 													    <div class="col-sm-6 col-md-6 col-lg-6">
 												  			<form action="/forum/modifyAnswer" method="POST">
-												  				<input type="submit" class="btn btn-sm btn-warning" value="modify Answer"/>
+												  				<input type="submit" class="btn btn-sm btn-warning" value="<spring:message code="message.forum.modifyAnswer"/>"/>
 												  				<input name="qid" value="${question.getId() }" style="display:none;"/>
 												  				<input name="aid" value="${answer.getId() }" style="display:none;"/>
 												  			</form>
@@ -167,7 +168,7 @@
 								
 								<c:if test="${question.getAnswers().size() > 0}">
 									<form action="createAnswer" method="POST">
-										<input class="btn btn-primary btn-sm" type="submit" value="insert answer"/>
+										<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertAnswer"/>"/>
 										<input name="qid" value="${question.getId() }" style="display:none;"/>
 									</form>
 							  	</c:if>

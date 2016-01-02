@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false"%>
 
 <html>
@@ -10,7 +11,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add a response</title>
+<title><spring:message code="message.forum.modifyAnswerTitle"/></title>
 
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
@@ -65,7 +66,7 @@
 						<div class="row">
 							<div id="previewQuestionArea" class="col-md-12">
 								<div class="panel panel-warning">
-								  <div class="panel-heading">Question preview</div>
+								  <div class="panel-heading"><spring:message code="message.forum.questionPreview"/></div>
 								  <div class="panel-body">
 								    <div class="row">
 								  		<div class="col-sm-12 col-md-12 col-lg-12">
@@ -95,8 +96,8 @@
 									<form:input path="id" style="display:none;" />
 									<hr />
 									<h3 style="margin-left: 10px;">
-										Your Answer
-										<input class="btn btn-primary" type="submit" value="Update answer" style="float: right; margin-right: 5px;">
+										<spring:message code="message.forum.yourAnswer"/>
+										<input class="btn btn-primary" type="submit" value="<spring:message code="message.forum.updateAnswer"/>" style="float: right; margin-right: 5px;">
 									</h3>
 						        	<div id="area" style="margin-top: 15px;">
 							            <form:textarea path="description" id="textEditor"></form:textarea>

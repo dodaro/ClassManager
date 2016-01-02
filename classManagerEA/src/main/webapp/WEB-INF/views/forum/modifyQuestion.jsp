@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false"%>
 
 <html>
@@ -10,7 +11,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add a question</title>
+<title><spring:message code="message.forum.modifyQuestionTitle"/></title>
 
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
@@ -67,13 +68,13 @@
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
 									<div class="panel panel-default">
-										<div class="panel-heading">Question info</div>
+										<div class="panel-heading"><spring:message code="message.forum.questionInfo"/></div>
 										<div class="panel-body">
 										
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-7">
-														<label for="questionTitleInpt">Question title</label>
+														<label for="questionTitleInpt"><spring:message code="message.forum.questionTitle"/></label>
 														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="insert title..."/>
 													</div>
 												</div>
@@ -82,7 +83,7 @@
 												<fieldset disabled>
 													<div class="form-group">
 														<div class="col-md-3">
-															<label for="questionUsrInpt">User</label>
+															<label for="questionUsrInpt"><spring:message code="message.forum.questionOwner"/></label>
 															<input name="user" id="questionUsrInpt" class="form-control" type="text" value="${username }" />
 														</div>
 													</div>
@@ -101,11 +102,11 @@
 										<div class="row">
 											<div class="col-md-10">
 												<h3 style="margin-left: 10px;">
-													Question description
+													<spring:message code="message.forum.questionDescription"/>
 												</h3>
 											</div>
 											<div class="col-md-2">
-												<h3><input class="btn btn-primary" type="submit" value="Update question" style="float: right; margin-right: 5px;"></h3>
+												<h3><input class="btn btn-primary" type="submit" value="<spring:message code="message.forum.updateQuestion"/>" style="float: right; margin-right: 5px;"></h3>
 											</div>
 										</div>
 										

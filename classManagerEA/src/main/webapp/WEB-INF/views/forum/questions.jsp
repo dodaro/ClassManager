@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false"%>
 
 <html>
@@ -10,7 +11,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Questions</title>
+<title><spring:message code="message.forum.questionsTitle"/></title>
 
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
@@ -76,7 +77,7 @@
 										  <div class="panel-heading">
 										  	<div class="row">
 										  		<div class="col-md-12">
-										  			<h4><b>Questions</b></h4>
+										  			<h4><b><spring:message code="message.forum.questionsTitle"/></b></h4>
 										  		</div>
 										  	</div>
 										    
@@ -88,7 +89,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<form action="insertQuestion">
-											<input class="btn btn-primary btn-sm" type="submit" value="insert question" style="float:right;"/>
+											<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertQuestion"/>" style="float:right;"/>
 										</form>
 									</div>
 								</div>

@@ -74,7 +74,8 @@
 												<div class="form-group">
 													<div class="col-md-7">
 														<label for="questionTitleInpt"><spring:message code="message.forum.questionTitle"/></label>
-														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="insert title..."/>
+														<spring:message code="message.forum.insertTitle" var="insertTitle"/>
+														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="${insertTitle }"/>
 													</div>
 												</div>
 											</div>

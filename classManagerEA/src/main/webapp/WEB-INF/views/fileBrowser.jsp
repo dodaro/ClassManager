@@ -18,6 +18,9 @@
 <link href="resources/style/fileBrowser.css" rel="stylesheet" />
 
 <script src="resources/script/fileBrowserScript.js"></script>
+<script
+	src="resources/lib/jquery-circle-progress-1.1.3/dist/circle-progress.js"></script>
+<script src="resources/lib/docsViewer/jquery.gdocsviewer.js"></script>
 
 </head>
 
@@ -62,23 +65,64 @@
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
-						
-						<div class="filemanager">
 
+						<!-- SET SCORE MODAL -->
+						<div id="scoreUpdate_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Update Score</h4>
+									</div>
+									<div class="modal-body">
+										<input id="oldScore_modal" type="number" min="0" max="30" required>
+									</div>
+									<div class="modal-footer">
+										<button id="score_confirm" type="button"
+											class="btn btn-success">Update Score</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- MODAL -->
+						<div id="visualizer_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 id="fileTitle_model" class="modal-title"></h4>
+									</div>
+									<div class="modal-body">
+										<a id="visualizer" href="#"></a>
+									</div>
+									<div class="modal-footer">
+										<button id="download_btn_modal" type="button"
+											class="btn btn-default" data-dismiss="modal">Download</button>
+										<button id="delete_btn_modal" type="button"
+											class="btn btn-default" data-dismiss="modal">Delete</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- browser -->
+						<div class="filemanager">
 							<div class="search">
 								<input type="search" placeholder="Find a file.." />
 							</div>
-
 							<div class="breadcrumbs"></div>
-
 							<ul class="data"></ul>
-
 							<div class="nothingfound">
 								<div class="nofiles"></div>
 								<span>No files here.</span>
 							</div>
-
 						</div>
+						<!-- browser -->
+
 					</div>
 				</div>
 			</div>

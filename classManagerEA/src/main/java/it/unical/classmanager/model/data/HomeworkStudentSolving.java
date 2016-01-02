@@ -2,6 +2,7 @@ package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,6 +19,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+/**
+ * Every time a student upload a file referred to an {@link Homework} an instance of this class is created.
+ */
 @Entity
 @Table(name ="homeworkStudentSolving")
 public class HomeworkStudentSolving implements Serializable  {
@@ -30,6 +34,9 @@ public class HomeworkStudentSolving implements Serializable  {
 	
 	@Column(name="score", nullable=false)
 	private int score;
+	
+	@Column(name="date", nullable=false, length=32)
+	private Date date;
 
 	//	Foreign key section
 	@ManyToOne
@@ -47,15 +54,17 @@ public class HomeworkStudentSolving implements Serializable  {
 	public HomeworkStudentSolving(){
 		this.id = 0;
 		this.score = 0;
+		this.date = null;
 		this.student = null;
 		this.homework = null;
 		this.homeworkAttachedStudentSolvings = new ArrayList<HomeworkAttachedStudentSolving>();		
 	}
 
-	public HomeworkStudentSolving(int id, int score, Student student, Homework homework,
+	public HomeworkStudentSolving(int id, int score, Date date, Student student, Homework homework,
 			List<HomeworkAttachedStudentSolving> homeworkAttachedStudentSolvings) {
 		this.id = id;
 		this.score = score;
+		this.date = date;
 		this.student = student;
 		this.homework = homework;
 		this.homeworkAttachedStudentSolvings = homeworkAttachedStudentSolvings;
@@ -99,6 +108,14 @@ public class HomeworkStudentSolving implements Serializable  {
 
 	public void setHomeworkAttachedStudentSolvings(List<HomeworkAttachedStudentSolving> homeworkAttachedStudentSolvings) {
 		this.homeworkAttachedStudentSolvings = homeworkAttachedStudentSolvings;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate( Date date) {
+		this.date = date;
 	}
 
 }

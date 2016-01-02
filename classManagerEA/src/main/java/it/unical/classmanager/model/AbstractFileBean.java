@@ -8,6 +8,7 @@ public abstract class AbstractFileBean {
 	protected String name;
 	protected String type;
 	protected String path;
+	protected boolean evaluable;
 	
 	public String getName() {
 		return name;
@@ -26,5 +27,13 @@ public abstract class AbstractFileBean {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public boolean isEvaluable() {
+		return evaluable;
+	}
+
+	public void setEvaluable(boolean evaluable) {
+		this.evaluable = evaluable;
 	}
 }

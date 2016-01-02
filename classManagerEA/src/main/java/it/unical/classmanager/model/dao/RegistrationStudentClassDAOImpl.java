@@ -5,7 +5,9 @@ import java.util.List;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.RegistrationStudentClass;
+import it.unical.classmanager.model.data.Student;
 
 public class RegistrationStudentClassDAOImpl implements RegistrationStudentClassDAO {
 	private DBHandler dbHandler;
@@ -64,6 +66,16 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 				session.createQuery("FROM RegistrationStudentClass").list();
 		session.close();
 		return registrationStudentClasses;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Student> getStudentsRegisteredToACourse(CourseClass course)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<Student> students = session.createQuery("SELECT student FROM RegistrationStudentClass WHERE courseClass = :course ").setParameter("course", course).list();
+		session.close();
+		return students;
 	}
 	
 }

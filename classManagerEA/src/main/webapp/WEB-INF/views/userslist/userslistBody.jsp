@@ -1,7 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-			<div class="col-sm-9 col-md-9 col-lg-10">
 				<h3>Users List</h3>
 				<form class="form-inline" action="searchusers" method="GET" role="form">
 				  <div class="form-group">
@@ -122,4 +121,3 @@
 				</form>
 				<div id="paginator">
 				</div>
-			</div>

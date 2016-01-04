@@ -33,6 +33,10 @@ public class AldoLoginController {
 	private ApplicationContext context;
 	private static final Logger logger = LoggerFactory.getLogger(AldoLoginController.class);
 	
+	
+	private final static String HEADER = "userslist/userslistHeader.jsp";
+	private final static String BODY = "userslist/userslistBody.jsp";
+	
 	/**
 	 * Manages the request related to the calendar
 	 */

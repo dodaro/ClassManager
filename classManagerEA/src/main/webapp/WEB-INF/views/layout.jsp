@@ -83,6 +83,9 @@
 						<li>
 						    <a href="./statistics"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
 						</li>
+						<li>
+						    <a href="./noticeboard"><span class="glyphicon glyphicon-stats"></span><spring:message code="message.noticeboard" text="default text"/></a>
+						</li>
 					</ul>
 				</div>
 			</div>

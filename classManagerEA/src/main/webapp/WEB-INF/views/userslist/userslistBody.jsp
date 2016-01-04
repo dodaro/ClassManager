@@ -7,15 +7,15 @@
 				    <label for="lastname"><spring:message code="message.lastName" text="default text"/></label>
 				    <input type="text"  class="form-control" name="query" placeholder="Rossi"/>
 				    	<label for="select"><spring:message code="message.usersperpage" text="default text"/></label>
-						  <select class="form-control" name="users">
-						  	<c:if test="${not empty pageSize}">
-						  		<option selected="selected">${pageSize}</option>
-						  	</c:if>
+						  <select id="page-size" class="form-control" name="users">
 						    <option>10</option>
 						    <option>25</option>
 						    <option>50</option>
 						    <option>100</option>
 						  </select>
+						  <c:if test="${not empty pageSize}">
+							<input id="selected-value" type="hidden" value="${pageSize}"/>
+						  </c:if>
 				  	<button type="submit" class="btn btn-default">Search</button>
 				    	<c:if test="${not empty error}" >
 				    		<span class="help-block"><spring:message code="searchField.length.error" text="default text"/></span>

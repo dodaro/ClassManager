@@ -30,6 +30,8 @@ $(function() {
 	    window.location.href = "searchusers?page="+num;
 	});
     
+	var value = $("#selected-value").val();
+	$("#page-size").val(value);
 		
 	
 })

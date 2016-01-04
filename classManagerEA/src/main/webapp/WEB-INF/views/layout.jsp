@@ -84,7 +84,10 @@
 						    <a href="./statistics"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
 						</li>
 						<li>
-						    <a href="./noticeboard"><span class="glyphicon glyphicon-stats"></span><spring:message code="message.noticeboard" text="default text"/></a>
+						    <a href="./noticeboard?init=1"><span class="glyphicon glyphicon-send"></span> <spring:message code="message.noticeboard" text="default text"/> con fake init</a>
+						</li>
+						<li>
+						    <a href="./noticeboard"><span class="glyphicon glyphicon-send"></span> <spring:message code="message.noticeboard" text="default text"/> senza init</a>
 						</li>
 					</ul>
 				</div>

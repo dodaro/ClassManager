@@ -31,7 +31,7 @@ public class SessionErrorController {
 	
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Simply displays a page with the error given by the "error" String passed as attribute check NoticeBoardController to see how to use it.
 	 */
 	@RequestMapping(value = "/sessionerror", method = RequestMethod.GET)
 	public String usersList(Locale locale, Model model,HttpServletRequest request,@ModelAttribute("error") String error) {

@@ -43,6 +43,10 @@ public class NoticeBoardController {
 	@RequestMapping(value = "/noticeboard", method = RequestMethod.GET)
 	public String noticeBoard(Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		
+		/**
+		 * handle errors like this, add the RedirectAttributes to the method and add the parameter to pass
+		 * this methods redirect passing parameters
+		 */
 		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null ) {
 			redirectAttributes.addAttribute("error", "session");
 			return "redirect:/sessionerror";

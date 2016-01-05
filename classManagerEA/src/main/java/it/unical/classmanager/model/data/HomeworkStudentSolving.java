@@ -35,7 +35,7 @@ public class HomeworkStudentSolving implements Serializable  {
 	@Column(name="score", nullable=false)
 	private int score;
 	
-	@Column(name="date", nullable=false, length=32)
+	@Column(name="date")
 	private Date date;
 
 	//	Foreign key section

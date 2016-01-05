@@ -33,5 +33,13 @@
 	  			
 		 
 		</c:forEach>
+		
+		<form id="options">
+			<input name="total-pages" type="hidden" value="${pageCount}"/> 
+			<input name="page-number" type="hidden" value="${pageNumber}"/> 
+		</form>
+		<div id="paginator">
+		</div>
+		
 	</div>
 

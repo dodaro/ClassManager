@@ -53,7 +53,6 @@ public class NoticeBoardController {
 		}
 		
 		
-		int noticesPerPage = ( request.getParameter("notices") != null ) ? Integer.parseInt(request.getParameter("notices")) : 10;
 		
 		String init = request.getParameter("init");
 		if ( init != null && init.equals("1") ) {
@@ -90,14 +89,44 @@ public class NoticeBoardController {
 		}
 		
 		
+		PagedListHolder<Communications> communicationsPage = (PagedListHolder<Communications>) request.getSession().getAttribute("noticesList");
 		CommunicationsDAO communicationsDao = (CommunicationsDAO) context.getBean("communicationsDAO");
-		PagedListHolder<Communications> communcationsPage = new PagedListHolder<Communications>(communicationsDao.getAllCommunications());
-		communcationsPage.setPageSize(noticesPerPage);
+		if ( communicationsPage == null ) {
+			communicationsPage = new PagedListHolder<Communications>(communicationsDao.getAllCommunications());
+		} else {
+			communicationsPage.setSource(communicationsDao.getAllCommunications());
+		}
+
 		
-		request.getSession().setAttribute("noticesList", communcationsPage);
+		int noticesPerPage = ( request.getParameter("notices") != null ) ? Integer.parseInt(request.getParameter("notices")) : -1;
+		if ( noticesPerPage != -1 ) {
+			if ( noticesPerPage < 10 )
+				noticesPerPage = 10;
+			if ( noticesPerPage > 100 ) {
+				noticesPerPage = 100;
+			}
+		} else {
+			noticesPerPage = communicationsPage.getPageSize();
+		}
+			
+		
+		
+		int pageToGet = ( request.getParameter("page") != null ) ? Integer.parseInt(request.getParameter("page")) : -1;
+		if ( pageToGet != -1 ) {
+			communicationsPage.setPage(pageToGet -1 );
+		}
+		
+		communicationsPage.setPageSize(noticesPerPage);
+		request.getSession().setAttribute("noticesList", communicationsPage);
 		model.addAttribute("pageSize", noticesPerPage);
 		model.addAttribute("customHeader", NoticeBoardController.HEADER);
 		model.addAttribute("customBody", NoticeBoardController.BODY);
+		
+		int pageNumber = communicationsPage.getPage() + 1;
+		int pageCount = communicationsPage.getPageCount();
+		
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
 
 		return "layout";
 			

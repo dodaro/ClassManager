@@ -1,6 +1,8 @@
 package it.unical.classmanager.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.AttendanceStudentLecture;
+import it.unical.classmanager.model.data.Communications;
+import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.HomeworkStudentSolving;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.StudentExamPartecipation;
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.DateTimeFactory;
 
 @Controller
 public class UsersListController {
@@ -54,12 +65,46 @@ public class UsersListController {
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
 		
 		
-		int pageSize = 10;
 		
-		PagedListHolder<User> usersList = new PagedListHolder<User>(userDao.getAllUsers());
+		for(int i=0; i<50; i++)	{
+			String username = "StudentAldo";
+			
+			User user = new User();
+			user.setUsername(username+i);
+			user.setFirstName("Aldo_FirstName");
+			user.setLastName("Aldo_LastName");
+			user.setRole("Student");				    	
+			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
+				Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
+			user.setEmail("studentaldo@profaldo.it");
+			user.setPassword(username+i);
+			user.setConfirmPassword(user.getPassword());
+			user.setHash(user.getPassword());
+			user.setAddress("address");		
+			
+			Student student = new Student(user, 
+				i, 
+				DateTimeFactory.getRandomDate().getTime(), 
+				new ArrayList<StudentExamPartecipation>(), 
+				new ArrayList<AttendanceStudentLecture>(), 
+				new ArrayList<RegistrationStudentClass>(), 
+				new ArrayList<HomeworkStudentSolving>());
+			
+			User retrievedUser = userDao.get(username+i);
+				if(retrievedUser==null){
+				    userDao.create(student);
+				    logger.info("Created "+student, locale);						
+				} 
+	    }					
+		
+		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
+		if ( usersList == null ) {
+			usersList = new PagedListHolder<User>(userDao.getAllUsers());
+		} else {
+			usersList.setSource(userDao.getAllUsers());
+		}
 		usersList.setSort(mutableSortDefiniton);
 		usersList.resort();
-	    usersList.setPageSize(pageSize);
 	    request.getSession().setAttribute("UserListController_usersList", usersList);
 		
 	    int pageCount = usersList.getPageCount();
@@ -67,7 +112,7 @@ public class UsersListController {
 		model.addAttribute("users",usersList);
 		model.addAttribute("pageNumber",pageNumber);
 		model.addAttribute("pageCount",pageCount);
-		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("pageSize",usersList.getPageSize());
 		model.addAttribute("prop",this.mutableSortDefiniton.getProperty());
 		model.addAttribute("asc",this.mutableSortDefiniton.isAscending());
 		model.addAttribute("customHeader", UsersListController.HEADER);
@@ -78,17 +123,7 @@ public class UsersListController {
 	
 	
 	
-	public static String shuffleString(String string)
-	{
-	  List<String> letters = Arrays.asList(string.split(""));
-	  Collections.shuffle(letters);
-	  String shuffled = "";
-	  for (String letter : letters) {
-	    shuffled += letter;
-	  }
-	  return shuffled;
-	}
-	
+
 	
 	/**
 	 * Search for user
@@ -136,8 +171,7 @@ public class UsersListController {
 			model.addAttribute("users",usersList);
 			model.addAttribute("pageNumber",pageNumber);
 			model.addAttribute("pageCount",pageCount);
-			model.addAttribute("users", usersList);
-			
+			model.addAttribute("pageSize", usersList.getPageSize());
 			
 			model.addAttribute("customHeader", UsersListController.HEADER);
 			model.addAttribute("customBody", UsersListController.BODY);

@@ -68,11 +68,11 @@ public class PolarSpiderCart extends AbstractCart {
 		    {
 			cartScript.append("series.color}");
 		    }
-		    cartScript.append("\">{");
+		    cartScript.append("\">");
 		    {
-			cartScript.append("series.name}");
+			//cartScript.append("{series.name}");
 		    }
-		    cartScript.append(": <b>${");
+		    cartScript.append("<b>{"); // $
 		    {
 			cartScript.append("point.y:,.0f}");
 		    }

@@ -71,9 +71,9 @@ public class PieGradientCart extends AbstractCart {
 		    }
 		    cartScript.append(": <b>{");
 		    {
-			cartScript.append("point.percentage:.1f}");
+			cartScript.append("point.y:.1f}"); // point.percentage
 		    }
-		    cartScript.append("%</b>\'\n");
+		    cartScript.append("</b>\'\n");
 		    cartScript.append("}");
 		}
 		cartScript.append(",\n");
@@ -95,10 +95,10 @@ public class PieGradientCart extends AbstractCart {
 			    }
 			    cartScript.append("</b>: {");
 			    {
-				cartScript.append("point.percentage:.1f}");
+				cartScript.append("point.y:.1f}");  // point.percentage
 			    }
-			    cartScript.append(" %\',\n");
-			    cartScript.append("style: {");
+			    //cartScript.append(" %\n");
+			    cartScript.append("\', style: {");
 			    {
 				cartScript.append("\n");
 				cartScript.append("color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || \'black\'\n");

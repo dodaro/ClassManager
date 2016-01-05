@@ -110,7 +110,8 @@ public class LoginController {
 		
 		logger.info(hash + " " + salt+ " "+ calculated); 
 		if ( calculated.equals(hash) ) {
-			request.getSession().setAttribute("loggedIn", user.getUsername());			
+			request.getSession().setAttribute("loggedIn", user.getUsername());
+			request.getSession().setAttribute("role", userfromDB.getRole());
 		}
 		
 		userJsonResponse.setStatus("SUCCESS");

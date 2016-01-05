@@ -5,5 +5,4 @@ $(function(){
 			$("#login-modal").modal("toggle");
 		});
 	});
-	
 });

@@ -7,24 +7,11 @@ SOLO PROFESSORI
 	->(All PieCarts)
 
 - Grafico professori e lezioni
-	Per professore:
 	Q - per ogni anno il numero totale di lezioni per ogni giorno della settimana
 	->(BubbleCart)  SEL
 	
-	Q - per ogni anno il numero medio di lezioni per ogni giorno della settimana
-	->(ColumnNullValues3D) SEL
-	->(ColumnDrilldown)
-	
 	Q - negli anni il numero medio di lezioni per ogni giorno della settimana
 	->(PolarCart) SEL
-	
-	Tra Professori:
-	Q - per ogni anno il numero medio di lezioni per ogni giorno della settimana
-	->(ColumnStackedCart) SEL
-	
-	Q - per ogni anno il numero totale di lezioni per ogni giorno della settimana
-	->(ColumnStackedAndGroupedCart) SEL
-	->(ColumnStackingGrouping3DCart)
 	
 	Q - negli anni il numero medio di lezioni per ogni giorno della settimana
 	->(ColumnStackedPercentCart) SEL
@@ -39,9 +26,6 @@ SOLO PROFESSORI
 	->(ColumnStackedCart)
 
 - Grafico presenze Studenti
-	Q - per ogni corso la media delle presenze di tutti gli studenti
-	->(ColumnDrilldownCart)	 SEL
-
 	Q - per ogni corso il numero medio di presenze di ogni studente
 	->(ColumnBasicCart) SEL
 
@@ -69,20 +53,6 @@ SOLO STUDENTI
 	Q - per ogni corso la media delle presenze
 	->(ColumnDrilldownCart)	SEL
 
-/* SELECTED CARTS */
-(All PieCarts)
-(BubbleCart)
-(ColumnDrilldown)
-(ColumnNullValues3D)
-(PolarCart)
-(PolarSpiderCart)
-(ColumnStackedCart)
-(ColumnStackedPercentCart)
-(ColumnStackedAndGroupedCart)
-(ColumnStackingGrouping3DCart)
-(ColumnBasicCart)
-(AreaStackedCart)
-(SplineIrregularTimeCart)
 		
 /********* Opzionali *********/
 

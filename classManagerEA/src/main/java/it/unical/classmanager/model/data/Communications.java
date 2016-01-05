@@ -1,13 +1,21 @@
 package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 @Entity
 @Table(name ="communications")
@@ -16,13 +24,18 @@ public class Communications implements Serializable  {
 	
 	@Id
 	@Column(name="id", nullable=false, length=32)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@Column(name="name", nullable=false, length=32)
 	private String name;
 	
-	@Column(name="description", nullable=false, length=32)
+	@Column(name="description", nullable=false, length=256)
 	private String description;	
+	
+	@Column(name="date", nullable=false)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
+	private Date date;
 
 	//	Foreign key section
 	@ManyToOne
@@ -33,14 +46,16 @@ public class Communications implements Serializable  {
 		this.id = 0;
 		this.name = "";
 		this.description = "";
-		this.professor = null;		
+		this.professor = null;
+		this.date = null;
 	}
 
-	public Communications(int id, String name, String description, Professor professor) {
+	public Communications(int id, String name, String description, Professor professor,Date date) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.professor = professor;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -73,6 +88,14 @@ public class Communications implements Serializable  {
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

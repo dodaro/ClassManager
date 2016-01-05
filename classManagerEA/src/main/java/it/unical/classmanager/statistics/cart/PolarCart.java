@@ -45,19 +45,20 @@ public class PolarCart extends AbstractCart {
 		    cartScript.append("\n");
 		    cartScript.append("tickInterval: 45,\n");
 		    cartScript.append("min: "+xAxisMinValue+",\n"); // 0
-		    cartScript.append("max: "+xAxisMaxValue+",\n"); // 360
-		    cartScript.append("labels: {");
-		    {
-			cartScript.append("\n");
-			cartScript.append("formatter: function () {");
-			{
-			    cartScript.append("\n");
-			    cartScript.append("return this.value + \'°\';\n");
-			    cartScript.append("}");
-			}
-			cartScript.append("\n");
-			cartScript.append("}");
-		    }
+		    cartScript.append("max: "+xAxisMaxValue+""); // 360
+		    //		    cartScript.append(",\n");
+		    //		    cartScript.append("labels: {");
+		    //		    {
+		    //			cartScript.append("\n");
+		    //			cartScript.append("formatter: function () {");
+		    //			{
+		    //			    cartScript.append("\n");
+		    //			    cartScript.append("return this.value + \'\';\n"); // °
+		    //			    cartScript.append("}");
+		    //			}
+		    //			cartScript.append("\n");
+		    //			cartScript.append("}");
+		    //		    }
 		    cartScript.append("\n");
 		    cartScript.append("}");
 		}
@@ -65,7 +66,9 @@ public class PolarCart extends AbstractCart {
 		cartScript.append("yAxis: {");
 		{
 		    cartScript.append("\n");
-		    cartScript.append("min: "+yAxisMinValue+"\n");
+		    cartScript.append("min: "+yAxisMinValue+",\n"); // 0
+		    cartScript.append("max: "+yAxisMaxValue+""); // 360
+		    
 		    cartScript.append("}");
 		}
 		cartScript.append(",\n");

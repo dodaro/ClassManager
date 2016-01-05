@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
@@ -32,6 +33,10 @@ public class AldoLoginController {
 	private ApplicationContext context;
 	private static final Logger logger = LoggerFactory.getLogger(AldoLoginController.class);
 	
+	
+	private final static String HEADER = "userslist/userslistHeader.jsp";
+	private final static String BODY = "userslist/userslistBody.jsp";
+	
 	/**
 	 * Manages the request related to the calendar
 	 */
@@ -46,7 +51,7 @@ public class AldoLoginController {
 		user.setFirstName("aldo");
 		user.setLastName("aldo");
 		
-		Calendar date = new GregorianCalendar(2011, Calendar.JULY, 3);
+		Calendar date = new GregorianCalendar(1996, Calendar.JULY, 3);
 	    date.add(Calendar.DAY_OF_MONTH, -7);
 	    
 		user.setBirthDate(date.getTime());
@@ -55,6 +60,7 @@ public class AldoLoginController {
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
 		user.setHash(user.getPassword());
+		user.setRole("admin");
 		
 		userDao.create(user);
 		
@@ -66,6 +72,7 @@ public class AldoLoginController {
 		Event event = new Event(0, "event", "", startDate, endDate, "", null, null, user);
 		eventDao.create(event);
 		request.getSession().setAttribute("loggedIn",username);
+		request.getSession().setAttribute("role",user.getRole());
 		return "redirect:/";
 			
 	}

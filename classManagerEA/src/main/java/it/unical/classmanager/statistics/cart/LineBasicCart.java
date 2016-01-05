@@ -37,7 +37,7 @@ public class LineBasicCart extends AbstractCart {
 		cartScript.append("xAxis: {");
 		{
 		    cartScript.append("\n");
-		    cartScript.append("categories: ["+categories+"]\n"); // \'Jan\', \'Feb\', \'Mar\', \'Apr\', \'May\', \'Jun\',\'Jul\', \'Aug\', \'Sep\', \'Oct\', \'Nov\', \'Dec\'
+		    cartScript.append("categories: ["+xAxisCategories+"]\n"); // \'Jan\', \'Feb\', \'Mar\', \'Apr\', \'May\', \'Jun\',\'Jul\', \'Aug\', \'Sep\', \'Oct\', \'Nov\', \'Dec\'
 		    cartScript.append("}");
 		}
 		cartScript.append(",\n");
@@ -50,6 +50,10 @@ public class LineBasicCart extends AbstractCart {
 			cartScript.append("text: \'"+yAxisTitle+"\'\n");
 			cartScript.append("}");
 		    }
+		    cartScript.append(",\n");
+		    cartScript.append("min: "+yAxisMinValue+"\n");
+		    cartScript.append(",\n");
+		    cartScript.append("max: "+yAxisMaxValue+"\n");
 		    cartScript.append(",\n");
 		    cartScript.append("plotLines: [{");
 		    {

@@ -5,6 +5,7 @@ import java.util.List;
 import it.unical.classmanager.model.data.Communications;
 
 public interface CommunicationsDAO {
+	
 	public void create(Communications communications);
 
 	public void update(Communications communications);
@@ -18,4 +19,5 @@ public interface CommunicationsDAO {
 	public int numberOfCommunications();
 
 	public List<Communications> getAllCommunications();
+
 }

@@ -257,8 +257,9 @@ public class User implements Serializable {
 		return hash;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + password + ", " + confirmPassword + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
+		return "[ " + this.username + ", " + hash + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
 	}
 }

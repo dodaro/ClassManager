@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
+import it.unical.classmanager.utils.FileManager;
 
 /**
  * Is called when is necessary retrieve files starting from a root
@@ -71,7 +72,7 @@ public class FileBrowserController {
 		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
 
 		
-		addTree(folder, files, false);
+		new FileManager().addTree(folder, files, false);
 		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files, false);
 
 		logger.info("getFiles");
@@ -155,33 +156,6 @@ public class FileBrowserController {
 
 		return Boolean.toString(delete);
 
-	}
-
-	/**
-	 * This method create recursively a tree of files
-	 * 
-	 * @param folder : is the root folder
-	 * @param files	: is the list of the files contained in {@link @param folder}
-	 * @param evaluable : indicates if the file is evaluable or not and if it has a score
-	 */
-	private void addTree(File folder, List<AbstractFileBean> files, boolean evaluable) {
-
-		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile() && !listOfFiles[i].isHidden()) {
-
-				FileBean file = FileBean.toFileBean(listOfFiles[i]);
-				files.add(file);
-
-			} else if (listOfFiles[i].isDirectory()) {
-
-				List<AbstractFileBean> flyweight = new ArrayList<AbstractFileBean>();
-
-				addTree(listOfFiles[i], flyweight, true);
-				FolderBean file = new FolderBean(listOfFiles[i].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[i].getPath(), flyweight, evaluable);
-				files.add(file);
-			}
-		}
 	}
 
 }

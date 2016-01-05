@@ -20,5 +20,7 @@ public interface LectureDAO {
 
 	public List<Lecture> getAllLectures();	
 	
-	public List<Lecture> getAllLecturesOfACourse(CourseClass course);	
+	public Lecture getLastLectureAdded(String username);
+    
+	public List<Lecture> getAllLecturesOfACourse(CourseClass course);
 }

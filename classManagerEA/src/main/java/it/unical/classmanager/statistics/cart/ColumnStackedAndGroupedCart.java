@@ -62,7 +62,9 @@ public class ColumnStackedAndGroupedCart extends AbstractCart {
 			cartScript.append("\n");
 			cartScript.append("return \'<b>\' + this.x + \'</b><br/>\' +\n");
 			cartScript.append("this.series.name + \': \' + this.y + \'<br/>\' +\n");
-			cartScript.append("\'Total: \' + this.point.stackTotal;\n");
+			//cartScript.append("\'Total: \' + this.point.stackTotal");
+			cartScript.append("\' \'");
+			cartScript.append(";\n");
 			cartScript.append("}");
 		    }
 		    cartScript.append("\n");

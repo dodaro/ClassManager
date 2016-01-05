@@ -47,8 +47,9 @@ public class SplineIrregularTimeCart extends AbstractCart {
 		    cartScript.append("dateTimeLabelFormats: {");
 		    {
 			//cartScript.append(" // don\'t display the dummy year\n");
-			cartScript.append("month: \'%e. %b\',\n");
-			cartScript.append("year: \'%b\'\n");
+			cartScript.append("month: \'%e. %b\'");
+			cartScript.append(",\n");
+			//cartScript.append("year: \'%b\'\n");
 			cartScript.append("}");
 		    }
 		    cartScript.append(",\n");
@@ -73,6 +74,8 @@ public class SplineIrregularTimeCart extends AbstractCart {
 		    }
 		    cartScript.append(",\n");
 		    cartScript.append("min: "+yAxisMinValue+"\n");
+		    cartScript.append(",\n");
+		    cartScript.append("max: "+yAxisMaxValue+"\n");
 		    cartScript.append("}");
 		}
 		cartScript.append(",\n");
@@ -84,16 +87,18 @@ public class SplineIrregularTimeCart extends AbstractCart {
 			cartScript.append("series.name}");
 		    }
 		    cartScript.append("</b><br>\',\n");
-		    cartScript.append("pointFormat: \'{");
-		    {
-			cartScript.append("point.x:%e. %b}");
-		    }
-		    cartScript.append(": {");
-		    {
-			cartScript.append("point.y:.2f}");
-		    }
-		    cartScript.append(" m\'\n");
-		    cartScript.append("}");
+		    cartScript.append("pointFormat: \'{point.x:%e %b} - <b>{point.y}</b>\'");
+//		    cartScript.append("pointFormat: \'{");
+//		    {
+//			cartScript.append("point.x:%e . %b}");
+//		    }
+//		    cartScript.append(": {");
+//		    {
+//			//cartScript.append("point.y:.2f}");
+//			cartScript.append("point.y:%e}");			
+//		    }
+//		    cartScript.append(" m\'\n");
+		    cartScript.append("}");		    
 		}
 		cartScript.append(",\n");
 		cartScript.append("plotOptions: {");

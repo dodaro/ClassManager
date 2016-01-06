@@ -2,8 +2,10 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
+import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Question;
 
@@ -65,8 +67,40 @@ public class QuestionDAOImpl implements QuestionDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<Question> questions = session.createQuery("FROM Question").list();
+		
+		/*
+		for(Question question : questions) {
+			question.getAnswers().size();
+		}
+		*/
+		
 		session.close();
 		return questions;
 	}
-
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Question> searchQuestion(QuestionSearchSetting searchSettings)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		
+		String queryString = "SELECT q FROM Question as q, User as u WHERE "
+				+ "q.user = u.username "
+				+ "AND LOWER(q.title) LIKE LOWER(:questionName) "
+				+ "AND LOWER(q.description) LIKE LOWER(:questionDescription) "
+				+ "AND LOWER(u.username) LIKE LOWER(:username)";
+		
+		Query query = session.createQuery(queryString);
+		
+		query.setParameter("questionName",  "%" + searchSettings.getQuestionName() + "%");
+		query.setParameter("questionDescription",  "%" + searchSettings.getQuestionDescription() + "%");
+		query.setParameter("username",  "%" + searchSettings.getUsername() + "%");
+		
+		List<Question> questions = (List<Question>) query.list();
+		
+		session.close();
+		return questions;
+	}
+	
+	
 }

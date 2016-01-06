@@ -11,23 +11,23 @@ import it.unical.classmanager.model.data.Question;
 
 public class QuestionManager {
 	
-	private QuestionDAOImpl questionDao;
+	private List<Question> questions;
 	private PagedListHolder<Question> paginationHolder;
 	
 	private int pageSize;
 	private final int INITIAL_PAGE_SIZE = 5;
 	
 	
-	public QuestionManager(QuestionDAOImpl questionDao) {
+	public QuestionManager(List<Question> questions) {
 		
-		this.questionDao = questionDao;
+		this.questions = questions;
 		this.pageSize = INITIAL_PAGE_SIZE;
 		initPagination();
 	}
 
 	private void initPagination() {
 		
-		this.paginationHolder = new PagedListHolder<Question>(questionDao.getAllQuestions());
+		this.paginationHolder = new PagedListHolder<Question>(this.questions);
 		this.paginationHolder.setPageSize(this.pageSize);
 	}
 	

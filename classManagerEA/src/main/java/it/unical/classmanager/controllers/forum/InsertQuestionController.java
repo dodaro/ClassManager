@@ -45,6 +45,7 @@ public class InsertQuestionController {
 		Question question = new Question();
 		model.addAttribute("question", question);
 		
+		
 		return "forum/insertQuestion";
 	}
 	

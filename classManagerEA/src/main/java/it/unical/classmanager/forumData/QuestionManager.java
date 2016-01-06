@@ -40,16 +40,14 @@ public class QuestionManager {
 		this.pageSize = pageSize;
 	}
 
-	public List<Question> getPreviousPageQuestions() {
+	public List<Question> getPreviousPageQuestions(int index) {
 		
-		this.paginationHolder.previousPage();
-		return this.paginationHolder.getPageList();
+		return getSpecificPageQuestions(index-1);
 	}
 	
-	public List<Question> getNextPageQuestions() {
+	public List<Question> getNextPageQuestions(int index) {
 		
-		this.paginationHolder.nextPage();
-		return this.paginationHolder.getPageList();
+		return getSpecificPageQuestions(index+1);
 	}
 	
 	public List<Question> getCurrentPageQuestions() {

@@ -97,12 +97,6 @@
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
 										<ul id="" class="pagination">
-										  <li>
-										    <a href="questionsPrevious" aria-label="Previous">
-										      <span aria-hidden="true">&laquo;</span>
-										    </a>
-										  </li>
-										  
 										  
 										  <c:forEach begin="0" end="${pageCount-1}" var="i">
 										  
@@ -118,11 +112,6 @@
 									 	  </c:forEach>
 									 	  
 									 	  
-										  <li>
-										    <a href="questionsNext" aria-label="Next">
-										      <span aria-hidden="true">&raquo;</span>
-										    </a>
-										  </li>
 										</ul>
 									</div>
 								</div>
@@ -160,12 +149,6 @@
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
 										<ul class="pagination">
-										  <li>
-										    <a href="questionsPrevious" aria-label="Previous">
-										      <span aria-hidden="true">&laquo;</span>
-										    </a>
-										  </li>
-										  
 										  
 										  <c:forEach begin="0" end="${pageCount-1}" var="i">
 										  
@@ -181,11 +164,6 @@
 									 	  </c:forEach>
 									 	  
 									 	  
-										  <li>
-										    <a href="questionsNext" aria-label="Next">
-										      <span aria-hidden="true">&raquo;</span>
-										    </a>
-										  </li>
 										</ul>
 									</div>
 								</div>

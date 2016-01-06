@@ -38,12 +38,10 @@ public class LoginCheckerFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		/*
 		if(httpRequest.getSession().getAttribute("loggedIn") == null) {
 			httpResponse.sendRedirect("/privilegeError");
 			return;
 		}
-		*/
 		
 		chain.doFilter(request, response);
 	}

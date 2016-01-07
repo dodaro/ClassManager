@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,7 @@ public class FileManager {
 
 	public final static String RESOURCES_PATH = "files";
 	public final static String HOMEWORK_PATH = "homeworks";
+	public final static String HOMEWORK_ATTACHED_PATH = "homeworkAttached";
 	public final static String MATERIALS_PATH = "materials";
 	public final static String LECTURES_PATH = "lectures";
 	public final static String STUDENTS_PATH = "students";
@@ -76,12 +78,11 @@ public class FileManager {
 	 */
 	public boolean mkMultipartFile(MultipartFile file, String path, String name){
 
-		String path_ = path + File.separator + name;
+		String path_ = FileManager.RESOURCES_PATH + File.separator + path + File.separator + name;
 		path_ = path_.replaceAll("/", File.separator);
 		path_ = path_.replaceAll(" ", "\\ ");
 
 		File f = new File(path_); 
-
 		boolean success = false;
 		try {
 
@@ -108,46 +109,51 @@ public class FileManager {
 	 * @param files	: is the list of the files contained in {@link @param folder}
 	 * @param evaluable : indicates if the file is evaluable or not and if it has a score
 	 */
-	public void addTree(File folder, List<AbstractFileBean> files, boolean evaluable) {
+	public void addTree(String root, List<AbstractFileBean> files) {
 
+		File folder = new File(root);
 		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile() && !listOfFiles[i].isHidden()) {
 
-				FileBean file = FileBean.toFileBean(listOfFiles[i]);
-				files.add(file);
+		if(listOfFiles != null)
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile() && !listOfFiles[i].isHidden()) {
 
-			} else if (listOfFiles[i].isDirectory()) {
+					FileBean file = FileBean.toFileBean(listOfFiles[i]);
+					files.add(file);
 
+				} else if (listOfFiles[i].isDirectory()) {
 
-				List<AbstractFileBean> flyweight = new ArrayList<AbstractFileBean>();
-
-				addTree(listOfFiles[i], flyweight, false);
-				FolderBean file = new FolderBean(listOfFiles[i].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[i].getPath(), flyweight, evaluable);
-				files.add(file);
+					FolderBean file = new FolderBean(0,listOfFiles[i].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[i].getPath(), listOfFiles[i].listFiles().length);
+					files.add(file);
+				}
 			}
-		}
 	}
 
-	/*private boolean isEvaluable(File file) {
+	/**
+	 * This method deletes a file from the file system
+	 * @param path the file path of the file to delete
+	 * @return
+	 */
+	public boolean deleteFile(String path){
 
-		//TODO Devo ricavarlo dalla sessione
-		int idCurrentCourse = 0;
+		File file = new File(path);
+		return file.delete();
+	}
 
-		//retrieves the owner course of the new lesson
-		CourseClassDAO courseClassDao = appContext.getBean("courseClassDAO",CourseClassDAOImpl.class);
-		CourseClass courseClass = courseClassDao.get(idCurrentCourse);
+	/**
+	 * deletes a non empty directory
+	 * @param path the path of the directory to delete
+	 * @return
+	 */
+	public boolean deleteDirectory(String path){
 
-		//TODO prendere solo quelli del corso corrente
-		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
-		List<HomeworkStudentSolving> allHomeworks = homeworkStudentSolvingDAO.getAllHomeworkStudentSolvings();
-
-		for (HomeworkStudentSolving homework : allHomeworks) {
-			
-			if(homework.getHomework().getName().equals(file.getName()))
-				return true;
+		boolean success = false;
+		try {
+			FileUtils.deleteDirectory(new File(path));
+			success = true;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		return false;
-	}*/
+		return success;
+	}
 }

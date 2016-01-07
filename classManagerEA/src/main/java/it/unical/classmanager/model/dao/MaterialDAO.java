@@ -18,4 +18,6 @@ public interface MaterialDAO {
 	public int numberOfMaterials();
 
 	public List<Material> getAllMaterials();
+
+	public List<Material> getAllLectureMaterials(int idLecture);
 }

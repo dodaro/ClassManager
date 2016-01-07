@@ -18,4 +18,6 @@ public interface HomeworkAttachedDAO {
 	public int numberOfHomeworkAttacheds();
 
 	public List<HomeworkAttached> getAllHomeworkAttacheds();
+
+	public List<HomeworkAttached> getAllHomeworkAttacheds(int idHomework);
 }

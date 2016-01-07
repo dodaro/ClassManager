@@ -73,12 +73,13 @@ public class LectureDAOImpl implements LectureDAO
 	}
 
 	@Override
-	public Lecture getLastLectureAdded(String username) {
+	public Lecture getLastLectureAdded(int idCourse) {
 
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		Query query = session.createQuery("FROM Lecture as lecture inner join lecture.courseClass as c WHERE c.professor.username = :user order by lecture.id DESC");
-		query.setParameter("user", username);
-		Lecture lecture = (Lecture) query.uniqueResult();
+		Query query = session.createQuery("FROM Lecture as lecture WHERE lecture.courseClass.id = :id order by lecture.id DESC");
+		query.setParameter("id", idCourse);
+		query.setMaxResults(1);
+		Lecture lecture = (Lecture)query.uniqueResult();
 
 		return lecture;
 	}
@@ -93,4 +94,12 @@ public class LectureDAOImpl implements LectureDAO
 		return lecture;
 	}
 
+	@Override
+	public List<Lecture> getAllLecturesOfACourse(int courseID)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<Lecture> lecture = session.createQuery("FROM Lecture WHERE courseClass.id = :course ").setParameter("course", courseID).list();
+		session.close();
+		return lecture;
+	}
 }

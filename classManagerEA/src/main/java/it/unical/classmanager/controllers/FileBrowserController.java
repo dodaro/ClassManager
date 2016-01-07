@@ -35,6 +35,9 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
+import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
 
@@ -47,78 +50,28 @@ public class FileBrowserController {
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(FileBrowserController.class);
-	
+
 	public static final String LECTURES_ROOT_TYPE = "lectures";
 	public static final String STUDENTS_HOMEWORKS_ROOT_TYPE = "students";
 
-	/**
-	 * This method is called to construct a three of files, starting from a root
-	 * 
-	 * @param rootDir : starting from this folder a tree of files is build and returned as a JSON
-	 * @return JSON
-	 */
-	@RequestMapping(value = "/contents", method = RequestMethod.GET)
-	public @ResponseBody String getFiles(Model model, @RequestParam("type") String type) {
-
-		User user = new User();
-		if(type.equals(LECTURES_ROOT_TYPE))
-			return getLectures(user);
-		else if (type.equals(STUDENTS_HOMEWORKS_ROOT_TYPE))
-			return getStudentsHomeworks(user);
-				
-
-		return "{}";
-	}
 	
-	public String getLectures(User professor){
-		
-		boolean isProfessor = true;
+	public List<AbstractFileBean> getLectureContent(String path){
 
+		String root = path;
 		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
-		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, FileManager.RESOURCES_PATH, files, false);
-
-		if(isProfessor){
-
-			//TODO Replace with DAO
-			List<String> courses = new ArrayList<String>();
-			String coursePath1 = "enterpriseApplication";
-			courses.add(FileManager.RESOURCES_PATH + File.separator + coursePath1);
-			
-			createTreeFromCourses(courses, files);
-		}
+		
+		new FileManager().addTree(root, files);
 
 		logger.info("getFiles");
 
-		return new Gson().toJson(root);
-	}
-	
-	public String getStudentsHomeworks(User professor){
-		
-		boolean isProfessor = true;
-
-		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
-		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, FileManager.RESOURCES_PATH, files, false);
-
-		if(isProfessor){
-
-			//TODO Replace with DAO
-			List<String> students = new ArrayList<String>();
-			String studentPath = "student1";
-			students.add(FileManager.RESOURCES_PATH + File.separator + FileManager.STUDENTS_PATH + File.separator + studentPath);
-			
-			createTreeFromCourses(students, files);
-		}
-
-		logger.info("getFiles");
-
-		return new Gson().toJson(root);
+		return files;
 	}
 
 	/**
 	 * This method allows the user to download the file contained in the parameter "path"
 	 * @param path : is the parameter of the GET request, that is the path of the file to dowload
 	 */ 
-	@RequestMapping(value="/contents/download", method = RequestMethod.GET)
+	@RequestMapping(value="download", method = RequestMethod.GET)
 	public void downloadFile(HttpServletResponse response, @RequestParam("path") String path) throws IOException {
 
 		//TODO Security check
@@ -149,7 +102,7 @@ public class FileBrowserController {
 
 		/* "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser 
             while others(zip e.g) will be directly downloaded [may provide save as popup, based on your browser setting.]*/
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() +"\""));
 
 
 		/* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
@@ -189,23 +142,6 @@ public class FileBrowserController {
 
 		return Boolean.toString(delete);
 
-	}
-
-	/**
-	 * Should be used after a query about the courses of a specific Professor. 
-	 * For each root directory "course" in courses the sub tree is added to the folder list
-	 * @param courses
-	 * @param folder
-	 * @param files
-	 */
-	private void createTreeFromCourses(List<String> courses, List<AbstractFileBean> files){
-
-		FileManager fm = new FileManager();
-		for (String course : courses) {	
-
-			File folder = new File(course);
-			fm.addTree(folder, files, false);
-		}
 	}
 
 }

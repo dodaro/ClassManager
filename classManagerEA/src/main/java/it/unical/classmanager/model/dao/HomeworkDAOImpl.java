@@ -46,9 +46,11 @@ public class HomeworkDAOImpl implements HomeworkDAO
 	public Homework get(Integer id)
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		Homework homework = (Homework) session
-				.createSQLQuery("SELECT Homework homework FROM Homework homework WHERE id = " + id)
-				.addEntity(Homework.class).uniqueResult();
+
+		Query finalQuery = session.createQuery("FROM Homework as h WHERE h.id = :id)");
+		finalQuery.setParameter("id", id);
+		Homework homework = (Homework) finalQuery.uniqueResult();
+		
 		session.close();
 		return homework;
 	}
@@ -102,6 +104,19 @@ public class HomeworkDAOImpl implements HomeworkDAO
 
 		session.close();
 		return homeworks;
+	}
+
+	@Override
+	public List<Homework> getAllLectureHomeworks(int idLecture) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+
+		Query finalQuery = session.createQuery("FROM Homework as h WHERE h.lecture.id = :id");
+		finalQuery.setParameter("id", idLecture);
+		List<Homework> homeworks = finalQuery.list();
+		
+		return homeworks;
+
 	}
 
 }

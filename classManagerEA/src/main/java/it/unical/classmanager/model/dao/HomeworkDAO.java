@@ -19,5 +19,7 @@ public interface HomeworkDAO {
 
 	public List<Homework> getAllHomeworks();
 
-	public List<Homework> getAllHomeworks(int idCourse);	
+	public List<Homework> getAllHomeworks(int idCourse);
+	
+	public List<Homework> getAllLectureHomeworks(int idLecture);
 }

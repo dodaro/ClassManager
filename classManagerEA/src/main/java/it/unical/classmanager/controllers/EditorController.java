@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -31,7 +32,10 @@ public class EditorController {
 	public String home(Locale locale, Model model) {
 		
 		EditorStatus status = initEditorStatus();
+		List<EnvironmentEnum> envLangs = EnvironmentManger.getInstance().getAviableLanguage();
+		
 		model.addAttribute("status", status);
+		model.addAttribute("aviableLangs", envLangs);
 			
 		return "editor";
 	}
@@ -42,9 +46,12 @@ public class EditorController {
 		String lang = status.getLanguage();
 
 		Environment env = EnvironmentManger.getInstance().getEnvironment(EnvironmentEnum.getEnumFromString(lang));
+		List<EnvironmentEnum> envLangs = EnvironmentManger.getInstance().getAviableLanguage();
+
 		status.setConsoleContent(env.compile(status.getCode()));
 		
 		model.addAttribute("status", status);
+		model.addAttribute("aviableLangs", envLangs);
 		
 		return "editor";
 	}

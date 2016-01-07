@@ -61,18 +61,6 @@ public class QuestionsController {
 		
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()));
 		
-
-		/*
-		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-		List<Question> questions = questionDAO.getAllQuestions();
-		*/
-		
-		
-		model.addAttribute("questions", this.questionManager.getCurrentPageQuestions());
-		model.addAttribute("pageCount", this.questionManager.getPageCount());
-		
-		model.addAttribute("currPage", this.questionManager.getCurrentPageNumber());
-		
 		return "forum/questions";
 	}
 	

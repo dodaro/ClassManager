@@ -116,32 +116,4 @@ public class FileBrowserController {
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
 	}
 
-
-	//TODO database connection. Delete returns false
-	/**
-	 * This method is called when a particular file needs to be deleted
-	 * @params path : the complete path of the file to delete
-	 */
-	@RequestMapping(value = "/contents/delete", method = RequestMethod.GET)
-	public @ResponseBody String deleteFile(Model model, @RequestParam("path") String path) {
-
-		boolean delete = false;
-		try{
-
-			String workingDir = System.getProperty("user.dir");
-			File file = new File(workingDir + "/" + path);
-			delete = file.delete();
-
-		}catch(Exception e){
-
-			e.printStackTrace();
-
-		}
-
-		logger.info("deleteFile");
-
-		return Boolean.toString(delete);
-
-	}
-
 }

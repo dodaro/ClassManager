@@ -1,6 +1,5 @@
 package it.unical.classmanager.controllers;
 
-import java.awt.Color;
 import java.io.File;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -8,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.classmanager.model.AbstractFileBean;
+import it.unical.classmanager.model.LectureControllerWrapper;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 import it.unical.classmanager.model.dao.CourseClassDAO;
@@ -33,7 +33,6 @@ import it.unical.classmanager.model.dao.HomeworkAttachedDAO;
 import it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkDAO;
 import it.unical.classmanager.model.dao.HomeworkDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.MaterialDAO;
@@ -42,12 +41,13 @@ import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkAttached;
-import it.unical.classmanager.model.data.HomeworkStudentSolving;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Material;
 import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
+//TODO reload of the page when creating new things, update lecture button not yet implemented, retrieve path from session, modal to create lecture (date and hour), deny upload exe
+//TODO internationalization, validation
 /**
  * This class allows to: 
  * - get Files starting from a root (students, lectures)
@@ -86,11 +86,11 @@ public class ClassController {
 
 
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
-	public String getClasses(Model model, @RequestParam("path") String path, HttpServletRequest request) {
+	public String getClasses(Model model, HttpServletRequest request) {
 
 		//TODO retrieve from session
 		int idCourse = 1;
-		String currentPath = "files/enterpriseApplication/" + path;
+		String currentPath = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH;
 
 		model.addAttribute("customHeader", ClassController.HEADER);
 		model.addAttribute("customBody", ClassController.BODY);
@@ -113,13 +113,17 @@ public class ClassController {
 
 
 	@RequestMapping(value = "/lectureContent", method = RequestMethod.GET)
-	public String getLectureContent(Model model, @RequestParam("path") String path, @RequestParam("parentId") int lectureId, HttpServletRequest request) {
+	public String getLectureContent(@Valid LectureControllerWrapper params,	
+			BindingResult result, Model model, HttpServletRequest request) {
 
 		model.addAttribute("customHeader", ClassController.HEADER);
 		model.addAttribute("customBody", ClassController.BODY);
 
 		List<AbstractFileBean> lectureContent = new ArrayList<AbstractFileBean>();
 
+		String path = params.getPath();
+		int lectureId = params.getParentId();
+		
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 
@@ -296,7 +300,7 @@ public class ClassController {
 		lectureDao.create(lecture);
 
 		createCalendarEvent(lecture);
-		
+
 		//creates the corresponding folder
 		String name = lecture.getNumber() + " - " + lecture.getTopic();
 		boolean success = false;
@@ -431,14 +435,14 @@ public class ClassController {
 		//TODO retrieve from session
 		String name = lecture.getNumber() + " - " + lecture.getTopic();
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
-		
+
 		boolean success = new FileManager().deleteFile(path);
 
 		if(!success){
 			logger.info("cannot delete the file " + path);
 		}
 
-		
+
 		return "redirect:/lectures?path=lectures";
 	}
 
@@ -449,14 +453,14 @@ public class ClassController {
 		Material material = materialDAO.get(id);
 		if(material != null)
 			materialDAO.delete(material);
-		
+
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);
-		
+
 		if(!success){
 			logger.info("cannot delete the file " + path);
 		}
-		
+
 		return "redirect:/lectures?path=lectures";
 	}
 
@@ -468,7 +472,7 @@ public class ClassController {
 		if(homework != null){
 			homeworkDAO.delete(homework);
 		}
-		
+
 		String path = homework.getFilePath();
 		boolean success = new FileManager().deleteFile(path);
 
@@ -518,12 +522,12 @@ public class ClassController {
 			dest.add(folder);
 		}	
 	}
-	
+
 	/*
 	 * creates a calendar event starting from the new lecture
 	 */
 	private void createCalendarEvent(Lecture lecture) {
-		
+
 		Event event = new Event();
 		event.setColor("##0000ff");
 		event.setDescription(lecture.getDescription());
@@ -534,7 +538,7 @@ public class ClassController {
 		event.setPlace("");
 		event.setTitle(lecture.getTopic());
 		event.setUser(lecture.getCourseClass().getProfessor());
-		
+
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		eventDao.create(event);
 	}

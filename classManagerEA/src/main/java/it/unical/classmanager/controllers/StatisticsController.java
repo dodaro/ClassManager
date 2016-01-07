@@ -13,8 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.CartsList;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.queryCart.professor.Professor_AvgAttendanceStudent;
@@ -51,29 +54,35 @@ public class StatisticsController {
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
 	
-	return statisticsForProfessor(locale, model, request, null);
+	//return statisticsForProfessor(locale, model, request, null);
 	
-	//	if ( username == null ) {			
-	//	    return "redirect:/";
-	//	}	
-	//	
-	//	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	//	User user = userDao.get(username);
-	//	model.addAttribute("user",user.getUsername());
-	//	
-	//	if(user instanceof Student){
-	//	    logger.info("Student statistics page accessed by "+user.getUsername(), locale);
-	//	    model.addAttribute("student", (Student)user);
-	//	    return statisticsForStudent(locale, model, request, (Student)user);
-	//	    
-	//	}
-	//	if(user instanceof Professor){
-	//	    logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
-	//	    model.addAttribute("professor", (Professor)user);
-	//	    return statisticsForProfessor(locale, model, request, (Professor)user);
-	//	}
-	//	
-	//	return "redirect:/";
+	//	User user = DaoHelper.getUserDAO().get("StudentAldo2");
+	//	return statisticsForStudent(locale, model, request, (Student) user);
+
+	//	User user = DaoHelper.getUserDAO().get("ProfAldo0");
+	//	return statisticsForProfessor(locale, model, request, (Professor) user);
+	
+	if ( username == null ) {			
+	    return "redirect:/";
+	}	
+	
+	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
+	User user = userDao.get(username);
+	model.addAttribute("user",user.getUsername());
+	
+	if(user instanceof Student){
+	    logger.info("Student statistics page accessed by "+user.getUsername(), locale);
+	    model.addAttribute("student", (Student)user);
+	    return statisticsForStudent(locale, model, request, (Student)user);
+	    
+	}
+	if(user instanceof Professor){
+	    logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
+	    model.addAttribute("professor", (Professor)user);
+	    return statisticsForProfessor(locale, model, request, (Professor)user);
+	}
+	
+	return "redirect:/";
     }
     
     public String statisticsForStudent(Locale locale, Model model,HttpServletRequest request, Student student) {

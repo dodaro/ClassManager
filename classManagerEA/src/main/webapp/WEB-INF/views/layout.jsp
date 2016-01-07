@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
 <html>
 <head>
@@ -42,7 +43,7 @@
 			</div>			
 			<div class="navbar-header pull-right">
         		<a class="nav-bar-button logout" href="./db_init"><span class="glyphicon glyphicon-log-out"></span>InitDB</a>
-				<c:if test="${empty user}">
+				<c:if test="${empty loggedIn}">
 <!--             		<button type="button" class="btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
             		
             	
@@ -50,9 +51,12 @@
     				<a id="login-button" class="nav-bar-button login" href="#"><span class="glyphicon glyphicon-log-out" ></span>Login</a>
     				<a class="nav-bar-button logout" href="aldo"><span class="glyphicon glyphicon-log-out"></span>Aldo Login</a>
     			</c:if>
-				<c:if test="${not empty user}">
-					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span><spring:message code="welcome.springmvc" text="default text" /> ${user}</a>
+				<c:if test="${not empty loggedIn}">
+					<a class="nav-bar-button logout" href="#"><span class="glyphicon glyphicon-log-out"></span><spring:message code="welcome.springmvc" text="default text" /> ${loggedIn}</a>
     				<a class="nav-bar-button logout" href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+				</c:if>
+				<c:if test="${not empty loggedIn && role == 'admin' }">
+					<a class="nav-bar-button logout" href="userslist"><span class="glyphicon glyphicon-log-out">User List</a>
 				</c:if>
             </div>
 	  	</div>
@@ -78,6 +82,12 @@
 						</li>
 						<li>
 						    <a href="./statistics"><span class="glyphicon glyphicon-stats"></span> Statistics</a>
+						</li>
+						<li>
+						    <a href="./noticeboard?init=1"><span class="glyphicon glyphicon-send"></span> <spring:message code="message.noticeboard" text="default text"/> con fake init</a>
+						</li>
+						<li>
+						    <a href="./noticeboard"><span class="glyphicon glyphicon-send"></span> <spring:message code="message.noticeboard" text="default text"/> senza init</a>
 						</li>
 					</ul>
 				</div>

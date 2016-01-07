@@ -1,6 +1,6 @@
 package it.unical.classmanager.controllers;
 
-
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -93,7 +94,10 @@ public class RegisterController {
 			return userJsonResponse;
 		} else {
 			user.setHash(user.getPassword());
-			userDao.create(user);
+			user.setRole("Student");
+			Student student = new Student(user);
+			student.setSubscriptionDate(new Date());
+			userDao.create(student);
 			userJsonResponse.setStatus("SUCCESS");
 			return userJsonResponse;
 		}

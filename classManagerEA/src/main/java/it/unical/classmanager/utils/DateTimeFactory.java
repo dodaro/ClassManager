@@ -25,7 +25,11 @@ public class DateTimeFactory {
 	public static Calendar getRandomDate(int year){
 		int month = random.nextInt(12);
 		int day = random.nextInt(daysInMonth[month]);
-		return new GregorianCalendar(year, month, day);
+		
+		GregorianCalendar date = new GregorianCalendar(year, month, day);
+		System.out.println("Created Date: "+date.getTime());
+		
+		return date;
 	}	
 	
 	public static Calendar getRandomDateLessThanYear(int year){
@@ -80,17 +84,25 @@ public class DateTimeFactory {
 		}
 		month = beginMonth + random.nextInt(endMonth-beginMonth);
 		int day = random.nextInt(daysInMonth[month]);
-		return new GregorianCalendar(year, month, day);
+		
+		GregorianCalendar date = new GregorianCalendar(year, month, day);
+		System.out.println("Created Date: "+date.getTime());	
+		
+		return date;
 	}
 	
 	public static int getRandomYear(){
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int randomYear = startYear + random.nextInt(currentYear-startYear);
+		System.out.println("Random Year: "+randomYear);
 		return startYear + random.nextInt(currentYear-startYear);
 	}
 	
 	public static int getRandomYearBetween(int beginYear, int endYear){
 		int diff = endYear - beginYear;
-		return beginYear + random.nextInt(diff);
+		int randomYear = beginYear + random.nextInt(diff);
+		System.out.println("Random Year Between ("+beginYear+","+endYear+"): "+randomYear);			
+		return randomYear;
 	}
 	
 	@SuppressWarnings("deprecation")

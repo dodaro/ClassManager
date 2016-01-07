@@ -1,0 +1,296 @@
+package it.unical.classmanager.controllers;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.AttendanceStudentLecture;
+import it.unical.classmanager.model.data.Communications;
+import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.HomeworkStudentSolving;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.StudentExamPartecipation;
+import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.DateTimeFactory;
+
+@Controller
+public class UsersListController {
+
+	
+	private final static String HEADER = "userslist/userslistHeader.jsp";
+	private final static String BODY = "userslist/userslistBody.jsp";
+	
+	@Autowired
+	ApplicationContext appContext;
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	MessageSource messageSource;
+	
+	@Autowired
+	private MutableSortDefinition mutableSortDefiniton;
+	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/userslist", method = RequestMethod.GET)
+	public String usersList(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+				
+		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+			return "redirect:/";
+		}
+		
+		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
+		
+		
+		
+		for(int i=0; i<50; i++)	{
+			String username = "StudentAldo";
+			
+			User user = new User();
+			user.setUsername(username+i);
+			user.setFirstName("Aldo_FirstName");
+			user.setLastName("Aldo_LastName");
+			user.setRole("Student");				    	
+			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
+				Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
+			user.setEmail("studentaldo@profaldo.it");
+			user.setPassword(username+i);
+			user.setConfirmPassword(user.getPassword());
+			user.setHash(user.getPassword());
+			user.setAddress("address");		
+			
+			Student student = new Student(user, 
+				i, 
+				DateTimeFactory.getRandomDate().getTime(), 
+				new ArrayList<StudentExamPartecipation>(), 
+				new ArrayList<AttendanceStudentLecture>(), 
+				new ArrayList<RegistrationStudentClass>(), 
+				new ArrayList<HomeworkStudentSolving>());
+			
+			User retrievedUser = userDao.get(username+i);
+				if(retrievedUser==null){
+				    userDao.create(student);
+				    logger.info("Created "+student, locale);						
+				} 
+	    }					
+		
+		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
+		if ( usersList == null ) {
+			usersList = new PagedListHolder<User>(userDao.getAllUsers());
+		} else {
+			usersList.setSource(userDao.getAllUsers());
+		}
+		usersList.setSort(mutableSortDefiniton);
+		usersList.resort();
+	    request.getSession().setAttribute("UserListController_usersList", usersList);
+		
+	    int pageCount = usersList.getPageCount();
+	    int pageNumber = usersList.getPage() + 1; 
+		model.addAttribute("users",usersList);
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("pageSize",usersList.getPageSize());
+		model.addAttribute("prop",this.mutableSortDefiniton.getProperty());
+		model.addAttribute("asc",this.mutableSortDefiniton.isAscending());
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+
+		return "layout";
+	}
+	
+	
+	
+
+	
+	/**
+	 * Search for user
+	 */
+	@RequestMapping(value = "/searchusers", method = RequestMethod.GET)
+	public String searchUsers(Model model,Locale locale,HttpServletRequest request ) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+				
+		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+			return "redirect:/";
+		}
+		
+		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
+		if ( usersList == null ) {
+			//TODO: HANDLE SESSION TIMEOUT; FOR NOW JUST A REDIRECT
+			handleSessionTimeOut();
+		}
+		
+		String nav = request.getParameter("page");
+		if ( nav != null ) {
+			//if the nav parameter is the next page
+			if ( nav.equals("prev") ) {
+				usersList.previousPage();
+				//or the previous page
+			} else if ( nav.equals("next") ) {
+				usersList.nextPage();
+				//or a page number
+			} else {
+				int pageToGet = 0;
+				try {
+					pageToGet = Integer.parseUnsignedInt(nav);
+					pageToGet -= 1;
+				} catch ( NumberFormatException e ) {
+					pageToGet = 0;
+				}
+				usersList.setPage(pageToGet);
+				
+			}
+			
+//			usersList.resort();
+			request.getSession().setAttribute("UserListController_usersList", usersList);
+			
+			int pageCount = usersList.getPageCount();
+		    int pageNumber = usersList.getPage() + 1; 
+			model.addAttribute("users",usersList);
+			model.addAttribute("pageNumber",pageNumber);
+			model.addAttribute("pageCount",pageCount);
+			model.addAttribute("pageSize", usersList.getPageSize());
+			
+			model.addAttribute("customHeader", UsersListController.HEADER);
+			model.addAttribute("customBody", UsersListController.BODY);
+			
+		    return "layout";
+		}
+		
+		
+		String lastname = request.getParameter("query");
+		if ( lastname == null || lastname.length() < 3 ) {
+			model.addAttribute("error", messageSource.getMessage("searchField.length.error", null, locale));
+		}
+		
+		String users = request.getParameter("users");
+		int usersPerPage = ( users == null ) ? 10 : Integer.valueOf(users);
+		if ( usersPerPage < 10 ) {
+			usersPerPage = 10;
+		} else if ( usersPerPage > 100 ) {
+			usersPerPage = 100;
+		}
+		
+		
+		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
+		usersList.setSource(userDao.getUsersByLastName(lastname));
+	    usersList.setPageSize(usersPerPage);
+	    
+	    
+	    
+		usersList.resort();
+		request.getSession().setAttribute("UserListController_usersList", usersList);
+	    
+	    int pageCount = usersList.getPageCount();
+	    int pageNumber = usersList.getPage() + 1; 
+		model.addAttribute("users",usersList);
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("pageSize", usersPerPage);
+	    
+	    model.addAttribute("users", usersList);
+	    
+	    model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+	    return "layout";
+	}
+	
+	/**
+	 * makes user Professor or deletes
+	 */
+	@RequestMapping(value = "/edituser", method = RequestMethod.POST)
+	public @ResponseBody String promoteuser(Locale locale, Model model,HttpServletRequest request,@RequestParam("user") String userName,@RequestParam("action") String action) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+				
+		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
+			return "redirect:/";
+		}
+				
+		if ( userName == null || userName.length() <= 0 || action == null || action.length() <= 0 ) {
+			return "redirect:/userslist";
+		}
+		
+		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
+		User user = (User) userDao.get(userName);
+		if ( action.equals("delete") ) {
+			logger.info("deleting " + userName + " on action " + action);
+			userDao.delete(user);
+		} else if ( action.equals("promote") ) {
+			userDao.promoteUser(user);
+		}
+		
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+		
+		return "userslist";
+	}
+	
+	
+	/**
+	 * changes the sort definition
+	 */
+	@RequestMapping(value = "/sort", method = RequestMethod.GET)
+	public String sort(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
+			return "redirect:/";
+		}
+		
+		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
+		if ( usersList == null ) {
+			//TODO: HANDLE SESSION TIMEOUT; FOR NOW JUST A REDIRECT
+			handleSessionTimeOut();
+		}
+		String property = request.getParameter("prop");
+		if ( property != null ) {
+			this.mutableSortDefiniton.setProperty(property);
+			this.mutableSortDefiniton.setToggleAscendingOnProperty(true);
+		}
+		
+		usersList.resort();
+		
+		model.addAttribute("prop", property);
+		model.addAttribute("asc", this.mutableSortDefiniton.isAscending());
+		
+		int pageCount = usersList.getPageCount();
+	    int pageNumber = usersList.getPage() + 1; 
+		model.addAttribute("users",usersList);
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("pageSize", usersList.getPageSize());
+		
+		model.addAttribute("customHeader", UsersListController.HEADER);
+		model.addAttribute("customBody", UsersListController.BODY);
+		
+		return "layout";
+	}
+	
+	private String handleSessionTimeOut() {
+		return "redirect:/userslist";
+	};
+
+	
+}

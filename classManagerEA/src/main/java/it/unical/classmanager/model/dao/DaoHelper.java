@@ -1,5 +1,7 @@
 package it.unical.classmanager.model.dao;
 
+import it.unical.classmanager.model.DBHandler;
+
 /**
  * @author Aloisius92
  * This is a class that behave
@@ -7,6 +9,7 @@ package it.unical.classmanager.model.dao;
  */
 public class DaoHelper {    
     private static DaoHelper instance;
+    private  DBHandler dbHandler;
     private  AnswerAttachedContentDAO answerAttachedContentDAO;
     private  AnswerDAO answerDAO;
     private  AttendanceStudentLectureDAO attendanceStudentLectureDAO;
@@ -39,6 +42,16 @@ public class DaoHelper {
 
     public void setInstance( Object arg0) {
 	DaoHelper.instance = (DaoHelper) arg0;	
+    }
+    
+    public void setDbHandler(DBHandler dbHandler)
+    {
+	this.dbHandler = dbHandler;
+    }
+    
+    public static DBHandler getDbHandler()
+    {
+	return DaoHelper.instance.dbHandler;
     }
     
     public static AnswerAttachedContentDAO getAnswerAttachedContentDAO() {
@@ -207,5 +220,6 @@ public class DaoHelper {
     
     public void setUserDAO( UserDAO userDAO) {
 	this.userDAO = userDAO;
-    }    
+    }
+    
 }

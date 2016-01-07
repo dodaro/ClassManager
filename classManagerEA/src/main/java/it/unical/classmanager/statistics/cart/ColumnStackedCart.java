@@ -99,10 +99,10 @@ public class ColumnStackedCart extends AbstractCart {
 		    {
 			cartScript.append("point.y}");
 		    }
-		    cartScript.append("<br/>Total: {");
-		    {
-			cartScript.append("point.stackTotal}");
-		    }
+		    //		    cartScript.append("<br/>Total: {");
+		    //		    {
+		    //			cartScript.append("point.stackTotal}");
+		    //		    }
 		    cartScript.append("\'\n");
 		    cartScript.append("}");
 		}

@@ -26,5 +26,23 @@ $(function(){
 	$("#page-size").val(value);
 	
 	
+	$("#new-post").click(function(data) {
+		
+		var formToAppned =
+		"<div class='row'>" +
+		 	 "<div class='col-sm-7 col-md-7 col-lg-7'>" +
+		 			"<p>newPost</p>"
+		 	+ "</div>" +
+		 "</div>";
+		
+		$(this).after(formToAppned);
+	});
+	$("#delete-post").click(function(data) {
+		alert("TODO:Handle delete");
+	});
+	$("#edit-post").click(function(data) {
+		alert("TODO:Handle edit");
+	});
+	
 	
 });

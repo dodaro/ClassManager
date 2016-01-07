@@ -64,6 +64,7 @@ public class LoginController {
 		if ( request.getSession().getAttribute("loggedIn") != null ) {
 			//return "redirect:/";
 		}
+		
 		UserJsonResponse userJsonResponse = new UserJsonResponse();
 		if ( result.hasErrors() ) {
 			Map<String ,String> errors=new HashMap<String, String>();
@@ -91,13 +92,7 @@ public class LoginController {
 		
 		//TODO: deserves better handling
 		if ( userfromDB == null ) {
-			model.addAttribute("error",messageSource.getMessage("message.invalidUser",null,locale));
-			Map<String ,String> errors=new HashMap<String, String>();
-			String message = messageSource.getMessage("message.invalidUser", null, locale);
-			errors.put("password", message);
-			userJsonResponse.setErrorsMap(errors);
-			userJsonResponse.setStatus("ERROR");
-			return userJsonResponse;
+			return handleError(model, locale,messageSource.getMessage("message.invalidUser",null,locale));
 		}
 		
 		String passwordField = userfromDB.getHash();
@@ -108,12 +103,25 @@ public class LoginController {
 		
 		String calculated = PasswordHashing.getInstance().getHash(givenPassword,salt);
 		
-		logger.info(hash + " " + salt+ " "+ calculated); 
 		if ( calculated.equals(hash) ) {
-			request.getSession().setAttribute("loggedIn", user.getUsername());			
+			request.getSession().setAttribute("loggedIn", user.getUsername());
+			request.getSession().setAttribute("role", userfromDB.getRole());
+			logger.info(user.getUsername() +  " has logged");
+		} else {
+			return handleError(model, locale,messageSource.getMessage("message.invalidUser",null,locale));
 		}
 		
 		userJsonResponse.setStatus("SUCCESS");
+		return userJsonResponse;
+	}
+
+	private UserJsonResponse handleError(Model model, Locale locale,String message) {
+		model.addAttribute("error",message);
+		Map<String ,String> errors=new HashMap<String, String>();
+		errors.put("password", message);
+		UserJsonResponse userJsonResponse = new UserJsonResponse();
+		userJsonResponse.setErrorsMap(errors);
+		userJsonResponse.setStatus("ERROR");
 		return userJsonResponse;
 	}
 	

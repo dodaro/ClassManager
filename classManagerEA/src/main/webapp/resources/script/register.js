@@ -1,5 +1,12 @@
 $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+    	changeYear: true,
+    	dateFormat: "dd/mm/yy",
+    	yearRange: "-100:+100",
+    	minDate: "-100y",
+    	maxDate: "-18y",
+    	
+    });
     
     $("#register-form").submit(function(event) {
 		event.preventDefault();
@@ -12,7 +19,7 @@ $(function() {
 	        delete data["undefined"];
 		});
 		
-		data["birthdate"] = $("#datepicker").datepicker( 'getDate' );
+		//data["birthdate"] = $("#datepicker").datepicker( 'getDate' );
 		
 		console.log(data);
 		
@@ -35,7 +42,7 @@ $(function() {
                     formGroup.append('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
                     formGroup.addClass("has-error has-feedback");
                     var errorDiv = formGroup.find(".errors");
-                    errorDiv.append('<span class="help-inline">' + error + '</span>');
+                    errorDiv.append('<span class="help-block">' + error + '</span>');
                 }
 			} else if ( data.status === "SUCCESS" ) {
 				window.location.replace("/");

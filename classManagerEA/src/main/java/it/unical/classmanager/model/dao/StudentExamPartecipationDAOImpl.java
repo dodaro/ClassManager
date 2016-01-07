@@ -2,9 +2,12 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.Exam;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.StudentExamPartecipation;
 
 public class StudentExamPartecipationDAOImpl implements StudentExamPartecipationDAO
@@ -69,6 +72,19 @@ public class StudentExamPartecipationDAOImpl implements StudentExamPartecipation
 				.list();
 		session.close();
 		return studentExamPartecipations;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<StudentExamPartecipation> getPartecipationBy(Student student, Exam exam) {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		String queryString = "FROM StudentExamPartecipation s WHERE s.student = :student AND s.exam= :exam";
+		Query query = session.createQuery(queryString);
+		query.setParameter("student", student);
+		query.setParameter("exam", exam);
+		List<StudentExamPartecipation> partecipations = query.list();
+		session.close();
+		return partecipations;
 	}
 
 }

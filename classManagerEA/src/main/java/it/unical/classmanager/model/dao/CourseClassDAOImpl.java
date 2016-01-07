@@ -2,10 +2,16 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.Lecture;
+import it.unical.classmanager.model.data.Professor;
 
 public class CourseClassDAOImpl implements CourseClassDAO {
 	private DBHandler dbHandler;
@@ -58,7 +64,8 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CourseClass> getAllCourseClassess(){
+	@Override
+	public List<CourseClass> getAllCourseClasses() {
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<CourseClass> courseClass = 
 				session.createQuery("FROM CourseClass").list();
@@ -67,9 +74,25 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	}
 
 	@Override
-	public List<CourseClass> getAllCourseClasses() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Lecture> getAllCourseClasses(Professor professor) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM CourseClass as courseClass WHERE courseClass.professor = :professor");
+		query.setParameter("professor", professor);
+		
+		@SuppressWarnings("unchecked")
+		List<Lecture> response = query.list();
+		response.size();
+		
+		session.close();
+		
+		/*Criteria cr = session.createCriteria(CourseClass.class);
+		cr.add(Restrictions.eq("professor", professor));
+		
+		@SuppressWarnings("unchecked")
+		List<CourseClass> results = cr.list();*/
+		
+		return response;
 	}
 
 }

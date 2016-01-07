@@ -77,7 +77,7 @@ public class EventDAOImpl implements EventDAO{
 	public List<Event> getAllEventsOfUser(String userId) {
 		
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		Query query = session.createQuery("FROM Event as event WHERE event.user.id = :user");
+		Query query = session.createQuery("FROM Event as event WHERE event.user.username = :user");
 		query.setParameter("user", userId);
 		
 		@SuppressWarnings("unchecked")

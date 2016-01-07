@@ -1,11 +1,13 @@
 package it.unical.classmanager.model;
 
-import java.sql.Time;
+import java.awt.Color;
 
 import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.Lecture;
+import it.unical.classmanager.model.data.User;
 
 public class FullCalendarEventBean{
-	
+
 	private int id;
 	private String title;
 	private String description;
@@ -14,9 +16,9 @@ public class FullCalendarEventBean{
 	private String place;
 	private String username;
 	private String color;
-	
+
 	public FullCalendarEventBean(){
-		
+
 		this.id = 0;
 		this.title = "";
 		this.description = "";
@@ -95,7 +97,7 @@ public class FullCalendarEventBean{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public String getColor() {
 		return color;
 	}
@@ -103,19 +105,34 @@ public class FullCalendarEventBean{
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
+
 	public static FullCalendarEventBean toFullCalendarEventBean(Event event){
-		
+
 		FullCalendarEventBean toReturn = new FullCalendarEventBean();
 		toReturn.setId(event.getId());
 		toReturn.setTitle(event.getTitle());
 		toReturn.setDescription(event.getDescription());
-		toReturn.setStart(event.getStartDate());
-		toReturn.setEnd(event.getEndDate());
+		toReturn.setStart(event.getStartDate().toString());
+		toReturn.setEnd(event.getEndDate().toString());
 		toReturn.setPlace(event.getPlace());
 		toReturn.setUsername(event.getUser().getUsername());
 		toReturn.setColor(event.getColor());
-		
+
+		return toReturn;
+	}
+
+	public static FullCalendarEventBean toFullCalendarEventBean(Lecture lecture, User user){
+
+		FullCalendarEventBean toReturn = new FullCalendarEventBean();
+		toReturn.setId(lecture.getId());
+		toReturn.setTitle(lecture.getTopic());
+		toReturn.setDescription(lecture.getDescription());
+		toReturn.setStart(lecture.getDate().toString());
+		toReturn.setEnd(lecture.getDate().toString());
+		toReturn.setPlace(lecture.getClassroom());
+		toReturn.setUsername(user.getUsername());
+		toReturn.setColor(Color.darkGray.toString());
+
 		return toReturn;
 	}
 

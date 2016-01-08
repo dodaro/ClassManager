@@ -31,7 +31,8 @@
 				  </div>
 				  <div class="form-group">
 				    <label for="text"><spring:message code="message.noticeboard.text" text="default text" /></label>
-				    <input name="text" type="text" class="form-control" id="notice-text" placeholder="Text">
+				    <form:textarea>
+				    </form:textarea>
 				  </div>
 				  <button type="submit" class="btn btn-default">Submit</button>
 				</form>

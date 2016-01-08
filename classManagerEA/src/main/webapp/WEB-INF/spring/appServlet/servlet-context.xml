@@ -41,6 +41,7 @@
 				<beans:value>/i18n/forum/messages_forum</beans:value>
 				<beans:value>/i18n/editor/messages_editor</beans:value>
 				<beans:value>/i18n/statistics/messages_statistics</beans:value>
+				<beans:value>/i18n/noticeboard/messages_noticeboard</beans:value>
 				<beans:value>/i18n/invitation/messages_invitation</beans:value>
 			</beans:array>
 		</beans:property>

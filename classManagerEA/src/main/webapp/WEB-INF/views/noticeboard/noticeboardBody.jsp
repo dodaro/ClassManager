@@ -16,12 +16,34 @@
 	<c:if test="${not empty pageSize}">
 		<input id="selected-value" type="hidden" value="${pageSize}"/>
 	</c:if>
-	<c:if test="${not empty loggedIn && role == 'Professor' || role == 'Admin' }">
+	<c:if test="${not empty loggedIn && role == 'Professor' || role == 'admin' }">
 		<button id="new-post" type="button" class="btn btn-success"><spring:message code="message.noticeboard.newpost" text="default text"/></button> 
 	</c:if>
 	
 </form>
 <!-- 	<div class="col-sm-9 col-md-9 col-lg-10">		 -->
+		<div id="form-div" style="display:none" class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+ 				<form:form commandName="new-notice" action="newnotice" role="form">
+				  	<spring:bind path="name">
+						<div class="form-group ${status.error ? 'has-error' : ''}">
+						   <label for="title"><spring:message code="message.noticeboard.title" text="default text" /></label>
+				  		   <form:input path="name" name="title" type="text" class="form-control" id="notice-title" placeholder="Title"/>
+						   <span id="helpBlock" class="help-block">${status.errorMessages[0]}</span>
+						</div>
+   					</spring:bind>
+				    
+				  	<spring:bind path="description">
+						<div class="form-group ${status.error ? 'has-error' : ''}">
+						    <label for="text"><spring:message code="message.noticeboard.text" text="default text" /></label>
+						    <form:input path="description" name="text" type="text" class="form-control" id="notice-text" placeholder="Text"/>
+							<span id="helpBlock" class="help-block">${status.errorMessages[0]}</span>
+						</div>
+   					 </spring:bind>
+				  <button type="submit" class="btn btn-default">Submit</button>
+				</form:form>
+			</div>
+		</div>
 		<c:forEach var="notice" items="${noticesList.getPageList()}">
 	  			<div class="row">
 	  				<div class="col-sm-7 col-md-7 col-lg-7">
@@ -32,14 +54,13 @@
 	  				</div>
 	  				<div class="col-sm-5 col-md-5 col-lg-5">
 	  				 	${notice.date}
-	  				<c:if test="${loggedIn.equals(notice.professor.getUsername()) && role == 'Professor' }">
-						<button id="delete-post" class="btn btn-danger"><spring:message code="message.noticeboard.deletepost" text="default text"/></button>
-						<button id="edit-post" class="btn btn-primary"><spring:message code="message.noticeboard.editpost" text="default text"/></button>
-					</c:if>
-					
-<%-- 					<form:form action="post-action" method="POST"> --%>
-						
-<%-- 					</form:form> --%>
+	  				<c:if test="${ loggedIn.equals(notice.professor.getUsername()) && role == 'Professor' || not empty loggedIn && role == 'admin' }">
+						<form style="display:inline-block" action="deletenotice" id="${notice.id}" method="POST">
+							<input type="hidden" name="post-id" value="${notice.id}"/>
+							<button type="submit" class="btn btn-danger" form="${notice.id}"><spring:message code="message.noticeboard.deletepost" text="default text"/></button>
+						</form>
+						<button class="btn btn-primary"><spring:message code="message.noticeboard.editpost" text="default text"/></button>
+					</c:if>				
 	  				</div>
 	  			</div>
 	  			

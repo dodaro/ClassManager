@@ -85,22 +85,23 @@ public class RegisterController {
 	}
 	
 	UserDAO userDao = (UserDAO) context.getBean("userDao");
-	if ( userDao.exists(user.getUsername()) ) {
-	    Map<String ,String> errors = new HashMap<String, String>();
-	    String message = messageSource.getMessage("message.usernameTaken",null,locale);
-	    errors.put("username", message);
-	    userJsonResponse.setStatus("ERROR");
-	    userJsonResponse.setErrorsMap(errors);
-	    return userJsonResponse;
-	} else {
-	    user.setHash(user.getPassword());
-	    user.setRole("Student");
-	    Student student = new Student(user);
-	    student.setSubscriptionDate(new Date());
-	    userDao.create(student);
-	    userJsonResponse.setStatus("SUCCESS");
-	    return userJsonResponse;
-	}
+		if ( userDao.exists(user.getUsername()) ) {
+		    Map<String ,String> errors = new HashMap<String, String>();
+		    String message = messageSource.getMessage("message.usernameTaken",null,locale);
+		    errors.put("username", message);
+		    userJsonResponse.setStatus("ERROR");
+		    userJsonResponse.setErrorsMap(errors);
+		    return userJsonResponse;
+		} else {
+		    user.setHash(user.getPassword());
+		    user.setRole("Student");
+		    Student student = new Student(user);
+		    student.setSubscriptionDate(new Date());
+		    userDao.create(student);
+		    userJsonResponse.setStatus("SUCCESS");
+		    logger.info("registered");
+		    return userJsonResponse;
+		}
     }
     
 }

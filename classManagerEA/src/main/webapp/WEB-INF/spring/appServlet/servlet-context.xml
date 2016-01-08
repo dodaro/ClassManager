@@ -39,6 +39,9 @@
 	    		<beans:value>/i18n/messages</beans:value>
 	    		<beans:value>/i18n/forum/messages_forum</beans:value>
 	    		<beans:value>/i18n/editor/messages_editor</beans:value>
+	    		<beans:value>/i18n/noticeboard/messages_noticeboard</beans:value>
+	    		<beans:value>/i18n/lectureManager/messages_lectureManager</beans:value>
+	    		<beans:value>/i18n/calendar/messages_calendar</beans:value>
 	    	</beans:array>
 	    </beans:property>
 	    <beans:property name="fallbackToSystemLocale" value="false" />

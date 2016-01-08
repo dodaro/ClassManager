@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
-<link href="resources/style/uploadFile_css/style.css" rel="stylesheet" />
+<link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
 
 <script src='/resources/lib/jquery/jquery.min.js'></script>
 <script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
@@ -23,9 +23,11 @@
 <script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/resources/script/forum/insertQuestion.js"></script>
 
-<script src="resources/lib/uploadFile-lib/jquery.ui.widget.js"></script>
-<script src="resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
-<script src="resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
+<script src="/resources/lib/uploadFile-lib/jquery.ui.widget.js"></script>
+<script src="/resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
+<script src="/resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
+
+<script src="/resources/lib/uploadFile-lib/script.js"></script>
 
 </head>
 
@@ -103,25 +105,6 @@
 							
 							
 							<div class="row">
-								<div class="col-md-12">
-									<div id="uploadFile_div" style="display: none;">
-										<form id="upload" method="post" action="/upload_${pwd}" enctype="multipart/form-data">
-											<div id="drop">
-												<spring:message code="lectureManager.drophere" text="default text" /> 
-												<a> <spring:message code="lectureManager.browse" text="default text" /> </a>
-												<input type="file" name="file" multiple />
-											</div>
-											<ul>
-												<!-- The file uploads will be shown here -->
-											</ul>
-											<input id="toUpload_input" type="hidden" name="parentId"
-												value="${parentId}" />
-										</form>
-									</div>
-								</div>
-							</div>
-							
-							<div class="row">
 							
 								<div id="questionArea" class="col-md-12">
 								 		<hr />
@@ -133,6 +116,43 @@
 											</div>
 											<div class="col-md-2">
 												<h3><input class="btn btn-primary" type="submit" value="<spring:message code="message.forum.submitQuestion"/>" style="float: right; margin-right: 5px;"></h3>
+											</div>
+										</div>
+										
+										<div class="row" style="margin-top: 20px">
+											<div class="col-sm-12 col-md-12 col-lg-12">
+												<div class="panel-group" id="accordion" role="tablist">
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab" id="headingOne">
+															<div class="panel-title">
+																<div>
+																	<div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
+																	 <h4><b>Allegati</b></h4>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+															<div class="panel-body">
+																<div id="uploadFile_div">
+																	<form id="upload" method="post" action="/upload_" enctype="multipart/form-data">
+																		<div id="drop">
+																			<spring:message code="lectureManager.drophere" text="default text" /> 
+																			<a> <spring:message code="lectureManager.browse" text="default text" /> </a>
+																			<input type="file" name="file" multiple />
+																		</div>
+																		<ul>
+																			<!-- The file uploads will be shown here -->
+																		</ul>
+																		<input id="toUpload_input" type="hidden" name="parentId"
+																			value="" />
+																	</form>
+																</div>
+			
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 										

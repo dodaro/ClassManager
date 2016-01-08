@@ -74,9 +74,6 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	 * 
 	 */
 		
-	//	cart.setTitle("Numero lezioni per giorno della settimana");
-	//	cart.setSubTitle("Per ogni anno il numero totale di lezioni per ogni giorno della settimana");
-	//	cart.setyAxisTitle("Lectures");
 	cart.setTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_Title",null,locale));
 	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_SubTitle",null,locale));
 	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_yAxisTitle",null,locale));

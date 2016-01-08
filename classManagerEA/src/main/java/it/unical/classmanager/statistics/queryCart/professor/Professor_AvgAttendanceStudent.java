@@ -47,11 +47,6 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	 * CourseClass, AvgAttendance
 	 */
 	
-	
-//	cart.setTitle("Media delle presenze");
-//	cart.setSubTitle("Per ogni corso la media delle presenze di tutti gli studenti");
-//	cart.setxAxisTitle("");
-//	cart.setyAxisTitle("Average Attendance");
 	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_Title",null,locale));
 	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SubTitle",null,locale));
 	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_yAxisTitle",null,locale));

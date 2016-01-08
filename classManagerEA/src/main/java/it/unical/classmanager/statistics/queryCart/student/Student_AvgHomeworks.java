@@ -50,7 +50,6 @@ public class Student_AvgHomeworks extends AbstractQueryCart {
 	 * CourseN, AvgScore
 	 */	
 	
-	//	cart.setTitle("Media compiti");
 	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgHomeworks_Title",null,locale));
 	
 	StringBuilder categories = new StringBuilder("");

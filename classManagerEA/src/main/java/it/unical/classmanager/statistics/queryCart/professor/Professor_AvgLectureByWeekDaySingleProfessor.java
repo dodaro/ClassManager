@@ -52,10 +52,6 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	 * 
 	 */
 		
-	//	cart.setTitle("Media numero lezioni per settimana");
-	//	cart.setSubTitle("Negli anni il numero medio di lezioni per ogni giorno della settimana");	
-	//	cart.setxAxisCategories("\'Monday\', \'Tuesday\', \'Wednesday\', \'Thursday\'"
-	//		+ ", \'Friday\', \'Saturday\', \'Sunday\'");
 	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_Title",null,locale));
 	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SubTitle",null,locale));	
 	cart.setxAxisCategories(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_xAxisCategories",null,locale));

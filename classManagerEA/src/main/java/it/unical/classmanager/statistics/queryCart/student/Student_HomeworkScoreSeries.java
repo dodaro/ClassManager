@@ -51,8 +51,7 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 	 * Course, Homework, Score
 	 */	
 	
-	//	cart.setTitle("Voti compiti");
-	cart.setTitle(messageSource.getMessage("",null,locale));
+	cart.setTitle(messageSource.getMessage("message.statistics.Student_HomeworkScoreSeries_Title",null,locale));
 	cart.setSubTitle("");
 	
 	StringBuilder categories = new StringBuilder("");

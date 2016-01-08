@@ -53,8 +53,6 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 	 * CourseClass, AvgTime
 	 */
 	
-	//	cart.setTitle("Chi consegna prima?");
-	//	cart.setyAxisTitle("Time Delivery");
 	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_Title",null,locale));
 	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_yAxisTitle",null,locale));
 	cart.setSubTitle("");

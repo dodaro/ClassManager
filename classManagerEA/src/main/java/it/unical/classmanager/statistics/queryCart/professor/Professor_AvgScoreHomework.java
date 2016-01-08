@@ -53,8 +53,6 @@ public class Professor_AvgScoreHomework extends AbstractQueryCart {
 	 * CourseClass, Student, AvgScore
 	 */
 	
-	//	cart.setTitle("Chi prende i voti migliori?");
-	//	cart.setyAxisTitle("Scores");
 	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgScoreHomework_Title",null,locale));
 	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgScoreHomework_yAxisTitle",null,locale));
 	cart.setSubTitle("");

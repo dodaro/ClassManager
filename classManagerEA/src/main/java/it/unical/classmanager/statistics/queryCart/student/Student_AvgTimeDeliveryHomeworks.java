@@ -50,7 +50,6 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	 * Course, AvgTime
 	 */
 	
-	//	cart.setTitle("Media tempi di consegna");
 	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_Title",null,locale));
 	
 	StringBuilder categories = new StringBuilder("");

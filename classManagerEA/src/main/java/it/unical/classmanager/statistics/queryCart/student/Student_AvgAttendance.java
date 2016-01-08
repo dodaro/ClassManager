@@ -50,9 +50,6 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	 * CourseNameN, AvgN
 	 */	
 	
-	//	cart.setTitle("Media delle presenze");
-	//	cart.setSubTitle("Per ogni corso ");
-	//	cart.setxAxisTitle("Corsi");
 	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_Title",null,locale));
 	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_SubTitle",null,locale));
 	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_xAxisTitle",null,locale));

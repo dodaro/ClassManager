@@ -56,7 +56,7 @@ import it.unical.classmanager.utils.FileManager;
  * - upload an Homework or a material for a lecture
  */
 @Controller
-public class ClassController {
+public class LectureController {
 
 	private final static String HEADER = "lecturesPage/lecturesPageHeader.jsp";
 	private final static String BODY = "lecturesPage/lecturesPageBody.jsp";
@@ -64,7 +64,7 @@ public class ClassController {
 
 	@Autowired
 	ApplicationContext appContext;
-	private static final Logger logger = LoggerFactory.getLogger(ClassController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LectureController.class);
 
 	/*
 	 * this path is used when a professor wants to see the folder of his students
@@ -72,8 +72,8 @@ public class ClassController {
 	@RequestMapping(value = "/students", method = RequestMethod.GET)
 	public String getStudents(Model model) {
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());
@@ -92,8 +92,8 @@ public class ClassController {
 		int idCourse = 1;
 		String currentPath = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH;
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 		LectureDAO lectureDao = appContext.getBean("lectureDAO", LectureDAOImpl.class);
 		List<Lecture> allLecturesOfACourse = lectureDao.getAllLecturesOfACourse(idCourse);
@@ -116,8 +116,8 @@ public class ClassController {
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request) {
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 		List<AbstractFileBean> lectureContent = new ArrayList<AbstractFileBean>();
 
@@ -150,8 +150,8 @@ public class ClassController {
 	@RequestMapping(value = "/homeworks", method = RequestMethod.GET)
 	public String getHomeworks(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idLecture, HttpServletRequest request) {
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 
 		model.addAttribute("homework", new Homework());
@@ -187,8 +187,8 @@ public class ClassController {
 	@RequestMapping(value = "/materials", method = RequestMethod.GET)
 	public String getMaterials(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idLecture, HttpServletRequest request) {
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 		model.addAttribute("pwd",FileManager.MATERIALS_PATH);
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
@@ -221,8 +221,8 @@ public class ClassController {
 	@RequestMapping(value = "/homeworkAttached", method = RequestMethod.GET)
 	public String getHomeworkAttached(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idHomework, HttpServletRequest request) {
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 		HomeworkAttachedDAO homeworkAttachedDAO = appContext.getBean("homeworkAttachedDAO", HomeworkAttachedDAOImpl.class);
 		List<HomeworkAttached> allHomeworkAttacheds = homeworkAttachedDAO.getAllHomeworkAttacheds(idHomework);
@@ -346,8 +346,8 @@ public class ClassController {
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 		homeworkDAO.create(homework);
 
-		model.addAttribute("customHeader", ClassController.HEADER);
-		model.addAttribute("customBody", ClassController.BODY);
+		model.addAttribute("customHeader", LectureController.HEADER);
+		model.addAttribute("customBody", LectureController.BODY);
 
 		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());

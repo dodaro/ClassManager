@@ -16,12 +16,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import it.unical.classmanager.model.ScoresPageTransformView;
+import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
+import it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl;
+import it.unical.classmanager.model.dao.CourseClassDAO;
+import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkDAO;
 import it.unical.classmanager.model.dao.HomeworkDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
+import it.unical.classmanager.model.data.Student;
 
 @Controller
 public class ScoreController {
@@ -49,11 +57,19 @@ public class ScoreController {
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 		List<Homework> homeworks = homeworkDAO.getAllHomeworks(idCourse);
 		
+		CourseClassDAO courseClassDAO = appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
+		CourseClass course = courseClassDAO.get(4);	
+		
+		RegistrationStudentClassDAO userDao = appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
+		List<Student> students = userDao.getStudentsRegisteredToACourse(course);
+		
+		model.addAttribute("students", students);
 		model.addAttribute("homeworks", homeworks);
 		
 		ScoresPageTransformView transformView = new ScoresPageTransformView();
+		//HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDao",HomeworkStudentSolvingDAOImpl.class);
 		
-		for (Homework homework : homeworks) {
+		/*for (Homework homework : homeworks) {
 			
 			for (HomeworkStudentSolving solution : homework.getHomeworkStudentSolvings()) {
 				
@@ -69,7 +85,7 @@ public class ScoreController {
 				String key = solution.getHomework().getId() + "-" + username;
 				transformView.addHomeworkSolution(key, solution.getId());
 			}
-		}
+		}*/
 		
 		model.addAttribute("map", new Gson().toJson(transformView));
 		

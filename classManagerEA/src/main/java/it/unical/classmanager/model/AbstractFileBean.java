@@ -5,9 +5,12 @@ public abstract class AbstractFileBean {
 	public static final String FOLDER_TYPE = "folder";
 	public static final String FILE_TYPE = "file";
 	
+	protected int parentId;
+	private int id;
 	protected String name;
 	protected String type;
 	protected String path;
+	private String action;
 	protected boolean evaluable;
 	
 	public String getName() {
@@ -35,5 +38,23 @@ public abstract class AbstractFileBean {
 
 	public void setEvaluable(boolean evaluable) {
 		this.evaluable = evaluable;
+	}
+	public int getParentId() {
+		return parentId;
+	}
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

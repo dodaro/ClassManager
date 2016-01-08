@@ -107,7 +107,7 @@ public class DBInitializatorController {
     /**
      * The probability for a student that has done a homework
      */
-    private static float homeworkStudentProbability = 0.75f;
+    private static float homeworkStudentProbability = 1.0f;
     /**
      * The probability that a student ask a question
      */
@@ -178,11 +178,12 @@ public class DBInitializatorController {
 	    dbEventInit(locale, model, request);
 	    dbCommunicationInit(locale, model, request);
 	    //dbQuestionAnswerInit(locale, model, request);
+	    
 	    // Attached contents
-	    //			dbQuestionAttachedContentInit(locale, model, request);
-	    //			dbAnswerAttachedContentInit(locale, model, request);
-	    //			dbHomeworkAttachedInit(locale, model, request);
-	    //			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+	    			dbQuestionAttachedContentInit(locale, model, request);
+	    			dbAnswerAttachedContentInit(locale, model, request);
+	    			dbHomeworkAttachedInit(locale, model, request);
+	    			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
 	    
 	    initialized = true;
 	} else {

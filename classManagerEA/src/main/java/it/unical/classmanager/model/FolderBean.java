@@ -1,29 +1,28 @@
 package it.unical.classmanager.model;
 
-import java.util.List;
-
 
 public class FolderBean extends AbstractFileBean{
 
-	private List<AbstractFileBean> items;
+	private int childs = 0;
 	
 	public FolderBean() {
 		
 	}
 	
-	public FolderBean(String name, String type, String path, List<AbstractFileBean> files, boolean evaluable){
+	public FolderBean(int lectureId, String name, String type, String path, int childs){
+		this.parentId = lectureId;
 		this.name = name;
 		this.type = type;
 		this.path = path;
-		this.items = files;
-		this.evaluable = evaluable;
+		this.childs = childs;
 	}
 
-	public List<AbstractFileBean> getItems() {
-		return items;
+	public int getChilds() {
+		return childs;
 	}
-	public void setItems(List<AbstractFileBean> items) {
-		this.items = items;
+
+	public void setChilds(int childs) {
+		this.childs = childs;
 	}
 	
 	

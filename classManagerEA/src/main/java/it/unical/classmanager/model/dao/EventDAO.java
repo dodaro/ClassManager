@@ -20,4 +20,6 @@ public interface EventDAO {
 	public List<Event> getAllEvents();
 	
 	public List<Event> getAllEventsOfUser(String userId);
+
+	public void deleteAllEvents(String username);
 }

@@ -35,6 +35,10 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
 
 /**
@@ -47,45 +51,27 @@ public class FileBrowserController {
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(FileBrowserController.class);
 
-	/**
-	 * Manages the request related to the file browser
-	 */
-	@RequestMapping(value = "/fileBrowser", method = RequestMethod.GET)
-	public String getFileBrowserPage(Model model) {
+	public static final String LECTURES_ROOT_TYPE = "lectures";
+	public static final String STUDENTS_HOMEWORKS_ROOT_TYPE = "students";
 
-		logger.info("getFiles");
-		return "fileBrowser";
+	
+	public List<AbstractFileBean> getLectureContent(String path){
 
-	}
-
-	/**
-	 * This method is called to construct a three of files, starting from a root
-	 * 
-	 * @param rootDir : starting from this folder a tree of files is build and returned as a JSON
-	 * @return JSON
-	 */
-	@RequestMapping(value = "/contents", method = RequestMethod.GET)
-	public @ResponseBody String getFiles(Model model, @RequestParam("dir") String rootDir) {
-
-		//TODO Controllare il proprietario della cartella
-		File folder = new File(rootDir);
+		String root = path;
 		List<AbstractFileBean> files = new ArrayList<AbstractFileBean>();
-
 		
-		new FileManager().addTree(folder, files, false);
-		FolderBean root = new FolderBean("files", AbstractFileBean.FOLDER_TYPE, folder.getPath(), files, false);
+		new FileManager().addTree(root, files);
 
 		logger.info("getFiles");
 
-		return new Gson().toJson(root);
-
+		return files;
 	}
 
 	/**
 	 * This method allows the user to download the file contained in the parameter "path"
 	 * @param path : is the parameter of the GET request, that is the path of the file to dowload
 	 */ 
-	@RequestMapping(value="/contents/download", method = RequestMethod.GET)
+	@RequestMapping(value="download", method = RequestMethod.GET)
 	public void downloadFile(HttpServletResponse response, @RequestParam("path") String path) throws IOException {
 
 		//TODO Security check
@@ -116,7 +102,7 @@ public class FileBrowserController {
 
 		/* "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser 
             while others(zip e.g) will be directly downloaded [may provide save as popup, based on your browser setting.]*/
-		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() +"\""));
 
 
 		/* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
@@ -128,34 +114,6 @@ public class FileBrowserController {
 
 		//Copy bytes from source to destination(outputstream in this example), closes both streams.
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
-	}
-
-
-	//TODO database connection. Delete returns false
-	/**
-	 * This method is called when a particular file needs to be deleted
-	 * @params path : the complete path of the file to delete
-	 */
-	@RequestMapping(value = "/contents/delete", method = RequestMethod.GET)
-	public @ResponseBody String deleteFile(Model model, @RequestParam("path") String path) {
-
-		boolean delete = false;
-		try{
-
-			String workingDir = System.getProperty("user.dir");
-			File file = new File(workingDir + "/" + path);
-			delete = file.delete();
-
-		}catch(Exception e){
-
-			e.printStackTrace();
-
-		}
-
-		logger.info("deleteFile");
-
-		return Boolean.toString(delete);
-
 	}
 
 }

@@ -40,7 +40,7 @@ public class Answer implements Serializable  {
 	@JoinColumn(name = "question")
 	private Question question;
 	
-	@OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<AnswerAttachedContent> answerAttachedContents;
 	

@@ -56,19 +56,19 @@ public class Lecture implements Serializable  {
 	@JoinColumn(name = "courseClass")
 	private CourseClass courseClass;
 	
-	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Material> materials;
 	
-	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Question> questions;
 	
-	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<AttendanceStudentLecture> attendanceStudentLectures;
 	
-	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Homework> homeworks;
 	

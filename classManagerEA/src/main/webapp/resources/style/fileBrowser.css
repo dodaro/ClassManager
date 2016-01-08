@@ -184,7 +184,7 @@ body {
 
 }
 
-.filemanager .data li a {
+.filemanager .data li div {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -471,7 +471,6 @@ body {
 .icon.file.f-scss:after {
 	border-bottom-color: #30837c;
 }
-
 
 /*----------------------------
 	Evaluation Score

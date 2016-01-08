@@ -1,11 +1,15 @@
 package it.unical.classmanager.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.Communications;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -96,6 +100,47 @@ public class UserDAOImpl implements UserDAO {
 		if ( get(username) != null ) 
 			return true;
 		return false;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsersByLastName(String lastName) {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		String queryString = "FROM User WHERE lower(lastName) like :lastName";
+		Query query = session.createQuery(queryString);
+		query.setParameter("lastName",  "%" + lastName + "%");
+		List<User> users = query.list();
+		session.close();
+		return users;
+	}
+	
+	@Override
+	public void promoteUser(User user) {
+//		delete(user);
+//		Session session = this.dbHandler.getSessionFactory().openSession();
+//		Transaction tx = null;
+//		try {
+//			tx = session.beginTransaction();
+//			//THIS IS A FAKE PASSWORD
+//			user.setPassword("password");
+//			user.setConfirmPassword(user.getPassword());
+//			user.setRole("Professor");
+//			Professor professor = new Professor(user,0,new ArrayList<Communications>(),new ArrayList<CourseClass>());
+//			create(professor);
+//			tx.commit();
+//		} catch ( Exception e ) {
+//			tx.rollback();
+//			create(user);
+//		} finally {
+//			session.close();
+//		}
+		delete(user);
+		//THIS IS A FAKE PASSWORD
+		user.setPassword("password");
+		user.setConfirmPassword(user.getPassword());
+		user.setRole("Professor");
+		Professor professor = new Professor(user,0,new ArrayList<Communications>(),new ArrayList<CourseClass>());
+		create(professor);
 	}
 	
 }

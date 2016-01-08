@@ -12,6 +12,7 @@
 	  			</a>
 			</div>			
 			<div class="navbar-header pull-right">
+        		<a class="nav-bar-button logout" href="./db_init"><span class="glyphicon glyphicon-log-out"></span>InitDB</a>
             	<c:if test="${empty user}">
 <!--             		<button type="button" class="btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
             		<a id="login-button" class="nav-bar-button login" href="#"><span class="glyphicon glyphicon-log-out" ></span>Login</a>

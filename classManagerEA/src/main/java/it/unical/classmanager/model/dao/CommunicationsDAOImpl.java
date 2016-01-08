@@ -65,7 +65,7 @@ public class CommunicationsDAOImpl implements CommunicationsDAO
 	public List<Communications> getAllCommunications()
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		List<Communications> communications = session.createQuery("FROM Communications").list();
+		List<Communications> communications = session.createQuery("FROM Communications com ORDER BY com.date desc").list();
 		session.close();
 		return communications;
 	}

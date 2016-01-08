@@ -59,7 +59,7 @@
 			
 			<div class="form-group">
 				<label for="birthdate"><spring:message code="message.birthDate" text="default text"/>:</label> 
-				<form:input id="datepicker" type="text" name="birthdate" path="birthDate" class="form-control" />  
+				<form:input id="datepicker" type="text" name="birthdate" path="birthDate" readonly='true' class="form-control" />  
 				<div class="errors"></div>
 			</div>			
 			

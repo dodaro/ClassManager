@@ -1,5 +1,9 @@
 package it.unical.classmanager.statistics.queryCart;
 
+import java.util.Locale;
+
+import org.springframework.context.MessageSource;
+
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 
@@ -10,6 +14,8 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 public abstract class AbstractQueryCart {
     protected AbstractCart cart = null;
     private User user;
+    protected MessageSource messageSource;
+    protected Locale locale;
     
     public AbstractQueryCart(){
 	cart = null;
@@ -30,7 +36,9 @@ public abstract class AbstractQueryCart {
     protected abstract AbstractCart buildCartFromQuery();
     protected abstract AbstractCart buildCartFromQuery(AbstractCart cart);
     
-    public AbstractCart getCart() {
+    public AbstractCart getCart(MessageSource messageSource, Locale locale) {
+	this.messageSource = messageSource;
+	this.locale = locale;
 	if(cart==null){
 	    cart = buildCartFromQuery();
 	}

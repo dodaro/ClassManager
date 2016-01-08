@@ -52,15 +52,18 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 	 * Professor, Sunday, NumberLecture
 	 * 
 	 */
-	
-	cart.setTitle("Negli anni il numero medio di lezioni per ogni giorno della settimana");
+
+	//	cart.setTitle("Negli anni il numero medio di lezioni per ogni giorno della settimana");
+	//	cart.setyAxisTitle("Average Lectures");
+	//	cart.setxAxisCategories("\'Monday\', \'Tuesday\', \'Wednesday\', \'Thursday\'"
+	//		+ ", \'Friday\', \'Saturday\', \'Sunday\'");
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_Title",null,locale));
+	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_yAxisTitle",null,locale));
+	cart.setxAxisCategories(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_xAxisCategories",null,locale));
 	cart.setSubTitle("");
 	cart.setxAxisTitle("");
-	cart.setyAxisTitle("Average Lectures");
 	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(0);
-	cart.setxAxisCategories("\'Monday\', \'Tuesday\', \'Wednesday\', \'Thursday\'"
-		+ ", \'Friday\', \'Saturday\', \'Sunday\'");	
+	cart.setxAxisMaxValue(0);	
 	cart.setyAxisMinValue(0);
 	cart.setyAxisMaxValue(0);
 	cart.setyAxisCategories("");
@@ -77,9 +80,9 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 	
 	for(int i=0; i<avg.size(); i+=7){
 	    if(i==0){
-		    seriesContent.append("{");		
+		seriesContent.append("{");		
 	    } else {
-		    seriesContent.append(", {");
+		seriesContent.append(", {");
 	    }
 	    
 	    {
@@ -90,9 +93,9 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 		for(int j=0; j<7; j++){
 		    float currentData = Float.parseFloat(avg.get(i+j)[2].toString());
 		    if(j==0){
-			    seriesContent.append(currentData);			
+			seriesContent.append(currentData);			
 		    } else {
-			    seriesContent.append(", "+currentData);			
+			seriesContent.append(", "+currentData);			
 		    }
 		}
 		
@@ -101,27 +104,6 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 	    }
 	}
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'John\',\n");
-	//	    seriesContent.append("data: [5, 3, 4, 7, 2]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Jane\',\n");
-	//	    seriesContent.append("data: [2, 2, 3, 2, 1]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Joe\',\n");
-	//	    seriesContent.append("data: [3, 4, 4, 2, 5]\n");
-	//	    seriesContent.append("}");
-	//	}
 	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setDrilldownContent(drilldownContent);

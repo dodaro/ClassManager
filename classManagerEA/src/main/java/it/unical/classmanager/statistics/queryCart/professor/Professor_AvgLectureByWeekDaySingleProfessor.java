@@ -40,7 +40,7 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	// Query
 	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
 	List<Object[]> avg = cartQueryDAO.getAvgLectureByWeekDaySingleProfessor((Professor)this.getUser());
-
+	
 	/*
 	 * Monday, NumberLecture
 	 * Tuesday, NumberLecture
@@ -51,15 +51,18 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	 * Sunday, NumberLecture
 	 * 
 	 */
-	
-	cart.setTitle("Media numero lezioni per settimana");
-	cart.setSubTitle("Negli anni il numero medio di lezioni per ogni giorno della settimana");
+		
+	//	cart.setTitle("Media numero lezioni per settimana");
+	//	cart.setSubTitle("Negli anni il numero medio di lezioni per ogni giorno della settimana");	
+	//	cart.setxAxisCategories("\'Monday\', \'Tuesday\', \'Wednesday\', \'Thursday\'"
+	//		+ ", \'Friday\', \'Saturday\', \'Sunday\'");
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_Title",null,locale));
+	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SubTitle",null,locale));	
+	cart.setxAxisCategories(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_xAxisCategories",null,locale));
 	cart.setxAxisTitle("");
 	cart.setyAxisTitle("");
 	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(360);	
-	cart.setxAxisCategories("\'Monday\', \'Tuesday\', \'Wednesday\', \'Thursday\'"
-		+ ", \'Friday\', \'Saturday\', \'Sunday\'");
+	cart.setxAxisMaxValue(360);
 	cart.setyAxisMinValue(0);
 	cart.setyAxisMaxValue(0);
 	cart.setyAxisCategories("");
@@ -73,8 +76,8 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	cart.setzPointTooltip("");
 	cart.setToolTipValueSuffix("");
 	StringBuilder seriesContent = new StringBuilder("");
-		
-	seriesContent.append("{name: \'Week\', data: [");
+	
+	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avg.size(); i++){
 	    float avgValue = Float.parseFloat(avg.get(i)[1].toString());
 	    if(i==0){
@@ -85,43 +88,6 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	}
 	seriesContent.append("], pointPlacement: \'on\'}");
 	cart.setSeriesContent(seriesContent);
-	
-	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("type: \'column\',\n");
-	//	    seriesContent.append("name: \'Column\',\n");
-	//	    seriesContent.append("data: [8, 7, 6, 5, 4, 3, 2, 1],\n");
-	//	    seriesContent.append("pointPlacement: \'between\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("type: \'column\',\n");
-	//	    seriesContent.append("name: \'Column\',\n");
-	//	    seriesContent.append("data: [8, 7, 6, 5, 4, 3, 2, 1],\n");
-	//	    seriesContent.append("pointPlacement: \'between\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("type: \'line\',\n");
-	//	    seriesContent.append("name: \'Line\',\n");
-	//	    seriesContent.append("data: [1, 2, 3, 4, 5, 6, 7, 8]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("type: \'area\',\n");
-	//	    seriesContent.append("name: \'Area\',\n");
-	//	    seriesContent.append("data: [1, 8, 2, 7, 3, 6, 4, 5]\n");
-	//	    seriesContent.append("}");
-	//	}
 	
 	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");

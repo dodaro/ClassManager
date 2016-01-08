@@ -50,7 +50,9 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	 * Course, AvgTime
 	 */
 	
-	cart.setTitle("Media tempi di consegna");
+	//	cart.setTitle("Media tempi di consegna");
+	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_Title",null,locale));
+	
 	StringBuilder categories = new StringBuilder("");
 	for(int i=0; i<avgTimeDeliveryHomeworksByStudent.size(); i++){
 	    if(i==0){
@@ -60,13 +62,10 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	    }
 	}
 	cart.setxAxisCategories(categories.toString());
-//	cart.setxAxisCategories("\'Sales\', \'Marketing\', "
-//		+ "\'Development\', \'Customer Support\', "
-//		+ "\'Information Technology\', \'Administration\'");
 	cart.setyAxisMinValue(0);
 	StringBuilder seriesContent = new StringBuilder("");
 	
-	seriesContent.append("{name: \'All Courses\', data: [");
+	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avgTimeDeliveryHomeworksByStudent.size(); i++){
 	    float avgValue = Float.parseFloat(avgTimeDeliveryHomeworksByStudent.get(i)[1].toString());
 	    if(i==0){
@@ -77,22 +76,6 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	}
 	seriesContent.append("], pointPlacement: \'on\'}");
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Allocated Budget\',\n");
-	//	    seriesContent.append("data: [43000, 19000, 60000, 35000, 17000, 10000],\n");
-	//	    seriesContent.append("pointPlacement: \'on\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Actual Spending\',\n");
-	//	    seriesContent.append("data: [50000, 39000, 42000, 31000, 26000, 14000],\n");
-	//	    seriesContent.append("pointPlacement: \'on\'\n");
-	//	    seriesContent.append("}");
-	//	}
 	cart.setSeriesContent(seriesContent);
 	
 	return cart;

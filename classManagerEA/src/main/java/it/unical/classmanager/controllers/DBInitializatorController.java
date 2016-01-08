@@ -99,11 +99,11 @@ public class DBInitializatorController {
     /**
      * The probability for a student for the attendance of a lesson
      */
-    private static float attendanceStudentProbability = 0.75f;
+    private static float attendanceStudentProbability = 0.1f;
     /**
      * The probability for a lecture that contains materials
      */
-    private static float lectureMaterialProbability = 0.75f;
+    private static float lectureMaterialProbability = 0.1f;
     /**
      * The probability for a student that has done a homework
      */

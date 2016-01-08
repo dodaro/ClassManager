@@ -78,6 +78,8 @@ public class FileManager {
 	 */
 	public boolean mkMultipartFile(MultipartFile file, String path, String name){
 
+		new File(FileManager.RESOURCES_PATH + "/" + path).mkdirs();
+		
 		String path_ = FileManager.RESOURCES_PATH + File.separator + path + File.separator + name;
 		path_ = path_.replaceAll("/", File.separator);
 		path_ = path_.replaceAll(" ", "\\ ");

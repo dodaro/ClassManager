@@ -85,13 +85,56 @@
 								  			<p>${question.getDescription()}</p>
 								  		</div>
 								  	</div>
+								  	
+									<c:if test="${question.getQuestionAttachedContents().size() != 0 }">
+										<div class="row" style="margin-top: 20px;">
+									  		<div class="col-sm-8 col-md-8 col-lg-8">
+									  		
+								  				<div class="panel-group" id="accordion" role="tablist">
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab" id="headingOne">
+															<div class="panel-title">
+																<div>
+																	<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+																	 <b>Attachment</b>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+															<div class="panel-body">
+															
+																<c:forEach var="attachment" items="${question.getQuestionAttachedContents() }">
+													  				<div class="row">
+													  					<div class="col-sm-6 col-md-6 col-lg-6">
+													  						<div class="row">
+													  							<div class="col-sm-2 col-md-2 col-lg-2">
+																		  			<span style="font-size:2em;" class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+													  							</div>
+													  							<div class="col-sm-10 col-md-10 col-lg-10">
+													  								<a href="/download?path=${attachment.getFilePath() }">${attachment.getName() }</a>
+													  							</div>
+													  						</div>
+													  					</div>
+													  				</div>
+													  			</c:forEach>
+															
+															</div>
+														</div>
+													</div>
+												</div>	
+									  		</div>
+									  	</div>									
+									</c:if>								  	
+								  	
+								  	
+								  	
 								  	<div class="row">
 								  		<div class="col-sm-12 col-md-12 col-lg-12">
 								  			<p class="pull-right" style="background-color: #E0EAF1; padding: 10 10 10 10">
 									  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								  			${question.getUser().getUsername()}
 								  			</p>
-								  			
 								  		</div>
 								  	</div>
 								  	
@@ -132,6 +175,7 @@
 											  			<p>${answer.getDescription() }</p>
 											  		</div>
 											  	</div>
+											  	
 											  	<div class="row">
 											  		<c:choose>
 													  <c:when test="${answer.getUser().getUsername() eq loggedUser}">

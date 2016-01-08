@@ -23,6 +23,9 @@
 <script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/resources/script/forum/insertQuestion.js"></script>
 
+<script src="/resources/script/fileBrowserScript.js"></script>
+<script src="/resources/lib/uploadFile-lib/jquery.knob.js"></script>
+
 <script src="/resources/lib/uploadFile-lib/jquery.ui.widget.js"></script>
 <script src="/resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
 <script src="/resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
@@ -71,7 +74,7 @@
 				<div class="row row-content">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						
-						<form:form action="insertQuestion" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
+						<form:form id="questionForm" action="/forum/insertQuestion" enctype="multipart/form-data" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
 									<div class="panel panel-default">
@@ -115,46 +118,10 @@
 												</h3>
 											</div>
 											<div class="col-md-2">
-												<h3><input class="btn btn-primary" type="submit" value="<spring:message code="message.forum.submitQuestion"/>" style="float: right; margin-right: 5px;"></h3>
+												<h3><input id="submitQuestionBtn" class="btn btn-primary" type="submit" value="<spring:message code="message.forum.submitQuestion"/>" style="float: right; margin-right: 5px;"></h3>
 											</div>
 										</div>
 										
-										<div class="row" style="margin-top: 20px">
-											<div class="col-sm-12 col-md-12 col-lg-12">
-												<div class="panel-group" id="accordion" role="tablist">
-													<div class="panel panel-default">
-														<div class="panel-heading" role="tab" id="headingOne">
-															<div class="panel-title">
-																<div>
-																	<div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
-																	 <h4><b>Allegati</b></h4>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-															<div class="panel-body">
-																<div id="uploadFile_div">
-																	<form id="upload" method="post" action="/upload_" enctype="multipart/form-data">
-																		<div id="drop">
-																			<spring:message code="lectureManager.drophere" text="default text" /> 
-																			<a> <spring:message code="lectureManager.browse" text="default text" /> </a>
-																			<input type="file" name="file" multiple />
-																		</div>
-																		<ul>
-																			<!-- The file uploads will be shown here -->
-																		</ul>
-																		<input id="toUpload_input" type="hidden" name="parentId"
-																			value="" />
-																	</form>
-																</div>
-			
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 										
 										<div class="row">
 											<div class="col-md-12">
@@ -166,17 +133,51 @@
 								</div>			
 							
 							</div>
+							<input id="attachedFiles" style="display: none;" name="attachedFiles">
+
 						</form:form>
 						
 						
+						<div class="row" style="margin-top: 20px">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<div class="panel-group" id="accordion" role="tablist">
+									<div class="panel panel-default">
+										<div class="panel-heading" role="tab" id="headingOne">
+											<div class="panel-title">
+												<div>
+													<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> 
+													 <h4><b>Allegati</b></h4>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+											<div class="panel-body">
+												<div id="uploadFile_div">
+													<form id="upload" method="POST" action="/forum/uploadQuestionAttachment">
+														<div id="drop">
+															<spring:message code="lectureManager.drophere" text="default text" /> 
+															<a> <spring:message code="lectureManager.browse" text="default text" /> </a>
+															<input type="file" name="file" />
+														</div>
+														<ul>
+															<!-- The file uploads will be shown here -->
+														</ul>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+		
 						
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
 	
 	
 </body>

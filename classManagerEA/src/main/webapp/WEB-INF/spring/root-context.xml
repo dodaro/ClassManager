@@ -144,7 +144,7 @@
 	<!-- End CartQueryDAO -->
 	
 	<!-- DAO Helper -->
-		<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
+	<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
 		<property name="dbHandler" ref="dbHandler" />
 		<property name="answerAttachedContentDAO" ref="answerAttachedContentDAO" />
 		<property name="answerDAO" ref="answerDAO" />

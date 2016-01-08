@@ -43,6 +43,9 @@ public class SendInvitationController {
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
+	//	model.addAttribute("noStudent", "empty");
+	//	model.addAttribute("noInvitedStudent", "empty");	
+	
 	return "invitation/sendInvitation";
     }
     

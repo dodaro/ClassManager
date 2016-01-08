@@ -22,9 +22,9 @@ import it.unical.classmanager.model.data.User;
  * Handles requests for checking the sended invitations.
  */
 @Controller
-public class CheckSendedInvitationsController {
+public class CheckInvitationsController {
     
-    private static final Logger logger = LoggerFactory.getLogger(CheckSendedInvitationsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CheckInvitationsController.class);
     
     @Autowired
     ApplicationContext appContext;
@@ -35,9 +35,9 @@ public class CheckSendedInvitationsController {
     /**
      * Show statistics based on the kind of user.
      */
-    @RequestMapping(value = "/checkSendedInvitations", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkInvitations", method = RequestMethod.GET)
     public String statistics(Locale locale, Model model,HttpServletRequest request) {
-	logger.info("CheckSendedInvitations Page", locale);
+	logger.info("CheckInvitations Page", locale);
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
 	if ( username == null ) {			
@@ -46,7 +46,7 @@ public class CheckSendedInvitationsController {
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
-	return "invitation/checkSendedInvitations";
+	return "invitation/checkInvitations";
     }
     
 }

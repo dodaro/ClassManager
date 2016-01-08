@@ -7,7 +7,7 @@
 	<div class="panel-body">
 		<ul>
 			<li><a href="./sendInvitation"><spring:message code="message.invitation.professorOperation1" /></a></li>
-			<li><a href="./checkSendedInvitations"><spring:message code="message.invitation.professorOperation2" /></a></li>
+			<li><a href="./checkInvitations"><spring:message code="message.invitation.professorOperation2" /></a></li>
 		</ul>
 	</div>
 </div>

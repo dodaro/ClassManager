@@ -46,6 +46,8 @@ public class SendInvitationController {
 	//	model.addAttribute("noStudent", "empty");
 	//	model.addAttribute("noInvitedStudent", "empty");	
 	
+	InvitationController.checkNewInvitations(model, user);
+	
 	return "invitation/sendInvitation";
     }
     

@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.DaoHelper;
+
 /**
  * Handles requests for the application home page.
  */
@@ -50,6 +52,10 @@ public class HomeController {
 		if ( role != null ) {
 			model.addAttribute("role",role);
 		}
+		
+		// This is for test, it will be removed!
+		// This must be included in all controller!
+		InvitationController.checkNewInvitations(model, DaoHelper.getUserDAO().get(user));
 		
 		return "layout";
 	}

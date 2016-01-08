@@ -49,6 +49,8 @@ public class RequestInvitationController {
 	//	model.addAttribute("noUnselectableCourse", "empty");
 	//	model.addAttribute("noSelectableCourse", "empty");
 	
+	InvitationController.checkNewInvitations(model, user);
+	
 	return "invitation/requestInvitation";
     }
     

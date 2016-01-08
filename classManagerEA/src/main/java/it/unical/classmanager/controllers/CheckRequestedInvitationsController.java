@@ -45,6 +45,8 @@ public class CheckRequestedInvitationsController {
 	
 	// model.addAttribute("noAcceptableCourse", "empty");
 	
+	InvitationController.checkNewInvitations(model, user);
+	
 	return "invitation/checkRequestedInvitations";
     }
     

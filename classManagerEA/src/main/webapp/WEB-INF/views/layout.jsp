@@ -72,33 +72,38 @@
 	<div class="container-fluid page-content">
 		<div class="row">
 			<!-- SIDEBAR -->
-			<div class="col-sm-3 col-md-3 col-lg-2">
-				<div id="sidebar-wrapper" class="sidebar-desktop">
-					<!-- collapse width -->
-					<ul class="sidebar-nav">
-						<li><a href="#"><span class="glyphicon glyphicon-home"></span>
-								Dashboard</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-book"></span>
-								Classroom</a></li>
-						<li><a href="#"><span
-								class="glyphicon glyphicon-folder-open"></span> Materials</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-list"></span>
-								Discussions</a></li>
-						<li><a href="./statistics"><span
-								class="glyphicon glyphicon-stats"></span> Statistics</a></li>
-						<li><a href="./invitation"><span
-								class="glyphicon glyphicon-gift" aria-hidden="true"></span>
-								Invitation</a></li>
-						<li><a href="./noticeboard?init=1"><span
-								class="glyphicon glyphicon-send"></span> <spring:message
-									code="message.noticeboard" text="default text" /> con fake
-								init</a></li>
-						<li><a href="./noticeboard"><span
-								class="glyphicon glyphicon-send"></span> <spring:message
-									code="message.noticeboard" text="default text" /> senza init</a></li>
-					</ul>
-				</div>
-			</div>
+			<!-- 			<div class="col-sm-3 col-md-3 col-lg-2"> -->
+			<!-- 				<div id="sidebar-wrapper" class="sidebar-desktop"> -->
+			<!-- 					collapse width -->
+			<!-- 					<ul class="sidebar-nav"> -->
+			<!-- 						<li><a href="#"><span class="glyphicon glyphicon-home"></span> -->
+			<!-- 								Dashboard</a></li> -->
+			<!-- 						<li><a href="#"><span class="glyphicon glyphicon-book"></span> -->
+			<!-- 								Classroom</a></li> -->
+			<!-- 						<li><a href="#"><span -->
+			<!-- 								class="glyphicon glyphicon-folder-open"></span> Materials</a></li> -->
+			<!-- 						<li><a href="#"><span class="glyphicon glyphicon-list"></span> -->
+			<!-- 								Discussions</a></li> -->
+			<!-- 						<li><a href="./statistics"><span -->
+			<!-- 								class="glyphicon glyphicon-stats"></span> Statistics</a></li> -->
+			<!-- 						<li><a href="./invitation"><span -->
+			<!-- 								class="glyphicon glyphicon-gift" aria-hidden="true"></span> -->
+			<!-- 								Invitation</a></li> -->
+			<!-- 						<li><a href="./noticeboard?init=1"><span -->
+			<%-- 								class="glyphicon glyphicon-send"></span> <spring:message --%>
+			<%-- 									code="message.noticeboard" text="default text" /> con fake --%>
+			<!-- 								init</a></li> -->
+			<!-- 						<li><a href="./noticeboard"><span -->
+			<%-- 								class="glyphicon glyphicon-send"></span> <spring:message --%>
+			<%-- 									code="message.noticeboard" text="default text" /> senza init</a></li> --%>
+			<!-- 					</ul> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
+			
+			<jsp:include page="./pagesCommon/sideBar.jsp" flush="true" />
+
+			<jsp:include page="${customBody}" flush="true" />
+
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<jsp:include page="${customBody}" flush="true" />
 			</div>

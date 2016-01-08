@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Professor;
@@ -34,6 +35,11 @@ public class InvitationController {
     
     @Autowired  
     MessageSource messageSource;
+    
+    public static void checkNewInvitations(Model model, User user){
+	// Query if there are new invitations for a particular user and set variable!
+	model.addAttribute("newInvitations", "34");
+    }
     
     /**
      * Show statistics based on the kind of user.
@@ -62,6 +68,8 @@ public class InvitationController {
 	    model.addAttribute("professor", (Professor)user);
 	}
 	
+	InvitationController.checkNewInvitations(model, user);
+		
 	return "invitation";
     }
     

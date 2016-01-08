@@ -46,6 +46,8 @@ public class CheckInvitationsController {
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
+	InvitationController.checkNewInvitations(model, user);
+	
 	return "invitation/checkInvitations";
     }
     

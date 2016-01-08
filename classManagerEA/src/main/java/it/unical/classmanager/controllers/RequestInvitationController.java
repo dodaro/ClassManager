@@ -39,11 +39,17 @@ public class RequestInvitationController {
     public String statistics(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("RequestInvitation Page", locale);
 	
-	String username = (String) request.getSession().getAttribute("loggedIn");	
+	String username = (String) request.getSession().getAttribute("loggedIn");
+	if ( username == null ) {			
+	    return "redirect:/";
+	}
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
-	return "requestInvitation";
+	//	model.addAttribute("noUnselectableCourse", "empty");
+	//	model.addAttribute("noSelectableCourse", "empty");
+	
+	return "invitation/requestInvitation";
     }
     
 }

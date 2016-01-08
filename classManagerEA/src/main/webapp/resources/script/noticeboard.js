@@ -28,8 +28,7 @@ var NoticeBoardManager = (function() {
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 			
-			newPostArea = CKEDITOR.replace(newPostAreaName);
-			
+			//newPostArea = CKEDITOR.replace(newPostAreaName);
 			
 			
 			$("#page-size").change(function() {
@@ -108,21 +107,17 @@ var ListenersManager = (function(){
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 			
-			
 			$("#new-post").click(function(data) {
-				
-				var formToAppned =
-				"<div class='row'>" +
-				 	 "<div class='col-sm-7 col-md-7 col-lg-7'>" +
-				 			"<p>newPost</p>"
-				 	+ "</div>" +
-				 "</div>";
-				
-				$(this).after(formToAppned);
+				if ( $("#form-div").is(":visible") ) {
+					$("#form-div").hide();
+				} else {
+					$("#form-div").show();
+				}
 			});
-			$("#delete-post").click(function(data) {
-				alert("TODO:Handle delete");
-			});
+			
+//			$("#delete-post").click(function(data) {
+//				alert("TODO:Handle delete");
+//			});
 			$("#edit-post").click(function(data) {
 				alert("TODO:Handle edit");
 			});

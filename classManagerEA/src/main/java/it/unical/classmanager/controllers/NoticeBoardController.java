@@ -163,6 +163,7 @@ public class NoticeBoardController {
 		if ( result.hasErrors() ) {
 			model.addAttribute("customHeader", NoticeBoardController.HEADER);
 			model.addAttribute("customBody", NoticeBoardController.BODY);
+			model.addAttribute("display",true);
 			return "layout";
 		}
 		

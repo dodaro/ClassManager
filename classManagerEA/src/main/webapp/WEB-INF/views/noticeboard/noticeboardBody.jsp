@@ -22,7 +22,7 @@
 	
 </form>
 <!-- 	<div class="col-sm-9 col-md-9 col-lg-10">		 -->
-		<div id="form-div" style="display:none" class="row">
+		<div id="form-div" style="display : ${ display ? 'block' : 'none'}" class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
  				<form:form commandName="new-notice" action="newnotice" role="form">
 				  	<spring:bind path="name">

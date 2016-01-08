@@ -35,6 +35,8 @@ var ListenersManager = (function(){
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 
+			
+			
 			$("#createNewClass_btn").on("click", function() {
 
 				$("#createNewClass_modal").modal().show();

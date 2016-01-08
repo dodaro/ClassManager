@@ -364,13 +364,14 @@ public class LectureController {
 	 * @param parentId the id of the parentFolder
 	 * @return
 	 */
-	@RequestMapping(value="/upload_homeworks", method=RequestMethod.POST)
+	@RequestMapping(value="/upload_homeworkAttached", method=RequestMethod.POST)
 	public String uploadHomework(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkId) {
 
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 		Homework homework = homeworkDAO.get(homeworkId);
 
 		String path = homework.getFilePath();
+		System.out.println(file.getOriginalFilename());
 		boolean success = new FileManager().mkMultipartFile(file, path, file.getOriginalFilename());
 		if(!success)
 			logger.error("cannot save the file " + path + "/" + file.getOriginalFilename());

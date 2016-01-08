@@ -22,6 +22,21 @@
 	
 </form>
 <!-- 	<div class="col-sm-9 col-md-9 col-lg-10">		 -->
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+ 				<form>
+				  <div class="form-group">
+				    <label for="title"><spring:message code="message.noticeboard.title" text="default text" /></label>
+				    <input name="title" type="text" class="form-control" id="notice-title" placeholder="Title">
+				  </div>
+				  <div class="form-group">
+				    <label for="text"><spring:message code="message.noticeboard.text" text="default text" /></label>
+				    <input name="text" type="text" class="form-control" id="notice-text" placeholder="Text">
+				  </div>
+				  <button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
 		<c:forEach var="notice" items="${noticesList.getPageList()}">
 	  			<div class="row">
 	  				<div class="col-sm-7 col-md-7 col-lg-7">

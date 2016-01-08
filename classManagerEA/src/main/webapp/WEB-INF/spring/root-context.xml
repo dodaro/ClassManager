@@ -46,8 +46,8 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop> 
-<!-- 				create -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- create -->
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
@@ -59,7 +59,7 @@
 
 	<bean id="event" class="it.unical.classmanager.model.data.Event">
 	</bean>
-	
+
 	<bean id="mutableSortDefinition" class="org.springframework.beans.support.MutableSortDefinition">
 		<property name="property" value="lastName"></property>
 		<property name="ignoreCase" value="true"></property>
@@ -138,14 +138,13 @@
 	</bean>
 	<!-- CartQueryDAO: This is a DAO for perform queries related to statistics 
 		carts -->
-	<bean id="cartQueryDAO"
-		class="it.unical.classmanager.model.dao.CartQueryDAOImpl">
+	<bean id="cartQueryDAO" class="it.unical.classmanager.model.dao.CartQueryDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 	<!-- End CartQueryDAO -->
-	
+
 	<!-- DAO Helper -->
-		<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
+	<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
 		<property name="dbHandler" ref="dbHandler" />
 		<property name="answerAttachedContentDAO" ref="answerAttachedContentDAO" />
 		<property name="answerDAO" ref="answerDAO" />

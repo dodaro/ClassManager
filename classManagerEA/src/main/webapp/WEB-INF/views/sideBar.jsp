@@ -12,8 +12,9 @@
 					Discussions</a></li>
 			<li><a href="./statistics"><span
 					class="glyphicon glyphicon-stats"></span> Statistics</a></li>
-			<li><a href="./allCarts"><span
-					class="glyphicon glyphicon-stats"></span> AllCarts</a></li>
+			<li><a href="./invitation"><span
+					class="glyphicon glyphicon-gift" aria-hidden="true"></span>
+					Invitation</a></li>
 		</ul>
 	</div>
 </div>

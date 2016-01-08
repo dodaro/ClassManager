@@ -35,12 +35,17 @@ public class CheckRequestedInvitationsController {
     @RequestMapping(value = "/checkRequestedInvitations", method = RequestMethod.GET)
     public String statistics(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("CheckRequestedInvitations Page", locale);
-
+	
 	String username = (String) request.getSession().getAttribute("loggedIn");	
+	if ( username == null ) {			
+	    return "redirect:/";
+	}
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
-	return "checkRequestedInvitations";
+	// model.addAttribute("noAcceptableCourse", "empty");
+	
+	return "invitation/checkRequestedInvitations";
     }
     
 }

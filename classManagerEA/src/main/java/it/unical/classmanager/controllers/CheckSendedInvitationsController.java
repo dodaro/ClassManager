@@ -39,11 +39,14 @@ public class CheckSendedInvitationsController {
     public String statistics(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("CheckSendedInvitations Page", locale);
 	
-	String username = (String) request.getSession().getAttribute("loggedIn");	
+	String username = (String) request.getSession().getAttribute("loggedIn");
+	if ( username == null ) {			
+	    return "redirect:/";
+	}
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
-	return "checkSendedInvitations";
+	return "invitation/checkSendedInvitations";
     }
     
 }

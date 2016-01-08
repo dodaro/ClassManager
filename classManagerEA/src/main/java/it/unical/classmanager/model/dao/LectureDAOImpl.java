@@ -86,7 +86,7 @@ public class LectureDAOImpl implements LectureDAO
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Lecture> getAllLecturesOfACourse(CourseClass course)
+	public List<Lecture> getAllLecturesOfProfessor(CourseClass course)
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();		
 		List<Lecture> lecture = session.createQuery("FROM Lecture WHERE courseClass = :course ").setParameter("course", course).list();
@@ -99,6 +99,15 @@ public class LectureDAOImpl implements LectureDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();		
 		List<Lecture> lecture = session.createQuery("FROM Lecture WHERE courseClass.id = :course ").setParameter("course", courseID).list();
+		session.close();
+		return lecture;
+	}
+	
+	@Override
+	public List<Lecture> getAllLecturesOfAProfessor(String professorId)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<Lecture> lecture = session.createQuery("FROM Lecture as l WHERE l.courseClass.professor.username = :username").setParameter("username", professorId).list();
 		session.close();
 		return lecture;
 	}

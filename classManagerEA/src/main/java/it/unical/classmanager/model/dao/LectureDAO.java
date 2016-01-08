@@ -22,7 +22,9 @@ public interface LectureDAO {
 	
 	public Lecture getLastLectureAdded(int idCourse);
     
-	public List<Lecture> getAllLecturesOfACourse(CourseClass course);
+	public List<Lecture> getAllLecturesOfProfessor(CourseClass course);
 
 	public List<Lecture> getAllLecturesOfACourse(int courseID);
+
+	List<Lecture> getAllLecturesOfAProfessor(String professorId);
 }

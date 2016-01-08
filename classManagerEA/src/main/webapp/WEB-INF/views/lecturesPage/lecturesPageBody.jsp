@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
@@ -16,10 +17,9 @@
 						<a id="visualizer" href="#"></a>
 					</div>
 					<div class="modal-footer">
-						<button id="download_btn_modal" type="button"
-							class="btn btn-default" data-dismiss="modal">Download</button>
-						<button id="delete_btn_modal" type="button"
-							class="btn btn-default" data-dismiss="modal">Delete</button>
+						<button id="download_btn_modal" type="button" class="btn btn-default" data-dismiss="modal">
+							<spring:message code="lectureManager.download" text="default text" />
+						</button>
 					</div>
 				</div>
 			</div>
@@ -39,21 +39,28 @@
 
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="topic">Topic:</label>
+									<label for="topic">
+										<spring:message code="lectureManager.topic" text="default text" />
+									</label>
 									<form:input type="text" name="topic" path="topic"
 										class="form-control" />
 								</div>
 								<div class="form-group">
-									<label for="description">Description:</label>
+									<label for="description">
+										<spring:message code="lectureManager.description" text="default text" />
+									</label>
 									<form:input type="text" name="description" path="description"
 										class="form-control" />
 								</div>
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-success">Create</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-success">
+									<spring:message code="lectureManager.done" text="default text" />
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									<spring:message code="lectureManager.close" text="default text" />
+								</button>
 							</div>
 
 						</div>
@@ -73,15 +80,26 @@
 
 			<div class="row row-content">
 			
-				<c:if test="${not empty lecture}"><div id="createNewClass_btn" class="btn btn-default">Add New</div></c:if>
-				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'}"><div id="uploadFile_btn" class="btn btn-default">Upload</div></c:if>
-				<c:if test="${not empty homework}"><div id="addHomework_btn" class="btn btn-default">add Homework</div></c:if>
+				<c:if test="${not empty lecture}"><div id="createNewClass_btn" class="btn btn-default">
+					<spring:message code="lectureManager.addNewLecture" text="default text" />
+				</div></c:if>
+				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'}">
+					<div id="uploadFile_btn" class="btn btn-default">
+						<spring:message code="lectureManager.upload" text="default text" />
+					</div>
+				</c:if>
+				<c:if test="${not empty homework}">
+					<div id="addHomework_btn" class="btn btn-default">
+						<spring:message code="lectureManager.addHomework" text="default text" />
+					</div>
+				</c:if>
 
 				<div id="uploadFile_div" style="display: none;">
-					<form id="upload" method="post" action="/upload_${pwd}"
-						enctype="multipart/form-data">
+					<form id="upload" method="post" action="/upload_${pwd}" enctype="multipart/form-data">
 						<div id="drop">
-							Drop Here <a>Browse</a> <input type="file" name="file" multiple />
+							<spring:message code="lectureManager.drophere" text="default text" /> 
+							<a> <spring:message code="lectureManager.browse" text="default text" /> </a>
+							<input type="file" name="file" multiple />
 						</div>
 						<ul>
 							<!-- The file uploads will be shown here -->
@@ -112,8 +130,12 @@
 											<span class="name">${file.name}</span>
 											<span class="details">
 												<c:choose>
-													<c:when test="${file.childs != 0}">${file.childs} items</c:when>
-													<c:otherwise>Empty</c:otherwise>
+													<c:when test="${file.childs != 0}">
+														${file.childs} <spring:message code="lectureManager.items" text="default text" />
+													</c:when>
+													<c:otherwise>
+														<spring:message code="lectureManager.empty" text="default text" />
+													</c:otherwise>
 												</c:choose>
 											</span>
 											<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color:white"></span>
@@ -138,7 +160,7 @@
 					<c:otherwise>
 						<div class="nothingfound">
 							<div class="nofiles"></div>
-							<span>No files here.</span>
+							<span><spring:message code="lectureManager.nofileshere" text="default text" /></span>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -163,12 +185,16 @@
 
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="name">Name:</label>
+									<label for="name">
+										<spring:message code="lectureManager.name" text="default text" />:
+									</label>
 									<form:input type="text" name="name" path="name"
 										class="form-control" />
 								</div>
 								<div class="form-group">
-									<label for="description">Description:</label>
+									<label for="description">
+										<spring:message code="lectureManager.description" text="default text" />
+									</label>
 									<form:input type="text" name="description" path="description"
 										class="form-control" />
 								</div>
@@ -177,9 +203,12 @@
 							</div>
 
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-success">Add</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-success">
+									<spring:message code="lectureManager.done" text="default text" />
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									<spring:message code="lectureManager.close" text="default text" />
+								</button>
 							</div>
 
 						</div>

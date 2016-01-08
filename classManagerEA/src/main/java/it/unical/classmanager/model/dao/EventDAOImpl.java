@@ -88,5 +88,16 @@ public class EventDAOImpl implements EventDAO{
 		return event;
 	}
 
+	@Override
+	public void deleteAllEvents(String username) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("DELETE FROM Event as e WHERE e.user.username = :username");
+		query.setParameter("username", username);
+		query.executeUpdate();
+		
+		session.close();
+	}
+
 
 }

@@ -29,7 +29,7 @@ $(document).ready(function() {
 });
 
 
-function createCalendar(editable){
+function createCalendar(editable, currentDate){
 
 	/*
 	 * The javascript script "fullCalendar" creates and initializes the calendar.
@@ -44,7 +44,7 @@ function createCalendar(editable){
 		 */ 
 		header: {
 			left: 'prev,next today',
-			center: '',
+			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
 		lang: 'it',
@@ -54,6 +54,11 @@ function createCalendar(editable){
 		editable: editable,
 		// allows "more" link when too many events
 		eventLimit: true,
+		
+		eventRender: function (event, element) {
+		    element.find('.fc-event-title').html(event.title);
+		},
+		
 		views:{
 			titleFormat: 'MMM D YYYY'
 		},
@@ -96,7 +101,6 @@ function createCalendar(editable){
 
 			//updateEvent(event,dayDelta,minuteDelta,allDay,revertFunc);
 		},
-
 		/*
 		 * these allows to select graphically a specific range of time. In this application, when a range is selected
 		 * a new event is created using the corresponding paramenters
@@ -162,9 +166,17 @@ $(document).ready(function(){
 
 		$("#editCalendar_btn").hide();
 		$("#updateCalendar_div").show();
+		
+		var moment = $('#calendar').fullCalendar('getDate');
+		var view = $('#calendar').fullCalendar('getView');
+		
 		$('#calendar').fullCalendar('destroy');
 		createCalendar(true);
-
+		
+		//in order to restore the date where the user was
+		$('#calendar').fullCalendar('gotoDate', moment);
+		$('#calendar').fullCalendar( 'changeView', view.type);
+		
 	});
 
 	$("#revert_btn").click(function(event){
@@ -193,6 +205,7 @@ $(document).ready(function(){
 			event.id = value.id;
 			event.title = value.title;
 			event.startDate = value.start.format();
+			if(value.end != null)
 			event.endDate = value.end.format();
 			event.color = value.color;
 
@@ -215,7 +228,6 @@ $(document).ready(function(){
 				window.redirect("/calendar");
 			},
 			error:function(data,status,er) { 
-				alert("error: "+data+" status: "+status+" er:"+er);
 				revertFunc();
 
 			}
@@ -249,6 +261,7 @@ events: [
 	 title: 'All Day Event',
 	 start: '2015-12-01',
 	 editable: true
+	 dow: [1, 4];
 },
 {
 	 title: 'Long Event',
@@ -302,8 +315,6 @@ events: [
 }
 ]
 
- *
- *
 /*
  * sends an Ajax request to the server when an event is modify in order to store the new information
  */

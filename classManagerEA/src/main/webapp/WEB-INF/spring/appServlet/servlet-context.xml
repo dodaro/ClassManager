@@ -25,7 +25,7 @@
 	
 	<beans:bean id="messageSource"
 	      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <beans:property name="basenames" value="/i18n/messages,/i18n/forum/messages_forum,/i18n/editor/messages_editor,/i18n/noticeboard/messages_noticeboard" />
+	    <beans:property name="basenames" value="/i18n/messages,/i18n/forum/messages_forum,/i18n/editor/messages_editor,/i18n/noticeboard/messages_noticeboard,/i18n/lectureManager/messages_lectureManager, /i18n/calendar/messages_calendar" />
 	    <beans:property name="fallbackToSystemLocale" value="false" />
 	</beans:bean>		 
      
@@ -33,7 +33,7 @@
         class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <beans:property name="defaultLocale" value="it" />        
     </beans:bean>
- 
+    
     <interceptors>
         <beans:bean
             class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">

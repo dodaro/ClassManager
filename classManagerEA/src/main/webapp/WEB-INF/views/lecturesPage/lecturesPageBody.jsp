@@ -104,6 +104,9 @@
 						<ul>
 							<!-- The file uploads will be shown here -->
 						</ul>
+						<div class="btn btn-default" id="file_upload_btn" style="margin-top:15px">
+							<spring:message code="lectureManager.done" text="default text" />
+						</div>
 						<input id="toUpload_input" type="hidden" name="parentId"
 							value="${parentId}" />
 					</form>

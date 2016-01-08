@@ -24,7 +24,7 @@
 				<c:set var="count" value="${count + 1}" scope="page" />
 					<c:choose>
 					<c:when test="${solutionsArray[index].homework.id == homework.id}">
-						<td><a href="#" data-pk="${solutionsArray[index].id}">${solutionsArray[index].homework.id}</a></td>
+						<td><a href="#" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</a></td>
 						<c:set var="index" value="${index + 1}" scope="page" />
 					</c:when>
 					<c:otherwise>

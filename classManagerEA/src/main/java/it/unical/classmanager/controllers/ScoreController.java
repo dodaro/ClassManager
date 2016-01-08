@@ -40,7 +40,7 @@ public class ScoreController {
 
 	private final static String HEADER = "scoresPage/scoresPageHeader.jsp";
 	private final static String BODY = "scoresPage/scoresPageBody.jsp";
-	
+
 	/**
 	 * This controller handles requests related to the visualization and evaluation of homeworks
 	 */
@@ -50,67 +50,39 @@ public class ScoreController {
 
 		//TODO prendere dalla sessione
 		int idCourse = 1;
-		
+
 		model.addAttribute("customHeader",ScoreController.HEADER);
 		model.addAttribute("customBody",ScoreController.BODY);
-		
+
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 		List<Homework> homeworks = homeworkDAO.getAllHomeworks(idCourse);
-		
+
 		CourseClassDAO courseClassDAO = appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 		CourseClass course = courseClassDAO.get(4);	
-		
+
 		RegistrationStudentClassDAO userDao = appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 		List<Student> students = userDao.getStudentsRegisteredToACourse(course);
-		
+
 		model.addAttribute("students", students);
 		model.addAttribute("homeworks", homeworks);
-		
-		ScoresPageTransformView transformView = new ScoresPageTransformView();
-		//HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDao",HomeworkStudentSolvingDAOImpl.class);
-		
-		/*for (Homework homework : homeworks) {
-			
-			for (HomeworkStudentSolving solution : homework.getHomeworkStudentSolvings()) {
-				
-				String username = solution.getStudent().getUsername();
-				String name = solution.getStudent().getFirstName() + " " + solution.getStudent().getLastName();
-				transformView.addStudent(username, name);
-				
-				transformView.addHomework(username, solution.getHomework().getId());
-				transformView.addScore(solution.getId(), solution.getScore());
-				
-				transformView.addHomeworkName(solution.getHomework().getId(),solution.getHomework().getName());
-				
-				String key = solution.getHomework().getId() + "-" + username;
-				transformView.addHomeworkSolution(key, solution.getId());
-			}
-		}*/
-		
-		model.addAttribute("map", new Gson().toJson(transformView));
-		
+
 		logger.info("getScores");
 		return "layout";
 
 	}
-	
-	@RequestMapping(value = "/update_scores", method = RequestMethod.POST)
-	public @ResponseBody String getScoresData(Model model, @RequestBody List<HomeworkStudentSolving> homeworkStudentSolvings) {
 
-		for (HomeworkStudentSolving homeworkStudentSolving : homeworkStudentSolvings) {
-			
-			int id = homeworkStudentSolving.getId();
-			int score = homeworkStudentSolving.getScore();
-			
-			HomeworkStudentSolvingDAO dao = appContext.getBean("homeworkStudentSolvingDAO",HomeworkStudentSolvingDAOImpl.class);
-			HomeworkStudentSolving original = dao.get(id);
-			original.setScore(score);
-			
-			dao.update(original);
-			
-			//update db;
-		}
-		
+	@RequestMapping(value = "/update_score", method = RequestMethod.POST)
+	public @ResponseBody String getScoresData(Model model, @RequestBody HomeworkStudentSolving homeworkStudentSolving) {
+
+		int id = homeworkStudentSolving.getId();
+		int score = homeworkStudentSolving.getScore();
+
+		HomeworkStudentSolvingDAO dao = appContext.getBean("homeworkStudentSolvingDAO",HomeworkStudentSolvingDAOImpl.class);
+		HomeworkStudentSolving original = dao.get(id);
+		original.setScore(score);
+
+		dao.update(original);
+
 		logger.info("update_score");
 		return "200";
 

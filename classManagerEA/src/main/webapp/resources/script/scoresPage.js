@@ -19,18 +19,16 @@ $(document).ready(function() {
 
 });
 
-function updateData(params){
+function updateData(data){
+	
+	var homeworkStudentSolving = {'id':data.pk, 'score':data.value};
 	
 	$.ajax({ 
-		headers: {
-			Accept : "text/plain; charset=utf-8"
-		},
 		url: "/update_score", 
-		type: 'POST', 
-		dataType: 'json', 
-		data: toSend, 
+		type: 'POST',  
+		data: JSON.stringify(homeworkStudentSolving), 
+		dataType: 'json',
 		contentType: 'application/json',
-		mimeType: 'application/json',
 		success: function(data) { 
 			if(data == "200")
 				window.location.replace("/scores");

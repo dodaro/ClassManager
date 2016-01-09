@@ -150,7 +150,23 @@ public class InsertAnswerController {
 		answer.setUser(tmpUser);
 		answer.setQuestion(tmpQuestion);
 		
-		answerDAO.update(answer);
+		Answer newAnswer = (Answer) answerDAO.update(answer);
+		
+		String attachedFilesID = request.getParameter("attachedFiles");
+		
+		if(attachedFilesID != null && !attachedFilesID.equals("")) {
+			
+			StringTokenizer tokenizer = new StringTokenizer(attachedFilesID, ";");
+			AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);
+		
+			while(tokenizer.hasMoreTokens()) {
+				String tmpID = tokenizer.nextToken();
+				
+				AnswerAttachedContent tmpAnswerContent = answerAttachedDAO.get(Integer.parseInt(tmpID));
+				tmpAnswerContent.setAnswer(newAnswer);
+				answerAttachedDAO.update(tmpAnswerContent);
+			}
+		}
 		
 			
 		return "redirect:detailedQuestion?qid=" + qid;

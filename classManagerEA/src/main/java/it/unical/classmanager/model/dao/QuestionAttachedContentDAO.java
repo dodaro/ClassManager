@@ -19,4 +19,6 @@ public interface QuestionAttachedContentDAO {
 	public int numberOfQuestionAttachedContents();
 
 	public List<QuestionAttachedContent> getAllQuestionAttachedContents();
+	
+	public QuestionAttachedContent searchByPath(String path);
 }

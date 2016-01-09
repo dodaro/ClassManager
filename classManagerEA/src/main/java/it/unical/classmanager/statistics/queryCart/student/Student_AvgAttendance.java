@@ -40,6 +40,7 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	// Query
 	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
 	List<Object[]> avgAttendanceByStudent = cartQueryDAO.getAvgAttendanceByStudent((Student)this.getUser());
+	
 	/*
 	 * avgAttendanceByStudent
 	 * CourseName1, Avg1
@@ -49,14 +50,14 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	 * CourseNameN, AvgN
 	 */	
 	
-	cart.setTitle("Media delle presenze");
-	cart.setSubTitle("Per ogni corso ");
-	cart.setxAxisTitle("Corsi");
+	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_Title",null,locale));
+	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_SubTitle",null,locale));
+	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_xAxisTitle",null,locale));
 	StringBuilder seriesContent = new StringBuilder("");
 	seriesContent.append("{");
 	{
 	    seriesContent.append("\n");
-	    seriesContent.append("name: \'Brands\',\n");
+	    seriesContent.append("name: \'"+messageSource.getMessage("message.statistics.Student_AvgAttendance_SeriesContentName",null,locale)+"\',\n");
 	    seriesContent.append("colorByPoint: true,\n");
 	    seriesContent.append("data: [");
 	    
@@ -82,207 +83,7 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	
 	StringBuilder drilldownContent = new StringBuilder("");
 	drilldownContent.append("{}");
-	//	drilldownContent.append("{");
-	//	{
-	//	    drilldownContent.append("\n");
-	//	    drilldownContent.append("name: \'Microsoft Internet Explorer\',\n");
-	//	    drilldownContent.append("id: \'Microsoft Internet Explorer\',\n");
-	//	    drilldownContent.append("data: [\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v11.0\',\n");
-	//	    drilldownContent.append("24.13\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v8.0\',\n");
-	//	    drilldownContent.append("17.2\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v9.0\',\n");
-	//	    drilldownContent.append("8.11\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v10.0\',\n");
-	//	    drilldownContent.append("5.33\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v6.0\',\n");
-	//	    drilldownContent.append("1.06\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v7.0\',\n");
-	//	    drilldownContent.append("0.5\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("}");
-	//	}
-	//	drilldownContent.append(", {");
-	//	{
-	//	    drilldownContent.append("\n");
-	//	    drilldownContent.append("name: \'Chrome\',\n");
-	//	    drilldownContent.append("id: \'Chrome\',\n");
-	//	    drilldownContent.append("data: [\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v40.0\',\n");
-	//	    drilldownContent.append("5\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v41.0\',\n");
-	//	    drilldownContent.append("4.32\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v42.0\',\n");
-	//	    drilldownContent.append("3.68\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v39.0\',\n");
-	//	    drilldownContent.append("2.96\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v36.0\',\n");
-	//	    drilldownContent.append("2.53\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v43.0\',\n");
-	//	    drilldownContent.append("1.45\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v31.0\',\n");
-	//	    drilldownContent.append("1.24\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v35.0\',\n");
-	//	    drilldownContent.append("0.85\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v38.0\',\n");
-	//	    drilldownContent.append("0.6\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v32.0\',\n");
-	//	    drilldownContent.append("0.55\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v37.0\',\n");
-	//	    drilldownContent.append("0.38\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v33.0\',\n");
-	//	    drilldownContent.append("0.19\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v34.0\',\n");
-	//	    drilldownContent.append("0.14\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v30.0\',\n");
-	//	    drilldownContent.append("0.14\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("}");
-	//	}
-	//	drilldownContent.append(", {");
-	//	{
-	//	    drilldownContent.append("\n");
-	//	    drilldownContent.append("name: \'Firefox\',\n");
-	//	    drilldownContent.append("id: \'Firefox\',\n");
-	//	    drilldownContent.append("data: [\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v35\',\n");
-	//	    drilldownContent.append("2.76\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v36\',\n");
-	//	    drilldownContent.append("2.32\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v37\',\n");
-	//	    drilldownContent.append("2.31\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v34\',\n");
-	//	    drilldownContent.append("1.27\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v38\',\n");
-	//	    drilldownContent.append("1.02\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v31\',\n");
-	//	    drilldownContent.append("0.33\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v33\',\n");
-	//	    drilldownContent.append("0.22\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v32\',\n");
-	//	    drilldownContent.append("0.15\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("}");
-	//	}
-	//	drilldownContent.append(", {");
-	//	{
-	//	    drilldownContent.append("\n");
-	//	    drilldownContent.append("name: \'Safari\',\n");
-	//	    drilldownContent.append("id: \'Safari\',\n");
-	//	    drilldownContent.append("data: [\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v8.0\',\n");
-	//	    drilldownContent.append("2.56\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v7.1\',\n");
-	//	    drilldownContent.append("0.77\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v5.1\',\n");
-	//	    drilldownContent.append("0.42\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v5.0\',\n");
-	//	    drilldownContent.append("0.3\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v6.1\',\n");
-	//	    drilldownContent.append("0.29\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v7.0\',\n");
-	//	    drilldownContent.append("0.26\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v6.2\',\n");
-	//	    drilldownContent.append("0.17\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("}");
-	//	}
-	//	drilldownContent.append(", {");
-	//	{
-	//	    drilldownContent.append("\n");
-	//	    drilldownContent.append("name: \'Opera\',\n");
-	//	    drilldownContent.append("id: \'Opera\',\n");
-	//	    drilldownContent.append("data: [\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v12.x\',\n");
-	//	    drilldownContent.append("0.34\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v28\',\n");
-	//	    drilldownContent.append("0.24\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v27\',\n");
-	//	    drilldownContent.append("0.17\n");
-	//	    drilldownContent.append("],\n");
-	//	    drilldownContent.append("[\n");
-	//	    drilldownContent.append("\'v29\',\n");
-	//	    drilldownContent.append("0.16\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("]\n");
-	//	    drilldownContent.append("}");
-	//	}
+	
 	cart.setDrilldownContent(drilldownContent);
 	
 	return cart;

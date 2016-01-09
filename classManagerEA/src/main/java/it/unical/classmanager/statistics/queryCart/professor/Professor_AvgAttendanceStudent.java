@@ -47,10 +47,10 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	 * CourseClass, AvgAttendance
 	 */
 	
-	cart.setTitle("Media delle presenze");
-	cart.setSubTitle("Per ogni corso la media delle presenze di tutti gli studenti");
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_Title",null,locale));
+	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SubTitle",null,locale));
+	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_yAxisTitle",null,locale));
 	cart.setxAxisTitle("");
-	cart.setyAxisTitle("Average Attendance");
 	cart.setxAxisMinValue(0);
 	cart.setxAxisMaxValue(0);
 	
@@ -77,7 +77,7 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	cart.setzPointTooltip("");
 	cart.setToolTipValueSuffix("");
 	StringBuilder seriesContent = new StringBuilder("");	
-	seriesContent.append("{name: \'All Courses\', data: [");
+	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avgAttendanceStudent.size(); i++){
 	    float currentData = Float.parseFloat(avgAttendanceStudent.get(i)[1].toString());
 	    if(i==0){
@@ -88,34 +88,6 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	}
 	seriesContent.append("]}");	
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Tokyo\',\n");
-	//	    seriesContent.append("data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'New York\',\n");
-	//	    seriesContent.append("data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'London\',\n");
-	//	    seriesContent.append("data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Berlin\',\n");
-	//	    seriesContent.append("data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]\n");
-	//	    seriesContent.append("}");
-	//	}
 	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setDrilldownContent(drilldownContent);

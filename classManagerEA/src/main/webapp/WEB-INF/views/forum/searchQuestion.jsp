@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
+<link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
 
 <script src='/resources/lib/jquery/jquery.min.js'></script>
 <script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>

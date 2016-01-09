@@ -28,22 +28,11 @@
 			<%@include file="sideBar.jsp"%>
 			<!-- END SIDEBAR -->
 
-
-<!-- 			<div class="col-sm-9 col-md-9 col-lg-10"> -->
-<%-- 				<%@include file="statisticsProfessor.jsp"%> --%>
-<%-- 					<%@include file="statisticsStudent.jsp"%> --%>
-<!-- 			</div> -->
-
-
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<c:if test="${not empty student}">
-					<h1>Student: ${student.username}</h1>
-					<br>
 					<%@include file="statisticsStudent.jsp"%>
 				</c:if>
 				<c:if test="${not empty professor}">
-					<h1>Professor: ${professor.username}</h1>
-					<br>
 					<%@include file="statisticsProfessor.jsp"%>
 				</c:if>
 			</div>

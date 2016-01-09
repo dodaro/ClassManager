@@ -66,5 +66,18 @@ public class QuestionAttachedContentDAOImpl implements QuestionAttachedContentDA
 		session.close();
 		return questionAttachedContents;
 	}
+	
+	
+	public QuestionAttachedContent searchByPath(String path) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		QuestionAttachedContent questionAttachedContent = 
+				(QuestionAttachedContent) session
+				.createSQLQuery("SELECT * FROM questionAttachedContent WHERE filePath = '" + path + "'")
+				.addEntity(QuestionAttachedContent.class)
+				.uniqueResult();
+		session.close();
+		return questionAttachedContent;
+	}
 
 }

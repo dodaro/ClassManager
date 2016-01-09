@@ -5,12 +5,8 @@ package it.unical.classmanager.statistics.queryCart.professor;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import it.unical.classmanager.model.dao.CartQueryDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
@@ -53,8 +49,8 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	 * Professor, numberCourse
 	 * 
 	 */
-	
-	cart.setTitle("Professori/numero corsi che sostengono");
+		
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_NumberCourses_Title",null,locale));
 	StringBuilder seriesContent = new StringBuilder("");
 	StringBuilder data = new StringBuilder("");
 	
@@ -72,54 +68,12 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	
 	seriesContent.append("{");
 	seriesContent.append("\n");
-	seriesContent.append("name: \'Courses\',\n");
+	seriesContent.append("name: \'"+messageSource.getMessage("message.statistics.Professor_NumberCourses_SeriesContentName",null,locale)+"\',\n");
 	seriesContent.append("data: [\n");
 	seriesContent.append(data.toString());
 	seriesContent.append("]\n");
 	seriesContent.append("}");
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Courses\',\n");
-	//	    seriesContent.append("data: [\n");
-	//	    seriesContent.append("{");
-	//	    {
-	//		seriesContent.append(" name: \'Microsoft Internet Explorer\', y: 56.33 }");
-	//	    }
-	//	    seriesContent.append(",\n");
-	//	    seriesContent.append("{");
-	//	    {
-	//		seriesContent.append("\n");
-	//		seriesContent.append("name: \'Chrome\',\n");
-	//		seriesContent.append("y: 24.03,\n");
-	//		seriesContent.append("sliced: true,\n");
-	//		seriesContent.append("selected: true\n");
-	//		seriesContent.append("}");
-	//	    }
-	//	    seriesContent.append(",\n");
-	//	    seriesContent.append("{");
-	//	    {
-	//		seriesContent.append(" name: \'Firefox\', y: 10.38 }");
-	//	    }
-	//	    seriesContent.append(",\n");
-	//	    seriesContent.append("{");
-	//	    {
-	//		seriesContent.append(" name: \'Safari\', y: 4.77 }");
-	//	    }
-	//	    seriesContent.append(", {");
-	//	    {
-	//		seriesContent.append(" name: \'Opera\', y: 0.91 }");
-	//	    }
-	//	    seriesContent.append(",\n");
-	//	    seriesContent.append("{");
-	//	    {
-	//		seriesContent.append(" name: \'Proprietary or Undetectable\', y: 0.2 }");
-	//	    }
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("]\n");
-	//	    seriesContent.append("}");
-	//	}	
 	cart.setSeriesContent(seriesContent);
 	
 	return cart;

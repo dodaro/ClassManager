@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,9 @@ public class StatisticsController {
     @Autowired
     ApplicationContext appContext;
     
+    @Autowired  
+    MessageSource messageSource;
+    
     /**
      * Show statistics based on the kind of user.
      */
@@ -53,14 +57,6 @@ public class StatisticsController {
 	logger.info("Statistics Page", locale);
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
-	
-	//return statisticsForProfessor(locale, model, request, null);
-	
-	//	User user = DaoHelper.getUserDAO().get("StudentAldo2");
-	//	return statisticsForStudent(locale, model, request, (Student) user);
-
-	//	User user = DaoHelper.getUserDAO().get("ProfAldo0");
-	//	return statisticsForProfessor(locale, model, request, (Professor) user);
 	
 	if ( username == null ) {			
 	    return "redirect:/";
@@ -92,18 +88,12 @@ public class StatisticsController {
 	Student_HomeworkScoreSeries q4 = new Student_HomeworkScoreSeries(student);
 	Student_ExamScoreSeries q5 = new Student_ExamScoreSeries(student);
 	
-	//	q1.getCart().setName("AverageHomeworksCourseClass");
-	//	q2.getCart().setName("ForCourseClassAverageAttendance");
-	//	q3.getCart().setName("ForCourseClassAverageTimeDeliveryHomeworks");
-	//	q4.getCart().setName("ForCourseClassSeriesScoresHomeworks");
-	//	q5.getCart().setName("SeriesScoreExams");
-	
 	AbstractCart[] cartsArray = {
-		(q1).getCart(),
-		(q2).getCart(),
-		(q3).getCart(),
-		(q4).getCart(),
-		(q5).getCart()
+		(q1).getCart(messageSource, locale),
+		(q2).getCart(messageSource, locale),
+		(q3).getCart(messageSource, locale),
+		(q4).getCart(messageSource, locale),
+		(q5).getCart(messageSource, locale)
 	};
 	
 	CartsList carts = new CartsList();
@@ -128,13 +118,13 @@ public class StatisticsController {
 	Professor_AvgAttendanceStudent q7 = new Professor_AvgAttendanceStudent(professor);
 	
 	AbstractCart[] cartsArray = {
-		q1.getCart(),
-		q2.getCart(),
-		q3.getCart(),
-		q4.getCart(),
-		q5.getCart(),
-		q6.getCart(),
-		q7.getCart(),
+		q1.getCart(messageSource, locale),
+		q2.getCart(messageSource, locale),
+		q3.getCart(messageSource, locale),
+		q4.getCart(messageSource, locale),
+		q5.getCart(messageSource, locale),
+		q6.getCart(messageSource, locale),
+		q7.getCart(messageSource, locale),
 	};
 	
 	CartsList carts = new CartsList();

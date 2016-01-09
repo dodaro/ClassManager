@@ -46,17 +46,17 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 	// Query
 	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
 	List<Object[]> avgTimeDeliveryHomework = cartQueryDAO.getAvgTimeDeliveryHomework((Professor)this.getUser());
-
+	
 	/*
 	 * CourseClass, AvgTime
 	 * CourseClass, AvgTime
 	 * CourseClass, AvgTime
 	 */
 	
-	cart.setTitle("Chi consegna prima?");
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_Title",null,locale));
+	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_yAxisTitle",null,locale));
 	cart.setSubTitle("");
 	cart.setxAxisTitle("");
-	cart.setyAxisTitle("Time Delivery");
 	cart.setxAxisMinValue(0);
 	cart.setxAxisMaxValue(0);
 	
@@ -124,33 +124,12 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 		}
 	    }	    
 	    seriesContent.append("],\n");
-	    seriesContent.append("stack: \'student\'\n");
+	    seriesContent.append(""+messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_StackPrefix",null,locale)+": \'student\'\n");
 	    seriesContent.append("}");
 	    
 	    k++;
 	}
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'John\',\n");
-	//	    seriesContent.append("data: [5, 3, 4, 7, 2]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Jane\',\n");
-	//	    seriesContent.append("data: [2, 2, 3, 2, 1]\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Joe\',\n");
-	//	    seriesContent.append("data: [3, 4, 4, 2, 5]\n");
-	//	    seriesContent.append("}");
-	//	}
 	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setDrilldownContent(drilldownContent);

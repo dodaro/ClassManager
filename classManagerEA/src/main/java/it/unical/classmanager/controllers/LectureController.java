@@ -523,7 +523,7 @@ public class LectureController {
 		String name = lecture.getNumber() + " - " + lecture.getTopic();
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
 
-		boolean success = new FileManager().deleteFile(path);
+		boolean success = new FileManager().deleteDirectory(path);
 
 		if(!success){
 			logger.info("cannot delete the file " + path);
@@ -561,7 +561,7 @@ public class LectureController {
 		}
 
 		String path = homework.getFilePath();
-		boolean success = new FileManager().deleteFile(path);
+		boolean success = new FileManager().deleteDirectory(path);
 
 		if(!success){
 			logger.info("cannot delete the file " + path);

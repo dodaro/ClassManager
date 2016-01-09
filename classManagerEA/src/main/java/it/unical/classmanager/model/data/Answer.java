@@ -28,7 +28,7 @@ public class Answer implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="description", nullable=false, length=256)
+	@Column(name="description", nullable=false, length=10000)
 	private String description;
 	
 	//	Foreign key section
@@ -40,7 +40,7 @@ public class Answer implements Serializable  {
 	@JoinColumn(name = "question")
 	private Question question;
 	
-	@OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<AnswerAttachedContent> answerAttachedContents;
 	

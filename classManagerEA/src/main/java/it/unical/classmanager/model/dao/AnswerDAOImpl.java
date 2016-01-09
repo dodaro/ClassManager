@@ -21,19 +21,19 @@ public class AnswerDAOImpl implements AnswerDAO
 		return dbHandler;
 	}
 
-	public void create(Answer answer)
+	public Object create(Answer answer)
 	{
-		this.dbHandler.create(answer);
+		return this.dbHandler.create(answer);
 	}
 
-	public void update(Answer answer)
+	public Object update(Answer answer)
 	{
-		this.dbHandler.update(answer);
+		return this.dbHandler.update(answer);
 	}
 
-	public void delete(Answer answer)
+	public Object delete(Answer answer)
 	{
-		this.dbHandler.delete(answer);
+		return this.dbHandler.delete(answer);
 	}
 
 	public Answer get(Integer id)

@@ -31,7 +31,7 @@ public class Question implements Serializable  {
 	@Column(name="title", nullable=false, length=100)
 	private String title;
 	
-	@Column(name="description", nullable=false, length=1000)	
+	@Column(name="description", nullable=false, length=10000)	
 	private String description;
 
 	//	Foreign key section

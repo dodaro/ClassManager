@@ -101,8 +101,6 @@ public class InsertQuestionController {
 		}
 		
 		
-		
-		
 		return "redirect:questions";
 	}
 	

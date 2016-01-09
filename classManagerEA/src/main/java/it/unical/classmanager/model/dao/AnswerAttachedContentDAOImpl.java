@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
+import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 {
@@ -40,7 +41,7 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		AnswerAttachedContent answerAttachedContent = (AnswerAttachedContent) session.createSQLQuery(
-				"SELECT answerAttachedContent FROM AnswerAttachedContent answerAttachedContent WHERE id = " + id)
+				"SELECT * FROM answerAttachedContent WHERE id = " + id)
 				.addEntity(AnswerAttachedContent.class).uniqueResult();
 		session.close();
 		return answerAttachedContent;
@@ -68,6 +69,19 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 		List<AnswerAttachedContent> answerAttachedContents = session.createQuery("FROM AnswerAttachedContent").list();
 		session.close();
 		return answerAttachedContents;
+	}
+	
+	
+	public AnswerAttachedContent searchByPath(String path) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		AnswerAttachedContent answerAttachedContent = 
+				(AnswerAttachedContent) session
+				.createSQLQuery("SELECT * FROM answerAttachedContent WHERE filePath = '" + path + "'")
+				.addEntity(AnswerAttachedContent.class)
+				.uniqueResult();
+		session.close();
+		return answerAttachedContent;
 	}
 
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import it.unical.classmanager.model.data.Answer;
 
 public interface AnswerDAO {
-	public void create(Answer answer);
+	public Object create(Answer answer);
 
-	public void update(Answer answer);
+	public Object update(Answer answer);
 
-	public void delete(Answer answer);
+	public Object delete(Answer answer);
 
 	public Answer get(Integer id);
 

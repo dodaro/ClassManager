@@ -1,6 +1,7 @@
 package it.unical.classmanager.controllers;
 
 import java.io.File;
+import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,10 +17,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.LectureControllerWrapper;
@@ -47,7 +50,7 @@ import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
 //TODO reload of the page when creating new things, update lecture button not yet implemented, retrieve path from session, modal to create lecture (date and hour), deny upload exe
-//TODO internationalization, validation
+//TODO validation
 /**
  * This class allows to: 
  * - get Files starting from a root (students, lectures)
@@ -88,6 +91,13 @@ public class LectureController {
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
 	public String getClasses(Model model, HttpServletRequest request) {
 
+		model.addAttribute("lecture", new Lecture());
+		return getLectures(model);
+	}
+
+
+	private String getLectures(Model model){
+
 		//TODO retrieve from session
 		int idCourse = 1;
 		String currentPath = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH;
@@ -102,8 +112,8 @@ public class LectureController {
 
 		adaptLecture(lectures,allLecturesOfACourse, currentPath);
 
+		model.addAttribute("contents", allLecturesOfACourse);
 		model.addAttribute("files", lectures);
-		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("pwd", FileManager.LECTURES_PATH);
 
 		logger.info("getLectures");
@@ -111,19 +121,23 @@ public class LectureController {
 		return "layout";
 	}
 
-
 	@RequestMapping(value = "/lectureContent", method = RequestMethod.GET)
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
-			BindingResult result, Model model, HttpServletRequest request) {
+			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
+
+		if(result.hasErrors()){
+			redirectAttributes.addAttribute("error", "path error");
+			return "redirect:/sessionerror";
+		}
 
 		List<AbstractFileBean> lectureContent = new ArrayList<AbstractFileBean>();
 
 		String path = params.getPath();
 		int lectureId = params.getParentId();
-		
+
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 
@@ -176,6 +190,7 @@ public class LectureController {
 
 		}	
 
+		model.addAttribute("contents", allLectureHomeworks);
 		model.addAttribute("files", homeworks);
 		model.addAttribute("pwd",FileManager.HOMEWORK_PATH);
 
@@ -259,7 +274,14 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/createLecture", method = RequestMethod.POST)
-	public String createClass(Model model, Lecture lecture, HttpServletRequest request) {
+	public String createClass(@Valid @ModelAttribute("lecture")Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
+
+
+		if(result.hasErrors()){
+
+			model.addAttribute("lecture", lecture);
+			return getLectures(model);
+		}
 
 		//TODO Devo ricavarlo dalla sessione
 		String currentPath = "enterpriseApplication/lectures";
@@ -284,25 +306,25 @@ public class LectureController {
 
 		lecture.setNumber(number);
 
-		Calendar lectureDateStart = DateTimeFactory.getRandomDate(2000);
 		// Calculating random lecture start hour
 		Time beginTime = DateTimeFactory.getRandomTimeBetween(
 				new Time(8,0,0), 
 				new Time(15,0,0));
 		Time endTime = new Time(beginTime.getHours()+2, beginTime.getMinutes(), beginTime.getSeconds());
 
-		lecture.setDate(lectureDateStart.getTime());
+		lecture.setDate(lecture.getDate());
+		lecture.setClassroom(lecture.getClassroom());
+
 		lecture.setBeginHour(beginTime);
 		lecture.setEndHour(endTime);
-		lecture.setClassroom("MT1");
-		lectureDateStart.add(Calendar.DAY_OF_MONTH, 2);
 
 		lectureDao.create(lecture);
 
 		createCalendarEvent(lecture);
 
 		//creates the corresponding folder
-		String name = lecture.getNumber() + " - " + lecture.getTopic();
+		//String name = lecture.getNumber() + " - " + lecture.getTopic();
+		String name = Integer.toString(lecture.getId());
 		boolean success = false;
 
 		success = new FileManager().mkDir(currentPath, name);
@@ -331,9 +353,16 @@ public class LectureController {
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
 		homework.setLecture(lecture);
 
-		String lessonName = lecture.getNumber() + " - " + lecture.getTopic();
+		//TODO RETRIEVE ID HOMEWORK AFTER CREATION
+		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
+		homeworkDAO.create(homework);
+		
+		//String lessonName = lecture.getNumber() + " - " + lecture.getTopic();
+		String lessonName = Integer.toString(lectureId);
+		
 		String currentPath = "enterpriseApplication/lectures" + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
-		boolean success = new FileManager().mkDir(currentPath, homework.getName());
+		//boolean success = new FileManager().mkDir(currentPath, homework.getName());
+		boolean success = new FileManager().mkDir(currentPath, Integer.toString(homework.getId()));
 
 
 		homework.setFilePath(currentPath + File.separator + homework.getName());
@@ -343,13 +372,9 @@ public class LectureController {
 			return "layout";
 		}
 
-		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
-		homeworkDAO.create(homework);
-
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 
-		model.addAttribute("lecture", new Lecture());
 		model.addAttribute("homework", new Homework());
 		model.addAttribute("lectureID", lectureId);
 
@@ -357,6 +382,67 @@ public class LectureController {
 
 		return "redirect:/homeworks?path=" + currentPath + "&parentId=" + lectureId;
 	}
+
+
+
+
+	@RequestMapping(value = "/update_lecture", method = RequestMethod.POST)
+	public String updateLecture(@Valid @ModelAttribute("lecture") Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
+
+		//TODO
+		LectureDAO lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
+		Lecture old = lectureDao.get(lecture.getId());
+
+		if(!lecture.getTopic().equals(old.getTopic()) && !lecture.getTopic().equals(""))
+			old.setTopic(lecture.getTopic());
+
+		if(!lecture.getDescription().equals(old.getDescription()) && !lecture.getDescription().equals(""))
+			old.setTopic(lecture.getDescription());
+
+		if(lecture.getDate() != null)
+			if(lecture.getDate().compareTo(old.getDate()) != 0)
+				old.setDate(lecture.getDate());
+
+		if(lecture.getBeginHour() != null)
+			if(lecture.getBeginHour().compareTo(old.getBeginHour()) != 0)
+				old.setBeginHour(lecture.getBeginHour());
+
+		if(lecture.getEndHour() != null)
+			if(lecture.getEndHour().compareTo(old.getEndHour()) != 0)
+				old.setEndHour(lecture.getEndHour());
+
+		if(!lecture.getClassroom().equals(old.getClassroom()) && !lecture.getClassroom().equals(""))
+			old.setClassroom(lecture.getClassroom());
+
+		lectureDao.update(old);
+
+		logger.info("update lecture");
+
+		return "redirect:/lectures?path=lectures"; 
+	}
+
+	@RequestMapping(value = "/update_homework", method = RequestMethod.POST)
+	public String updateHomework(Model model, Homework homework, @RequestParam("parentId") int lectureId) {
+
+		//TODO
+		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
+		Homework old = homeworkDAO.get(homework.getId());
+
+		if(!homework.getDescription().equals(old.getDescription()) && !homework.getDescription().equals(""))
+			old.setDescription(homework.getDescription());
+
+		if(!homework.getName().equals(old.getName()) && !homework.getName().equals(""))
+			old.setName(homework.getName());
+
+		homeworkDAO.update(old);
+
+		logger.info("update homework");
+
+		return "redirect:/homeworks?path=" + homework.getFilePath() + "&parentId=" + lectureId;
+	}
+
+
+
 
 	/**
 	 * Handles the requests to upload a new file. Creates the file in the "path" in the file system
@@ -510,7 +596,7 @@ public class LectureController {
 		for (Lecture lecture : source) {
 
 			String name = lecture.getNumber() + " - " + lecture.getTopic();
-			String folderPath = currentPath + File.separator + name;
+			String folderPath = currentPath + File.separator + lecture.getId();
 
 			File f = new File(folderPath);
 			int childs = 0;

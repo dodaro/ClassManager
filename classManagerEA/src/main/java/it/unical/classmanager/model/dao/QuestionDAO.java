@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
 import it.unical.classmanager.model.data.Question;
 
 public interface QuestionDAO {
@@ -18,4 +19,6 @@ public interface QuestionDAO {
 	public int numberOfQuestions();
 
 	public List<Question> getAllQuestions();
+	
+	public List<Question> searchQuestion(QuestionSearchSetting searchSettings);
 }

@@ -25,15 +25,37 @@
 	
 	<beans:bean id="messageSource"
 	      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+<<<<<<< HEAD
 	    <beans:property name="basenames" value="/i18n/messages,/i18n/forum/messages_forum,/i18n/editor/messages_editor,/i18n/noticeboard/messages_noticeboard,/i18n/lectureManager/messages_lectureManager, /i18n/calendar/messages_calendar" />
+=======
+	    <beans:property name="basenames">
+	    	<beans:array>
+	    		<beans:value>/i18n/messages</beans:value>
+	    		<beans:value>/i18n/forum/messages_forum</beans:value>
+	    		<beans:value>/i18n/editor/messages_editor</beans:value>
+	    	</beans:array>
+	    </beans:property>
+>>>>>>> origin/Forum
 	    <beans:property name="fallbackToSystemLocale" value="false" />
 	</beans:bean>		 
      
+    <!-- 
+    <beans:bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <beans:property name="defaultLocale" value="it" />        
+        <beans:property name="cookieName" value="localeLang"></beans:property>
+    </beans:bean>
+    -->
+    
     <beans:bean id="localeResolver"
         class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <beans:property name="defaultLocale" value="it" />        
     </beans:bean>
     
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> origin/Forum
     <interceptors>
         <beans:bean
             class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">

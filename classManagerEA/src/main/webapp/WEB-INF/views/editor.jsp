@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -66,7 +67,7 @@
 								<div class="col-md-2">
 								
 								<div class="form-group">
-								<label for="editorLang">Language:</label>
+								<label for="editorLang"><spring:message code="message.editor.language"/></label>
 								<select id="editorLang" class="form-control">
 						            <option value="c_cpp">C/C++</option>
 						            <option value="java">Java</option>
@@ -78,7 +79,7 @@
 						          </div>
 						          
 						          <div class="form-group">
-						          <label for="editorTheme">Theme:</label>
+						          <label for="editorTheme"><spring:message code="message.editor.theme"/></label>
 						          <select id="editorTheme" class="form-control">
 						
 						            <option value="monokai">Monokai</option>
@@ -109,9 +110,9 @@
 						          </div>
 						         
 						        <div class="form-group">
-						        <input type="button" id="tryCodeBtn" class="btn btn-primary btn-block" value="try code" />
-						        <input type="button" id="toggleConsole" class="btn btn-primary btn-block" value="toggle console" />
-						        <input type="button" id="clearConsole" class="btn btn-primary btn-block" value="clear console" />
+						        <input type="button" id="tryCodeBtn" class="btn btn-primary btn-block" value="<spring:message code="message.editor.executeCode"/>" />
+						        <input type="button" id="toggleConsole" class="btn btn-primary btn-block" value="<spring:message code="message.editor.toggleConsole"/>" />
+						        <input type="button" id="clearConsole" class="btn btn-primary btn-block" value="<spring:message code="message.editor.clearConsole"/>" />
 								</div>
 								
 								

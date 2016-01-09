@@ -18,13 +18,13 @@ import it.unical.classmanager.managers.EnvironmentManger;
 import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the editor page.
  */
 @Controller
 public class EditorController {
 	
 	@Autowired
-	ApplicationContext appContext;
+	private ApplicationContext appContext;
 	
 	
 	@RequestMapping(value = "/editor", method = RequestMethod.GET)

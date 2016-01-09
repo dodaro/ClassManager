@@ -46,9 +46,14 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+<<<<<<< HEAD
 				<prop key="hibernate.hbm2ddl.auto">update</prop> 
 <!-- 				create -->
 				<prop key="hibernate.show_sql">false</prop>
+=======
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+>>>>>>> origin/Forum
 			</props>
 		</property>
 	</bean>
@@ -183,5 +188,6 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
 	</bean>
-
+	
+	
 </beans>

@@ -85,9 +85,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getSelectableCourse(Student student){
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Corso 1", "Professore 1"};
+	Object[] el1 = {"Corso1", "Professore1"};
 	result.add(el1);
-	Object[] el2 = {"Corso 2", "Professore 2"};
+	Object[] el2 = {"Corso2", "Professore2"};
 	result.add(el2);
 	
 	return result;
@@ -97,9 +97,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getSelectableCourse(Professor professor) {
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Corso 1"};
+	Object[] el1 = {"Corso1"};
 	result.add(el1);
-	Object[] el2 = {"Corso 2"};
+	Object[] el2 = {"Corso2"};
 	result.add(el2);
 	
 	return result;
@@ -109,9 +109,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getCancellableCourse(Student student){
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Corso 1", "Professore 1"};
+	Object[] el1 = {"Corso1", "Professore1"};
 	result.add(el1);
-	Object[] el2 = {"Corso 2", "Professore 2"};
+	Object[] el2 = {"Corso2", "Professore2"};
 	result.add(el2);
 	
 	return result;	
@@ -121,9 +121,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getSelectableStudent(CourseClass courseClass){
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Studente 1"};
+	Object[] el1 = {"Studente1"};
 	result.add(el1);
-	Object[] el2 = {"Studente 2"};
+	Object[] el2 = {"Studente2"};
 	result.add(el2);
 	
 	return result;	
@@ -133,9 +133,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getCancellableStudent(CourseClass courseClass){
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Studente 1"};
+	Object[] el1 = {"Studente1"};
 	result.add(el1);
-	Object[] el2 = {"Studente 2"};
+	Object[] el2 = {"Studente2"};
 	result.add(el2);
 	
 	return result;	
@@ -145,9 +145,9 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getAcceptableCourse(Student student) {
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Corso 1", "Professore 1"};
+	Object[] el1 = {"Corso1", "Professore1"};
 	result.add(el1);
-	Object[] el2 = {"Corso 2", "Professore 2"};
+	Object[] el2 = {"Corso2", "Professore2"};
 	result.add(el2);
 	
 	return result;
@@ -157,11 +157,11 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
     public List<Object[]> getAcceptableStudent(Professor professor) {
 	List<Object[]> result = new ArrayList<Object[]>();
 	
-	Object[] el1 = {"Studente 1", "Corso 1"};
+	Object[] el1 = {"Studente1", "Corso1"};
 	result.add(el1);
-	Object[] el2 = {"Studente 1", "Corso 2"};
+	Object[] el2 = {"Studente1", "Corso2"};
 	result.add(el2);
-	Object[] el3 = {"Studente 2", "Corso 1"};
+	Object[] el3 = {"Studente2", "Corso1"};
 	result.add(el3);
 	
 	return result;	

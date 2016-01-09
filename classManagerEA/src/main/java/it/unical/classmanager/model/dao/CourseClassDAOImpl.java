@@ -9,6 +9,7 @@ import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.User;
 
 public class CourseClassDAOImpl implements CourseClassDAO {
     private DBHandler dbHandler;
@@ -93,20 +94,18 @@ public class CourseClassDAOImpl implements CourseClassDAO {
     }
     
     @Override
-    public CourseClass get( String name) {
+    public CourseClass get(String name) {
 	Session session = this.dbHandler.getSessionFactory().openSession();
-	CourseClass courseClass = 
-		(CourseClass) session
-		.createSQLQuery("SELECT * FROM courseClass WHERE name = " + name)
-		.addEntity(CourseClass.class)
-		.uniqueResult();
-	session.close();
+	String queryString = "FROM CourseClass WHERE name =:name";
+	Query query = session.createQuery(queryString);
+	query.setParameter("name",name);	
+	CourseClass courseClass = (CourseClass) query.uniqueResult();
+	session.close();	
 	return courseClass;
     }
     
     @Override
-    public List<CourseClass> getCourseClasses(Professor professor)  
-    {  
+    public List<CourseClass> getCourseClasses(Professor professor){  
 	Session session = this.dbHandler.getSessionFactory().openSession();		  
 	List<CourseClass> courseClasses = session.createQuery("FROM CourseClass "  
 		+ "WHERE professor = :professor").setParameter("professor", professor).list();  

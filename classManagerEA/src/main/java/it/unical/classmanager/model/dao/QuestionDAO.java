@@ -8,9 +8,9 @@ import it.unical.classmanager.model.data.Question;
 public interface QuestionDAO {
 	public Object create(Question question);
 
-	public void update(Question question);
+	public Object update(Question question);
 
-	public void delete(Question question);
+	public Object delete(Question question);
 
 	public Question get(Integer id);
 

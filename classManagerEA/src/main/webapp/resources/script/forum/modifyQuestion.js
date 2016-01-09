@@ -91,7 +91,7 @@ var ListenersManager = (function(){
     	var violationOccurred = function() {
     		
     		alert("Page violated... ");
-			window.location="/forum/insertQuestion";
+			window.location="/forum/questions";
     	}
     	
     	var validatePage = function() {
@@ -134,6 +134,42 @@ var ListenersManager = (function(){
     	
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
+			
+			
+			$(".removeAttachmentBtn").on("click", function(){
+					
+				if(validityChecker.validatePage() === true) {
+				
+  					var attachment = $(this);
+  					var parameters = {name: $(attachment).data("aname"), id: $(attachment).data("aid"), type: "remove"};
+  					
+  					$.ajax({
+  							url: "/forum/removeQuestionAttachment",
+  							method: "POST",
+  							data:{
+  								attachedIdRemove: parameters.id
+  							}
+  						}).done(function(e, result, data) {
+  							
+  								var result = data.responseText;
+  								if(result === "true") {
+
+  									$(attachment).closest(".attachmentContainer").remove();
+  								}
+  								else {
+  									alert("remove non andata a buon fine")
+  								}
+  						});
+				}
+				
+			});
+			
+			$(".removeAttachmentBtn").bind('DOMSubtreeModified', function() {
+			    
+				validityChecker.setAttachmentInputs(-1);
+				validityChecker.validatePage()
+			});
+			
 			
 
 			$('#attachedFiles').on("change", function(data, parameters) {

@@ -24,7 +24,7 @@ public class QuestionAttachedContent implements Serializable  {
 	@Column(name="name", nullable=false, length=256)
 	private String name;
 	
-	@Column(name="type", nullable=false, length=32)
+	@Column(name="type", nullable=false, length=256)
 	private String type;
 	
 	@Column(name="filePath", nullable=false, length=1000)

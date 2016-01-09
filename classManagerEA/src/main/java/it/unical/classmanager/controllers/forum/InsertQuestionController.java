@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,9 +98,6 @@ public class InsertQuestionController {
 				tmpQuestionContent.setQuestion(newQuestion);
 				questionAttachedDAO.update(tmpQuestionContent);
 			}
-			
-			
-			
 		}
 		
 		
@@ -137,8 +136,23 @@ public class InsertQuestionController {
 		User tmpUser = userDao.get(username);
 		
 		question.setUser(tmpUser);
-		questionDAO.update(question);
+		Question newQuestion = (Question) questionDAO.update(question);
 		
+		String attachedFilesID = request.getParameter("attachedFiles");
+		
+		if(attachedFilesID != null && !attachedFilesID.equals("")) {
+			
+			StringTokenizer tokenizer = new StringTokenizer(attachedFilesID, ";");
+			QuestionAttachedContentDAO questionAttachedDAO = (QuestionAttachedContentDAOImpl) appContext.getBean("questionAttachedContentDAO", QuestionAttachedContentDAOImpl.class);
+		
+			while(tokenizer.hasMoreTokens()) {
+				String tmpID = tokenizer.nextToken();
+				
+				QuestionAttachedContent tmpQuestionContent = questionAttachedDAO.get(Integer.parseInt(tmpID));
+				tmpQuestionContent.setQuestion(newQuestion);
+				questionAttachedDAO.update(tmpQuestionContent);
+			}
+		}
 		
 		return "redirect:questions";
 	}
@@ -151,14 +165,35 @@ public class InsertQuestionController {
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		
 		FileManager fm = new FileManager();
-		fm.mkMultipartFile(file, username + "/", file.getOriginalFilename());
+		String filePath = "files/" + username + "/" + file.getOriginalFilename();
+
+		String newFileName = file.getOriginalFilename();
+		if(new File(filePath).exists()) {
+			
+			ArrayList<String> fileNameSplitted = new ArrayList<String>(Arrays.asList(file.getOriginalFilename().split("\\.(?=[^\\.]+$)")));
+			if(fileNameSplitted.size() == 1) {
+				fileNameSplitted.add("");
+			}
+			else {
+				fileNameSplitted.add(1, "." + fileNameSplitted.get(1));
+			}
+
+			
+			String name = fileNameSplitted.get(0);
+			String extension = fileNameSplitted.get(1);
+			name += "_" + new Random(System.currentTimeMillis()).nextInt(1000000);
+			
+			newFileName = name + extension;
+			filePath = "files/" + username + "/" + newFileName;
+		}
+		
+		fm.mkMultipartFile(file, username + "/", newFileName);
 		
 		
 		QuestionAttachedContentDAO questionAttachedDAO = (QuestionAttachedContentDAOImpl) appContext.getBean("questionAttachedContentDAO", QuestionAttachedContentDAOImpl.class);
 		
 		QuestionAttachedContent questionAttached = new QuestionAttachedContent();
 		
-		String filePath = "files/" + username + "/" + file.getOriginalFilename();
 		File tmpFile = new File(filePath);
 		String tmpMimeType = null;
 		try {
@@ -170,7 +205,7 @@ public class InsertQuestionController {
 		QuestionAttachedContent questionSearched = questionAttachedDAO.searchByPath(filePath);
 		if(questionSearched == null) {
 			
-			questionAttached.setName(file.getOriginalFilename());
+			questionAttached.setName(newFileName);
 			questionAttached.setFilePath(filePath);
 			questionAttached.setType(tmpMimeType);
 			questionAttachedDAO.create(questionAttached);
@@ -178,10 +213,34 @@ public class InsertQuestionController {
 			questionSearched = questionAttachedDAO.searchByPath(filePath);
 		}
 		
-		return Integer.toString(questionSearched.getId());
+		return "{\"name\": \""+ newFileName +"\", \"id\": \""+ Integer.toString(questionSearched.getId()) +"\", \"type\":\"insert\"}";
 	}
 	
 	
+	
+	@RequestMapping(value = "/forum/removeQuestionAttachment", method = RequestMethod.POST)
+	public @ResponseBody boolean removeQuestionAttachment(Locale locale, Model model, HttpServletRequest request) {
+		
+		int attachedFilesIDRemove = Integer.parseInt(request.getParameter("attachedIdRemove"));
+		
+		QuestionAttachedContentDAO questionAttachedDAO = (QuestionAttachedContentDAOImpl) appContext.getBean("questionAttachedContentDAO", QuestionAttachedContentDAOImpl.class);
+		
+		try{
+			
+			QuestionAttachedContent questionAttached = questionAttachedDAO.get(attachedFilesIDRemove);
+			
+			FileManager fm = new FileManager();
+			fm.deleteFile(questionAttached.getFilePath());
+			
+			questionAttachedDAO.delete(questionAttached);
+			
+			return true;
+		}
+		catch(Exception e) {
+			return false;
+		}
+	
+	}
 	
 	
 	

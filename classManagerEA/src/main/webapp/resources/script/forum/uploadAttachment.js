@@ -8,8 +8,10 @@ $(function(){
         $(this).parent().find('input').click();
     });
 
+    
     // Initialize the jQuery File Upload plugin
     $('#upload').fileupload({
+    	
 
         // This element will accept file drag/drop uploading
         dropZone: $('#drop'),
@@ -17,7 +19,7 @@ $(function(){
         // This function is called when a file is added to the queue;
         // either via the browse button, or via drag/drop:
         add: function (e, data) {
-
+        	
             var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
                 ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
 
@@ -43,14 +45,10 @@ $(function(){
                 });
 
             });
-
-            $('#file_upload_btn').click(function () {
-                
-                data.submit();
-            });
+            
             
             // Automatically upload the file once it is added to the queue
-          //  var jqXHR = data.submit();
+            var jqXHR = data.submit();
         },
 
         progress: function(e, data){
@@ -70,6 +68,20 @@ $(function(){
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');
+        },
+        
+        success: function(e, result, data) {
+        	
+        	var fileJson = JSON.parse(data.responseText);
+        	
+        	if($('#attachedFiles').val() !== "") {
+        		$('#attachedFiles').val($('#attachedFiles').val()+ ";" + fileJson.id);
+        	}
+        	else {
+        		$('#attachedFiles').val(fileJson.id);
+        	}
+        	
+        	$('#attachedFiles').trigger("change", fileJson);
         }
 
     });

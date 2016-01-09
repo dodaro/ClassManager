@@ -48,12 +48,12 @@ public class DBHandler {
 		return performOperation(obj, Operation.CREATE);
 	}
 	
-	public void delete(Object obj) {
-		performOperation(obj, Operation.DELETE);
+	public Object delete(Object obj) {
+		return performOperation(obj, Operation.DELETE);
 	}
 	
-	public void update(Object obj) {
-		performOperation(obj, Operation.UPDATE);
+	public Object update(Object obj) {
+		return performOperation(obj, Operation.UPDATE);
 	}
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {

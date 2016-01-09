@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.AttendanceStudentLecture;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Lecture;
@@ -93,6 +94,17 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 		List<CourseClass> results = cr.list();*/
 		
 		return response;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CourseClass> getCourseClasses(Professor professor)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<CourseClass> courseClasses = session.createQuery("FROM CourseClass "
+				+ "WHERE professor = :professor").setParameter("professor", professor).list();
+		session.close();
+		return courseClasses;
 	}
 
 }

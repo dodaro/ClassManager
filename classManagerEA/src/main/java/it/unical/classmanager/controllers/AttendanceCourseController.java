@@ -53,9 +53,9 @@ public class AttendanceCourseController
 		
 		// TODO Prendere il corso selezionato in precedenza
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
-		CourseClass course = courseClassDAO.get(4);	
-		//LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
-		List<Lecture> lectures = course.getLectures();//lectureDAO.getAllLecturesOfACourse(course);
+		CourseClass course = courseClassDAO.get(3);	
+		LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
+		List<Lecture> lectures = lectureDAO.getAllLecturesOfACourse(course);
 
 		// TODO Prendere gli studenti iscritti al corso in ordine alfabetico
 		// TODO Ordinare la lista delle lezioni a cui ha partecipato lo studente in base al numero lezione (Tramite query o funzione Java)

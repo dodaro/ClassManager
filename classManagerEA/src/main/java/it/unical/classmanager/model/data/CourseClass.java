@@ -37,7 +37,7 @@ public class CourseClass implements Serializable  {
 	@Column(name="name", nullable=false, length=64)
 	private String name;
 	
-	@Min(3)
+	@Min(1)
 	@Max(12)
 	@Column(name="cfu", nullable=false)
 	private int cfu;

@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.unical.classmanager.controllers.propertyEditor.DegreeCoursePropertyEditor;
 import it.unical.classmanager.controllers.propertyEditor.ProfessorPropertyEditor;
@@ -54,24 +56,30 @@ public class CourseController
 	private ApplicationContext context;
 
 	private Professor professor;
+	private List<CourseClass> courseClasses;
 	private List<DegreeCourse> degreeCourses;
 	private CourseClass courseForm;
 
 	@RequestMapping(value = "/courses", method = RequestMethod.GET)
-	public String loadCourses(HttpServletRequest request, Model model)
-	{
+	public String loadCourses(HttpServletRequest request, Model model, Locale locale, RedirectAttributes redirectAttributes)
+	{		
 		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
 		professor = (Professor) userDAO.get("ProfAldo0");
 		model.addAttribute("professor", professor);
-		model.addAttribute("courses", professor.getCourseClasses());
+		//model.addAttribute("courses", professor.getCourseClasses());
+		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
+		courseClasses = courseClassDAO.getCourseClasses(professor);
+		model.addAttribute("courses", courseClasses);
 
 		DegreeCourseDAO degreeCourseDAO = context.getBean("degreeCourseDAO", DegreeCourseDAOImpl.class);
 		degreeCourses = degreeCourseDAO.getAllDegreeCourses();
 		model.addAttribute("degreeCourses", degreeCourses);
 
 		courseForm = new CourseClass();
-		model.addAttribute("courseForm", courseForm);
+		model.addAttribute("courseForm", courseForm); // To create new Course
+		
+		model.addAttribute("selectCourseForm", new CourseClass());
 
 		model.addAttribute("state", "modalClosed");
 		model.addAttribute("customHeader", CourseController.HEADER);
@@ -95,7 +103,7 @@ public class CourseController
 			}
 
 			model.addAttribute("professor", professor);
-			model.addAttribute("courses", professor.getCourseClasses());
+			model.addAttribute("courses", courseClasses);
 			model.addAttribute("degreeCourses", degreeCourses);
 
 			model.addAttribute("state", "modalOpened");
@@ -109,6 +117,21 @@ public class CourseController
 			courseDAO.create(course);
 			return "redirect:courses";
 		}
+	}
+	
+	@RequestMapping(value = "/selectCourse", method = RequestMethod.POST)
+	public String selectCourse(HttpServletRequest request, @ModelAttribute("selectCourseForm") CourseClass course, BindingResult result, Model model, Locale locale)
+	{
+		if (professor == null || degreeCourses == null)
+			return "redirect:courses";
+		
+		// Il corso non ha i riferimenti ai @OneToMany
+		// TODO Save course in session!
+
+		logger.info(course.toString());
+		
+		// TODO Redirect to course page
+		return "redirect:courses";
 	}
 
 	/**

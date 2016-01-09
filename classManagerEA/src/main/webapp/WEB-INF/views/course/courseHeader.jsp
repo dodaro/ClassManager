@@ -1,5 +1,5 @@
 <style type="text/css"> 
-	a.no-text-decoration
+	.no-text-decoration
 	{
    		text-decoration: none;
 	}

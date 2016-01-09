@@ -30,6 +30,7 @@ public class FileManager {
 	public final static String MATERIALS_PATH = "materials";
 	public final static String LECTURES_PATH = "lectures";
 	public final static String STUDENTS_PATH = "students";
+	public final static String HOMEWORK_STUDENT_SOLVING_PATH = "homeworkStudentSolving";
 
 	@Autowired
 	ApplicationContext appContext;

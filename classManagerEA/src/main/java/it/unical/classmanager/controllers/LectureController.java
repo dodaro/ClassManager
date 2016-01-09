@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,18 +35,29 @@ import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkAttachedDAO;
 import it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl;
+import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAO;
+import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkDAO;
 import it.unical.classmanager.model.dao.HomeworkDAOImpl;
+import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
+import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.MaterialDAO;
 import it.unical.classmanager.model.dao.MaterialDAOImpl;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
+import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkAttached;
+import it.unical.classmanager.model.data.HomeworkAttachedStudentSolving;
+import it.unical.classmanager.model.data.HomeworkStudentSolving;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Material;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
@@ -64,28 +76,9 @@ public class LectureController {
 	private final static String HEADER = "lecturesPage/lecturesPageHeader.jsp";
 	private final static String BODY = "lecturesPage/lecturesPageBody.jsp";
 
-
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(LectureController.class);
-
-	/*
-	 * this path is used when a professor wants to see the folder of his students
-	 */
-	@RequestMapping(value = "/students", method = RequestMethod.GET)
-	public String getStudents(Model model) {
-
-		model.addAttribute("customHeader", LectureController.HEADER);
-		model.addAttribute("customBody", LectureController.BODY);
-
-		model.addAttribute("lecture", new Lecture());
-		model.addAttribute("homework", new Homework());
-
-		model.addAttribute("filesType",FileBrowserController.LECTURES_ROOT_TYPE);
-		logger.info("getClassPage");
-		return "layout";
-
-	}
 
 
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
@@ -183,7 +176,7 @@ public class LectureController {
 	}
 
 	private String getHomeworks(Model model, int idLecture, String path) {
-		
+
 		HomeworkDAO homewrokDAO = appContext.getBean("homeworkDAO", HomeworkDAOImpl.class);
 		List<Homework> allLectureHomeworks = homewrokDAO.getAllLectureHomeworks(idLecture);
 
@@ -292,13 +285,47 @@ public class LectureController {
 			}
 		}	
 
-		model.addAttribute("files", homeworksAttacheds);
 		model.addAttribute("pwd",FileManager.HOMEWORK_ATTACHED_PATH);
 		model.addAttribute("parentId",idHomework);
+
+		//TODO retrieve from session
+		boolean imStudent = true;
+		String username = (String) request.getSession().getAttribute("loggedIn");
+
+		if(imStudent)
+			getHomeworkStudentSolving(model, username, homeworksAttacheds, path);
 
 		logger.info("getHomeworkAttached");
 		return "layout";
 	}
+
+	private void getHomeworkStudentSolving(Model model, String username, List<AbstractFileBean> homeworksAttacheds, String path) {
+
+		//TODO retrieve from session
+		int idCourse = 1;
+		String courseName = "enterpriseApplication";
+
+		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
+		List<HomeworkStudentSolving> allHomeworkStudentSolvings = homeworkStudentSolvingDAO.getAllHomeworkStudentSolvings(username);
+
+		for (HomeworkStudentSolving solution : allHomeworkStudentSolvings) {
+
+			String name = solution.getHomework().getName();
+			String folderPath = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.STUDENTS_PATH + File.separator + solution.getStudent().getUsername() + File.separator + FileManager.HOMEWORK_PATH + solution.getId();
+
+			int childs = solution.getHomeworkAttachedStudentSolvings().size();
+
+			FolderBean folder = new FolderBean(solution.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
+			folder.setParentId(solution.getStudent().getIdentificationNumber());
+			folder.setAction("/studentHomeworkAttachments");
+			folder.setId(solution.getId());
+			homeworksAttacheds.add(folder);
+		}	
+
+		model.addAttribute("pwd",FileManager.HOMEWORK_STUDENT_SOLVING_PATH);
+		model.addAttribute("files", homeworksAttacheds);
+	}
+
 
 	/**
 	 * creates a new class
@@ -314,7 +341,7 @@ public class LectureController {
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
-			
+
 			return getLectures(model);
 		}
 
@@ -388,7 +415,7 @@ public class LectureController {
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("homework", homework);
-			
+
 			model.addAttribute("customHeader", LectureController.HEADER);
 			model.addAttribute("customBody", LectureController.BODY);
 
@@ -396,7 +423,7 @@ public class LectureController {
 
 			return getHomeworks(model,lectureId, homework.getFilePath());
 		}
-		
+
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
 		homework.setLecture(lecture);
 
@@ -437,7 +464,7 @@ public class LectureController {
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
-			
+
 			return getLectures(model);
 		}
 
@@ -526,6 +553,60 @@ public class LectureController {
 		logger.info("saving file");
 
 		return "redirect:/homeworkAttached?path=" + path + "&parentId=" + homeworkId;
+	}
+
+	/**
+	 * Handles the requests to upload a new file. Creates the file in the "path" in the file system
+	 * @param file the file uploaded
+	 * @param parentId the id of the parentFolder
+	 * @return
+	 */
+	@RequestMapping(value="/upload_homeworkStudentSolving", method=RequestMethod.POST)
+	public String uploadHomeworkStudentSolving(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkId, HttpServletRequest request) {
+
+		//TODO Devo ricavarlo dalla sessione
+		int idCourse = 1;
+		String courseName = "enterpriseApplication";
+
+		//retrieving the logged student
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		UserDAO userDAO = appContext.getBean("userDao", UserDAO.class);
+		User user = userDAO.get(username);
+		Student student = new Student(user);
+		
+		//retrieving the referred homework
+		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
+		Homework homework = homeworkDAO.get(homeworkId);
+
+		//creating the solution
+		HomeworkStudentSolving hss = new  HomeworkStudentSolving();
+		hss.setDate(new Date());
+		hss.setStudent(student);
+		hss.setHomework(homework);
+
+		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
+		int hssId = homeworkStudentSolvingDAO.create(hss).getId();
+
+		//creating the attachment to track the file
+		HomeworkAttachedStudentSolving hss_attachment = new HomeworkAttachedStudentSolving();
+		hss_attachment.setHomeworkStudentSolving(hss);
+		
+		//creating the file on the file system
+		String folderPath = courseName + File.separator + FileManager.STUDENTS_PATH + File.separator + user.getUsername() + File.separator + FileManager.HOMEWORK_PATH + File.separator + hssId;
+		hss_attachment.setFilePath(folderPath + File.separator + file.getOriginalFilename());
+
+		
+		HomeworkAttachedStudentSolvingDAO homeworkAttachedStudentSolvingDAO = appContext.getBean("homeworkAttachedStudentSolvingDAO", HomeworkAttachedStudentSolvingDAOImpl.class);
+		homeworkAttachedStudentSolvingDAO.create(hss_attachment);
+		
+		boolean success = new FileManager().mkMultipartFile(file, folderPath, file.getOriginalFilename());
+		
+		if(!success){
+			return "layout";
+		}
+
+
+		return "redirect:/homeworkAttached?path=" + homework.getFilePath() + "&parentId=" + homeworkId;
 	}
 
 

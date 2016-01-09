@@ -5,9 +5,8 @@
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 
-		<jsp:include page="modals/visualizeModal.jsp" flush="true" />
-		<jsp:include page="modals/createLecture.jsp" flush="true" />
-		<jsp:include page="modals/createHomework.jsp" flush="true" />
+		<jsp:include page="../modals/visualizeModal.jsp" flush="true" />
+		<jsp:include page="../modals/createHomework.jsp" flush="true" />
 
 
 		<!-- browser -->

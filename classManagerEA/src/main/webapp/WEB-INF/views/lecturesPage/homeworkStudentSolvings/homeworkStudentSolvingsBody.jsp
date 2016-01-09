@@ -5,9 +5,27 @@
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 
-		<jsp:include page="modals/visualizeModal.jsp" flush="true" />
-		<jsp:include page="modals/createLecture.jsp" flush="true" />
-		<jsp:include page="modals/createHomework.jsp" flush="true" />
+		<!-- MODAL VISUALIZE DOC -->
+		<div id="visualizer_modal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="fileTitle_model" class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<a id="visualizer" href="#"></a>
+					</div>
+					<div class="modal-footer">
+						<button id="download_btn_modal" type="button"
+							class="btn btn-default" data-dismiss="modal">
+							<spring:message code="lectureManager.download"
+								text="default text" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 		<!-- browser -->
@@ -17,49 +35,6 @@
 				<input type="search" placeholder="Find a file.." />
 			</div>
 			<div class="breadcrumbs"></div>
-
-			<div class="row row-content">
-
-				<c:if test="${not empty lecture}">
-					<div id="createNewClass_btn" class="btn btn-default">
-						<spring:message code="lectureManager.addNewLecture"
-							text="default text" />
-					</div>
-				</c:if>
-				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'}">
-					<div id="uploadFile_btn" class="btn btn-default">
-						<spring:message code="lectureManager.upload" text="default text" />
-					</div>
-				</c:if>
-				<c:if test="${not empty homework}">
-					<div id="addHomework_btn" class="btn btn-default">
-						<spring:message code="lectureManager.addHomework"
-							text="default text" />
-					</div>
-				</c:if>
-
-				<div id="uploadFile_div" style="display: none;">
-					<form id="upload" method="post" action="/upload_${pwd}"
-						enctype="multipart/form-data" onsubmit="return reload();">
-						<div id="drop">
-							<spring:message code="lectureManager.drophere"
-								text="default text" />
-							<a> <spring:message code="lectureManager.browse"
-									text="default text" />
-							</a> <input type="file" name="file" multiple />
-						</div>
-						<ul>
-							<!-- The file uploads will be shown here -->
-						</ul>
-						<div class="btn btn-default" id="file_upload_btn"
-							style="margin-top: 15px">
-							<spring:message code="lectureManager.done" text="default text" />
-						</div>
-						<input id="toUpload_input" type="hidden" name="parentId"
-							value="${parentId}" />
-					</form>
-				</div>
-			</div>
 
 			<ul class="data">
 				<c:choose>
@@ -71,19 +46,9 @@
 							<li class="${file.type}">
 								<form action="${file.action}">
 
-									<input type="hidden" name="id" value="${contentsArray[index].id}"></input> 
-									
-									<c:if test="${not empty lecture}">
-										<input type="hidden" name="topic" value="${contentsArray[index].topic}"></input>
-										<input type="hidden" name="date" value="${contentsArray[index].date}"></input>
-										<input type="hidden" name="beginHour" value="${contentsArray[index].beginHour}"></input>
-										<input type="hidden" name="endHour" value="${contentsArray[index].beginHour}"></input>
-										<input type="hidden" name="classroom" value="${contentsArray[index].classroom}"></input>
-									</c:if>
-									
-									<c:if test="${not empty homework}"><input type="hidden" name="name" value="${contentsArray[index].name}"></input></c:if>
-									
-									<input type="hidden" name="description" value="${contentsArray[index].description}"></input>
+									<c:if test="${pwd == 'students'}"><input type="hidden" name="id" value="${contentsArray[index].username}"></input></c:if>
+									<c:if test="${pwd != 'students'}"><input type="hidden" name="id" value="${contentsArray[index].id}"></input></c:if>
+																			
 									<input type="hidden" name="path" value="${file.path}"></input>
 									<input type="hidden" name="parentId" value="${file.parentId}"></input>
 									<input type="submit" style="display: none;"></input>
@@ -138,15 +103,5 @@
 		</div>
 		<!-- browser -->
 
-
-
 	</div>
 </div>
-
-<script>
-$(document).ready(function() 
-{
-	$('#createNewClass_modal_open').modal('show');
-	$('#addHomework_modal_open').modal('show');
-});
-</script>

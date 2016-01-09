@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.AttendanceStudentLecture;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Lecture;

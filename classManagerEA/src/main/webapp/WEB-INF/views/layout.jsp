@@ -63,7 +63,7 @@
 				</c:if>
 				<c:if test="${not empty loggedIn && role == 'admin' }">
 					<a class="nav-bar-button logout" href="userslist"><span
-						class="glyphicon glyphicon-log-out">User List</a>
+						class="glyphicon glyphicon-log-out"></span>User List</a>
 				</c:if>
 			</div>
 		</div>

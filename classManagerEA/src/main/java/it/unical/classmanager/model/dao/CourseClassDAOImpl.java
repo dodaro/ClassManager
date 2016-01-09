@@ -73,7 +73,7 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 		return courseClass;
 	}
 
-	@Override
+	/*@Override
 	public List<Lecture> getAllCourseClasses(Professor professor) {
 		
 		Session session = this.dbHandler.getSessionFactory().openSession();
@@ -91,8 +91,8 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 		
 		@SuppressWarnings("unchecked")
 		List<CourseClass> results = cr.list();*/
-		
+	/*	
 		return response;
-	}
+	}*/
 
 }

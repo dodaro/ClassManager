@@ -5,7 +5,7 @@ import java.util.List;
 import it.unical.classmanager.model.data.Homework;
 
 public interface HomeworkDAO {
-	public void create(Homework homework);
+	public int create(Homework homework);
 
 	public void update(Homework homework);
 

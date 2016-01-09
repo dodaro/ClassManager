@@ -11,6 +11,7 @@
 
 	<title>Class Manager</title>
 	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="resources/lib/jquery/moment.min.js"></script>
 	<script type="text/javascript" src="resources/lib/jquery-ui/jquery-ui.js"></script>
 	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>	
 	

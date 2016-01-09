@@ -162,15 +162,28 @@ public class LectureController {
 
 
 	@RequestMapping(value = "/homeworks", method = RequestMethod.GET)
-	public String getHomeworks(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idLecture, HttpServletRequest request) {
+	public String getHomeworks(@Valid LectureControllerWrapper params,	
+			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 
+		if(result.hasErrors()){
+			redirectAttributes.addAttribute("error", "path error");
+			return "redirect:/sessionerror";
+		}
+
+		int idLecture = params.getParentId();
+		String path = params.getPath();
 
 		model.addAttribute("homework", new Homework());
 		model.addAttribute("parentId", idLecture);
 
+		return getHomeworks(model, idLecture, path);
+	}
+
+	private String getHomeworks(Model model, int idLecture, String path) {
+		
 		HomeworkDAO homewrokDAO = appContext.getBean("homeworkDAO", HomeworkDAOImpl.class);
 		List<Homework> allLectureHomeworks = homewrokDAO.getAllLectureHomeworks(idLecture);
 
@@ -199,8 +212,18 @@ public class LectureController {
 		return "layout";
 	}
 
+
 	@RequestMapping(value = "/materials", method = RequestMethod.GET)
-	public String getMaterials(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idLecture, HttpServletRequest request) {
+	public String getMaterials(@Valid LectureControllerWrapper params,	
+			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+		if(result.hasErrors()){
+			redirectAttributes.addAttribute("error", "path error");
+			return "redirect:/sessionerror";
+		}
+
+		int idLecture = params.getParentId();
+		String path = params.getPath();
 
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
@@ -230,11 +253,21 @@ public class LectureController {
 
 		logger.info("getMaterials");
 
+
 		return "layout";
 	}
 
 	@RequestMapping(value = "/homeworkAttached", method = RequestMethod.GET)
-	public String getHomeworkAttached(Model model, @RequestParam("path") String path, @RequestParam("parentId") int idHomework, HttpServletRequest request) {
+	public String getHomeworkAttached(@Valid LectureControllerWrapper params,	
+			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+		if(result.hasErrors()){
+			redirectAttributes.addAttribute("error", "path error");
+			return "redirect:/sessionerror";
+		}
+
+		int idHomework = params.getParentId();
+		String path = params.getPath();
 
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
@@ -273,13 +306,15 @@ public class LectureController {
 	 * @param lecture the informations about the new Lecture
 	 * @return classPage.jsp
 	 */
-	@RequestMapping(value = "/createLecture", method = RequestMethod.POST)
-	public String createClass(@Valid @ModelAttribute("lecture")Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
+	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
+	public String createClass(@Valid @ModelAttribute("lecture")Lecture lecture, BindingResult result, HttpServletRequest request, Model model) {
 
 
 		if(result.hasErrors()){
 
+			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
+			
 			return getLectures(model);
 		}
 
@@ -318,13 +353,12 @@ public class LectureController {
 		lecture.setBeginHour(beginTime);
 		lecture.setEndHour(endTime);
 
-		lectureDao.create(lecture);
+		int newId = lectureDao.create(lecture);
 
 		createCalendarEvent(lecture);
 
 		//creates the corresponding folder
-		//String name = lecture.getNumber() + " - " + lecture.getTopic();
-		String name = Integer.toString(lecture.getId());
+		String name = Integer.toString(newId);
 		boolean success = false;
 
 		success = new FileManager().mkDir(currentPath, name);
@@ -347,25 +381,35 @@ public class LectureController {
 	 * allows to create a new directory in which store the files related to a particular homework
 	 * @param lecture the lecture to which this homework is referred
 	 */
-	@RequestMapping(value = "/addHomework", method = RequestMethod.POST)
-	public String addHomework(Model model, Homework homework, @RequestParam("parentId") int lectureId) {
+	@RequestMapping(value = "/homeworks", method = RequestMethod.POST)
+	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model) {
 
+		if(result.hasErrors()){
+
+			model.addAttribute("modalState", "_open");
+			model.addAttribute("homework", homework);
+			
+			model.addAttribute("customHeader", LectureController.HEADER);
+			model.addAttribute("customBody", LectureController.BODY);
+
+			model.addAttribute("parentId", lectureId);
+
+			return getHomeworks(model,lectureId, homework.getFilePath());
+		}
+		
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
 		homework.setLecture(lecture);
 
-		//TODO RETRIEVE ID HOMEWORK AFTER CREATION
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
-		homeworkDAO.create(homework);
-		
-		//String lessonName = lecture.getNumber() + " - " + lecture.getTopic();
+
 		String lessonName = Integer.toString(lectureId);
-		
 		String currentPath = "enterpriseApplication/lectures" + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
-		//boolean success = new FileManager().mkDir(currentPath, homework.getName());
-		boolean success = new FileManager().mkDir(currentPath, Integer.toString(homework.getId()));
 
+		int newId = homeworkDAO.create(homework);
+		homework.setFilePath(currentPath + File.separator + newId);
+		homeworkDAO.update(homework);
 
-		homework.setFilePath(currentPath + File.separator + homework.getName());
+		boolean success = new FileManager().mkDir(currentPath, Integer.toString(newId));
 
 		if(!success){
 			logger.error("failed to create directory " + homework.getName() + " in " + currentPath);
@@ -388,6 +432,14 @@ public class LectureController {
 
 	@RequestMapping(value = "/update_lecture", method = RequestMethod.POST)
 	public String updateLecture(@Valid @ModelAttribute("lecture") Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
+
+		if(result.hasErrors()){
+
+			model.addAttribute("modalState", "_open");
+			model.addAttribute("lecture", lecture);
+			
+			return getLectures(model);
+		}
 
 		//TODO
 		LectureDAO lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
@@ -488,7 +540,7 @@ public class LectureController {
 
 		//TODO retrieve from session
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
-		String folder_name = lecture.getNumber() + " - " + lecture.getTopic();
+		String folder_name = Integer.toString(lectureId);
 
 		String path = "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + folder_name + File.separator + FileManager.MATERIALS_PATH;
 
@@ -507,6 +559,7 @@ public class LectureController {
 		materialDAO.create(material);
 
 		logger.info("saving file");
+
 		return "redirect:/materials?path=" + path + "&parentId=" + lectureId;
 	}
 

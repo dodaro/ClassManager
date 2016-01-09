@@ -6,13 +6,14 @@
 
 <script src="resources/script/classPage.js"></script>
 
-<script src="resources/lib/uploadFile-lib/jquery.knob.js"></script>
 
 <!-- jQuery File Upload Dependencies -->
 <link href="resources/style/uploadFile_css/style.css" rel="stylesheet" />
+<script src="resources/lib/uploadFile-lib/jquery.knob.js"></script>
 <script src="resources/lib/uploadFile-lib/jquery.ui.widget.js"></script>
 <script src="resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
 <script src="resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
-
-<!-- Our main JS file -->
 <script src="resources/lib/uploadFile-lib/script.js"></script>
+
+<!-- bootstrap date timepicker-->
+<script type="text/javascript" src="/resources/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>

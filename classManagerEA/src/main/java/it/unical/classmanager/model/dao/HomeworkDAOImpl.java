@@ -28,9 +28,9 @@ public class HomeworkDAOImpl implements HomeworkDAO
 		return dbHandler;
 	}
 
-	public void create(Homework homework)
+	public int create(Homework homework)
 	{
-		this.dbHandler.create(homework);
+		return ((Homework) this.dbHandler.create(homework)).getId();
 	}
 
 	public void update(Homework homework)

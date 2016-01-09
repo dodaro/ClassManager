@@ -12,11 +12,19 @@ $(document).ready(function() {
 
 	$("#uploadFile_div").hide();
 	
-	$( ".datepicker" ).datepicker({
+	/*$( ".datepicker" ).datepicker({
     	changeYear: true,
     	dateFormat: "dd/mm/yy",
     	yearRange: "-100:+100",	
-    });
+    });*/
+	
+	$( ".datepicker" ).datetimepicker({
+		format: 'DD/MM/YYYY'
+	});
+	
+	$( ".timepicker" ).datetimepicker({
+		format: 'HH:mm'
+	});
 	
 });
 
@@ -46,14 +54,15 @@ var ListenersManager = (function(){
 
 			$("#createNewClass_btn").on("click", function() {
 
-				$("#lecture-form").attr("action", "/createLecture");
+				$("#lecture-form").attr("action", "/lectures");
 				$("#createNewClass_modal").modal().show();
 
 			});
 
+
 			$("#addHomework_btn").on("click", function() {
 
-				$("#homework-form").attr("action", "/addHomework");
+				$("#homework-form").attr("action", "/homeworks");
 				$("#addHomework_modal").modal().show();
 			});
 
@@ -83,20 +92,11 @@ var ListenersManager = (function(){
 			$("#download_btn_modal").click(function(){
 
 				var url = $("#visualizer").attr("href");
-
-//				var blob = new Blob(["/download?path=" + url]);
-//				var evt = document.createEvent("HTMLEvents");
-//				evt.initEvent("click");
-//				var a = $("<a>", {
-//				download: encodeURIComponent("/download?path=" + url),
-//				href: URL.createObjectURL(blob)
-//				});
-
-//				a.get(0).dispatchEvent(evt);
-
 				window.open("/download?path=" + url);
 
 			});
+			
+			
 
 			/*$("#delete_btn_modal").click(function(){
 				var url = $("#visualizer").attr("href");
@@ -210,4 +210,9 @@ function update_homeworks(event){
 	$("#homework-form").attr("action", "/update_homework");
 	$("#addHomework_modal").modal().show();
 	
+}
+
+function reload(){
+	
+	window.location.reload();
 }

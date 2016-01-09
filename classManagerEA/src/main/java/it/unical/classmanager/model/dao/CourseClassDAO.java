@@ -21,5 +21,5 @@ public interface CourseClassDAO {
 
 	public List<CourseClass> getAllCourseClasses();	
 	
-	public List<Lecture> getAllCourseClasses(Professor professor);
+	//public List<Lecture> getAllCourseClasses(Professor professor);
 }

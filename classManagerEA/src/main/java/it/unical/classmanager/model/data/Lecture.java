@@ -35,11 +35,11 @@ public class Lecture implements Serializable  {
 	private int number;
 	
 	@Column(name="topic", nullable=false, length=32)
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String topic;
 	
 	@Column(name="description", nullable=false, length=256)
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String description;
 	
 	@Column(name="date", nullable=false, length=32)

@@ -27,11 +27,13 @@
 			</div>
 		</div>
 
+
 		<!-- MODAL Create lecture-->
 		<c:if test="${not empty lecture}">
-			<div id="createNewClass_modal" class="modal fade ${fade}" role="dialog" style="display: ${display};">
-				<form:form id="lecture-form" action="/createLecture" method="POST"
+			<div id="createNewClass_modal${modalState}" class="modal fade" role="dialog">
+				<form:form id="lecture-form" action="/lectures" method="POST"
 					commandName="lecture" role="form">
+
 					<div class="modal-dialog">
 						<!-- Modal content-->
 						<div class="modal-content">
@@ -54,23 +56,66 @@
 									<label for="description"> <spring:message
 											code="lectureManager.description" text="default text" />
 									</label>
-									<form:input type="text" name="description" path="description"
-										class="form-control" />
+									<spring:bind path="description">
+										<form:input type="text" name="description" path="description" class="form-control" />
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
 								</div>
 
 								<div class="form-group">
 									<label for="classroom"> <spring:message
 											code="lectureManager.classroom" text="default text" />
 									</label>
-									<form:input type="text" name="classroom" path="classroom"
-										class="form-control" />
+									<spring:bind path="classroom">
+										<form:input type="text" name="classroom" path="classroom" class="form-control" />
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
+								</div>
+
+								<div class="form-group">
+									<label for="date"> <spring:message
+											code="lectureManager.date" text="default text" />:
+									</label>
+									<spring:bind path="date">
+										<div class='input-group date'>
+											<form:input type="text" name="date" path="date"
+												class="datepicker form-control" />
+											<span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
+								</div>
+
+								<div class="form-group">
+									<label for="beginHour">
+										<spring:message code="lectureManager.beginHour" text="default text" />:
+									</label>
+									<spring:bind path="beginHour">
+										<div class='input-group date'>
+											<form:input  type="text" name="beginHour" path="beginHour" class="timepicker form-control" />
+											<span class="input-group-addon">
+                       		 					<span class="glyphicon glyphicon-time"></span>
+                    						</span>
+										</div>
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
 								</div>
 								
 								<div class="form-group">
-									<label for="date">
-										<spring:message code="lectureManager.date" text="default text" />:
+									<label for="endHour">
+										<spring:message code="lectureManager.endHour" text="default text" />:
 									</label>
-									<form:input type="text" name="date" path="date" readonly='true' class="form-control datepicker" />
+									<spring:bind path="endHour">
+										<div class='input-group date'>
+											<form:input  type="text" name="endHour" path="endHour" class="timepicker form-control" />
+											<span class="input-group-addon">
+			                     		 		<span class="glyphicon glyphicon-time"></span>
+			                  				</span>
+										</div>
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
 								</div>
 								
 								<form:input id="createLectureModal_id" type="hidden" name="id" path="id"/>
@@ -123,7 +168,7 @@
 
 				<div id="uploadFile_div" style="display: none;">
 					<form id="upload" method="post" action="/upload_${pwd}"
-						enctype="multipart/form-data">
+						enctype="multipart/form-data" onsubmit="return reload();">
 						<div id="drop">
 							<spring:message code="lectureManager.drophere"
 								text="default text" />
@@ -226,7 +271,7 @@
 
 		<!-- MODAL addHomework-->
 		<c:if test="${not empty homework}">
-			<div id="addHomework_modal" class="modal fade" role="dialog">
+			<div id="addHomework_modal${modalState}" class="modal fade" role="dialog">
 				<form:form id="homework-form" action="/addHomework" method="POST"
 					commandName="homework" role="form">
 					<div class="modal-dialog">
@@ -241,8 +286,10 @@
 									<label for="name"> <spring:message
 											code="lectureManager.name" text="default text" />:
 									</label>
-									<form:input type="text" name="name" path="name"
-										class="form-control" />
+									<spring:bind path="name">
+										<form:input type="text" name="name" path="name" class="form-control" />
+										<span class="help-block">${status.errorMessages[0]}</span>
+									</spring:bind>
 								</div>
 								<div class="form-group">
 									<label for="description"> <spring:message
@@ -276,3 +323,11 @@
 
 	</div>
 </div>
+
+<script>
+$(document).ready(function() 
+{
+	$('#createNewClass_modal_open').modal('show');
+	$('#addHomework_modal_open').modal('show');
+});
+</script>

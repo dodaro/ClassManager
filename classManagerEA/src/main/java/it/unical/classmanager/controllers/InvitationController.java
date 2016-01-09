@@ -41,8 +41,16 @@ public class InvitationController {
     }
     
     public static void checkNewInvitations(Model model, User user){
-	// Query if there are new invitations for a particular user and set variable!
-	model.addAttribute("newInvitations", "34");
+	int newInvitations = 0;
+	if(user instanceof Student){
+	    newInvitations = DaoHelper.getRegistrationStudentClassDAO().getNewInvitationsOfStudent((Student) user);
+	} else if (user instanceof Professor){
+	    newInvitations = DaoHelper.getRegistrationStudentClassDAO().getNewInvitationsOfProfessor((Professor) user);
+	}
+	
+	if(newInvitations>0){
+	    model.addAttribute("newInvitations", newInvitations+"");	    
+	}
     }
     
     /**
@@ -73,7 +81,7 @@ public class InvitationController {
 	}
 	
 	InvitationController.checkNewInvitations(model, user);
-		
+	
 	return "invitation";
     }
     

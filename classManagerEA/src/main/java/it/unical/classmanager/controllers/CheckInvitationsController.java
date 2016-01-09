@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.unical.classmanager.invitations.InvitationBean;
 import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -35,11 +39,8 @@ public class CheckInvitationsController {
     @Autowired  
     MessageSource messageSource;
     
-    /**
-     * Show statistics based on the kind of user.
-     */
     @RequestMapping(value = "/checkInvitations", method = RequestMethod.GET)
-    public String statistics(Locale locale, Model model,HttpServletRequest request) {
+    public String checkInvitations(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("CheckInvitations Page", locale);
 	
 	String username = (String) request.getSession().getAttribute("loggedIn");
@@ -49,7 +50,7 @@ public class CheckInvitationsController {
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
-	processAcceptableStudent(locale, model, request);
+	processAcceptableStudent(locale, model, request, (Professor) user);
 	InvitationController.checkNewInvitations(model, user);
 	
 	return "invitation/checkInvitations";
@@ -71,7 +72,8 @@ public class CheckInvitationsController {
 		User user = DaoHelper.getUserDAO().get(username);
 		model.addAttribute("user",user.getUsername());
 		
-		processAcceptableStudent(locale, model, request);
+		processInviteAll((Professor) user);
+		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
 		
 		return "invitation/checkInvitations";
@@ -94,18 +96,54 @@ public class CheckInvitationsController {
 		User user = DaoHelper.getUserDAO().get(username);
 		model.addAttribute("user",user.getUsername());
 		
-		processAcceptableStudent(locale, model, request);
+		processInviteSingle((Professor) user, studentName, courseName);
+		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
 		
 		return "invitation/checkInvitations";
     }
     
-    private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request){
-	InvitationBeanList list = new InvitationBeanList();
-	list.addToList(new InvitationBean("Studente 1", "Corso 1"));
-	list.addToList(new InvitationBean("Studente 2", "Corso 2"));
-	list.addToList(new InvitationBean("Studente 3", "Corso 1"));
-	list.addToList(new InvitationBean("Studente 4", "Corso 4"));
-	model.addAttribute("studentList", list);
+    private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request, Professor professor){
+	InvitationBeanList list = getAcceptableStudent(professor);
+	if(list!=null){
+	    model.addAttribute("studentList", list);
+	}
     }
+    
+    private InvitationBeanList getAcceptableStudent(Professor professor){
+	List<Object[]> acceptableStudent = DaoHelper.getRegistrationStudentClassDAO().getAcceptableStudent(professor);
+	if(acceptableStudent.size()>0){
+	    InvitationBeanList list = new InvitationBeanList();
+	    for(int i=0; i<acceptableStudent.size(); i++){
+		list.addToList(new InvitationBean(
+			acceptableStudent.get(i)[0].toString(),
+			acceptableStudent.get(i)[1].toString()));	    
+	    }
+	    return list;
+	}
+	return null;
+    }
+
+    private void processInviteAll(Professor professor) {
+	InvitationBeanList acceptableStudent = getAcceptableStudent(professor);
+	for(int i=0; i<acceptableStudent.size(); i++){
+	    processInviteSingle(professor, acceptableStudent.get(i).getField1(), acceptableStudent.get(i).getField2());
+	}
+    }
+    
+    private void processInviteSingle(Professor professor, String studentName, String courseSelected) {
+	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
+	Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
+	
+	//    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
+	//	    k,
+	//	    invitationDate, 
+	//	    date, 
+	//	    date, 
+	//	    student, 
+	//	    courseClass);
+	//    k++;
+	//    registrationStudentClassDAO.create(registrationStudentClass);
+    }  
+
 }

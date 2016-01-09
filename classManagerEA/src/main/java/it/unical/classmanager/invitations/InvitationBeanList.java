@@ -20,5 +20,13 @@ public class InvitationBeanList {
     
     public void addToList(InvitationBean invitationBean){
 	list.add(invitationBean);
-    }    
+    }   
+    
+    public int size(){
+	return list.size();
+    }
+    
+    public InvitationBean get(int index){
+	return list.get(index);
+    }
 }

@@ -95,4 +95,16 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 		return response;
 	}
 
+	@Override
+	public CourseClass get( String name) {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		CourseClass courseClass = 
+				(CourseClass) session
+				.createSQLQuery("SELECT * FROM courseClass WHERE name = " + name)
+				.addEntity(CourseClass.class)
+				.uniqueResult();
+		session.close();
+		return courseClass;
+	}
+
 }

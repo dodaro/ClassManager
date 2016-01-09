@@ -38,10 +38,12 @@
 					<li role="presentation" class="active"><a
 						href="#totalAvgLectureProfessor"
 						aria-controls="totalAvgLectureProfessor" role="tab"
-						data-toggle="tab">Media lezioni per professore </a></li>
+						data-toggle="tab"><spring:message
+								code="message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_TabHead" /></a></li>
 					<li role="presentation"><a href="#totalAvgLectureProfessors"
 						aria-controls="totalAvgLectureProfessors" role="tab"
-						data-toggle="tab"> Media lezioni tra professori</a></li>
+						data-toggle="tab"><spring:message
+								code="message.statistics.Professor_AvgLectureByWeekDayAllProfessor_TabHead" /></a></li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
@@ -70,7 +72,8 @@
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
 		<div class="panel-heading">
-			<h3 class="panel-title">Homeworks Analysis</h3>
+			<h3 class="panel-title"><spring:message
+								code="message.statistics.Professor_Homework_Head" /></h3>
 		</div>
 		<div class="panel-body">
 			<div class="col-sm-6 col-md-6 col-lg-6">
@@ -84,7 +87,8 @@
 
 	<div class="panel panel-default col-sm-12 col-md-12 col-lg-12">
 		<div class="panel-heading">
-			<h3 class="panel-title">Attendances Analysis</h3>
+			<h3 class="panel-title"><spring:message
+								code="message.statistics.Professor_Attendance_Head" /></h3>
 		</div>
 		<div class="panel-body">
 			<div class="col-sm-12 col-md-12 col-lg-12">

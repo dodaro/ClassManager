@@ -52,11 +52,11 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	 * ...
 	 * Anno, Date, ExamName, Score
 	 */
-	
-	cart.setTitle("Voti esami");
-	cart.setSubTitle("La serie dei voti degli esami");
-	cart.setxAxisTitle("Time");
-	cart.setyAxisTitle("Score");
+		
+	cart.setTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_Title",null,locale));
+	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_SubTitle",null,locale));
+	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_xAxisTitle",null,locale));
+	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_yAxisTitle",null,locale));
 	cart.setyAxisMinValue(0);
 	cart.setyAxisMaxValue(30);
 	StringBuilder seriesContent = new StringBuilder("");

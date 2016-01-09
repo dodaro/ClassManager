@@ -53,10 +53,10 @@ public class Professor_AvgScoreHomework extends AbstractQueryCart {
 	 * CourseClass, Student, AvgScore
 	 */
 	
-	cart.setTitle("Chi prende i voti migliori?");
+	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgScoreHomework_Title",null,locale));
+	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgScoreHomework_yAxisTitle",null,locale));
 	cart.setSubTitle("");
 	cart.setxAxisTitle("");
-	cart.setyAxisTitle("Scores");
 	cart.setxAxisMinValue(0);
 	cart.setxAxisMaxValue(0);
 	
@@ -123,44 +123,12 @@ public class Professor_AvgScoreHomework extends AbstractQueryCart {
 		}
 	    }	    
 	    seriesContent.append("],\n");
-	    seriesContent.append("stack: \'student\'\n");
+	    seriesContent.append(""+messageSource.getMessage("message.statistics.Professor_AvgScoreHomework_StackPrefix",null,locale)+": \'student\'\n");
 	    seriesContent.append("}");
 	    
 	    k++;
 	}
 	
-	//	seriesContent.append("{");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'John\',\n");
-	//	    seriesContent.append("data: [5, 3, 4, 7, 2],\n");
-	//	    seriesContent.append("stack: \'male\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Joe\',\n");
-	//	    seriesContent.append("data: [3, 4, 4, 2, 5],\n");
-	//	    seriesContent.append("stack: \'male\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Jane\',\n");
-	//	    seriesContent.append("data: [2, 5, 6, 2, 1],\n");
-	//	    seriesContent.append("stack: \'female\'\n");
-	//	    seriesContent.append("}");
-	//	}
-	//	seriesContent.append(", {");
-	//	{
-	//	    seriesContent.append("\n");
-	//	    seriesContent.append("name: \'Janet\',\n");
-	//	    seriesContent.append("data: [3, 0, 4, 4, 3],\n");
-	//	    seriesContent.append("stack: \'female\'\n");
-	//	    seriesContent.append("}");
-	//	}
 	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setDrilldownContent(drilldownContent);

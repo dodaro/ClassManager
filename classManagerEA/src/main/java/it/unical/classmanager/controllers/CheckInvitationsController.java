@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import it.unical.classmanager.invitations.InvitationBean;
+import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.User;
 
@@ -46,9 +49,63 @@ public class CheckInvitationsController {
 	User user = DaoHelper.getUserDAO().get(username);
 	model.addAttribute("user",user.getUsername());
 	
+	processAcceptableStudent(locale, model, request);
 	InvitationController.checkNewInvitations(model, user);
 	
 	return "invitation/checkInvitations";
     }
     
+    @RequestMapping(value = "/checkInvitations_AcceptAll", method = RequestMethod.POST)
+    public String inviteAll(
+	    @RequestParam(value = "AcceptAll", required = true) String value, 
+	    Locale locale,
+	    Model model,
+	    HttpServletRequest request){
+		
+		System.err.println("Received: "+value);
+		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		if ( username == null ) {			
+		    return "redirect:/";
+		}
+		User user = DaoHelper.getUserDAO().get(username);
+		model.addAttribute("user",user.getUsername());
+		
+		processAcceptableStudent(locale, model, request);
+		InvitationController.checkNewInvitations(model, user);
+		
+		return "invitation/checkInvitations";
+    }
+    
+    @RequestMapping(value = "/checkInvitations_AcceptSingle", method = RequestMethod.POST)
+    public String inviteSingle(
+	    @RequestParam(value = "courseName", required = true) String courseName,
+	    @RequestParam(value = "studentName", required = true) String studentName, 
+	    Locale locale,
+	    Model model,
+	    HttpServletRequest request){
+		
+		System.err.println("Received: "+studentName+", Course: "+courseName);
+		
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		if ( username == null ) {			
+		    return "redirect:/";
+		}
+		User user = DaoHelper.getUserDAO().get(username);
+		model.addAttribute("user",user.getUsername());
+		
+		processAcceptableStudent(locale, model, request);
+		InvitationController.checkNewInvitations(model, user);
+		
+		return "invitation/checkInvitations";
+    }
+    
+    private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request){
+	InvitationBeanList list = new InvitationBeanList();
+	list.addToList(new InvitationBean("Studente 1", "Corso 1"));
+	list.addToList(new InvitationBean("Studente 2", "Corso 2"));
+	list.addToList(new InvitationBean("Studente 3", "Corso 1"));
+	list.addToList(new InvitationBean("Studente 4", "Corso 4"));
+	model.addAttribute("studentList", list);
+    }
 }

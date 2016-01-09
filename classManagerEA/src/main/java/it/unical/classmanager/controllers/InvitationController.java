@@ -36,6 +36,10 @@ public class InvitationController {
     @Autowired  
     MessageSource messageSource;
     
+    public static void checkNewInvitations(Model model, String user){
+	checkNewInvitations(model, DaoHelper.getUserDAO().get(user));
+    }
+    
     public static void checkNewInvitations(Model model, User user){
 	// Query if there are new invitations for a particular user and set variable!
 	model.addAttribute("newInvitations", "34");

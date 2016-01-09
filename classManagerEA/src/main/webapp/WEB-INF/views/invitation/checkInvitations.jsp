@@ -23,14 +23,14 @@
 					<div class="panel-body">
 						<div class="row col-sm-12 col-md-12 col-lg-12">
 							<div class="panel panel-default">
-								<c:if test="${not empty noStudent}">
+								<c:if test="${empty studentList}">
 									<br>
 									<div class="alert alert-danger" role="alert">
 										<strong>Ops!</strong>
 										<spring:message code="message.invitation.sendHelpInfo5" />
 									</div>
 								</c:if>
-								<c:if test="${empty noStudent}">
+								<c:if test="${not empty studentList}">
 									<table class="table">
 										<caption>
 											<spring:message code="message.invitation.sendHelpInfo6" />
@@ -42,75 +42,41 @@
 														code="message.invitation.sendTableHeadField1" /></th>
 												<th><spring:message
 														code="message.invitation.sendTableHeadField2" /></th>
-												<th>
-													<form>
+												<th><form:form id="acceptAll"
+														action="checkInvitations_AcceptAll" method="POST">
 														<button
 															class="btn btn-default invitationActionButton pull-right"
 															type="submit">
 															<spring:message code="message.invitation.acceptAll" />
 														</button>
-													</form>
-												</th>
+															<input type="hidden" name="AcceptAll"
+																value="AcceptAll">
+													</form:form></th>
 											</tr>
 										</thead>
 										<!-- Generated content -->
 										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<td>Studente 1</td>
-												<td>Corso 2</td>
-												<td>
-													<form>
+											<c:set var="k" value="0" />
+											<c:forEach items="${studentList.list}" var="singleStudent">
+												<tr>
+													<c:set var="k" value="${k+1}" />
+													<th scope="row">${k}</th>
+													<td>${singleStudent.field1}</td>
+													<td>${singleStudent.field2}</td>
+													<td><form:form id="accept${k}"
+															action="checkInvitations_AcceptSingle" method="POST">
 														<button
 															class="btn btn-default invitationActionButton pull-right"
 															type="submit">
 															<spring:message code="message.invitation.acceptSingle" />
 														</button>
-													</form>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Studente 2</td>
-												<td>Corso 2</td>
-												<td>
-													<form>
-														<button
-															class="btn btn-default invitationActionButton pull-right"
-															type="submit">
-															<spring:message code="message.invitation.acceptSingle" />
-														</button>
-													</form>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>Studente 3</td>
-												<td>Corso 1</td>
-												<td>
-													<form>
-														<button
-															class="btn btn-default invitationActionButton pull-right"
-															type="submit">
-															<spring:message code="message.invitation.acceptSingle" />
-														</button>
-													</form>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">4</th>
-												<td>Studente 4</td>
-												<td>Corso 3</td>
-												<td>
-													<form>
-														<button
-															class="btn btn-default invitationActionButton pull-right"
-															type="submit">
-															<spring:message code="message.invitation.acceptSingle" />
-														</button>
-													</form>
-												</td>
-											</tr>
+															<input type="hidden" name="studentName"
+																value="${singleStudent.field1}">
+															<input type="hidden" name="courseName"
+																value="${singleStudent.field2}">
+														</form:form></td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</c:if>

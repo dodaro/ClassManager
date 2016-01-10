@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.unical.classmanager.invitations.InvitationBean;
 import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.data.CourseClass;
-import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
@@ -132,18 +134,14 @@ public class CheckRequestedInvitationsController {
     }
     
     private void processAcceptInvitationSingle(Student student, String courseName, String professorName) {
-	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
-	Professor professor = (Professor) DaoHelper.getUserDAO().get(professorName);
+	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);	
+	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	
-	//    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
-	//	    k,
-	//	    invitationDate, 
-	//	    date, 
-	//	    date, 
-	//	    student, 
-	//	    courseClass);
-	//    k++;
-	//    registrationStudentClassDAO.create(registrationStudentClass);
+	if(registrationStudentClassDAO.existRegistration(student, courseClass)){
+	    RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
+	    registrationStudentClass.setAcceptedDate(Calendar.getInstance().getTime());
+	    registrationStudentClassDAO.update(registrationStudentClass);
+	}
     } 
     
 }

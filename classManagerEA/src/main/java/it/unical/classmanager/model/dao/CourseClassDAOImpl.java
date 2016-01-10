@@ -95,6 +95,11 @@ public class CourseClassDAOImpl implements CourseClassDAO {
     
     @Override
     public CourseClass get(String name) {
+	
+	if(name.toCharArray()[0]=='\''){
+	    name = name.substring(1, name.length()-1);
+	}	
+	
 	Session session = this.dbHandler.getSessionFactory().openSession();
 	String queryString = "FROM CourseClass WHERE name =:name";
 	Query query = session.createQuery(queryString);

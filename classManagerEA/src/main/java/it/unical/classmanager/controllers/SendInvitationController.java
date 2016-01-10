@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.unical.classmanager.invitations.InvitationBean;
 import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
@@ -54,8 +57,10 @@ public class SendInvitationController {
 		User user = DaoHelper.getUserDAO().get(username);
 		model.addAttribute("user",user.getUsername());
 		
-		System.err.println("CourseName received: "+courseName);
-		model.addAttribute("courseSelected", courseName);
+		if(courseName!=null){
+		    System.err.println("CourseName received: "+courseName.trim());
+		    model.addAttribute("courseSelected", courseName);
+		}
 		
 		processSelectableCourse(locale, model, request, username);
 		processSelectableStudent(locale, model, request,courseName);
@@ -99,7 +104,7 @@ public class SendInvitationController {
 		return "invitation/sendInvitation";
     }
     
-
+    
     @RequestMapping(value = "/sendInvitation_InviteSingle", method = RequestMethod.POST)
     public String inviteSingle(
 	    @RequestParam(value = "courseSelected", required = true) String courseSelected,
@@ -133,8 +138,8 @@ public class SendInvitationController {
 		
 		return "invitation/sendInvitation";
     }
-
-
+    
+    
     @RequestMapping(value = "/sendInvitation_CancelAll", method = RequestMethod.POST)
     public String cancelAll(
 	    @RequestParam(value = "courseSelected", required = true) String courseSelected,
@@ -234,7 +239,7 @@ public class SendInvitationController {
     
     private InvitationBeanList getSelectableStudent(String courseName){
 	if(courseName!=null){
-	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
+	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
 	    List<Object[]> selectableStudent = DaoHelper.getRegistrationStudentClassDAO().getSelectableStudent(courseClass);
 	    if(selectableStudent.size()>0){
 		InvitationBeanList list = new InvitationBeanList();
@@ -256,7 +261,7 @@ public class SendInvitationController {
     
     private InvitationBeanList getCancellableStudent(String courseName){
 	if(courseName!=null){
-	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
+	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
 	    List<Object[]> cancellableStudent = DaoHelper.getRegistrationStudentClassDAO().getCancellableStudent(courseClass);
 	    if(cancellableStudent.size()>0){
 		InvitationBeanList list = new InvitationBeanList();
@@ -279,16 +284,21 @@ public class SendInvitationController {
     private void processInviteSingle(Professor professor, String courseSelected, String studentName) {
 	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
 	Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
-	
-	//    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
-	//	    k,
-	//	    invitationDate, 
-	//	    date, 
-	//	    date, 
-	//	    student, 
-	//	    courseClass);
-	//    k++;
-	//    registrationStudentClassDAO.create(registrationStudentClass);
+	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
+	int maxIndex = registrationStudentClassDAO.getMaxIndex();
+	Calendar cal = Calendar.getInstance();
+		
+	if(!registrationStudentClassDAO.existRegistration(student, courseClass)){
+	    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
+		    maxIndex+1,
+		    cal.getTime(), 
+		    null, 
+		    null, 
+		    student, 
+		    courseClass);
+	    
+	    registrationStudentClassDAO.create(registrationStudentClass);	    
+	}
     }  
     
     private void processCancellAll(Professor professor, String courseSelected) {
@@ -301,16 +311,12 @@ public class SendInvitationController {
     private void processCancellSingle(Professor professor, String courseSelected, String studentName) {
 	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
 	Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
+	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	
-	//    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
-	//	    k,
-	//	    invitationDate, 
-	//	    date, 
-	//	    date, 
-	//	    student, 
-	//	    courseClass);
-	//    k++;
-	//    registrationStudentClassDAO.create(registrationStudentClass);
+	if(registrationStudentClassDAO.existRegistration(student, courseClass)){
+	    RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
+	    registrationStudentClassDAO.delete(registrationStudentClass);
+	}
     }  
- 
+    
 }

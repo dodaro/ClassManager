@@ -144,7 +144,7 @@ public class ProfessorHomeworkStudentSolvings {
 
 			FolderBean folder = new FolderBean(solution.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
 			folder.setParentId(solution.getStudent().getIdentificationNumber());
-			folder.setAction("/studentHomeworkAttachments");
+			folder.setAction("/professorStudentHomeworkAttachments");
 			folder.setId(solution.getId());
 			files.add(folder);
 		}	
@@ -156,7 +156,8 @@ public class ProfessorHomeworkStudentSolvings {
 		return "layout";
 	}
 
-	@RequestMapping(value = "/studentHomeworkAttachments", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/professorStudentHomeworkAttachments", method = RequestMethod.GET)
 	public String getStudentsHomeworkSolvingsAttachmets(Model model, @RequestParam("id") int homeworkStudentSolvingId) {
 
 		model.addAttribute("customHeader", ProfessorHomeworkStudentSolvings.HEADER);
@@ -187,4 +188,5 @@ public class ProfessorHomeworkStudentSolvings {
 		
 		return "layout";
 	}
+	
 }

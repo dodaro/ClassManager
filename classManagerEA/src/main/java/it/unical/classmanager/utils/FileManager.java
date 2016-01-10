@@ -31,6 +31,7 @@ public class FileManager {
 	public final static String LECTURES_PATH = "lectures";
 	public final static String STUDENTS_PATH = "students";
 	public final static String HOMEWORK_STUDENT_SOLVING_PATH = "homeworkStudentSolving";
+	public final static String HOMEWORK_STUDENT_SOLVING_ATTACHMENT_PATH = "homeworkStudentSolvingAttachment";
 
 	@Autowired
 	ApplicationContext appContext;
@@ -43,6 +44,7 @@ public class FileManager {
 	 */
 	public boolean mkDir(String path, String name){
 
+		new File(RESOURCES_PATH + File.separator + path).mkdirs();
 		final String completePath = RESOURCES_PATH + File.separator + path + File.separator + name;
 		return new File(completePath).mkdir();
 	}

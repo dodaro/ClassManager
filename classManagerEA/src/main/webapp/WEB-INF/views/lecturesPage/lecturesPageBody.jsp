@@ -1,13 +1,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 
 		<jsp:include page="modals/visualizeModal.jsp" flush="true" />
-		<jsp:include page="modals/createLecture.jsp" flush="true" />
-		<jsp:include page="modals/createHomework.jsp" flush="true" />
+		<c:if test="${not empty canCreate}">
+			<jsp:include page="modals/createLecture.jsp" flush="true" />
+			<jsp:include page="modals/createHomework.jsp" flush="true" />
+		</c:if>
 
 
 		<!-- browser -->
@@ -20,18 +23,18 @@
 
 			<div class="row row-content">
 
-				<c:if test="${not empty lecture}">
+				<c:if test="${not empty lecture && not empty canCreate}">
 					<div id="createNewClass_btn" class="btn btn-default">
 						<spring:message code="lectureManager.addNewLecture"
 							text="default text" />
 					</div>
 				</c:if>
-				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'}">
+				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'  && not empty canCreate && canCreate == true}">
 					<div id="uploadFile_btn" class="btn btn-default">
 						<spring:message code="lectureManager.upload" text="default text" />
 					</div>
 				</c:if>
-				<c:if test="${not empty homework}">
+				<c:if test="${not empty homework  && not empty canCreate && canCreate}">
 					<div id="addHomework_btn" class="btn btn-default">
 						<spring:message code="lectureManager.addHomework"
 							text="default text" />
@@ -63,7 +66,8 @@
 
 			<ul class="data">
 				<c:choose>
-					<c:when test="${not empty files}">
+					<c:when test="${not empty files && fn:length(files) gt 0}">
+					
 						<c:set var="index" value="0" scope="page"/>  
 						<c:set var="contentsArray" value="${contents}" scope="page"/>
 						<c:forEach var="file" items="${files}">
@@ -104,7 +108,7 @@
 													</c:otherwise>
 												</c:choose>
 											</span> 
-											<c:if test="${not empty pwd}">
+											<c:if test="${not empty pwd  && not empty canCreate}">
 												<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
 												<span onclick="update_${pwd}(event);" class="glyphicon glyphicon-pencil" style="color: white"></span>
 											</c:if>
@@ -116,7 +120,7 @@
 											<span class="icon ${file.type} f-${file.extension}">.${file.extension}</span>
 											<span class="name">${file.name}</span>
 											<span class="details">${file.size} Bytes</span>
-											<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
+											<c:if test="${not empty canCreate}"><span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span></c:if>
 											<span onclick="alert();" class="glyphicon glyphicon-download-alt" style="color: white"></span>
 										</div>
 									</c:if>
@@ -127,10 +131,9 @@
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<div class="nothingfound">
+						<div class="nothingfound" style="display:block;">
 							<div class="nofiles"></div>
-							<span><spring:message code="lectureManager.nofileshere"
-									text="default text" /></span>
+							<span><spring:message code="lectureManager.nofileshere" text="default text" /></span>
 						</div>
 					</c:otherwise>
 				</c:choose>

@@ -135,7 +135,7 @@ function delete_lectures(event){
 	event.stopImmediatePropagation();
 
 	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
-	$.post("\delete_lecture",{'lectureId':lectureId},function(){
+	$.post("/delete_lecture",{'lectureId':lectureId},function(){
 
 	});
 }
@@ -151,7 +151,27 @@ function delete_homeworkAttached(event){
 	event.stopImmediatePropagation();
 
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	$.post("\delete_homeworkAttached",{'homeworkAttachedId':homeworkId},function(){
+	$.post("/delete_homeworkAttached",{'homeworkAttachedId':homeworkId},function(){
+
+	});
+}
+
+function delete_homeworkStudentSolving(event){
+
+	event.stopImmediatePropagation();
+
+	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("/delete_homeworkStudentSolving",{'homeworkStudentSolvingId':hssId},function(){
+
+	});
+}
+
+function delete_homeworkAttached(event){
+
+	event.stopImmediatePropagation();
+
+	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("/delete_homeworkStudentSolvingAttachment",{'homeworkStudentSolvingAttachedId':homeworkId},function(){
 
 	});
 }

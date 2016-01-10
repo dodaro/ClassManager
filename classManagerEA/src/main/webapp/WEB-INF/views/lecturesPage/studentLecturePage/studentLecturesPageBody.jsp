@@ -6,7 +6,6 @@
 	<div class="col-sm-12 col-md-12 col-lg-12">
 
 		<jsp:include page="../modals/visualizeModal.jsp" flush="true" />
-		<jsp:include page="../modals/createHomework.jsp" flush="true" />
 
 
 		<!-- browser -->
@@ -19,22 +18,18 @@
 
 			<div class="row row-content">
 
-				<c:if test="${not empty lecture}">
-					<div id="createNewClass_btn" class="btn btn-default">
-						<spring:message code="lectureManager.addNewLecture"
-							text="default text" />
-					</div>
-				</c:if>
-				<c:if test="${not empty pwd && pwd != 'lectures' && pwd != 'homeworks'}">
+				<c:if test="${not empty pwd && pwd == 'homeworkStudentSolvingAttachment'}">
 					<div id="uploadFile_btn" class="btn btn-default">
 						<spring:message code="lectureManager.upload" text="default text" />
 					</div>
 				</c:if>
-				<c:if test="${not empty homework}">
-					<div id="addHomework_btn" class="btn btn-default">
-						<spring:message code="lectureManager.addHomework"
-							text="default text" />
-					</div>
+				<c:if test="${not empty pwd && pwd == 'homeworkStudentSolving'}">
+					<form action="/homeworksStudentSolving" method="POST" >
+						<input type="hidden" name="parentId" value="${parentId}"></input>
+						<div class="btn btn-default" onclick="this.parentNode.submit()">
+							<spring:message code="lectureManager.addHomeworkSolution" text="default text" />
+						</div>
+					</form>
 				</c:if>
 
 				<div id="uploadFile_div" style="display: none;">
@@ -70,19 +65,7 @@
 							<li class="${file.type}">
 								<form action="${file.action}">
 
-									<input type="hidden" name="id" value="${contentsArray[index].id}"></input> 
-									
-									<c:if test="${not empty lecture}">
-										<input type="hidden" name="topic" value="${contentsArray[index].topic}"></input>
-										<input type="hidden" name="date" value="${contentsArray[index].date}"></input>
-										<input type="hidden" name="beginHour" value="${contentsArray[index].beginHour}"></input>
-										<input type="hidden" name="endHour" value="${contentsArray[index].beginHour}"></input>
-										<input type="hidden" name="classroom" value="${contentsArray[index].classroom}"></input>
-									</c:if>
-									
-									<c:if test="${not empty homework}"><input type="hidden" name="name" value="${contentsArray[index].name}"></input></c:if>
-									
-									<input type="hidden" name="description" value="${contentsArray[index].description}"></input>
+									<input type="hidden" name="id" value="${file.id}"></input> 																								
 									<input type="hidden" name="path" value="${file.path}"></input>
 									<input type="hidden" name="parentId" value="${file.parentId}"></input>
 									<input type="submit" style="display: none;"></input>
@@ -105,7 +88,6 @@
 											</span> 
 											<c:if test="${not empty pwd}">
 												<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
-												<span onclick="update_${pwd}(event);" class="glyphicon glyphicon-pencil" style="color: white"></span>
 											</c:if>
 										</div>
 									</c:if>
@@ -115,8 +97,10 @@
 											<span class="icon ${file.type} f-${file.extension}">.${file.extension}</span>
 											<span class="name">${file.name}</span>
 											<span class="details">${file.size} Bytes</span>
-											<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
 											<span onclick="alert();" class="glyphicon glyphicon-download-alt" style="color: white"></span>
+											<c:if test="${pwd == 'homeworkStudentSolvingAttachment'}">
+												<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
+											</c:if>
 										</div>
 									</c:if>
 

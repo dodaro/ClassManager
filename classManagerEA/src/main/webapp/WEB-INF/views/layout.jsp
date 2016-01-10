@@ -107,6 +107,7 @@
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<jsp:include page="${customBody}" flush="true" />
 			</div>
+
 		</div>
 	</div>
 

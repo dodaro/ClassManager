@@ -34,6 +34,8 @@
 						<span class="badge invitationActionButton">${newInvitations}</span>
 					</c:if>
 			</a></li>
+			<li><a href="./viewer3D"><span
+					class="glyphicon glyphicon-eye-open"></span> Viewer3D</a></li>
 			<li><a href="./noticeboard?init=1"> <span
 					class="glyphicon glyphicon-send"></span> <spring:message
 						code="message.noticeboard" text="default text" /> con fake init

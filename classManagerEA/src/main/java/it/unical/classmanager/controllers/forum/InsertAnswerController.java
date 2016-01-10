@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +90,7 @@ public class InsertAnswerController {
 		answer.setUser(tmpUser);
 		answer.setQuestion(tmpQuestion);
 		
-		Answer newAnswer = (Answer) answerDAO.create(answer);
+		Answer newAnswer =  answerDAO.create(answer);
 		
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
@@ -150,7 +151,7 @@ public class InsertAnswerController {
 		answer.setUser(tmpUser);
 		answer.setQuestion(tmpQuestion);
 		
-		Answer newAnswer = (Answer) answerDAO.update(answer);
+		Answer newAnswer =  answerDAO.update(answer);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
 		
@@ -201,6 +202,9 @@ public class InsertAnswerController {
 			filePath = "files/" + username + "/" + newFileName;
 		}
 		
+		newFileName = StringEscapeUtils.escapeSql(newFileName);
+		filePath = StringEscapeUtils.escapeSql(filePath);
+		
 		fm.mkMultipartFile(file, username + "/", newFileName);
 		
 		
@@ -215,18 +219,14 @@ public class InsertAnswerController {
 			e.printStackTrace();
 		}
 
-		AnswerAttachedContent answerSearched = answerAttachedDAO.searchByPath(filePath);
-		if(answerSearched == null) {
 			
-			answerAttached.setName(newFileName);
-			answerAttached.setFilePath(filePath);
-			answerAttached.setType(tmpMimeType);
-			answerAttachedDAO.create(answerAttached);
+		answerAttached.setName(newFileName);
+		answerAttached.setFilePath(filePath);
+		answerAttached.setType(tmpMimeType);
+		answerAttached = answerAttachedDAO.create(answerAttached);
 			
-			answerSearched = answerAttachedDAO.searchByPath(filePath);
-		}
 		
-		return "{\"name\": \""+ newFileName +"\", \"id\": \""+ Integer.toString(answerSearched.getId()) +"\", \"type\":\"insert\"}";
+		return "{\"name\": \""+ newFileName +"\", \"id\": \""+ Integer.toString(answerAttached.getId()) +"\", \"type\":\"insert\"}";
 	}
 	
 	

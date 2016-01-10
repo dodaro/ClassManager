@@ -22,14 +22,14 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 		return dbHandler;
 	}
 
-	public void create(AnswerAttachedContent answerAttachedContent)
+	public AnswerAttachedContent create(AnswerAttachedContent answerAttachedContent)
 	{
-		this.dbHandler.create(answerAttachedContent);
+		return (AnswerAttachedContent) this.dbHandler.create(answerAttachedContent);
 	}
 
-	public void update(AnswerAttachedContent answerAttachedContent)
+	public AnswerAttachedContent update(AnswerAttachedContent answerAttachedContent)
 	{
-		this.dbHandler.update(answerAttachedContent);
+		return (AnswerAttachedContent) this.dbHandler.update(answerAttachedContent);
 	}
 
 	public void delete(AnswerAttachedContent answerAttachedContent)

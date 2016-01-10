@@ -23,19 +23,19 @@ public class QuestionDAOImpl implements QuestionDAO
 		return dbHandler;
 	}
 
-	public Object create(Question question)
+	public Question create(Question question)
 	{
-		return this.dbHandler.create(question);
+		return (Question) this.dbHandler.create(question);
 	}
 
-	public Object update(Question question)
+	public Question update(Question question)
 	{
-		return this.dbHandler.update(question);
+		return (Question) this.dbHandler.update(question);
 	}
 
-	public Object delete(Question question)
+	public void delete(Question question)
 	{
-		return this.dbHandler.delete(question);
+		this.dbHandler.delete(question);
 	}
 
 	public Question get(Integer id)

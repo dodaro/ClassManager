@@ -83,7 +83,7 @@ public class InsertQuestionController {
 		User tmpUser = userDao.get(username);
 		
 		question.setUser(tmpUser);
-		Question newQuestion = (Question) questionDAO.create(question);
+		Question newQuestion =  questionDAO.create(question);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
 
@@ -135,7 +135,7 @@ public class InsertQuestionController {
 		User tmpUser = userDao.get(username);
 		
 		question.setUser(tmpUser);
-		Question newQuestion = (Question) questionDAO.update(question);
+		Question newQuestion =  questionDAO.update(question);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
 		

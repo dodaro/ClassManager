@@ -72,7 +72,6 @@
 									<c:forEach var="tmpLang" items="${aviableLangs}">
 										<option value="${tmpLang.getValue() }">${tmpLang.getLabel() }</option>							
 									</c:forEach>
-						            <option value="html">HTML</option>
 						            <option value="javascript">Javascript</option>
 						          </select> 
 						          </div>

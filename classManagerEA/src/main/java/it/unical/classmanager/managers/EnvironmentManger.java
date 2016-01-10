@@ -8,6 +8,7 @@ import java.util.Map;
 
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.editorData.concrete.CPPEnvironment;
+import it.unical.classmanager.editorData.concrete.DLVEnvironment;
 import it.unical.classmanager.editorData.concrete.JavaEnvironment;
 import it.unical.classmanager.editorData.concrete.PerlEnvironment;
 import it.unical.classmanager.editorData.concrete.PythonEnvironment;
@@ -78,6 +79,10 @@ public class EnvironmentManger {
 			
 		case PERL:
 			this.environments.put(environmentEnum, new PerlEnvironment());
+			break;
+			
+		case DLV:
+			this.environments.put(environmentEnum, new DLVEnvironment());
 			break;
 
 		default:

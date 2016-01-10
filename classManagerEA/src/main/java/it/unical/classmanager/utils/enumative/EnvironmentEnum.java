@@ -10,7 +10,7 @@ package it.unical.classmanager.utils.enumative;
  */
 public enum EnvironmentEnum {
 
-	C_CPP("c_cpp", "C/C++"), JAVA("java", "Java"), PYTHON("python", "Python"), PERL("perl", "Perl");
+	C_CPP("c_cpp", "C/C++"), JAVA("java", "Java"), PYTHON("python", "Python"), PERL("perl", "Perl"), DLV("dlv", "DLV");
 
 	private String label;
 	private String value;

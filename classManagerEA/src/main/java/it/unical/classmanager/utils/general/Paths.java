@@ -32,4 +32,7 @@ public class Paths {
 	//python environments
 	public static String pythonEnvironment = environments + "pythonEnv"+sep;
 	
+	//DLV environments
+	public static String DLVEnvironment = environments + "DLVEnv"+sep;
+	
 }

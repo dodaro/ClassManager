@@ -180,7 +180,7 @@ public class InsertAnswerController {
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		
 		FileManager fm = new FileManager();
-		String filePath = "files/" + username + "/" + file.getOriginalFilename();
+		String filePath = "files/forumAttachment/answerAttachment/" + username + "/" + file.getOriginalFilename();
 
 		String newFileName = file.getOriginalFilename();
 		if(new File(filePath).exists()) {
@@ -199,13 +199,13 @@ public class InsertAnswerController {
 			name += "_" + new Random(System.currentTimeMillis()).nextInt(1000000);
 			
 			newFileName = name + extension;
-			filePath = "files/" + username + "/" + newFileName;
+			filePath = "files/forumAttachment/answerAttachment/" + username + "/" + newFileName;
 		}
 		
 		newFileName = StringEscapeUtils.escapeSql(newFileName);
 		filePath = StringEscapeUtils.escapeSql(filePath);
 		
-		fm.mkMultipartFile(file, username + "/", newFileName);
+		fm.mkMultipartFile(file, "forumAttachment/answerAttachment/" +  username + "/", newFileName);
 		
 		
 		AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);

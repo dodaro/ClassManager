@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -734,7 +736,7 @@ public class DBInitializatorController {
 			    "DescriptionAnswer"+k,
 			    user, 
 			    question,
-			    new ArrayList<AnswerAttachedContent>());
+			    new HashSet<AnswerAttachedContent>());
 		    answerDAO.create(answer);
 		    logger.info("Created "+answer, locale);
 		    k++;
@@ -747,7 +749,7 @@ public class DBInitializatorController {
 			    "DescriptionAnswer"+k,
 			    user, 
 			    question,
-			    new ArrayList<AnswerAttachedContent>());
+			    new HashSet<AnswerAttachedContent>());
 		    answerDAO.create(answer);
 		    logger.info("Created "+answer, locale);
 		    k++;

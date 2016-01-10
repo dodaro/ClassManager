@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +186,9 @@ public class InsertQuestionController {
 			filePath = "files/" + username + "/" + newFileName;
 		}
 		
+		newFileName = StringEscapeUtils.escapeSql(newFileName);
+		filePath = StringEscapeUtils.escapeSql(filePath);
+		
 		fm.mkMultipartFile(file, username + "/", newFileName);
 		
 		
@@ -200,18 +204,13 @@ public class InsertQuestionController {
 			e.printStackTrace();
 		}
 
-		QuestionAttachedContent questionSearched = questionAttachedDAO.searchByPath(filePath);
-		if(questionSearched == null) {
-			
-			questionAttached.setName(newFileName);
-			questionAttached.setFilePath(filePath);
-			questionAttached.setType(tmpMimeType);
-			questionAttachedDAO.create(questionAttached);
-			
-			questionSearched = questionAttachedDAO.searchByPath(filePath);
-		}
+		questionAttached.setName(newFileName);
+		questionAttached.setFilePath(filePath);
+		questionAttached.setType(tmpMimeType);
+		questionAttached = questionAttachedDAO.create(questionAttached);
 		
-		return "{\"name\": \""+ newFileName +"\", \"id\": \""+ Integer.toString(questionSearched.getId()) +"\", \"type\":\"insert\"}";
+		
+		return "{\"name\": \""+ newFileName +"\", \"id\": \""+ Integer.toString(questionAttached.getId()) +"\", \"type\":\"insert\"}";
 	}
 	
 	

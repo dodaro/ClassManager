@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,9 +28,11 @@ public class Communications implements Serializable  {
 	private int id;
 	
 	@Column(name="name", nullable=false, length=32)
+	@Size(min=4,max=20)
 	private String name;
 	
 	@Column(name="description", nullable=false, length=256)
+	@Size(min=4,max=256)
 	private String description;	
 	
 	@Column(name="date", nullable=false)
@@ -96,6 +98,12 @@ public class Communications implements Serializable  {
 	
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	@Override
+	public String toString() {
+		return id + ", " + name + ", " + description + ", " + date + ", " + professor.getLastName();
+		
 	}
 	
 }

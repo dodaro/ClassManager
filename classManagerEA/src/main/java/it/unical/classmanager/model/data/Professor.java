@@ -24,11 +24,11 @@ public class Professor extends User implements Serializable  {
 //	private int identificationNumber;
 
 	//	Foreign key section
-	@OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Communications>  communications;
 	
-	@OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<CourseClass> courseClasses;
 	

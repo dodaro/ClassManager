@@ -15,6 +15,8 @@ public interface CourseClassDAO {
 
 	public CourseClass get(Integer id);
 
+	public CourseClass get(String name);
+
 	public void deleteAllCourseClasses();
 
 	public int numberOfCourseClasses();
@@ -22,4 +24,6 @@ public interface CourseClassDAO {
 	public List<CourseClass> getAllCourseClasses();	
 	
 	public List<Lecture> getAllCourseClasses(Professor professor);
+
+	public List<CourseClass> getCourseClasses( Professor professor);
 }

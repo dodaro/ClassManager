@@ -96,7 +96,7 @@
 															<div class="panel-title">
 																<div>
 																	<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-																	 <b>Attachment</b>
+																	 <b><spring:message code="message.forum.attachments" /></b>
 																	</div>
 																</div>
 															</div>
@@ -186,7 +186,7 @@
 																		<div class="panel-title">
 																			<div>
 																				<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse${answer.getId() }" aria-expanded="false" aria-controls="collapse${answer.getId() }">
-																				 <b>Attachment</b>
+																				 <b><spring:message code="message.forum.attachments" /></b>
 																				</div>
 																			</div>
 																		</div>

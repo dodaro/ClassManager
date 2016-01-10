@@ -124,7 +124,7 @@
 														<div class="panel-title">
 															<div>
 																<div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-																 <b>Allegati caricati</b>
+																 <b><spring:message code="message.forum.loadedAttachment" /></b>
 																</div>
 															</div>
 														</div>
@@ -154,7 +154,7 @@
 													<div class="panel-title">
 														<div>
 															<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> 
-															 <h4><b>Carica Allegati</b></h4>
+															 <h4><b><spring:message code="message.forum.loadAttachment" /></b></h4>
 															</div>
 														</div>
 													</div>

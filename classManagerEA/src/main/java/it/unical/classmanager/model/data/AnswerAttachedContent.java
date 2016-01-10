@@ -20,13 +20,13 @@ public class AnswerAttachedContent implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="name", nullable=false, length=32)
+	@Column(name="name", nullable=false, length=256)
 	private String name;
 	
-	@Column(name="type", nullable=false, length=32)
+	@Column(name="type", nullable=false, length=256)
 	private String type;
 	
-	@Column(name="filePath", nullable=false, length=32)
+	@Column(name="filePath", nullable=false, length=1000)
 	private String filePath;
 
 	//	Foreign key section
@@ -89,5 +89,51 @@ public class AnswerAttachedContent implements Serializable  {
 	public void setAnswer(Answer answer) {
 		this.answer = answer;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AnswerAttachedContent other = (AnswerAttachedContent) obj;
+		if (answer == null) {
+			if (other.answer != null)
+				return false;
+		} else if (!answer.equals(other.answer))
+			return false;
+		if (filePath == null) {
+			if (other.filePath != null)
+				return false;
+		} else if (!filePath.equals(other.filePath))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		return true;
+	}
+	
 	
 }

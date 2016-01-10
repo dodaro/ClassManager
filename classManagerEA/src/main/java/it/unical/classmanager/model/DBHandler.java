@@ -16,7 +16,7 @@ public class DBHandler {
 		sessionFactory = null;
 	}
 	
-	private void performOperation(Object obj, Operation op) {
+	private Object performOperation(Object obj, Operation op) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		try {
@@ -40,18 +40,20 @@ public class DBHandler {
 		} finally {
 			session.close();
 		}
+		
+		return obj;
 	}
 	
-	public void create(Object obj) {
-		performOperation(obj, Operation.CREATE);
+	public Object create(Object obj) {
+		return performOperation(obj, Operation.CREATE);
 	}
 	
-	public void delete(Object obj) {
-		performOperation(obj, Operation.DELETE);
+	public Object delete(Object obj) {
+		return performOperation(obj, Operation.DELETE);
 	}
 	
-	public void update(Object obj) {
-		performOperation(obj, Operation.UPDATE);
+	public Object update(Object obj) {
+		return performOperation(obj, Operation.UPDATE);
 	}
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {

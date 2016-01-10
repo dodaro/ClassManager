@@ -21,13 +21,13 @@ public class QuestionAttachedContent implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="name", nullable=false, length=32)
+	@Column(name="name", nullable=false, length=256)
 	private String name;
 	
-	@Column(name="type", nullable=false, length=32)
+	@Column(name="type", nullable=false, length=256)
 	private String type;
 	
-	@Column(name="filePath", nullable=false, length=32)
+	@Column(name="filePath", nullable=false, length=1000)
 	private String filePath;
 	
 	//	Foreign key section

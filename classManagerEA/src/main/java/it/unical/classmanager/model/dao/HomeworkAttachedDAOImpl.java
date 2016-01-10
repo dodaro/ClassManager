@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
@@ -62,6 +63,18 @@ public class HomeworkAttachedDAOImpl implements HomeworkAttachedDAO {
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<HomeworkAttached> homeworkAttached = 
 				session.createQuery("FROM HomeworkAttached").list();
+		session.close();
+		return homeworkAttached;
+	}
+
+	@Override
+	public List<HomeworkAttached> getAllHomeworkAttacheds(int idHomework) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM HomeworkAttached as h WHERE h.homework.id = :id");
+		query.setParameter("id", idHomework);
+		List<HomeworkAttached> homeworkAttached = query.list();
+		
 		session.close();
 		return homeworkAttached;
 	}

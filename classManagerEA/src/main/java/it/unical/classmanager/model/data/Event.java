@@ -48,6 +48,7 @@ public class Event implements Serializable  {
 	@Column(name="color", nullable=true)
 	private String color;
 	
+	
 	//	Foreign key section	
 	@ManyToOne
 	@JoinColumn(name = "user")

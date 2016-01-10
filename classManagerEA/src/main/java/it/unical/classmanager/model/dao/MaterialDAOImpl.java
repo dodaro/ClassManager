@@ -2,9 +2,11 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.Material;
 
 public class MaterialDAOImpl implements MaterialDAO
@@ -66,6 +68,18 @@ public class MaterialDAOImpl implements MaterialDAO
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<Material> materials = session.createQuery("FROM Material").list();
 		session.close();
+		return materials;
+	}
+
+	@Override
+	public List<Material> getAllLectureMaterials(int idLecture) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+
+		Query finalQuery = session.createQuery("FROM Material as m WHERE m.lecture.id = :id");
+		finalQuery.setParameter("id", idLecture);
+		List<Material> materials = finalQuery.list();
+		
 		return materials;
 	}
 

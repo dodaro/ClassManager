@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -99,15 +101,15 @@ public class DBInitializatorController {
     /**
      * The probability for a student for the attendance of a lesson
      */
-    private static float attendanceStudentProbability = 0.75f;
+    private static float attendanceStudentProbability = 0.1f;
     /**
      * The probability for a lecture that contains materials
      */
-    private static float lectureMaterialProbability = 0.75f;
+    private static float lectureMaterialProbability = 0.1f;
     /**
      * The probability for a student that has done a homework
      */
-    private static float homeworkStudentProbability = 0.75f;
+    private static float homeworkStudentProbability = 1.0f;
     /**
      * The probability that a student ask a question
      */
@@ -178,11 +180,12 @@ public class DBInitializatorController {
 	    dbEventInit(locale, model, request);
 	    dbCommunicationInit(locale, model, request);
 	    //dbQuestionAnswerInit(locale, model, request);
+	    
 	    // Attached contents
-	    //			dbQuestionAttachedContentInit(locale, model, request);
-	    //			dbAnswerAttachedContentInit(locale, model, request);
-	    //			dbHomeworkAttachedInit(locale, model, request);
-	    //			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+	    			dbQuestionAttachedContentInit(locale, model, request);
+	    			dbAnswerAttachedContentInit(locale, model, request);
+	    			dbHomeworkAttachedInit(locale, model, request);
+	    			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
 	    
 	    initialized = true;
 	} else {
@@ -733,7 +736,7 @@ public class DBInitializatorController {
 			    "DescriptionAnswer"+k,
 			    user, 
 			    question,
-			    new ArrayList<AnswerAttachedContent>());
+			    new HashSet<AnswerAttachedContent>());
 		    answerDAO.create(answer);
 		    logger.info("Created "+answer, locale);
 		    k++;
@@ -746,7 +749,7 @@ public class DBInitializatorController {
 			    "DescriptionAnswer"+k,
 			    user, 
 			    question,
-			    new ArrayList<AnswerAttachedContent>());
+			    new HashSet<AnswerAttachedContent>());
 		    answerDAO.create(answer);
 		    logger.info("Created "+answer, locale);
 		    k++;

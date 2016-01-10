@@ -204,7 +204,10 @@ var ListenersManager = (function(){
 					var editorContent = EditorManager.getInstance().getAceEditor().getValue();
 					var evalResult = eval(editorContent.toString()) || "";
 					
-					EditorManager.getInstance().getAceConsole().setValue(evalResult.toString());
+					var console = EditorManager.getInstance().getAceConsole();
+					
+					console.setValue("");
+					console.session.insert(console.getCursorPosition(), JSON.stringify(evalResult, null, 4));
 				}
 				else {
 					
@@ -214,18 +217,6 @@ var ListenersManager = (function(){
 					$('#editorForm').submit();
 				}
 				
-				
-			});
-			
-			
-			//javascript error
-			$(window).on("error", function(error, url, line) {
-				
-				var selectVal = $("#editorLang").val();
-				
-				if(selectVal === "javascript") {
-					EditorManager.getInstance().getAceConsole().setValue(error.toString());
-				}
 				
 			});
 			

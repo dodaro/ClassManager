@@ -28,7 +28,7 @@ var NoticeBoardManager = (function() {
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 			
-			//newPostArea = CKEDITOR.replace(newPostAreaName);
+			newPostArea = CKEDITOR.replace(newPostAreaName);
 			
 			
 			$("#page-size").change(function() {
@@ -115,11 +115,18 @@ var ListenersManager = (function(){
 				}
 			});
 			
-//			$("#delete-post").click(function(data) {
-//				alert("TODO:Handle delete");
-//			});
-			$("#edit-post").click(function(data) {
-				alert("TODO:Handle edit");
+			
+			$(".edit").click(function(data) {
+				var form = $(this).closest(".row").find(".form-edit-div");
+				console.log(form);
+				if ( form.is(":visible") ) {
+					form.hide();
+				} else {
+					form.show();
+				}
+				
+				form.find(".textEditor")
+				CKEDITOR.replace(newPostAreaName);
 			});
 		
 			

@@ -36,7 +36,7 @@
 				  	<spring:bind path="description">
 						<div class="form-group ${status.error ? 'has-error' : ''}">
 						    <label for="text"><spring:message code="message.noticeboard.text" text="default text" /></label>
-						    <form:input path="description" name="text" type="text" class="form-control" id="notice-text" placeholder="Text"/>
+						    <form:textarea path="description" id="textEditor"></form:textarea>
 							<span id="helpBlock" class="help-block">${status.errorMessages[0]}</span>
 						</div>
    					 </spring:bind>
@@ -48,9 +48,17 @@
 	  			<div class="row">
 	  				<div class="col-sm-7 col-md-7 col-lg-7">
 			  			<h4>${notice.name}</h4>
-
-			  			<h4>Prof. ${notice.professor.getLastName()}</h4>
-			  			 ${notice.description}
+							<h4>
+								<c:choose>
+							    <c:when test="${notice.isServiceMessage()}">
+							        <p style="color:red;text-transform:uppercase"><spring:message code="message.noticeboard.service" text="default text"/></p>
+							    </c:when>    
+							    <c:otherwise>
+						       		${ notice.professor.getLastName()}
+						    	</c:otherwise>
+								</c:choose>
+							</h4>
+  			 			<p>${notice.description}</p>
 	  				</div>
 	  				<div class="col-sm-5 col-md-5 col-lg-5">
 	  				 	${notice.date}
@@ -59,12 +67,36 @@
 							<input type="hidden" name="post-id" value="${notice.id}"/>
 							<button type="submit" class="btn btn-danger" form="${notice.id}"><spring:message code="message.noticeboard.deletepost" text="default text"/></button>
 						</form>
-						<button class="btn btn-primary"><spring:message code="message.noticeboard.editpost" text="default text"/></button>
+						<button class="btn btn-primary edit"><spring:message code="message.noticeboard.editpost" text="default text"/></button>
 					</c:if>				
 	  				</div>
-	  			</div>
+			<div class="form-edit-div" style="display : ${ display ? 'block' : 'none'}" class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+ 				<form:form commandName="edit-notice" action="edit-notice" role="form">
+<%--  					<form:input path="professor" value="${notice.professor.getUsername()}" type="hidden"/> --%>
+				  	<spring:bind path="name">
+						<div class="form-group ${status.error ? 'has-error' : ''}">
+						   <label for="title"><spring:message code="message.noticeboard.title" text="default text" /></label>
+				  		   <form:input path="name" name="title" type="text" class="form-control" id="notice-title" placeholder="Title"/>
+						   <span id="helpBlock" class="help-block">${status.errorMessages[0]}</span>
+						</div>
+   					</spring:bind>
+				    
+				  	<spring:bind path="description">
+						<div class="form-group ${status.error ? 'has-error' : ''}">
+						    <label for="text"><spring:message code="message.noticeboard.text" text="default text" /></label>
+						    <form:textarea path="description" id="textEditor-${notice.getId()}"></form:textarea>
+							<span id="helpBlock" class="help-block">${status.errorMessages[0]}</span>
+						</div>
+   					 </spring:bind>
+				  <button type="submit" class="btn btn-default">Submit</button>
+				</form:form>
+			</div>
+		</div>			  			
 	  			
-		 
+	  			
+	  			
+	  			</div>
 		</c:forEach>
 		
 		<form id="options">

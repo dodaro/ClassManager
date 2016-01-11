@@ -21,6 +21,7 @@ import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -56,13 +57,14 @@ public class AldoLoginController {
 	    
 		user.setBirthDate(date.getTime());
 		user.setEmail("aldo@aldo.it");
-		user.setRole(User.PROFESSOR);
+		user.setRole("admin");
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
 		user.setHash(user.getPassword());
-		user.setRole("admin");
 		
-		userDao.create(user);
+		Professor aldo = new Professor(user);
+		
+		userDao.create(aldo);
 		
 		
 		EventDAO eventDao = context.getBean("eventDao",EventDAOImpl.class);

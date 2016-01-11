@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <!-- <div class="col-sm-3 col-md-3 col-lg-2"> -->
 <!-- 	<div id="sidebar-wrapper" class="sidebar-desktop"> -->
 <!-- 		<ul class="sidebar-nav"> -->
@@ -43,6 +45,9 @@
 			<li><a href="./noticeboard"> <span
 					class="glyphicon glyphicon-send"></span> <spring:message
 						code="message.noticeboard" text="default text" /> senza init
+			</a></li>
+			<li><a href="#"> <span
+					class="glyphicon glyphicon-send"></span> Apri cancello
 			</a></li>
 		</ul>
 	</div>

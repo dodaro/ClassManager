@@ -27,11 +27,24 @@ $(function(){
 
 			filemanager.addClass('searching');
 
-			
+			$(".data li").each(function(index){
+				
+				var elem = $(this);
+				var current = elem.find("form").find("input[name=topic]").val();
+				if(current.toLowerCase().indexOf(value.toLowerCase()) == -1){
+					elem.hide();
+				}
+				else
+					elem.show();
+			});
 		}
 
 		else {
 
+			$(".data li").each(function(index){
+				$(this).show();
+			});
+			
 			filemanager.removeClass('searching');
 		}
 
@@ -60,20 +73,5 @@ $(function(){
 
 		}
 
-	});
-});
-
-/**
- * called when the delete button is clicked
- */
-$(document).ready(function(){
-
-	$("#delete_btn_modal").click(function(){
-		var url = $("#visualizer").attr("href");
-		$.get( "/contents/delete", {"path" : url}, function(data){
-
-			if(data == true)
-				window.location.replace("fileBrowser");
-		});	
 	});
 });

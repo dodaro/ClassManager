@@ -103,72 +103,13 @@
 
 			<jsp:include page="./pagesCommon/sideBar.jsp" flush="true" />
 
-			<div class="col-sm-10 col-md-10 col-lg-10">
-				<br>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Weather Large</strong>
-					</div>
-					<div class="panel-body">
-						<a
-							href="http://www.accuweather.com/en/it/rende/211946/weather-forecast/211946"
-							class="aw-widget-legal"> </a>
-						<div id="awcc1452438100523" class="aw-widget-current"
-							data-locationkey="211946" data-unit="c" data-language="en-us"
-							data-useip="false" data-uid="awcc1452438100523"></div>
-						<script type="text/javascript"
-							src="http://oap.accuweather.com/launch.js"></script>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-2 col-md-2 col-lg-2"></div>
-			<div class="col-sm-3 col-md-3 col-lg-3">
-				<br>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Weather Small</strong>
-					</div>
-					<div class="panel-body">
-						<a
-							href="http://www.accuweather.com/en/it/rende/211946/weather-forecast/211946"
-							class="aw-widget-legal"> </a>
-						<div id="awcc1452438172150" class="aw-widget-current"
-							data-locationkey="211946" data-unit="c" data-language="en-us"
-							data-useip="false" data-uid="awcc1452438172150"></div>
-						<script type="text/javascript"
-							src="http://oap.accuweather.com/launch.js"></script>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-2 col-md-2 col-lg-2"></div>
-			<div class="col-sm-3 col-md-3 col-lg-3">
-				<br>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Clock</strong>
-					</div>
-				</div>
-				<div class="panel-body">
-					<script type="text/javascript"
-						src="http://100widgets.com/js_data.php?id=27"></script>
-					<script type="text/javascript"
-						src="http://100widgets.com/js_data.php?id=37"></script>
-					<script type="text/javascript"
-						src="http://100widgets.com/js_data.php?id=48"></script>
-				</div>
-			</div>
-
-			<jsp:include page="${customBody}" flush="true" />
-
 			<div class="col-sm-9 col-md-9 col-lg-10">
 				<jsp:include page="${customBody}" flush="true" />
 			</div>
 
 		</div>
 	</div>
-
+	
 	<!-- Modal For Login-->
 	<div id="login-modal" class="modal fade" role="dialog">
 		<div class="modal-dialog">

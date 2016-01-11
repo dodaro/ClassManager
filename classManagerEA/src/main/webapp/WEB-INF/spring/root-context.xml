@@ -55,13 +55,9 @@
 				<prop key="hibernate.show_sql">true</prop>
 
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-<<<<<<< HEAD
+				
 				<prop key="hibernate.show_sql">true</prop>
 
-=======
-				<!-- create -->
-				<prop key="hibernate.show_sql">false</prop>
->>>>>>> master
 			</props>
 		</property>
 	</bean>

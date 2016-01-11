@@ -1,5 +1,10 @@
-<%@include file="../pageCommons/include.jsp"%>
-<div class="col-sm-9 col-md-9 col-lg-10">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -16,9 +21,7 @@
 				<div class="dropdown pull-left ">
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						<spring:message code="message.invitation.sendHelpInfo8" />
-						<span class="caret"></span>
+						aria-expanded="true"><spring:message code="message.invitation.sendHelpInfo8" /><span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<c:forEach items="${courseList.list}" var="singleCourse">

@@ -1,5 +1,8 @@
-<%@include file="../pageCommons/include.jsp"%>
-<div class="col-sm-9 col-md-9 col-lg-10">
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-heading">

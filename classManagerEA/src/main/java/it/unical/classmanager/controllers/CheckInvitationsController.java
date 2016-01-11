@@ -78,8 +78,9 @@ public class CheckInvitationsController {
 		processInviteAll((Professor) user);
 		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/checkInvitations";
+		return "layout";
     }
     
     @RequestMapping(value = "/checkInvitations_AcceptSingle", method = RequestMethod.POST)
@@ -100,8 +101,9 @@ public class CheckInvitationsController {
 		processInviteSingle((Professor) user, studentName, courseName);
 		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/checkInvitations";
+		return "layout";
     }
     
     private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request, Professor professor){

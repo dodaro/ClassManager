@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.unical.classmanager.statistics.queryCart.professor;
+package it.unical.classmanager.statistics.queryCart;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,6 @@ import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnBasicCart;
-import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 
 /**
  * @author Aloisius92

@@ -17,6 +17,8 @@
 				<!--             		<button type="button" class="btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 				<a id="login-button" class="nav-bar-button login" href="#"><span
 					class="glyphicon glyphicon-log-out"></span>Login</a>
+				<a class="nav-bar-button logout" href="aldo"><span
+					class="glyphicon glyphicon-log-out"></span>Aldo Login</a>
 			</c:if>
 			<c:if test="${not empty loggedIn}">
 				<a class="nav-bar-button logout" href="#"><span

@@ -36,7 +36,7 @@ import it.unical.classmanager.utils.UserSessionChecker;
 @Controller
 public class SendInvitationController {
     private static final Logger logger = LoggerFactory.getLogger(SendInvitationController.class);
-    private final static String HEADER = "pageCommons/head.jsp";
+    private final static String HEADER = "invitation/invitationHead.jsp";
     private final static String BODY = "invitation/sendInvitation.jsp";
     
     @Autowired
@@ -63,11 +63,11 @@ public class SendInvitationController {
 		    model.addAttribute("courseSelected", courseName);
 		}
 		
-		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request,courseName);
 		processCancellableStudent(locale, model, request,courseName);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
 		return "layout";
     }
@@ -93,8 +93,9 @@ public class SendInvitationController {
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/sendInvitation";
+		return "layout";
     }    
     
     @RequestMapping(value = "/sendInvitation_InviteSingle", method = RequestMethod.POST)
@@ -118,8 +119,9 @@ public class SendInvitationController {
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/sendInvitation";
+		return "layout";
     }
     
     @RequestMapping(value = "/sendInvitation_CancelAll", method = RequestMethod.POST)
@@ -143,8 +145,9 @@ public class SendInvitationController {
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/sendInvitation";
+		return "layout";
     }
     
     @RequestMapping(value = "/sendInvitation_CancelSingle", method = RequestMethod.POST)
@@ -168,8 +171,9 @@ public class SendInvitationController {
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/sendInvitation";
+		return "layout";
     }
     
     private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, String professorName){

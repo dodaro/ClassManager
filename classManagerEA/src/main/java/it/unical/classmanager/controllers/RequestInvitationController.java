@@ -78,9 +78,10 @@ public class RequestInvitationController {
 		processRequestInvitationAll((Student) user);		
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
-		InvitationController.checkNewInvitations(model, user);
+		InvitationController.checkNewInvitations(model, user);		
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/requestInvitation";
+		return "layout";
     }
     
     @RequestMapping(value = "/requestInvitation_Single", method = RequestMethod.POST)
@@ -101,9 +102,10 @@ public class RequestInvitationController {
 		processRequestInvitationSingle((Student) user, courseName, professorName);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
-		InvitationController.checkNewInvitations(model, user);
+		InvitationController.checkNewInvitations(model, user);		
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/requestInvitation";
+		return "layout";
     }
     
     @RequestMapping(value = "/requestInvitation_CancelAll", method = RequestMethod.POST)
@@ -123,9 +125,10 @@ public class RequestInvitationController {
 		processCancellInvitationAll((Student) user);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
-		InvitationController.checkNewInvitations(model, user);
+		InvitationController.checkNewInvitations(model, user);		
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/requestInvitation";
+		return "layout";
     }
     
     @RequestMapping(value = "/requestInvitation_CancelSingle", method = RequestMethod.POST)
@@ -146,9 +149,10 @@ public class RequestInvitationController {
 		processCancellInvitationSingle((Student) user, courseName, professorName);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
-		InvitationController.checkNewInvitations(model, user);
+		InvitationController.checkNewInvitations(model, user);		
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
-		return "invitation/requestInvitation";
+		return "layout";
     }
     
     private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, Student student){

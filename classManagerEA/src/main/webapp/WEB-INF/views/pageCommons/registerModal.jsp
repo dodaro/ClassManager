@@ -1,3 +1,6 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <div id="register-modal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 

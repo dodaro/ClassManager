@@ -1,16 +1,13 @@
-<%@include file="pageCommons/include.jsp"%>
+<jsp:include page="pageCommons/include.jsp" flush="true" />
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Class Manager</title>
-<%@include file="pageCommons/head.jsp"%>
+<jsp:include page="pageCommons/head.jsp" flush="true" />
 <jsp:include page="${customHeader}" flush="true" />
 </head>
 <body>
 	<!-- NAVBAR -->
-	<%@include file="pageCommons/navBar.jsp"%>
+	<jsp:include page="pageCommons/navBar.jsp" flush="true" />
 
 	<div class="container-fluid page-content">
 		<div class="row">
@@ -32,10 +29,10 @@
 	</div>
 
 	<!-- Modal For Login-->
-	<%@include file="pageCommons/loginModal.jsp"%>
+	<jsp:include page="pageCommons/loginModal.jsp" flush="true" />
 
 	<!-- Modal For Register-->
-	<%@include file="pageCommons/registerModal.jsp"%>
+	<jsp:include page="pageCommons/registerModal.jsp" flush="true" />
 
 </body>
 </html>

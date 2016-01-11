@@ -1,16 +1,15 @@
 package it.unical.classmanager.controllers;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,52 +18,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.unical.classmanager.model.AbstractFileBean;
-import it.unical.classmanager.model.LectureControllerWrapper;
-import it.unical.classmanager.model.LectureWrapper;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
+import it.unical.classmanager.model.LectureControllerWrapper;
+import it.unical.classmanager.model.LectureWrapper;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
-import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkAttachedDAO;
-import it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAO;
-import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkDAO;
-import it.unical.classmanager.model.dao.HomeworkDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
-import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.MaterialDAO;
 import it.unical.classmanager.model.dao.MaterialDAOImpl;
-import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
-import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
-import it.unical.classmanager.model.data.Homework;
-import it.unical.classmanager.model.data.HomeworkAttached;
-import it.unical.classmanager.model.data.HomeworkAttachedStudentSolving;
-import it.unical.classmanager.model.data.HomeworkStudentSolving;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Material;
-import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
-import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
-//TODO reload of the page when creating new things, update lecture button not yet implemented, retrieve path from session, modal to create lecture (date and hour), deny upload exe
-//TODO validation
+//TODO filters, .exe
 /**
  * This class allows to: 
  * - get Files starting from a root (students, lectures)
@@ -77,7 +60,6 @@ public class LectureController {
 
 	private final static String HEADER = "lecturesPage/lecturesPageHeader.jsp";
 	private final static String BODY = "lecturesPage/lecturesPageBody.jsp";
-	private static final String STUDENT_BODY = "lecturesPage/studentLecturePage/studentLecturesPageBody.jsp";
 
 	@Autowired
 	ApplicationContext appContext;
@@ -99,7 +81,9 @@ public class LectureController {
 
 		//TODO retrieve from session
 		int idCourse = 1;
-		String currentPath = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH;
+		String courseName = Integer.toString(idCourse);
+		
+		String currentPath = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.LECTURES_PATH;
 
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
@@ -126,7 +110,7 @@ public class LectureController {
 
 		//TODO retrieve from session
 		int idCourse = 1;
-		String courseName = "enterpriseApplication";
+		String courseName = Integer.toString(idCourse);
 				
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
@@ -224,7 +208,7 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
-	public String createClass(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
+	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
 
 	
 		if(result.hasErrors()){
@@ -241,12 +225,14 @@ public class LectureController {
 		Lecture lecture = lectureWrapper.getLecture();
 		
 		//TODO Devo ricavarlo dalla sessione
-		String currentPath = "enterpriseApplication/lectures";
-		int id = 1;
+		int idCourse = 1;
+		String courseName = Integer.toString(idCourse);
+
+		String currentPath = courseName + File.separator + FileManager.LECTURES_PATH;
 
 		//retrieves the owner course of the new lesson
 		CourseClassDAO courseClassDao = appContext.getBean("courseClassDAO",CourseClassDAOImpl.class);
-		CourseClass courseClass = courseClassDao.get(id);
+		CourseClass courseClass = courseClassDao.get(idCourse);
 
 		lecture.setCourseClass(courseClass);
 
@@ -262,18 +248,8 @@ public class LectureController {
 			number = lastLecture.getNumber() + 1;
 
 		lecture.setNumber(number);
-
-		// Calculating random lecture start hour
-		Time beginTime = DateTimeFactory.getRandomTimeBetween(
-				new Time(8,0,0), 
-				new Time(15,0,0));
-		Time endTime = new Time(beginTime.getHours()+2, beginTime.getMinutes(), beginTime.getSeconds());
-
 		lecture.setDate(lecture.getDate());
 		lecture.setClassroom(lecture.getClassroom());
-
-		lecture.setBeginHour(beginTime);
-		lecture.setEndHour(endTime);
 
 		int newId = lectureDao.create(lecture);
 
@@ -284,11 +260,15 @@ public class LectureController {
 		boolean success = false;
 
 		success = new FileManager().mkDir(currentPath, name);
-		success = new FileManager().mkDir(currentPath + File.separator + name, FileManager.HOMEWORK_PATH);
-		success = new FileManager().mkDir(currentPath + File.separator + name, FileManager.MATERIALS_PATH);
+		if(success){
+			success = new FileManager().mkDir(currentPath + File.separator + name, FileManager.HOMEWORK_PATH);
+			if(success)
+				success = new FileManager().mkDir(currentPath + File.separator + name, FileManager.MATERIALS_PATH);
+		}
 
 		if(!success){
 			logger.error("failed to create directory " + name + " in " + currentPath);
+			lectureDao.delete(lectureDao.get(newId));
 			return "/layout";
 		}
 
@@ -350,21 +330,29 @@ public class LectureController {
 	 * @return
 	 */
 	@RequestMapping(value="/upload_materials", method=RequestMethod.POST)
-	public String uploadMaterial(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
+	public @ResponseBody String uploadMaterial(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
 
 		//TODO retrieve from session
+		int idCourse = 1;
+		String courseName = Integer.toString(idCourse);
+		
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
 		String folder_name = Integer.toString(lectureId);
 
-		String path = "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + folder_name + File.separator + FileManager.MATERIALS_PATH;
-
-		boolean success = new FileManager().mkMultipartFile(file, path, file.getOriginalFilename());
-		if(!success)
+		String path = courseName + File.separator + FileManager.LECTURES_PATH + File.separator + folder_name + File.separator + FileManager.MATERIALS_PATH;
+		String filePath = FileManager.RESOURCES_PATH + File.separator + path + File.separator;
+		String fileName = generateName(filePath, file);
+		
+		boolean success = new FileManager().mkMultipartFile(file, path, fileName);
+		if(!success){
 			logger.error("cannot save the file " + path + "/" + file.getOriginalFilename());
+			return "500";
+		}
 
 		Material material = new Material();
-		material.setName(file.getOriginalFilename());
-		material.setFilePath(FileManager.RESOURCES_PATH + File.separator + path + File.separator + file.getOriginalFilename());
+		
+		material.setName(fileName);
+		material.setFilePath(filePath + fileName);
 		material.setHidden(false);
 		material.setType(file.getContentType().split("/")[1]);
 		material.setLecture(lecture);
@@ -374,7 +362,7 @@ public class LectureController {
 
 		logger.info("saving file");
 
-		return "redirect:/materials?path=" + path + "&parentId=" + lectureId;
+		return "200";
 	}
 
 
@@ -473,6 +461,30 @@ public class LectureController {
 			return false;
 		
 		return true;
+	}
+	
+	private String generateName(String filePath, MultipartFile file){
+		
+		String newFileName = file.getOriginalFilename();
+		if(new File(filePath + newFileName).exists()) {
+			
+			ArrayList<String> fileNameSplitted = new ArrayList<String>(Arrays.asList(file.getOriginalFilename().split("\\.(?=[^\\.]+$)")));
+			if(fileNameSplitted.size() == 1) {
+				fileNameSplitted.add("");
+			}
+			else {
+				fileNameSplitted.add(1, "." + fileNameSplitted.get(1));
+			}
+
+			
+			String name = fileNameSplitted.get(0);
+			String extension = fileNameSplitted.get(1);
+			name += "_" + new Random(System.currentTimeMillis()).nextInt(1000000);
+			
+			newFileName = name + extension;
+		}
+		
+		return newFileName = StringEscapeUtils.escapeSql(newFileName);
 	}
 
 }

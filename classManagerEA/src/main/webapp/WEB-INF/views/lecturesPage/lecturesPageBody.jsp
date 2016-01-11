@@ -18,8 +18,13 @@
 
 			<div class="search">
 				<input type="search" placeholder="Find a file.." />
+				<span class="glyphicon glyphicon-search" style="color: white"></span>
 			</div>
-			<div class="breadcrumbs"><a href="${backPage}">Indietro</a></div>
+			<div class="breadcrumbs">
+				<a href="${backPage}">
+					<span class="glyphicon glyphicon-hand-left" style="color: white"></span>
+				</a>
+			</div>
 
 			<div class="row row-content">
 
@@ -150,6 +155,9 @@
 $(document).ready(function() 
 {
 	$('#createNewClass_modal_open').modal('show');
+	$('#createNewClass_modal_open').attr("id","createNewClass_modal");
+	
 	$('#addHomework_modal_open').modal('show');
+	$('#addHomework_modal_open').attr("id","addHomework_modal");
 });
 </script>

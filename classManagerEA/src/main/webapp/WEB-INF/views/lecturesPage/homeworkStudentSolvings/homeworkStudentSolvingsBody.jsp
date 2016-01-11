@@ -33,8 +33,13 @@
 
 			<div class="search">
 				<input type="search" placeholder="Find a file.." />
+				<span class="glyphicon glyphicon-search" style="color: white"></span>
 			</div>
-			<div class="breadcrumbs"></div>
+			<div class="breadcrumbs">
+				<a href="${backPage}">
+					<span class="glyphicon glyphicon-hand-left" style="color: white"></span>
+				</a>
+			</div>
 
 			<ul class="data">
 				<c:choose>

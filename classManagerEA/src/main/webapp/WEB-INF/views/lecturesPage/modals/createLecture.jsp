@@ -99,8 +99,7 @@
 								<button type="submit" class="btn btn-success">
 									<spring:message code="lectureManager.done" text="default text" />
 								</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.replace('/lectures')" >
 									<spring:message code="lectureManager.close" text="default text" />
 								</button>
 							</div>

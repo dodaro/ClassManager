@@ -237,7 +237,8 @@ function addLink(){
 	alert("ciao");
 }
 
-function reload(){
+function reloadHomework(event){
 	
-	window.location.reload();
+	var homeworkId = $("#addHomeworkModal_id").val()
+	window.location.reload("/homework?path=&parentId=" + homeworkId);
 }

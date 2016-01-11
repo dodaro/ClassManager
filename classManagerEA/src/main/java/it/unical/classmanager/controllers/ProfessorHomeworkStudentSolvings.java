@@ -87,7 +87,7 @@ public class ProfessorHomeworkStudentSolvings {
 
 		//TODO retrieve from session
 		int idCourse = 1;
-		String courseName = "enterpriseApplication";
+		String courseName = Integer.toString(idCourse);
 
 		CourseClassDAO courseClassDAO = appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 		CourseClass course = courseClassDAO.get(idCourse);	
@@ -115,6 +115,10 @@ public class ProfessorHomeworkStudentSolvings {
 		model.addAttribute("files", files);
 		model.addAttribute("pwd",FileManager.STUDENTS_PATH);
 
+		//BACK PAGE
+		String referred = "/students";
+		model.addAttribute("backPage", referred);
+
 		logger.info("get students of a course");
 
 		return "layout";
@@ -128,7 +132,7 @@ public class ProfessorHomeworkStudentSolvings {
 
 		//TODO retrieve from session
 		int idCourse = 1;
-		String courseName = "enterpriseApplication";
+		String courseName = Integer.toString(idCourse);
 
 		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
 		List<HomeworkStudentSolving> allHomeworkStudentSolvings = homeworkStudentSolvingDAO.getAllHomeworkStudentSolvings(studentId);
@@ -153,10 +157,14 @@ public class ProfessorHomeworkStudentSolvings {
 		model.addAttribute("files", files);
 		model.addAttribute("pwd",FileManager.HOMEWORK_PATH);
 
+		//BACK PAGE
+		String referred = "/studentsHomeworks?id" + studentId;
+		model.addAttribute("backPage", referred);
+
 		return "layout";
 	}
 
-	
+
 	@RequestMapping(value = "/professorStudentHomeworkAttachments", method = RequestMethod.GET)
 	public String getStudentsHomeworkSolvingsAttachmets(Model model, @RequestParam("id") int homeworkStudentSolvingId) {
 
@@ -185,8 +193,12 @@ public class ProfessorHomeworkStudentSolvings {
 		model.addAttribute("contents", allHomeworkAttachedStudentSolvings);
 		model.addAttribute("files", files);
 		model.addAttribute("pwd",FileManager.HOMEWORK_PATH);
-		
+
+		//BACK PAGE
+		String referred = "/professorStudentHomeworkAttachments?path=" + homeworkStudentSolvingId;
+		model.addAttribute("backPage", referred);
+
 		return "layout";
 	}
-	
+
 }

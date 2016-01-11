@@ -22,9 +22,9 @@ public class HomeworkAttachedStudentSolvingDAOImpl implements HomeworkAttachedSt
 		return dbHandler;
 	}
 
-	public void create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)
+	public HomeworkAttachedStudentSolving create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)
 	{
-		this.dbHandler.create(homeworkAttachedStudentSolving);
+		return (HomeworkAttachedStudentSolving) this.dbHandler.create(homeworkAttachedStudentSolving);
 	}
 
 	public void update(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)

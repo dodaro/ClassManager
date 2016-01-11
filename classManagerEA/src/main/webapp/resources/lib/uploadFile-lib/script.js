@@ -70,6 +70,10 @@ $(function(){
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');
+        },
+        
+        always: function (e, data) {
+        	window.location.reload()
         }
 
     });

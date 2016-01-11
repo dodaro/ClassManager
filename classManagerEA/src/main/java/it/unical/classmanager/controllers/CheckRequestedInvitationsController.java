@@ -25,6 +25,8 @@ import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
  * @author Aloisius92
@@ -32,8 +34,9 @@ import it.unical.classmanager.model.data.User;
  */
 @Controller
 public class CheckRequestedInvitationsController {
-    
     private static final Logger logger = LoggerFactory.getLogger(CheckRequestedInvitationsController.class);
+    private final static String HEADER = "pageCommons/head.jsp";
+    private final static String BODY = "invitation/checkRequestedInvitations.jsp";
     
     @Autowired
     ApplicationContext appContext;
@@ -44,18 +47,17 @@ public class CheckRequestedInvitationsController {
     @RequestMapping(value = "/checkRequestedInvitations", method = RequestMethod.GET)
     public String checkRequestedInvitations(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("CheckRequestedInvitations Page", locale);
-	
-	String username = (String) request.getSession().getAttribute("loggedIn");	
-	if ( username == null ) {			
+
+	User user = UserSessionChecker.checkUserSession(model, request);
+	if ( user == null ) {			
 	    return "redirect:/";
-	}
-	User user = DaoHelper.getUserDAO().get(username);
-	model.addAttribute("user",user.getUsername());
+	}	
 	
 	processAcceptableCourse(locale, model, request, (Student) user);
 	InvitationController.checkNewInvitations(model, user);
+	CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 	
-	return "invitation/checkRequestedInvitations";
+	return "layout";
     }
     
     @RequestMapping(value = "/checkRequestedInvitations_All", method = RequestMethod.POST)
@@ -67,12 +69,10 @@ public class CheckRequestedInvitationsController {
 		
 		System.err.println("Accept: "+value);
 		
-		String username = (String) request.getSession().getAttribute("loggedIn");
-		if ( username == null ) {			
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
 		    return "redirect:/";
-		}
-		User user = DaoHelper.getUserDAO().get(username);
-		model.addAttribute("user",user.getUsername());
+		}	
 		
 		processAcceptInvitationAll((Student) user);
 		processAcceptableCourse(locale, model, request, (Student) user);
@@ -91,12 +91,10 @@ public class CheckRequestedInvitationsController {
 		
 		System.err.println("Accept: "+courseName+", Professor: "+professorName);
 		
-		String username = (String) request.getSession().getAttribute("loggedIn");
-		if ( username == null ) {			
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
 		    return "redirect:/";
-		}
-		User user = DaoHelper.getUserDAO().get(username);
-		model.addAttribute("user",user.getUsername());
+		}	
 		
 		processAcceptInvitationSingle((Student) user, courseName, professorName);
 		processAcceptableCourse(locale, model, request, (Student) user);

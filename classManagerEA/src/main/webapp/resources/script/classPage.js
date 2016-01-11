@@ -232,6 +232,11 @@ function update_homeworks(event){
 	
 }
 
+function addLink(){
+	
+	alert("ciao");
+}
+
 function reload(){
 	
 	window.location.reload();

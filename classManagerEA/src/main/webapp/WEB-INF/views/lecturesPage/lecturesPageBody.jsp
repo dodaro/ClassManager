@@ -19,7 +19,7 @@
 			<div class="search">
 				<input type="search" placeholder="Find a file.." />
 			</div>
-			<div class="breadcrumbs"></div>
+			<div class="breadcrumbs"><a href="${backPage}">Indietro</a></div>
 
 			<div class="row row-content">
 

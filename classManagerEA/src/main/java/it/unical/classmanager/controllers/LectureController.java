@@ -27,10 +27,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.LectureControllerWrapper;
+import it.unical.classmanager.model.LectureWrapper;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkAttachedDAO;
@@ -122,6 +124,10 @@ public class LectureController {
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
+		//TODO retrieve from session
+		int idCourse = 1;
+		String courseName = "enterpriseApplication";
+				
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 
@@ -132,8 +138,8 @@ public class LectureController {
 
 		List<AbstractFileBean> lectureContent = new ArrayList<AbstractFileBean>();
 
-		String path = params.getPath();
 		int lectureId = params.getParentId();
+		String path = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.LECTURES_PATH + File.separator + lectureId;
 
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
@@ -151,7 +157,10 @@ public class LectureController {
 		lectureContent.add(materials);
 
 		model.addAttribute("files", lectureContent);
-
+		
+		String referred = "/lectures?path=lectures";
+		model.addAttribute("backPage", referred);
+		
 		logger.info("getLectureContent");
 
 		return "layout";
@@ -162,6 +171,10 @@ public class LectureController {
 	public String getHomeworks(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
+		//TODO retrieve from session
+		int courseId = 1;
+		String courseName = "enterpiseApplication";
+		
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 
@@ -171,11 +184,15 @@ public class LectureController {
 		}
 
 		int idLecture = params.getParentId();
-		String path = params.getPath();
-
+		String path = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.LECTURES_PATH + File.separator + idLecture + File.separator + FileManager.HOMEWORK_PATH;
+		
 		model.addAttribute("homework", new Homework());
 		model.addAttribute("parentId", idLecture);
-
+		
+		//BACK PAGE
+		String referred = "/lectureContent?parentId=" + idLecture;
+		model.addAttribute("backPage", referred);
+		
 		if(canCreate(request))
 			model.addAttribute("canCreate", true);
 		
@@ -253,8 +270,11 @@ public class LectureController {
 
 		if(canCreate(request))
 			model.addAttribute("canCreate", true);
+		
+		String referred = "/lectureContent?parentId=" + idLecture;
+		model.addAttribute("backPage", referred);
+		
 		logger.info("getMaterials");
-
 
 		return "layout";
 	}
@@ -309,6 +329,12 @@ public class LectureController {
 		else
 			model.addAttribute("canCreate",true);
 
+
+		//BACK PAGE
+		HomeworkDAO homeworkDAO = DaoHelper.getHomeworkDAO();
+		String referred = "/homeworks?parentId=" + homeworkDAO.get(idHomework).getLecture().getId();;
+		model.addAttribute("backPage", referred);
+				
 		logger.info("getHomeworkAttached");
 		return "layout";
 	}
@@ -384,17 +410,22 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
-	public String createClass(@Valid @ModelAttribute("lecture")Lecture lecture, BindingResult result, HttpServletRequest request, Model model) {
+	public String createClass(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
 
-
+	
 		if(result.hasErrors()){
 
 			model.addAttribute("modalState", "_open");
-			model.addAttribute("lecture", lecture);
+			model.addAttribute("lecture", lectureWrapper);
 
+			if(canCreate(request))
+				model.addAttribute("canCreate", true);
+			
 			return getLectures(model);
 		}
 
+		Lecture lecture = lectureWrapper.getLecture();
+		
 		//TODO Devo ricavarlo dalla sessione
 		String currentPath = "enterpriseApplication/lectures";
 		int id = 1;

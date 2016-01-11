@@ -45,7 +45,13 @@ public class CPPEnvironment extends Environment{
 				return result.getConsoleResult();
 			}
 			
-			result = this.terminal.executeCommand(tmpDir, "./"+tmpfileName);
+			
+			result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/home/docker" + tmpDir + tmpfileName);
+			
+			
+			//result = this.terminal.executeCommand(tmpDir, "./"+tmpfileName);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				

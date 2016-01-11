@@ -36,7 +36,12 @@ public class DLVEnvironment extends Environment{
 			String tmpDir = this.directoryPath + tmpfileName + "/";
 			createSandbox(tmpfileName, content);
 			
-			ExecutionResult result = this.terminal.executeCommand(tmpDir, "/home/sera/Programs/dlv/dlv", "./"+tmpfileName+this.extension);
+			ExecutionResult result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/home/docker/dlv", "/home/docker" + tmpDir + tmpfileName + this.extension);
+			
+			
+			//ExecutionResult result = this.terminal.executeCommand(tmpDir, "/home/sera/Programs/dlv/dlv", "./"+tmpfileName+this.extension);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				

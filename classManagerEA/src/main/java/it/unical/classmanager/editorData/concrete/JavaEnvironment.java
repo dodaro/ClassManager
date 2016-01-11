@@ -71,7 +71,12 @@ public class JavaEnvironment extends Environment{
 				return result.getConsoleResult();
 			}
 			
-			result = this.terminal.executeCommand(tmpDir, "java", this.className);
+			result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/bin/sh", "-c", "cd /home/docker" + tmpDir + "; java " + this.className );
+			
+			
+			//result = this.terminal.executeCommand(tmpDir, "java", this.className);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				
@@ -122,5 +127,6 @@ public class JavaEnvironment extends Environment{
 		
 		return "";
 	}
+	
 	
 }

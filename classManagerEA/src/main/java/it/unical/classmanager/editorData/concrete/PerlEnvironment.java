@@ -36,7 +36,13 @@ public class PerlEnvironment extends Environment{
 			String tmpDir = this.directoryPath + tmpfileName + "/";
 			createSandbox(tmpfileName, content);
 			
-			ExecutionResult result = this.terminal.executeCommand(tmpDir, "perl", "./"+tmpfileName+this.extension);
+			
+			ExecutionResult result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "perl", "/home/docker" + tmpDir + tmpfileName + this.extension);
+			
+			
+			//ExecutionResult result = this.terminal.executeCommand(tmpDir, "perl", "./"+tmpfileName+this.extension);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				

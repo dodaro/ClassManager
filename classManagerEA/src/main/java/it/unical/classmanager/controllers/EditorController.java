@@ -48,11 +48,12 @@ public class EditorController {
 		Environment env = EnvironmentManger.getInstance().getEnvironment(EnvironmentEnum.getEnumFromString(lang));
 		List<EnvironmentEnum> envLangs = EnvironmentManger.getInstance().getAviableLanguage();
 
-		status.setConsoleContent(env.compile(status.getCode()));
+		String tmpResult = env.compile(status.getCode());
+		status.setConsoleContent(tmpResult);
 		
 		model.addAttribute("status", status);
 		model.addAttribute("aviableLangs", envLangs);
-		
+
 		return "editor";
 	}
 	

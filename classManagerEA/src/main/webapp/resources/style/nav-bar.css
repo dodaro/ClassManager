@@ -153,5 +153,15 @@ a:hover.nav-bar-button
 }
 
 .modal{
-    overflow-y: scroll
+    overflow-y: scroll;
+}
+
+.invitationActionButton {
+	background-color: #FF6600;
+	color: #FFFFFF;
+}
+
+.invitationCancelButton {
+	background-color: #FF0000;
+	color: #FFFFFF;
 }

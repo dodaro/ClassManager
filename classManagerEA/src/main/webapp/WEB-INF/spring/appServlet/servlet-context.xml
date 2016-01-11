@@ -29,6 +29,7 @@
 	<beans:bean id="messageSource"
 	      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 
+<<<<<<< HEAD
 	    <beans:property name="basenames">
 	    	<beans:array>
 	    		<beans:value>/i18n/messages</beans:value>
@@ -62,4 +63,44 @@
             <beans:property name="paramName" value="locale" />
         </beans:bean>
     </interceptors>
+=======
+	<!-- <beans:bean id="messageSource" -->
+	<!-- class="org.springframework.context.support.ReloadableResourceBundleMessageSource"> -->
+	<!-- <beans:property name="basenames" -->
+	<!-- value="/i18n/messages,/i18n/forum/messages_forum,/i18n/editor/messages_editor,/i18n/noticeboard/messages_noticeboard"/> -->
+	<!-- <beans:property name="fallbackToSystemLocale" value="false" /> -->
+	<!-- </beans:bean> -->
+
+
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:array>
+				<beans:value>/i18n/messages</beans:value>
+				<beans:value>/i18n/forum/messages_forum</beans:value>
+				<beans:value>/i18n/editor/messages_editor</beans:value>
+	    		<beans:value>/i18n/lectureManager/messages_lectureManager</beans:value>
+	    		<beans:value>/i18n/calendar/messages_calendar</beans:value>
+				<beans:value>/i18n/statistics/messages_statistics</beans:value>
+				<beans:value>/i18n/noticeboard/messages_noticeboard</beans:value>
+				<beans:value>/i18n/invitation/messages_invitation</beans:value>
+				<beans:value>/i18n/course/messages_course</beans:value>
+			</beans:array>
+		</beans:property>
+		<beans:property name="fallbackToSystemLocale" value="false" />
+	</beans:bean>
+
+	<beans:bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="it" />
+	</beans:bean>
+
+	<interceptors>
+		<beans:bean
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<beans:property name="paramName" value="locale" />
+		</beans:bean>
+	</interceptors>
+
+>>>>>>> master
 </beans:beans>

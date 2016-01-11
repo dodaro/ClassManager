@@ -21,12 +21,12 @@ public class QuestionAttachedContentDAOImpl implements QuestionAttachedContentDA
 		return dbHandler;
 	}
 	
-	public void create(QuestionAttachedContent questionAttachedContent){
-		this.dbHandler.create(questionAttachedContent);
+	public QuestionAttachedContent create(QuestionAttachedContent questionAttachedContent){
+		return (QuestionAttachedContent) this.dbHandler.create(questionAttachedContent);
 	}
 
-	public void update(QuestionAttachedContent questionAttachedContent){
-		this.dbHandler.update(questionAttachedContent);
+	public QuestionAttachedContent update(QuestionAttachedContent questionAttachedContent){
+		return (QuestionAttachedContent) this.dbHandler.update(questionAttachedContent);
 	}
 
 	public void delete(QuestionAttachedContent questionAttachedContent){

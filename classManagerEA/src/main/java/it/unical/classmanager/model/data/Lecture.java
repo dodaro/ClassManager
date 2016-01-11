@@ -213,5 +213,97 @@ public class Lecture implements Serializable  {
 	public void setHomeworks(List<Homework> homeworks) {
 		this.homeworks = homeworks;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attendanceStudentLectures == null) ? 0 : attendanceStudentLectures.hashCode());
+		result = prime * result + ((beginHour == null) ? 0 : beginHour.hashCode());
+		result = prime * result + ((classroom == null) ? 0 : classroom.hashCode());
+		result = prime * result + ((courseClass == null) ? 0 : courseClass.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((endHour == null) ? 0 : endHour.hashCode());
+		result = prime * result + ((homeworks == null) ? 0 : homeworks.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((materials == null) ? 0 : materials.hashCode());
+		result = prime * result + number;
+		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
+		result = prime * result + ((topic == null) ? 0 : topic.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Lecture other = (Lecture) obj;
+		if (attendanceStudentLectures == null) {
+			if (other.attendanceStudentLectures != null)
+				return false;
+		} else if (!attendanceStudentLectures.equals(other.attendanceStudentLectures))
+			return false;
+		if (beginHour == null) {
+			if (other.beginHour != null)
+				return false;
+		} else if (!beginHour.equals(other.beginHour))
+			return false;
+		if (classroom == null) {
+			if (other.classroom != null)
+				return false;
+		} else if (!classroom.equals(other.classroom))
+			return false;
+		if (courseClass == null) {
+			if (other.courseClass != null)
+				return false;
+		} else if (!courseClass.equals(other.courseClass))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (endHour == null) {
+			if (other.endHour != null)
+				return false;
+		} else if (!endHour.equals(other.endHour))
+			return false;
+		if (homeworks == null) {
+			if (other.homeworks != null)
+				return false;
+		} else if (!homeworks.equals(other.homeworks))
+			return false;
+		if (id != other.id)
+			return false;
+		if (materials == null) {
+			if (other.materials != null)
+				return false;
+		} else if (!materials.equals(other.materials))
+			return false;
+		if (number != other.number)
+			return false;
+		if (questions == null) {
+			if (other.questions != null)
+				return false;
+		} else if (!questions.equals(other.questions))
+			return false;
+		if (topic == null) {
+			if (other.topic != null)
+				return false;
+		} else if (!topic.equals(other.topic))
+			return false;
+		return true;
+	}
+	
 	
 }

@@ -96,7 +96,7 @@
 															<div class="panel-title">
 																<div>
 																	<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-																	 <b>Attachment</b>
+																	 <b><spring:message code="message.forum.attachments" /></b>
 																	</div>
 																</div>
 															</div>
@@ -175,6 +175,48 @@
 											  			<p>${answer.getDescription() }</p>
 											  		</div>
 											  	</div>
+											  	
+											  	<c:if test="${answer.getAnswerAttachedContents().size() != 0 }">
+													<div class="row" style="margin-top: 20px;">
+												  		<div class="col-sm-8 col-md-8 col-lg-8">
+												  		
+											  				<div class="panel-group" id="accordion" role="tablist">
+																<div class="panel panel-default">
+																	<div class="panel-heading" role="tab" id="heading${answer.getId() }">
+																		<div class="panel-title">
+																			<div>
+																				<div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse${answer.getId() }" aria-expanded="false" aria-controls="collapse${answer.getId() }">
+																				 <b><spring:message code="message.forum.attachments" /></b>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="collapse${answer.getId() }" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${answer.getId() }">
+																		<div class="panel-body">
+																		
+																			<c:forEach var="attachment" items="${answer.getAnswerAttachedContents() }">
+																  				<div class="row">
+																  					<div class="col-sm-6 col-md-6 col-lg-6">
+																  						<div class="row">
+																  							<div class="col-sm-2 col-md-2 col-lg-2">
+																					  			<span style="font-size:2em;" class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+																  							</div>
+																  							<div class="col-sm-10 col-md-10 col-lg-10">
+																  								<a href="/download?path=${attachment.getFilePath() }">${attachment.getName() }</a>
+																  							</div>
+																  						</div>
+																  					</div>
+																  				</div>
+																  			</c:forEach>
+																		
+																		</div>
+																	</div>
+																</div>
+															</div>	
+												  		</div>
+												  	</div>									
+												</c:if>								  	
+											  	
 											  	
 											  	<div class="row">
 											  		<c:choose>

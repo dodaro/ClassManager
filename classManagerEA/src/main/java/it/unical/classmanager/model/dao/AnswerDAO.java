@@ -5,9 +5,9 @@ import java.util.List;
 import it.unical.classmanager.model.data.Answer;
 
 public interface AnswerDAO {
-	public void create(Answer answer);
+	public Answer create(Answer answer);
 
-	public void update(Answer answer);
+	public Answer update(Answer answer);
 
 	public void delete(Answer answer);
 

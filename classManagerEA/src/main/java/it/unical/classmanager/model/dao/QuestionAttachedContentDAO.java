@@ -6,9 +6,9 @@ import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 
 public interface QuestionAttachedContentDAO {
-	public void create(QuestionAttachedContent questionAttachedContent);
+	public QuestionAttachedContent create(QuestionAttachedContent questionAttachedContent);
 
-	public void update(QuestionAttachedContent questionAttachedContent);
+	public QuestionAttachedContent update(QuestionAttachedContent questionAttachedContent);
 
 	public void delete(QuestionAttachedContent questionAttachedContent);
 

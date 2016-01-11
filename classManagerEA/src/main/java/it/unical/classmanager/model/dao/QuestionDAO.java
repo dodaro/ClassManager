@@ -6,9 +6,9 @@ import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
 import it.unical.classmanager.model.data.Question;
 
 public interface QuestionDAO {
-	public Object create(Question question);
+	public Question create(Question question);
 
-	public void update(Question question);
+	public Question update(Question question);
 
 	public void delete(Question question);
 

@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
+import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 {
@@ -21,14 +22,14 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 		return dbHandler;
 	}
 
-	public void create(AnswerAttachedContent answerAttachedContent)
+	public AnswerAttachedContent create(AnswerAttachedContent answerAttachedContent)
 	{
-		this.dbHandler.create(answerAttachedContent);
+		return (AnswerAttachedContent) this.dbHandler.create(answerAttachedContent);
 	}
 
-	public void update(AnswerAttachedContent answerAttachedContent)
+	public AnswerAttachedContent update(AnswerAttachedContent answerAttachedContent)
 	{
-		this.dbHandler.update(answerAttachedContent);
+		return (AnswerAttachedContent) this.dbHandler.update(answerAttachedContent);
 	}
 
 	public void delete(AnswerAttachedContent answerAttachedContent)
@@ -40,7 +41,7 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		AnswerAttachedContent answerAttachedContent = (AnswerAttachedContent) session.createSQLQuery(
-				"SELECT answerAttachedContent FROM AnswerAttachedContent answerAttachedContent WHERE id = " + id)
+				"SELECT * FROM answerAttachedContent WHERE id = " + id)
 				.addEntity(AnswerAttachedContent.class).uniqueResult();
 		session.close();
 		return answerAttachedContent;
@@ -68,6 +69,19 @@ public class AnswerAttachedContentDAOImpl implements AnswerAttachedContentDAO
 		List<AnswerAttachedContent> answerAttachedContents = session.createQuery("FROM AnswerAttachedContent").list();
 		session.close();
 		return answerAttachedContents;
+	}
+	
+	
+	public AnswerAttachedContent searchByPath(String path) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		AnswerAttachedContent answerAttachedContent = 
+				(AnswerAttachedContent) session
+				.createSQLQuery("SELECT * FROM answerAttachedContent WHERE filePath = '" + path + "'")
+				.addEntity(AnswerAttachedContent.class)
+				.uniqueResult();
+		session.close();
+		return answerAttachedContent;
 	}
 
 }

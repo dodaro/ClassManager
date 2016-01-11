@@ -3,6 +3,7 @@ package it.unical.classmanager.model.dao;
 import java.util.List;
 
 import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 
@@ -22,5 +23,30 @@ public interface RegistrationStudentClassDAO {
 
 	public List<RegistrationStudentClass> getAllRegistrationStudentClasses();
 
-	List<Student> getStudentsRegisteredToACourse( CourseClass course);
+	public List<Student> getStudentsRegisteredToACourse( CourseClass course);
+
+	public List<Object[]> getSelectableCourse( Student student);
+	
+	public List<Object[]> getSelectableCourse( Professor professor);
+
+	public List<Object[]> getCancellableCourse( Student student);
+
+	public List<Object[]> getSelectableStudent( CourseClass courseClass);
+
+	public List<Object[]> getCancellableStudent( CourseClass courseClass);
+
+	public List<Object[]> getAcceptableCourse( Student student);
+
+	public List<Object[]> getAcceptableStudent( Professor professor);
+
+	public int getNewInvitationsOfStudent( Student student);
+
+	public int getNewInvitationsOfProfessor( Professor professor);
+
+	public int getMaxIndex();
+
+	public boolean existRegistration(Student student, CourseClass courseClass);
+
+	public RegistrationStudentClass getRegistration(Student student, CourseClass courseClass);
+
 }

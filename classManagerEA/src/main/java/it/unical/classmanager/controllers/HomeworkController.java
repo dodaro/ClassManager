@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -341,7 +342,7 @@ public class HomeworkController {
 	}
 
 
-	@RequestMapping(value = "/update_homework", method = RequestMethod.POST)
+	@RequestMapping(value = "/update_homeworks", method = RequestMethod.POST)
 	public String updateHomework(Model model, Homework homework, @RequestParam("parentId") int lectureId) {
 
 		//TODO
@@ -371,7 +372,7 @@ public class HomeworkController {
 	 * @return
 	 */
 	@RequestMapping(value="/upload_homeworkAttached", method=RequestMethod.POST)
-	public String uploadHomework(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkId) {
+	public @ResponseBody String uploadHomework(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkId) {
 
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 		Homework homework = homeworkDAO.get(homeworkId);
@@ -406,7 +407,7 @@ public class HomeworkController {
 	 * @return
 	 */
 	@RequestMapping(value="/upload_homeworkStudentSolvingAttachment", method=RequestMethod.POST)
-	public String uploadHomeworkStudentSolving(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkStudentSolvingId, HttpServletRequest request) {
+	public @ResponseBody String uploadHomeworkStudentSolving(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkStudentSolvingId, HttpServletRequest request) {
 
 		//TODO Devo ricavarlo dalla sessione
 		int idCourse = 1;
@@ -442,7 +443,7 @@ public class HomeworkController {
 
 
 
-	@RequestMapping(value="/delete_homework", method=RequestMethod.POST)
+	@RequestMapping(value="/delete_homeworks", method=RequestMethod.POST)
 	public String deleteHomework(@RequestParam("homeworkId") int id) {
 
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);

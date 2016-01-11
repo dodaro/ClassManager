@@ -47,7 +47,7 @@ import it.unical.classmanager.model.data.Material;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
 
-//TODO filters, .exe
+//TODO .exe
 /**
  * This class allows to: 
  * - get Files starting from a root (students, lectures)
@@ -209,7 +209,6 @@ public class LectureController {
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
 	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
-
 	
 		if(result.hasErrors()){
 
@@ -387,7 +386,7 @@ public class LectureController {
 		return "redirect:/lectures?path=lectures";
 	}
 
-	@RequestMapping(value="/delete_material", method=RequestMethod.POST)
+	@RequestMapping(value="/delete_materials", method=RequestMethod.POST)
 	public String deleteMaterial(@RequestParam("materialId") int id) {
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);

@@ -30,6 +30,23 @@
     <url-pattern>/forum/*</url-pattern>
   </filter-mapping>
   
+  <filter>
+    <display-name>ProfessorCheckerFilter</display-name>
+    <filter-name>ProfessorCheckerFilter</filter-name>
+    <filter-class>it.unical.classmanager.filters.ProfessorCheckerFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ProfessorCheckerFilter</filter-name>
+    <url-pattern>/lectures</url-pattern>
+    <url-pattern>/update_lecture</url-pattern>
+    <url-pattern>/delete_lecture</url-pattern>
+    <url-pattern>/upload_materials</url-pattern>
+    <url-pattern>/delete_materials</url-pattern>
+    <url-pattern>/homeworks</url-pattern>
+    <url-pattern>/update_homeworks</url-pattern>
+    <url-pattern>/delete_homeworks</url-pattern>
+  </filter-mapping>
+  
   <!-- 
   <filter>
     <display-name>InternationalizationCheckerFilter</display-name>

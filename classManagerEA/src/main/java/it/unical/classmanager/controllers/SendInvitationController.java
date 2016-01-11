@@ -64,8 +64,8 @@ public class SendInvitationController {
 		}
 		
 		processSelectableCourse(locale, model, request, user.getUsername());
-		processSelectableStudent(locale, model, request,courseName);
-		processCancellableStudent(locale, model, request,courseName);
+		processSelectableStudent(locale, model, request, courseName);
+		processCancellableStudent(locale, model, request, courseName);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		
@@ -78,8 +78,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "InviteAll", required = true) String value, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){
-		
+	    HttpServletRequest request){		
 		System.err.println("Received: "+value);
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
@@ -104,8 +103,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "StudentName", required = true) String studentName, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){
-		
+	    HttpServletRequest request){		
 		System.err.println("Received: "+studentName);
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
@@ -130,8 +128,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "CancelAll", required = true) String value, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){
-		
+	    HttpServletRequest request){		
 		System.err.println("Received: "+value);
 		
 		User user = UserSessionChecker.checkUserSession(model, request);

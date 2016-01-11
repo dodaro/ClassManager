@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<jsp:include page="../pageCommons/head.jsp" flush="true" />
 
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
@@ -20,10 +20,12 @@
 				</strong>
 				<div class="dropdown pull-left ">
 					<button class="btn btn-default dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true"><spring:message code="message.invitation.sendHelpInfo8" /><span class="caret"></span>
+						id="courseSelector" data-toggle="dropdown" aria-haspopup="false"
+						aria-expanded="true">
+						<spring:message code="message.invitation.sendHelpInfo8" />
+						<span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<ul class="dropdown-menu" aria-labelledby="courseSelector">
 						<c:forEach items="${courseList.list}" var="singleCourse">
 							<li><a
 								href="/sendInvitation?courseName='${singleCourse.field1}'">${singleCourse.field1}</a></li>

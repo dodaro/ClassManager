@@ -1,19 +1,19 @@
-package it.unical.classmanager.invitations;
+package it.unical.classmanager.utils;
 
-public class InvitationBean {
+public class GenericContainerBean {
     private String field1;
     private String field2;
     private String field3;
     private String field4;
     
-    public InvitationBean() {
+    public GenericContainerBean() {
 	field1 = "";
 	field2 = "";
 	field3 = "";
 	field4 = "";
     }
     
-    public InvitationBean(String field1) {
+    public GenericContainerBean(String field1) {
 	super();
 	this.field1 = field1;
 	this.field2 = "";
@@ -21,7 +21,7 @@ public class InvitationBean {
 	this.field4 = "";
     }
     
-    public InvitationBean(String field1, String field2) {
+    public GenericContainerBean(String field1, String field2) {
 	super();
 	this.field1 = field1;
 	this.field2 = field2;
@@ -29,7 +29,7 @@ public class InvitationBean {
 	this.field4 = "";
     }
     
-    public InvitationBean(String field1, String field2, String field3) {
+    public GenericContainerBean(String field1, String field2, String field3) {
 	super();
 	this.field1 = field1;
 	this.field2 = field2;
@@ -37,7 +37,7 @@ public class InvitationBean {
 	this.field4 = "";
     }
     
-    public InvitationBean(String field1, String field2, String field3, String field4) {
+    public GenericContainerBean(String field1, String field2, String field3, String field4) {
 	super();
 	this.field1 = field1;
 	this.field2 = field2;

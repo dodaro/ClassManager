@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.unical.classmanager.invitations.InvitationBean;
-import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.data.CourseClass;
@@ -26,6 +24,8 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.GenericContainerBean;
+import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -106,18 +106,18 @@ public class CheckRequestedInvitationsController {
     }
     
     private void processAcceptableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	InvitationBeanList acceptableCourse = getAcceptableCourse(student);
+	GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
 	if(acceptableCourse!=null){
 	    model.addAttribute("acceptableCourse", acceptableCourse);
 	}
     }
     
-    private InvitationBeanList getAcceptableCourse(Student student){
+    private GenericContainerBeanList getAcceptableCourse(Student student){
 	List<Object[]> acceptableCourse = DaoHelper.getRegistrationStudentClassDAO().getAcceptableCourse(student);
 	if(acceptableCourse.size()>0){
-	    InvitationBeanList list = new InvitationBeanList();
+	    GenericContainerBeanList list = new GenericContainerBeanList();
 	    for(int i=0; i<acceptableCourse.size(); i++){
-		list.addToList(new InvitationBean(
+		list.addToList(new GenericContainerBean(
 			acceptableCourse.get(i)[0].toString(),
 			acceptableCourse.get(i)[1].toString()));	    
 	    }
@@ -127,7 +127,7 @@ public class CheckRequestedInvitationsController {
     }
     
     private void processAcceptInvitationAll(Student student) {
-	InvitationBeanList acceptableCourse = getAcceptableCourse(student);
+	GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
 	for(int i=0; i<acceptableCourse.size(); i++){
 	    processAcceptInvitationSingle(student, acceptableCourse.get(i).getField1(), acceptableCourse.get(i).getField2());
 	}

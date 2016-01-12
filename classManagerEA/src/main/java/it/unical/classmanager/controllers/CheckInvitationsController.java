@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.unical.classmanager.invitations.InvitationBean;
-import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.data.CourseClass;
@@ -27,6 +25,8 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.GenericContainerBean;
+import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -107,18 +107,18 @@ public class CheckInvitationsController {
     }
     
     private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request, Professor professor){
-	InvitationBeanList list = getAcceptableStudent(professor);
+	GenericContainerBeanList list = getAcceptableStudent(professor);
 	if(list!=null){
 	    model.addAttribute("studentList", list);
 	}
     }
     
-    private InvitationBeanList getAcceptableStudent(Professor professor){
+    private GenericContainerBeanList getAcceptableStudent(Professor professor){
 	List<Object[]> acceptableStudent = DaoHelper.getRegistrationStudentClassDAO().getAcceptableStudent(professor);
 	if(acceptableStudent.size()>0){
-	    InvitationBeanList list = new InvitationBeanList();
+	    GenericContainerBeanList list = new GenericContainerBeanList();
 	    for(int i=0; i<acceptableStudent.size(); i++){
-		list.addToList(new InvitationBean(
+		list.addToList(new GenericContainerBean(
 			acceptableStudent.get(i)[0].toString(),
 			acceptableStudent.get(i)[1].toString()));	    
 	    }
@@ -128,7 +128,7 @@ public class CheckInvitationsController {
     }
     
     private void processInviteAll(Professor professor) {
-	InvitationBeanList acceptableStudent = getAcceptableStudent(professor);
+	GenericContainerBeanList acceptableStudent = getAcceptableStudent(professor);
 	for(int i=0; i<acceptableStudent.size(); i++){
 	    processInviteSingle(professor, acceptableStudent.get(i).getField1(), acceptableStudent.get(i).getField2());
 	}

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.unical.classmanager.invitations.InvitationBean;
-import it.unical.classmanager.invitations.InvitationBeanList;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.data.CourseClass;
@@ -26,6 +24,8 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.GenericContainerBean;
+import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -156,18 +156,18 @@ public class RequestInvitationController {
     }
     
     private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	InvitationBeanList selectableCourse = getSelectableCourse(student);
+	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
 	if(selectableCourse!=null){
 	    model.addAttribute("selectableCourse", selectableCourse);
 	}
     }
     
-    private InvitationBeanList getSelectableCourse(Student student){
+    private GenericContainerBeanList getSelectableCourse(Student student){
 	List<Object[]> selectableCourse = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
 	if(selectableCourse.size()>0){
-	    InvitationBeanList list = new InvitationBeanList();
+	    GenericContainerBeanList list = new GenericContainerBeanList();
 	    for(int i=0; i<selectableCourse.size(); i++){
-		list.addToList(new InvitationBean(
+		list.addToList(new GenericContainerBean(
 			selectableCourse.get(i)[0].toString(), 
 			selectableCourse.get(i)[1].toString()));	    
 	    }
@@ -177,18 +177,18 @@ public class RequestInvitationController {
     }
     
     private void processCancellableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	InvitationBeanList cancellableCourse = getCancellableCourse(student);
+	GenericContainerBeanList cancellableCourse = getCancellableCourse(student);
 	if(cancellableCourse!=null){
 	    model.addAttribute("cancellableCourse", cancellableCourse);
 	}
     }
     
-    private InvitationBeanList getCancellableCourse(Student student){
+    private GenericContainerBeanList getCancellableCourse(Student student){
 	List<Object[]> cancellableCourse = DaoHelper.getRegistrationStudentClassDAO().getCancellableCourse(student);
 	if(cancellableCourse.size()>0){
-	    InvitationBeanList list = new InvitationBeanList();
+	    GenericContainerBeanList list = new GenericContainerBeanList();
 	    for(int i=0; i<cancellableCourse.size(); i++){
-		list.addToList(new InvitationBean(
+		list.addToList(new GenericContainerBean(
 			cancellableCourse.get(i)[0].toString(), 
 			cancellableCourse.get(i)[1].toString()));	    
 	    }
@@ -198,7 +198,7 @@ public class RequestInvitationController {
     }    
     
     private void processRequestInvitationAll(Student student) {
-	InvitationBeanList selectableCourse = getSelectableCourse(student);
+	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
 	for(int i=0; i<selectableCourse.size(); i++){
 	    processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
 	}
@@ -224,7 +224,7 @@ public class RequestInvitationController {
     }   
     
     private void processCancellInvitationAll(Student student) {
-	InvitationBeanList selectableCourse = getSelectableCourse(student);
+	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
 	for(int i=0; i<selectableCourse.size(); i++){
 	    processCancellInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
 	}

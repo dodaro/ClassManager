@@ -72,6 +72,7 @@ public class InvitationController {
 	    model.addAttribute("student", (Student)user);
 	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
 	}
+	
 	if(user instanceof Professor){
 	    logger.info("Professor invitation page accessed by "+user.getUsername(), locale);	
 	    model.addAttribute("professor", (Professor)user);

@@ -15,7 +15,7 @@
 		<hr>
 		<div class="col-sm-3 col-md-3 col-lg-3">
 			<p>
-				<strong>Corsi</strong>
+				<strong><spring:message code="message.homeProfessorCourses" /></strong>
 			</p>
 			<ul>
 				<li><a href="#">Corso 1</a></li>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="col-sm-9 col-md-9 col-lg-9">
 			<div class="panel panel-default">
-				<div class="panel-body">Calendario</div>
+				<div class="panel-body">Qui va il calendario!</div>
 			</div>
 		</div>
 		<br>
@@ -40,7 +40,9 @@
 					<h4 class="panel-title">
 						<a role="button" data-toggle="collapse" data-parent="#accordion"
 							href="#collapseOne" aria-expanded="true"
-							aria-controls="collapseOne"> Ultimi compiti sottomessi </a>
+							aria-controls="collapseOne"> <spring:message
+								code="message.homeLastHomeworkSubmittedByStudent" />
+						</a>
 					</h4>
 				</div>
 				<div id="collapseOne" class="panel-collapse collapse in"
@@ -50,9 +52,10 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Student</th>
-									<th>Course</th>
-									<th>Homework</th>
+									<th><spring:message code="message.homeTableMsg1" />
+									</th>
+									<th><spring:message code="message.homeTableMsg2" />
+									<th><spring:message code="message.homeTableMsg3" />
 								</tr>
 							</thead>
 							<tbody>
@@ -84,7 +87,9 @@
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse"
 							data-parent="#accordion" href="#collapseTwo"
-							aria-expanded="false" aria-controls="collapseTwo"> Ultime Lezioni aggiunte </a>
+							aria-expanded="false" aria-controls="collapseTwo"> <spring:message
+								code="message.homeLastLecture" />
+						</a>
 					</h4>
 				</div>
 				<div id="collapseTwo" class="panel-collapse collapse"
@@ -94,9 +99,9 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Course</th>
-									<th>Lecture</th>
-									<th>Date</th>
+									<th><spring:message code="message.homeTableMsg2" /></th>
+									<th><spring:message code="message.homeTableMsg4" /></th>
+									<th><spring:message code="message.homeTableMsg5" /></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -128,7 +133,9 @@
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse"
 							data-parent="#accordion" href="#collapseThree"
-							aria-expanded="false" aria-controls="collapseThree"> Ultimi materiali aggiunti </a>
+							aria-expanded="false" aria-controls="collapseThree"> <spring:message
+								code="message.homeLastMaterialsAdded" />
+						</a>
 					</h4>
 				</div>
 				<div id="collapseThree" class="panel-collapse collapse"
@@ -138,9 +145,12 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Course</th>
-									<th>Material</th>
-									<th>Date</th>
+									<th><spring:message code="message.homeTableMsg2" />
+									Course</th>
+									<th><spring:message code="message.homeTableMsg6" />
+									Material</th>
+									<th><spring:message code="message.homeTableMsg5" />
+									Date</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -168,6 +178,6 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 </div>

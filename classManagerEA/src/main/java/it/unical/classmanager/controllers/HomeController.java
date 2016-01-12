@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.CustomHeaderAndBody;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -21,10 +22,12 @@ import it.unical.classmanager.utils.UserSessionChecker;
  */
 @Controller
 public class HomeController {
-    
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private final static String HEADER = "home/homeHead.jsp";
+    private final static String BODY = "home/homeBody.jsp";
+
     @Autowired
     ApplicationContext appContext;
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Locale locale, Model model,HttpServletRequest request) {
@@ -34,20 +37,15 @@ public class HomeController {
 	if (user == null) {			
 	    return "welcome";
 	} 	
+
+	CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 	
 	model.addAttribute("user",user);
 	String role = (String) request.getSession().getAttribute("role");
 	if ( role != null ) {
 	    model.addAttribute("role",role);
 	}
-	
-	//	corsi attivi per utente (stud/prof)
-	//	calendario
-	//	ultime lezioni aggiunte
-	//	ultimi materiali aggiunti
-	//	ultimi compiti
-	//	esami disponibili
-	
+		
 	return "layout";
     }
     

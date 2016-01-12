@@ -42,7 +42,7 @@ h1 {
 	padding: 15px 15px;
 	transition: background-color 0.5s ease;
 	animation-name: fadeInAnimation;
-	animation-duration: 12s;
+	animation-duration: 10s;
 }
 
 a.welcomeLogin {

@@ -47,17 +47,10 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 
-				<prop key="hibernate.hbm2ddl.auto">update</prop> 
-<!-- 				create -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- create -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
-
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.show_sql">true</prop>
-
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				
-				<prop key="hibernate.show_sql">true</prop>
-
 			</props>
 		</property>
 	</bean>
@@ -189,6 +182,6 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
-	</bean>	
-	
+	</bean>
+
 </beans>

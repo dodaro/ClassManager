@@ -1,11 +1,6 @@
 <jsp:include page="pageCommons/include.jsp" flush="true" />
 <html>
 <head>
-
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Class Manager</title>
 <jsp:include page="pageCommons/head.jsp" flush="true" />
 <jsp:include page="${customHeader}" flush="true" />

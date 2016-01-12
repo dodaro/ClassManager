@@ -31,19 +31,22 @@ public class HomeController {
 	logger.info("Welcome home! The client locale is {}.", locale);	
 	
 	User user = UserSessionChecker.checkUserSession(model, request);
-	if ( user == null ) {			
+	if (user == null) {			
 	    return "welcome";
-	}
+	} 	
 	
+	model.addAttribute("user",user);
 	String role = (String) request.getSession().getAttribute("role");
-	
-	if ( user != null ) {
-	    model.addAttribute("user",user);
-	    
-	}
 	if ( role != null ) {
 	    model.addAttribute("role",role);
 	}
+	
+	//	corsi attivi per utente (stud/prof)
+	//	calendario
+	//	ultime lezioni aggiunte
+	//	ultimi materiali aggiunti
+	//	ultimi compiti
+	//	esami disponibili
 	
 	return "layout";
     }

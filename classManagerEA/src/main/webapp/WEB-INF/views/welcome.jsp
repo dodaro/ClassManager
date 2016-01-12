@@ -1,3 +1,5 @@
+<jsp:include page="pageCommons/include.jsp" flush="true" />
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 

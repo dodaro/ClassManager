@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" type="text/css"
 	href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/style.css" />
+<!-- <link rel="stylesheet" type="text/css" href="resources/style/style.css" /> -->
 <link rel="stylesheet" type="text/css"
 	href="resources/style/nav-bar.css" />
 <link rel="stylesheet" type="text/css"

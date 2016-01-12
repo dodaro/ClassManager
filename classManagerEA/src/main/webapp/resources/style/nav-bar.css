@@ -7,152 +7,144 @@
 	margin-top: 50px;
 }
 
-.row-content
-{
-    padding: 10px;
+.row-content {
+	padding: 10px;
 }
 
 /* NAVBAR */
-.navbar 
-{
-    background-color: #FF6600;
-    border: none;
-    border-radius: 0px;
-    margin: 0px;
+.navbar {
+	background-color: #FF6600;
+	border: none;
+	border-radius: 0px;
+	margin: 0px;
 }
-.navbar-default .navbar-brand 
-{
-    color:#fff;
-    font-weight: bold;
-    margin:0;
-    line-height: 50px;
-    float:none; 
-    margin-left: auto; 
-    margin-right: auto; 
-    width: 60px; 
-    float: none; 
+
+.navbar-default .navbar-brand {
+	color: #fff;
+	font-weight: bold;
+	margin: 0;
+	line-height: 50px;
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60px;
+	float: none;
 }
 
 /* TOGGLE BUTTON */
-.navbar-toggle
-{
-    border: none;
-    color:#fff;
-    margin:0;
-    padding: 18px 15px; 
-    border-radius: 0px;
-    float:left;
+.navbar-toggle {
+	border: none;
+	color: #fff;
+	margin: 0;
+	padding: 18px 15px;
+	border-radius: 0px;
+	float: left;
 }
-.navbar-default .navbar-toggle,
-    .navbar-default .navbar-toggle:hover,
-        .navbar-default .navbar-toggle:focus 
-{
-    background-color: #404040 ;
+
+.navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover,
+	.navbar-default .navbar-toggle:focus {
+	background-color: #404040;
 }
-.navbar-default .navbar-toggle .icon-bar 
-{
-    background-color: #fff;
+
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
 }
 
 /* NAV BAR BUTTONS */
-.nav-bar-button
-{
-    margin-bottom: 8px;
-    margin: 0;
-    padding: 15px 15px; 
-    float:right;
-    transition: background-color 0.5s ease;
+.nav-bar-button {
+	margin-bottom: 8px;
+	margin: 0;
+	padding: 15px 15px;
+	float: right;
+	transition: background-color 0.5s ease;
 }
-a.nav-bar-button
-{
-    color: #fff;
-    text-decoration: none;
+
+a.nav-bar-button {
+	color: #fff;
+	text-decoration: none;
 }
-a:hover.nav-bar-button
-{
-    background: #FF9900;
+
+a:hover.nav-bar-button {
+	background: #FF9900;
 }
 
 /* SIDEBAR */
-#sidebar-wrapper
-{    
-    background-color: #404040;
-    color: black;  
-    z-index: 1;
+#sidebar-wrapper {
+	background-color: #404040;
+	color: black;
+	z-index: 1;
 }
-.sidebar-nav 
-{
-    padding: 0px;
-    width: 100%;    
-    list-style: none;
+
+.sidebar-nav {
+	padding: 0px;
+	width: 100%;
+	list-style: none;
 }
-.sidebar-nav li 
-{
-    line-height: 50px;
-    text-indent: 20px;
+
+.sidebar-nav li {
+	line-height: 50px;
+	text-indent: 20px;
 }
-.sidebar-nav li a 
-{
-    transition: background-color 0.3s ease;
-    color: white;
-    display: block;
-    text-decoration: none;
+
+.sidebar-nav li a {
+	transition: background-color 0.3s ease;
+	color: white;
+	display: block;
+	text-decoration: none;
 }
-.sidebar-nav li a:hover 
-{
-    background: rgba(255,255,255,0.25);
-    color: white;
-    text-decoration: none;
+
+.sidebar-nav li a:hover {
+	background: rgba(255, 255, 255, 0.25);
+	color: white;
+	text-decoration: none;
 }
-.sidebar-nav li a:active, .sidebar-nav li a:focus 
-{
-    text-decoration: none;
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+	text-decoration: none;
 }
 
 /* SIDEBAR - DESKTOP */
-.sidebar-desktop 
-{
-    width: 0px;
-    height: 100%;    
-    position: fixed;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+.sidebar-desktop {
+	width: 0px;
+	height: 100%;
+	position: fixed;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
-.sidebar-desktop.active
-{
-     width: inherit;
+
+.sidebar-desktop.active {
+	width: inherit;
 }
 
 /* SIDEBAR - MOBILE */
-.sidebar-mobile 
-{
-    width: 0px;
-    height: 100%;
-    z-index: 51;
-    margin: 0; 
-    padding: 0;
-    top: auto;
-    position: fixed;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-.sidebar-mobile.active
-{
-    width: 70%;
+.sidebar-mobile {
+	width: 0px;
+	height: 100%;
+	z-index: 51;
+	margin: 0;
+	padding: 0;
+	top: auto;
+	position: fixed;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
-.modal{
-    overflow-y: scroll;
+.sidebar-mobile.active {
+	width: 70%;
+}
+
+.modal {
+	overflow-y: scroll;
 }
 
 .invitationActionButton {

@@ -16,6 +16,7 @@ public class UserSessionChecker {
 	if ( username != null ) {
 	    user = DaoHelper.getUserDAO().get(username);
 	    model.addAttribute("user",user.getUsername());
+	    InvitationController.checkNewInvitations(model, user);
 	}			
 	return user;
     }

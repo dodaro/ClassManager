@@ -2,6 +2,7 @@ package it.unical.classmanager.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class AttendanceCourseController
 	private ApplicationContext context;
 	
 	@RequestMapping(value = "/view_attendance", method = RequestMethod.GET)
-	public String loadCourseAttendances(Model model) 
+	public String loadCourseAttendances(Model model, Locale locale) 
 	{
 		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
 		
@@ -57,8 +58,6 @@ public class AttendanceCourseController
 		//LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
 		List<Lecture> lectures = course.getLectures();//lectureDAO.getAllLecturesOfACourse(course);
 
-		// TODO Prendere gli studenti iscritti al corso in ordine alfabetico
-		// TODO Ordinare la lista delle lezioni a cui ha partecipato lo studente in base al numero lezione (Tramite query o funzione Java)
 		//UserDAO userDao = context.getBean("userDao", UserDAOImpl.class);
 		RegistrationStudentClassDAO userDao = context.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 		AttendanceStudentLectureDAO attendanceStudentLectureDAO = context.getBean("attendanceStudentLectureDAO", AttendanceStudentLectureDAOImpl.class);
@@ -71,6 +70,7 @@ public class AttendanceCourseController
 		// Viene utilizzata casomai il professore intende modificare le presenze di una lezione
 		Lecture lecture = new Lecture();
 		
+		model.addAttribute("professor", course.getProfessor());
 		model.addAttribute("course", course);
 		model.addAttribute("lectures", lectures);
 		model.addAttribute("students", students);

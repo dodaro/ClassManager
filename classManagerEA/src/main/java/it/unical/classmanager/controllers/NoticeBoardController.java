@@ -84,7 +84,7 @@ public class NoticeBoardController {
 				String stringdate = sdf.format(Calendar.getInstance().getTime());
 				Communications comm;
 				try {
-					comm = new Communications(0, "nuovo messaggio", "testo del messaggio",professor,sdf.parse(stringdate));
+					comm = new Communications(0, "nuovo messaggio", "testo del messaggio",professor,sdf.parse(stringdate),false);
 					communicationsDAO.create(comm);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -135,6 +135,7 @@ public class NoticeBoardController {
 		model.addAttribute("pageCount",pageCount);
 		
 		model.addAttribute("new-notice", new Communications());
+		model.addAttribute("edit-notice", new Communications());
 		
 
 		return "layout";
@@ -167,14 +168,18 @@ public class NoticeBoardController {
 			return "layout";
 		}
 		
+			
+		//check if this is a fake auth 
 		Professor professor = (Professor) userDao.get(username);
 		if ( professor == null ) {
-			model.addAttribute("customHeader", NoticeBoardController.HEADER);
-			model.addAttribute("customBody", NoticeBoardController.BODY);
-			return "layout";
+			return handleFakeAuth(model);
 		}
 		
 		communication.setProfessor(professor);
+		
+		if ( role.equals("admin") ) {
+			communication.setServiceMessage(true);
+		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
 		String dateString = sdf.format(Calendar.getInstance().getTime());
@@ -194,6 +199,12 @@ public class NoticeBoardController {
 		return "redirect:/noticeboard";
 	}
 	
+	private String handleFakeAuth(Model model) {
+		model.addAttribute("customHeader", NoticeBoardController.HEADER);
+		model.addAttribute("customBody", NoticeBoardController.BODY);
+		return "layout";
+	}
+
 	/**
 	 * deletes a notice
 	 */

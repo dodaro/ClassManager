@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<%@include file="./pagesCommon/includeJSP.jsp"%>
+<%@include file="./pageCommons/include.jsp"%>
 <html>
 <head>
-<%@include file="./pagesCommon/head.jsp"%>
+<%@include file="./pageCommons/head.jsp"%>
 
 <!-- Insert this script -->
 <script type="text/javascript"
@@ -10,11 +10,11 @@
 
 </head>
 <body>
-	<%@include file="./pagesCommon/topBar.jsp"%>
+	<%@include file="./pageCommons/navBar.jsp"%>
 	<div class="container-fluid page-content">
 		<div class="row">
 			<!-- SIDEBAR -->
-			<%@include file="./pagesCommon/sideBar.jsp"%>
+			<%@include file="./pageCommons/sideBar.jsp"%>
 			<!-- END SIDEBAR -->
 
 			<div class="col-sm-10 col-md-10 col-lg-10">

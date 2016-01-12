@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.unical.classmanager.statistics.queryCart.student;
+package it.unical.classmanager.statistics.queryCart;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,6 @@ import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.SplineIrregularTimeCart;
-import it.unical.classmanager.statistics.queryCart.AbstractQueryCart;
 
 /**
  * @author Aloisius92

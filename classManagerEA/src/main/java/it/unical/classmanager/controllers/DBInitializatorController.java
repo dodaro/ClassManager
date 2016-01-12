@@ -913,7 +913,8 @@ public class DBInitializatorController {
 			    k,
 			    "Communication"+k, 
 			    "Description"+k, 
-			    professor,Calendar.getInstance().getTime());
+			    professor,Calendar.getInstance().getTime(),
+			    false);
 		    communicationsDAO.create(communications);
 		    logger.info("Created "+communications, locale);
 		    k++;		

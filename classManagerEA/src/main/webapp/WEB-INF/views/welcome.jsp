@@ -1,26 +1,45 @@
+<jsp:include page="pageCommons/include.jsp" flush="true" />
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-
 <html>
 <head>
-<title>Welcome To Class Manager</title>
+<title>Class Manager</title>
+<jsp:include page="pageCommons/head.jsp" flush="true" />
+<link rel="stylesheet" type="text/css"
+	href="resources/style/welcome.css" />
 </head>
 <body>
-	<h1>This is the welcome web page</h1>
-	<a href="register">Register</a>
-	<br>
-	<a href="login">Login</a>
-	<br>
-
-	<c:if test="${empty loggedIn}">
-		<a id="login-button" class="nav-bar-button login" href="#"><span
-			class="glyphicon glyphicon-log-out"></span>Login</a>
-	</c:if>
+	<div class="container-fluid page-content">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<p class="text-center mainTitle fontType">
+					<spring:message code="message.welcomeTitle" />
+				</p>
+				<br>
+				<p class="text-center subTitle fontType">
+					<spring:message code="message.welcomeSubTitle1" />
+				</p>
+				<p class="text-center subTitle fontType">
+					<spring:message code="message.welcomeSubTitle2" />
+				</p>
+				<p class="text-center subTitle fontType">
+					<spring:message code="message.welcomeSubTitle3" />
+				</p>
+				<br>
+				<p class="text-center fontType">
+					<c:if test="${empty loggedIn}">
+						<a id="login-button" class="welcomeLogin login" href="#"><span
+							class="glyphicon glyphicon-upload"></span>Log-in</a>
+					</c:if>
+				</p>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal For Login-->
-	<%@include file="pageCommons/loginModal.jsp"%>
+	<jsp:include page="pageCommons/loginModal.jsp" flush="true" />
 
 	<!-- Modal For Register-->
-	<%@include file="pageCommons/registerModal.jsp"%>
+	<jsp:include page="pageCommons/registerModal.jsp" flush="true" />
 </body>
 </html>

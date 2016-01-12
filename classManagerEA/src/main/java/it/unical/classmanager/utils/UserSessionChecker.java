@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
+import it.unical.classmanager.controllers.InvitationController;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.User;
 
@@ -15,6 +16,7 @@ public class UserSessionChecker {
 	if ( username != null ) {
 	    user = DaoHelper.getUserDAO().get(username);
 	    model.addAttribute("user",user.getUsername());
+	    InvitationController.checkNewInvitations(model, user);
 	}			
 	return user;
     }

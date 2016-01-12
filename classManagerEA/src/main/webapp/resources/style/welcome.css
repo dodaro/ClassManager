@@ -1,0 +1,63 @@
+body { 
+  background: url("/resources/background.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@keyframes fadeInAnimation {
+	from {opacity: 0.0;}
+	to {opacity: 1.0;}
+}
+
+h1 {
+	color: #FFFFFF;
+}
+
+.mainTitle {
+	font-size: 64px;
+	color: #FFFFFF;
+	padding-top: 15%;
+	animation-name: fadeInAnimation;
+	animation-duration: 4s;
+}
+
+.subTitle {
+	font-size: 32px;
+	font-style: italic;
+	color: #FFF;
+	animation-name: fadeInAnimation;
+	animation-duration: 8s;
+}
+
+.fontType {
+	font-family: Script, Cursive, "Comic Sans", Serif, Times;
+}
+
+/* WELCOME LOGIN BUTTON */
+.welcomeLogin {
+	margin-bottom: 8px;
+	margin: 0;
+	padding: 15px 15px;
+	transition: background-color 0.5s ease;
+	animation-name: fadeInAnimation;
+	animation-duration: 10s;
+}
+
+a.welcomeLogin {
+	color: #fff;
+	text-decoration: none;
+	font-size: 2.5em;
+}
+
+a:hover.welcomeLogin {
+	background-image: url("/resources/loginBackground.png");
+	background-repeat: repeat;
+	border-radius: 16px;
+	margin-bottom: 8px;
+	margin: 0;
+	padding: 15px 15px;
+	transition: background-color 0.5s ease;
+	margin-bottom: 8px;
+}

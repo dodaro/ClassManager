@@ -35,6 +35,7 @@ import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Exam;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
+import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.StudentExamPartecipation;
 
@@ -53,7 +54,7 @@ public class ScoreController {
 	 */
 	//TODO ADD ALSO EXAM EVALUATION
 	@RequestMapping(value = "/scores", method = RequestMethod.GET)
-	public String getScores(Model model) {
+	public String getScores(Model model, Integer yearFilter, Integer lectureFilter) {
 
 		//TODO prendere dalla sessione
 		int idCourse = 1;
@@ -65,7 +66,7 @@ public class ScoreController {
 		List<Homework> homeworks = homeworkDAO.getAllHomeworks(idCourse);
 
 		CourseClassDAO courseClassDAO = appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
-		CourseClass course = courseClassDAO.get(idCourse);	
+		CourseClass course = courseClassDAO.get(idCourse);
 
 		RegistrationStudentClassDAO userDao = appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 		List<Student> students = userDao.getStudentsRegisteredToACourse(course);
@@ -91,6 +92,12 @@ public class ScoreController {
 		model.addAttribute("partecipations", partecipations);
 		model.addAttribute("exams", exams);
 
+		model.addAttribute("lectureId", lectureFilter);
+		model.addAttribute("yearFilter", yearFilter);
+		
+		model.addAttribute("lectures", course.getLectures());
+		model.addAttribute("lecture", new Lecture());
+		
 		logger.info("getScores");
 		return "layout";
 

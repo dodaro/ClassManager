@@ -51,7 +51,6 @@ var ListenersManager = (function(){
 			alreadyInitialized = true;
 
 
-
 			$("#createNewClass_btn").on("click", function() {
 
 				$("#lecture-form").attr("action", "/lectures");

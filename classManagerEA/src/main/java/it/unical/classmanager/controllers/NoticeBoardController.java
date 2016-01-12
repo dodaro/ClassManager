@@ -143,7 +143,7 @@ public class NoticeBoardController {
 	}
 	
 	/**
-	 * saves a new notice
+	 * saves a new notice or updates a previous one.
 	 */
 	@RequestMapping(value = "/newnotice", method = RequestMethod.POST)
 	public String newNotice(@Valid @ModelAttribute("new-notice") Communications communication,BindingResult result,Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
@@ -175,26 +175,106 @@ public class NoticeBoardController {
 			return handleFakeAuth(model);
 		}
 		
+		CommunicationsDAO communicationsDAO = DaoHelper.getCommunicationsDAO();
+		
+		if ( communication.getId() == -1 ) {
+			communication.setProfessor(professor);
+			
+			if ( role.equals("admin") ) {
+				communication.setServiceMessage(true);
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
+			String dateString = sdf.format(Calendar.getInstance().getTime());
+			
+			try {
+				communication.setDate(sdf.parse(dateString));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			communicationsDAO.create(communication);
+		} else {
+			//I am updating
+			Communications toEdit = communicationsDAO.get(communication.getId());
+			
+			if ( toEdit == null || ( !role.equals("admin") && !toEdit.getProfessor().getUsername().equals(username) ) ) {
+				return handleFakeAuth(model);
+			}
+			
+			
+			toEdit.setName(communication.getName());
+			toEdit.setDescription(communication.getDescription());
+			
+			communicationsDAO.update(toEdit);
+		}
+		
+		
+//		logger.info(communication.toString());
+
+		
+		return "redirect:/noticeboard";
+	}
+	
+	
+	/**
+	 * edits a notice
+	 */
+	@RequestMapping(value = "/editnotice", method = RequestMethod.POST)
+	public String editNotice(@Valid @ModelAttribute("edit-notice") Communications communication,BindingResult result,Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
+		
+		/**
+		 * handle errors like this, add the RedirectAttributes to the method and add the parameter to pass
+		 * this methods redirect passing parameters
+		 */
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		String role = (String) request.getSession().getAttribute("role");
+		if ( username == null || role.equals("Student") ) {
+			redirectAttributes.addAttribute("error", "session");
+			return "redirect:/sessionerror";
+		}
+		
+		UserDAO userDao = DaoHelper.getUserDAO();
+		
+		if ( result.hasErrors() ) {
+			model.addAttribute("customHeader", NoticeBoardController.HEADER);
+			model.addAttribute("customBody", NoticeBoardController.BODY);
+			model.addAttribute("display",false);
+			model.addAttribute("display-edit",true);
+			model.addAttribute("new-notice",new Communications());
+			model.addAttribute("edit-notice",communication);
+			return "layout";
+		}
+		
+		
+		//check if this is a fake auth 
+		Professor professor = (Professor) userDao.get(username);
+		if ( professor == null ) {
+			return handleFakeAuth(model);
+		}
+		
+		int id = communication.getId();
+		CommunicationsDAO communicationsDAO = DaoHelper.getCommunicationsDAO();
+		Communications toEdit = communicationsDAO.get(id);
+		if ( toEdit == null || ( !role.equals("admin") && !communication.getProfessor().getUsername().equals(username)) ) {
+			model.addAttribute("customHeader", NoticeBoardController.HEADER);
+			model.addAttribute("customBody", NoticeBoardController.BODY);
+			model.addAttribute("display",true);
+			return "layout";
+		}
+		
+		
 		communication.setProfessor(professor);
 		
-		if ( role.equals("admin") ) {
-			communication.setServiceMessage(true);
-		}
+		toEdit.setName(communication.getName());
+		toEdit.setDescription(communication.getDescription());
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
-		String dateString = sdf.format(Calendar.getInstance().getTime());
+
 		
-		try {
-			communication.setDate(sdf.parse(dateString));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		logger.info(communication.toString());
-		CommunicationsDAO communicationsDAO = DaoHelper.getCommunicationsDAO();
-		communicationsDAO.create(communication);
-
+		communicationsDAO.update(toEdit);
+		
 		
 		return "redirect:/noticeboard";
 	}

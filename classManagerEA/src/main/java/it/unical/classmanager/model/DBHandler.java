@@ -19,7 +19,6 @@ public class DBHandler {
 	private Object performOperation(Object obj, Operation op) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
-		Object toReturn = obj;
 		try {
 			tx = session.beginTransaction();
 			switch (op) {
@@ -31,21 +30,18 @@ public class DBHandler {
 				break;
 			case DELETE:
 				session.delete(obj);
-				toReturn = null;
 				break;
 			}
 			tx.commit();
 		} catch (Exception e) {
-			if (tx != null) {
+			if (tx != null)
 				tx.rollback();
-				toReturn = obj;
-			}
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
 		
-		return toReturn;
+		return obj;
 	}
 	
 	public Object create(Object obj) {

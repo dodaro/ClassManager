@@ -107,14 +107,9 @@
 								<c:if test="${user.username != loggedIn }">
 									<button type="submit" class="btn btn-danger"><spring:message code="message.delete" text="default text"/></button>
 								</c:if>
-								<c:choose>
-									<c:when test="${ user.role.equals('Student') }">
-										<button type="submit" class="btn btn-success promote"><spring:message code="message.professor" text="default text"/></button>
-									</c:when>
-									<c:when test="${ user.role.equals('Professor') }">
-										<button type="submit" class="btn btn-primary demote"><spring:message code="message.student" text="default text"/></button>
-									</c:when>
-								</c:choose>
+								<c:if test="${user.role == 'Student'}">
+									<button type="submit" class="btn btn-success"><spring:message code="message.professor" text="default text"/></button>
+								</c:if>
 								</td>
 							</tr>
 						</c:forEach>

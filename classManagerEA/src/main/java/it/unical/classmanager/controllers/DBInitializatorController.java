@@ -171,21 +171,21 @@ public class DBInitializatorController {
 	    dbCourseClassInit(locale, model, request);
 	    dbLectureInit(locale, model, request);
 	    dbRegistrationStudentClassInit(locale, model, request);
-	    dbAttendanceStudentLectureInit(locale, model, request);
-	    dbMaterialInit(locale, model, request);
+	    //dbAttendanceStudentLectureInit(locale, model, request);
+	    //dbMaterialInit(locale, model, request);
 	    dbHomeworkInit(locale, model, request);
 	    dbHomeworkStudentSolvingInit(locale, model, request);
 	    dbExamInit(locale, model, request);
 	    dbStudentExamPartecipationInit(locale, model, request);
 	    dbEventInit(locale, model, request);
-	    dbCommunicationInit(locale, model, request);
+	    //dbCommunicationInit(locale, model, request);
 	    //dbQuestionAnswerInit(locale, model, request);
 	    
 	    // Attached contents
-	    			dbQuestionAttachedContentInit(locale, model, request);
-	    			dbAnswerAttachedContentInit(locale, model, request);
-	    			dbHomeworkAttachedInit(locale, model, request);
-	    			dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+	    			//dbQuestionAttachedContentInit(locale, model, request);
+	    			//dbAnswerAttachedContentInit(locale, model, request);
+	    			//dbHomeworkAttachedInit(locale, model, request);
+	    			//dbHomeworkAttachedStudentSolvingInit(locale, model, request);
 	    
 	    initialized = true;
 	} else {

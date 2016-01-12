@@ -7,35 +7,86 @@ $(document).ready(function() {
 	//toggle `popup` / `inline` mode
 	$.fn.editable.defaults.mode = 'popup';     
 
-	//TODO retrieve the score id and store values in array to send
-	$('#scores_table a').editable({
+	$('#scores_table a.homework').editable({
 		type: 'text',
 		placement: 'right',
 		url: function(params){
-			updateData(params);
+
+			var type = 'update'
+				updateData(params, type);
 		},
 		title: 'Change score'
 	});
 
+	$('#scores_table a.newHomework').editable({
+		type: 'text',
+		placement: 'right',
+		url: function(params){
+
+			var type = 'new'
+				updateData(params, type);
+		},
+		title: 'Change score'
+	});
+
+	$('#scores_table a.exam').editable({
+		type: 'text',
+		placement: 'right',
+		url: function(params){
+
+			var type = 'update'
+				updateExam(params, type);
+		},
+		title: 'Change score'
+	});
+
+	$('#scores_table a.newExam').editable({
+		type: 'text',
+		placement: 'right',
+		url: function(params){
+
+			var type = 'new'
+				updateExam(params, type);
+		},
+		success: function(data){
+			//return data.success.code;
+		},
+		validate: function(response, newValue){
+
+			if(!data.match("^[0-9]+?"))
+				return "invalid text";
+			if(data < 0 || data > 30)
+				return "invalid range";
+		},
+		title: 'Change score',
+	});
+
 });
 
-function updateData(data){
-	
-	var homeworkStudentSolving = {'id':data.pk, 'score':data.value};
-	
+
+function updateExam(data, type){
+
+	var part;
+	var url;
+
+	if(type === 'new'){
+
+		url = "/create_Partecipation";
+		parentId = data.pk.split(" ")[0];
+		studentId = data.pk.split(" ")[1];
+		part = {'parentId':parentId, 'studentId' : studentId,'score':data.value};
+	}
+	else{
+		url = "/update_Partecipation";
+		part = {'id':data.pk, 'score':data.value, 'type':data.type};
+	}
+
 	$.ajax({ 
-		url: "/update_score", 
+		url: url, 
 		type: 'POST',  
-		data: JSON.stringify(homeworkStudentSolving), 
+		data: JSON.stringify(part), 
 		dataType: 'json',
 		contentType: 'application/json',
-		success: function(data) { 
-			if(data == "200")
-				window.location.replace("/scores");
-		},
-		error:function(data,status,er) { 
-			alert("error: "+data+" status: "+status+" er:"+er);
-		}
 	});
 }
 
@@ -89,91 +140,126 @@ function updateData(data){
 // * class and organizes them in an bidimensional hash map of the form map[studentID][homeworkID] = score
 // */
 //function init(){
-//
-//	/*var students = JSON.parse(JSON.stringify(data.students));
-//	var studentHomeworks = JSON.parse(JSON.stringify(data.studentHomeworks));
-//	var scores = JSON.parse(JSON.stringify(data.scores));
-//	var homeworksName = JSON.parse(JSON.stringify(data.homeworksName));
-//	var homeworkSolution = JSON.parse(JSON.stringify(data.homeworkSolution));
-//
-//	var map_scores = {};
-//
-//	$.each(studentHomeworks, function(student, homeworks){
-//
-//		if(!(student in map_scores))
-//			map_scores[student] = {};
-//
-//		$.each(homeworks, function(num, homework){
-//
-//			if(!homework in map_scores[student])
-//				map_scores[student][homework] = {};
-//
-//			var keyHS = homework + "-" + student;
-//			var id_ = homeworkSolution[keyHS]
-//			map_scores[student][homework] = {'id': id_, 'score': scores[id_]};
-//
-//		});
-//	});*/
-//
+
+///*var students = JSON.parse(JSON.stringify(data.students));
+//var studentHomeworks = JSON.parse(JSON.stringify(data.studentHomeworks));
+//var scores = JSON.parse(JSON.stringify(data.scores));
+//var homeworksName = JSON.parse(JSON.stringify(data.homeworksName));
+//var homeworkSolution = JSON.parse(JSON.stringify(data.homeworkSolution));
+
+//var map_scores = {};
+
+//$.each(studentHomeworks, function(student, homeworks){
+
+//if(!(student in map_scores))
+//map_scores[student] = {};
+
+//$.each(homeworks, function(num, homework){
+
+//if(!homework in map_scores[student])
+//map_scores[student][homework] = {};
+
+//var keyHS = homework + "-" + student;
+//var id_ = homeworkSolution[keyHS]
+//map_scores[student][homework] = {'id': id_, 'score': scores[id_]};
+
+//});
+//});*/
+
 ///*
-//	//starting from the hash map an html table is created
-//	var content = "<tr><td></td>";
-//	$.each(homeworksName, function(id, name){
-//
-//		content += "<td>" + name + "</td>";
-//	});
-//	content += "</tr>";
-//
-//	$.each(map_scores, function(student, homeworks){
-//
-//		content += "<tr>";
-//		content += "<td>" + students[student] + "</td>";
-//
-//		$.each(homeworks, function(key, val){
-//
-//			content += "<td><a href=# data-pk=" + val.id + ">" + val.score + "</a></td>";
-//		});
-//		content += "</tr>";
-//	});
-//
-//	$('#scores_table').append(content);
-//
-//	scoreContainer = new ScoreContainer();*/
+////starting from the hash map an html table is created
+//var content = "<tr><td></td>";
+//$.each(homeworksName, function(id, name){
+
+//content += "<td>" + name + "</td>";
+//});
+//content += "</tr>";
+
+//$.each(map_scores, function(student, homeworks){
+
+//content += "<tr>";
+//content += "<td>" + students[student] + "</td>";
+
+//$.each(homeworks, function(key, val){
+
+//content += "<td><a href=# data-pk=" + val.id + ">" + val.score + "</a></td>";
+//});
+//content += "</tr>";
+//});
+
+//$('#scores_table').append(content);
+
+//scoreContainer = new ScoreContainer();*/
 //}
-//
+
 ///*
-// *	Sends data to the server for the update 
-// */
+//*	Sends data to the server for the update 
+//*/
 //function sendData(){
-//
-//	if(scoreContainer.isEmpty())
-//		return;
-//
-//	var toSend = JSON.stringify(scoreContainer.getScores());
-//
-//	$.ajax({ 
-//		headers: {
-//			Accept : "text/plain; charset=utf-8"
-//		},
-//		url: "/update_scores", 
-//		type: 'POST', 
-//		dataType: 'json', 
-//		data: toSend, 
-//		contentType: 'application/json',
-//		mimeType: 'application/json',
-//		success: function(data) { 
-//			if(data == "200")
-//				window.location.replace("/scores");
-//		},
-//		error:function(data,status,er) { 
-//			alert("error: "+data+" status: "+status+" er:"+er);
-//		}
-//	});
+
+//if(scoreContainer.isEmpty())
+//return;
+
+//var toSend = JSON.stringify(scoreContainer.getScores());
+
+//$.ajax({ 
+//headers: {
+//Accept : "text/plain; charset=utf-8"
+//},
+//url: "/update_scores", 
+//type: 'POST', 
+//dataType: 'json', 
+//data: toSend, 
+//contentType: 'application/json',
+//mimeType: 'application/json',
+//success: function(data) { 
+//if(data == "200")
+//window.location.replace("/scores");
+//},
+//error:function(data,status,er) { 
+//alert("error: "+data+" status: "+status+" er:"+er);
+//}
+//});
 //}
 ///*
-// * stores temporary information about the score update. Called every time a score changes
-// */
+//* stores temporary information about the score update. Called every time a score changes
+//*/
 //function updateData(data){
-//
-//	scoreContainer.addScore(data);
+
+//scoreContainer.addScore(data);
 //}
+
+$(document).ready(function() {
+
+	$(document).find('input').on('input', function(e){
+
+		folders = [];
+		files = [];
+
+		var value = this.value.trim();
+
+		if(value.length) {
+
+			$("table td").each(function(index){
+
+				var elem = $(this).find("a").text();
+				var current = elem.text();
+				if(typeof current != 'undefined')
+					if(current.toLowerCase().indexOf(value.toLowerCase()) == -1){
+						elem.hide();
+					}
+					else
+						elem.show();
+			});
+		}
+
+		else {
+
+			$(".data a").each(function(index){
+				$(this).show();
+			});
+
+		}
+
+	});
+});

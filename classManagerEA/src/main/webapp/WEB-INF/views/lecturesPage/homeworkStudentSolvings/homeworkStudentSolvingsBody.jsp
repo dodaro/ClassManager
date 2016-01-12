@@ -51,11 +51,11 @@
 							<li class="${file.type}">
 								<form action="${file.action}">
 
-									<c:if test="${pwd == 'students'}"><input type="hidden" name="id" value="${contentsArray[index].username}"></input></c:if>
+									<c:if test="${pwd == 'students'}"><input type="hidden" name="username" value="${contentsArray[index].username}"></input></c:if>
 									<c:if test="${pwd != 'students'}"><input type="hidden" name="id" value="${contentsArray[index].id}"></input></c:if>
 																			
 									<input type="hidden" name="path" value="${file.path}"></input>
-									<input type="hidden" name="parentId" value="${file.parentId}"></input>
+									<input type="hidden" name="parentId" value="${parentId}"></input>
 									<input type="submit" style="display: none;"></input>
 
 									<c:if test="${file.type == 'folder'}">

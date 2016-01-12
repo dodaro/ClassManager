@@ -12,10 +12,14 @@
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 		<div class="table-responsive">
-			<table class="table table-condensed">
+			<table class="tablesorter table table-condensed">
 				<thead>
 					<tr>
-						<th></th>
+						<th class="sortable">
+							<spring:message code="message.attendance.students" text="default text"/>
+							<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
+							<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+						</th>
 						<th><spring:message code="message.attendance.lectures" text="default text"/></th>
 						<c:forEach items="${lectures}" var="lecture">
 							<th>${lecture.number}</th>
@@ -23,9 +27,6 @@
 					<tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><b><spring:message code="message.attendance.students" text="default text"/></b></td>
-					</tr>
 					<c:forEach items="${students}" var="student">
 						<tr>
 							<td>${student.username}</td>
@@ -51,7 +52,7 @@
 								<td></td>
 							</c:forEach>
 						</tr>	
-					</c:forEach>			
+					</c:forEach>				
 				</tbody>
 				<tr>
 					<td></td>

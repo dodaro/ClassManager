@@ -7,17 +7,27 @@
 	<div class="col-sm-12 col-md-12 col-lg-12">
 		<form:form action="attendance" method="post" modelAttribute="lecture">
 			<h3 class="text-muted">
-				<spring:message code="message.attendance.courseAttendances" text="default text"/> 
-				<spring:message code="message.attendance.lecture" text="default text"/>:
-				${lecture.number} ${lecture.topic} 
-				<small> - ${course.name} - ${professor.username}</small>
+				<spring:message code="message.attendance.courseAttendances" text="Attendances"/> 
+				<spring:message code="message.attendance.lecture" text="Lecture"/>
 			</h3>
+			<h3 class="text-muted">				
+				${lecture.number} ${lecture.date} 
+				<small> - ${course.name} - ${professor.username}</small>
+			</h3> 
+			<h3 class="text-muted">				
+				${lecture.topic} 
+				<small> - ${course.name} - ${professor.username}</small>
+			</h3> 
 			<div class="table-responsive">
-				<table class="table table-condensed">
+				<table class="tablesorter table table-condensed" id="myTable">
 					<thead>
 						<tr>
-							<th>Student</th>
-							<th>Attendence</th>
+							<th>
+								<spring:message code="message.attendance.students" text="Students"/>
+								<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
+								<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+							</th>
+							<th><spring:message code="message.attendance.courseAttendances" text="Attendances"/></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,7 +42,7 @@
 								<td>${student.username}</td>
 								<td><form:checkbox path="attendanceStudentLectures"	value="${student.username}" /></td>
 							</tr>
-						</c:forEach>					
+						</c:forEach>				
 					</tbody>
 				<tr>
 					<td></td>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Student;
@@ -93,7 +94,8 @@ public class RegisterController {
 			    userJsonResponse.setErrorsMap(errors);
 			    return userJsonResponse;
 			} else {
-			    user.setHash(user.getPassword());
+				String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+			    user.setHash(hash);
 			    user.setRole("Student");
 			    Student student = new Student(user);
 			    student.setSubscriptionDate(new Date());

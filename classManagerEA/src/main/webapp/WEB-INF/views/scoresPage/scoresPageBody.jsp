@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <br>
 
@@ -10,28 +11,40 @@
       <span class="input-group-addon" id="basic-addon1">
 	  	<span class="glyphicon glyphicon-filter"></span>
 	  </span>
-      <input id="filter" name="filterText" type="text" class="form-control" aria-label="..." placeholder="filter for">
+      <input id="filter" name="filterText" type="text" class="form-control" aria-label="..." placeholder="type for filter">
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
   
 </div><!-- /.row -->
 <br>
-<div class="row">
-	  <div class="col-lg-6">
-	    <div class="input-group">
-	      <form action="/scores">
-		      <div class="input-group">
-		 		<span class="input-group-addon">Lezione</span>
-		  		<%--<input name="lectureFilter" type="text" class="form-control" placeholder="lecture..">--%>
-				<form:select class=".form-control" itemLabel="lecture.id" path="lecture" items="${lectures}" />	  		
-		  		<span class="input-group-addon">Exam year</span>
-		  		<input name="yearFilter" type="text" class="form-control" placeholder="exam year..">
-			  	<span class="input-group-btn">
-	      			<button id="filter_btn" class="btn btn-default" type="submit">Go!</button>
-	   		  	</span>
-			  </div>
+
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
+	More Filters
+</button>
+<div class="row collapse" id="filters_collapse">
+	  <div class="col-lg-8">
+	     <form action="/scores">
+		      	<div class="input-group">
+		      		
+			 		<span class="input-group-addon">Lezione</span>
+					<select name="lectureFilter" class="form-control">
+				        <c:forEach items="${lectures}" var="item" varStatus="count"> 
+				            <option value="${item.id}">${item.number} - ${item.topic}</option>
+				        </c:forEach>
+				        <option value="">all</option>
+				    </select> 
+				    
+			     			
+			  		<span class="input-group-addon">Exam year</span>
+			  		<input name="yearFilter" type="text" class="form-control" placeholder="exam year..">
+			  		
+			  		<span class="input-group-btn">
+	      				<button id="filter_btn" class="btn btn-success" type="submit">Apply</button>
+	   		  		</span>
+	   		  	
+		  		</div>
+
 	      </form>
-	    </div><!-- /input-group -->
 	  </div><!-- /.col-lg-6 -->
 	  
 	<div class="btn-group" data-toggle="buttons">
@@ -58,11 +71,11 @@
 						<c:choose>
 							<c:when test="${not empty lectureId}">
 								<c:if test="${homework.lecture.id == lectureId}">
-									<th class="homework-td">${homework.id}</th>
+									<th class="homework-td">${homework.name}</th>
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<th class="homework-td">${homework.id}</th>
+								<th class="homework-td">${homework.name}</th>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -71,11 +84,13 @@
 						<c:choose>
 							<c:when test="${not empty yearFilter}">
 								<c:if test="${exam.date.getYear() == yearFilter}">
-									<th class="exam-td" style="color:red">${exam.id}</th>
+									<fmt:formatDate value="${exam.date}"  type="date"  pattern="dd-mm-yyyy" var="formattedDate" />
+									<th class="exam-td" style="color:red">Exam: ${formattedDate}</th>
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<th class="exam-td" style="color:red">${exam.id}</th>							
+								<fmt:formatDate value="${exam.date}"  type="date"  var="formattedDate" />
+								<th class="exam-td" style="color:red">Exam: ${formattedDate}</th>							
 							</c:otherwise>
 						</c:choose>						
 					</c:forEach>
@@ -171,3 +186,7 @@
 	  </table>
 	</div>
 </div>
+
+<script>
+$("th").css("font-size", 10 + "px");
+</script>

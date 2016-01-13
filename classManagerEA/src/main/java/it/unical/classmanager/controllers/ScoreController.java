@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class ScoreController {
 		
 		for (Student student : students) {
 			for (Exam exam : exams) {
-				
+
 				List<StudentExamPartecipation> partecipationBy = studentExamPartecipationDAO.getPartecipationBy(student, exam);
 				if(partecipationBy != null)
 					partecipations.addAll(partecipationBy);
@@ -98,6 +99,7 @@ public class ScoreController {
 		model.addAttribute("lectures", course.getLectures());
 		model.addAttribute("lecture", new Lecture());
 		
+		model.addAttribute("formatter", new SimpleDateFormat("yyyyy-mm-dd"));
 		logger.info("getScores");
 		return "layout";
 

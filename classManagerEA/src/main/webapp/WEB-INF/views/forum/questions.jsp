@@ -95,12 +95,15 @@
 									</div>
 								</div>
 								
-								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
-										<div id="paginatorTop">
+								<c:if test="${pageCount != 0}">
+									<div class="row">
+										<div class="col-sm-12 col-md-12 col-lg-12">
+											<div id="paginatorTop">
+											</div>
 										</div>
 									</div>
-								</div>
+								</c:if>
+								
 								
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
@@ -108,17 +111,13 @@
 											<c:forEach var="question" items="${questions}">
 												<li class="list-group-item answerRow" data-qid="${question.getId() }">
 												  <div class="row text-center">
-													<div class="col-md-3">
-														<div class="col-md-6">
+													<div class="col-md-2">
+														<div class="col-md-12">
 															<div class="row"><div class="col-md-12">${question.getAnswers().size()}</div></div>
 															<div class="row"><div class="col-md-12">answer</div></div>
 														</div>
-														<div class="col-md-6">
-															<div class="row"><div class="col-md-12">15(fittizio)</div></div>
-															<div class="row"><div class="col-md-12">views</div></div>
-														</div>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-10">
 														<div class="row"><div class="col-md-12"><h4>
 														<a class="questionLink" href="/forum/detailedQuestion?qid=${question.getId()}">${question.getTitle()}</a>
 														</h4></div></div>
@@ -131,12 +130,14 @@
 									</div>
 								</div>
 								
-								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
-										<div id="paginatorBottom">
+								<c:if test="${pageCount != 0}">
+									<div class="row">
+										<div class="col-sm-12 col-md-12 col-lg-12">
+											<div id="paginatorBottom">
+											</div>
 										</div>
 									</div>
-								</div>
+								</c:if>
 								
 								<input type="hidden" value="${currPage }" id="currPage" />
 								<input type="hidden" value="${pageCount }" id="pageCount" />

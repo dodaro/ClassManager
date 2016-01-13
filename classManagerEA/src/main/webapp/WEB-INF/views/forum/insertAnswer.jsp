@@ -113,8 +113,8 @@
 						        	<div id="area" style="margin-top: 15px;">
 							            <form:textarea path="description" id="textEditor"></form:textarea>
 							            <div class="form-group has-error">
-														<label class="control-label"><form:errors path="description"/></label>
-													</div>
+											<label class="control-label"><form:errors path="description"/></label>
+										</div>
 						        	</div>
 						        	<input name="qid" value="${question.getId() }" style="display:none;">
 						        	

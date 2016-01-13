@@ -24,7 +24,6 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
-import it.unical.classmanager.utils.GenericContainerBean;
 import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
@@ -163,15 +162,22 @@ public class RequestInvitationController {
     }
     
     private GenericContainerBeanList getSelectableCourse(Student student){
-	List<Object[]> selectableCourse = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
-	if(selectableCourse.size()>0){
-	    GenericContainerBeanList list = new GenericContainerBeanList();
-	    for(int i=0; i<selectableCourse.size(); i++){
-		list.addToList(new GenericContainerBean(
-			selectableCourse.get(i)[0].toString(), 
-			selectableCourse.get(i)[1].toString()));	    
-	    }
-	    return list;
+	//	List<Object[]> selectableCourse = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
+	//	if(selectableCourse.size()>0){
+	//	    GenericContainerBeanList list = new GenericContainerBeanList();
+	//	    for(int i=0; i<selectableCourse.size(); i++){
+	//		list.addToList(new GenericContainerBean(
+	//			selectableCourse.get(i)[0].toString(), 
+	//			selectableCourse.get(i)[1].toString()));	    
+	//	    }
+	//	    return list;
+	//	}	
+	//	return null;
+	
+	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    return beanList;
 	}	
 	return null;
     }
@@ -184,15 +190,10 @@ public class RequestInvitationController {
     }
     
     private GenericContainerBeanList getCancellableCourse(Student student){
-	List<Object[]> cancellableCourse = DaoHelper.getRegistrationStudentClassDAO().getCancellableCourse(student);
-	if(cancellableCourse.size()>0){
-	    GenericContainerBeanList list = new GenericContainerBeanList();
-	    for(int i=0; i<cancellableCourse.size(); i++){
-		list.addToList(new GenericContainerBean(
-			cancellableCourse.get(i)[0].toString(), 
-			cancellableCourse.get(i)[1].toString()));	    
-	    }
-	    return list;
+	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getCancellableCourse(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    return beanList;
 	}
 	return null;
     }    

@@ -1,6 +1,7 @@
 package it.unical.classmanager.controllers;
 
 import java.sql.Time;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -52,17 +55,23 @@ public class HomeController {
 	    model.addAttribute("role",role);
 	}
 	
+	setWelcomeMessage(locale, model, request);
+	
 	if(user instanceof Student){
 	    model.addAttribute("student", (Student)user);
 	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
+	    setLastLectures(locale, model, request, (Student)user);
+	    setLastMaterials(locale, model, request, (Student)user);
+	    setLastHomeworks(locale, model, request, (Student)user);
 	}
 	
 	if(user instanceof Professor){
 	    model.addAttribute("professor", (Professor)user);
 	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
+	    setLastLectures(locale, model, request, (Professor)user);
+	    setLastMaterials(locale, model, request, (Professor)user);
+	    setLastHomeworks(locale, model, request, (Professor)user);
 	}
-	
-	setWelcomeMessage(locale, model, request);
 	
 	return "layout";
     }
@@ -89,4 +98,51 @@ public class HomeController {
 	model.addAttribute("welcomeMessage2", message2);	
     }
     
+    private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Student student){
+	List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastLectureList", beanList);
+	}	
+    }
+    
+    private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Professor professor){
+	List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(professor);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastLectureList", beanList);
+	}
+    }
+    
+    private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Student student){
+	List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastMaterialList", beanList);
+	}
+    }
+    
+    private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Professor professor){
+	List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(professor);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastMaterialList", beanList);
+	}
+    }
+    
+    private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Student student){
+	List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastHomeworkList", beanList);
+	}
+    }
+    
+    private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Professor professor){
+	List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(professor);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("lastHomeworkList", beanList);
+	}
+    }
 }

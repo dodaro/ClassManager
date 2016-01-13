@@ -25,7 +25,6 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
-import it.unical.classmanager.utils.GenericContainerBean;
 import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
@@ -183,13 +182,10 @@ public class SendInvitationController {
     private GenericContainerBeanList getSelectableCourse(String professorName){
 	if(professorName!=null){
 	    Professor professor = (Professor) DaoHelper.getUserDAO().get(professorName);
-	    List<Object[]> selectableCourse = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(professor);
-	    if(selectableCourse.size()>0){
-		GenericContainerBeanList list = new GenericContainerBeanList();
-		for(int i=0; i<selectableCourse.size(); i++){
-		    list.addToList(new GenericContainerBean(selectableCourse.get(i)[0].toString()));	    
-		}
-		return list;
+	    List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(professor);
+	    if(objectList.size()>0){
+		GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+		return beanList;
 	    }
 	}
 	return null;
@@ -205,13 +201,10 @@ public class SendInvitationController {
     private GenericContainerBeanList getSelectableStudent(String courseName){
 	if(courseName!=null){
 	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
-	    List<Object[]> selectableStudent = DaoHelper.getRegistrationStudentClassDAO().getSelectableStudent(courseClass);
-	    if(selectableStudent.size()>0){
-		GenericContainerBeanList list = new GenericContainerBeanList();
-		for(int i=0; i<selectableStudent.size(); i++){
-		    list.addToList(new GenericContainerBean(selectableStudent.get(i)[0].toString()));	    
-		}
-		return list;
+	    List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableStudent(courseClass);
+	    if(objectList.size()>0){
+		GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+		return beanList;
 	    }
 	}
 	return null;
@@ -227,13 +220,10 @@ public class SendInvitationController {
     private GenericContainerBeanList getCancellableStudent(String courseName){
 	if(courseName!=null){
 	    CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
-	    List<Object[]> cancellableStudent = DaoHelper.getRegistrationStudentClassDAO().getCancellableStudent(courseClass);
-	    if(cancellableStudent.size()>0){
-		GenericContainerBeanList list = new GenericContainerBeanList();
-		for(int i=0; i<cancellableStudent.size(); i++){
-		    list.addToList(new GenericContainerBean(cancellableStudent.get(i)[0].toString()));	    
-		}
-		return list;
+	    List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getCancellableStudent(courseClass);
+	    if(objectList.size()>0){
+		GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+		return beanList;
 	    }
 	}
 	return null;

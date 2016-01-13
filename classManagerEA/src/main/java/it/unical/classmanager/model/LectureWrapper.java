@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Pattern;
 
 import it.unical.classmanager.model.data.Lecture;

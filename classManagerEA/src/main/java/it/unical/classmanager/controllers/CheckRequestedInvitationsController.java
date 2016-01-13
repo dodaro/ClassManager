@@ -24,7 +24,6 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
-import it.unical.classmanager.utils.GenericContainerBean;
 import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
@@ -113,15 +112,10 @@ public class CheckRequestedInvitationsController {
     }
     
     private GenericContainerBeanList getAcceptableCourse(Student student){
-	List<Object[]> acceptableCourse = DaoHelper.getRegistrationStudentClassDAO().getAcceptableCourse(student);
-	if(acceptableCourse.size()>0){
-	    GenericContainerBeanList list = new GenericContainerBeanList();
-	    for(int i=0; i<acceptableCourse.size(); i++){
-		list.addToList(new GenericContainerBean(
-			acceptableCourse.get(i)[0].toString(),
-			acceptableCourse.get(i)[1].toString()));	    
-	    }
-	    return list;
+	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getAcceptableCourse(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    return beanList;
 	}
 	return null;
     }

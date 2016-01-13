@@ -7,9 +7,7 @@ import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
-import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
-import it.unical.classmanager.model.data.User;
 
 public class CourseClassDAOImpl implements CourseClassDAO {
     private DBHandler dbHandler;
@@ -88,6 +86,7 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	return courseClass;
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public List<CourseClass> getCourseClasses(Professor professor){  
 	Session session = this.dbHandler.getSessionFactory().openSession();		  

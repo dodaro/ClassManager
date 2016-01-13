@@ -9,13 +9,21 @@ public class GenericContainerBeanList {
     public GenericContainerBeanList() {
 	setList(new ArrayList<GenericContainerBean>());
     }
-
-    public List<GenericContainerBean> getList() {
-	    return list;
+    
+    public GenericContainerBeanList(List<Object[]> objects) {
+	setList(new ArrayList<GenericContainerBean>());
+	
+	for(int i=0; i<objects.size(); i++){
+	    this.addToList(new GenericContainerBean(objects.get(i)));	    
+	}	
     }
-
+    
+    public List<GenericContainerBean> getList() {
+	return list;
+    }
+    
     public void setList( List<GenericContainerBean> list) {
-	    this.list = list;
+	this.list = list;
     }
     
     public void addToList(GenericContainerBean invitationBean){

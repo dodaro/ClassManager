@@ -73,6 +73,7 @@ public class HomeworkAttachedStudentSolvingDAOImpl implements HomeworkAttachedSt
 		return homeworkAttachedStudentSolving;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<HomeworkAttachedStudentSolving> getAllHomeworkAttachedStudentSolvings(int homeworkStudentSolvingId) {
 		

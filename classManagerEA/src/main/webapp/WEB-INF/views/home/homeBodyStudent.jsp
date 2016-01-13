@@ -7,9 +7,7 @@
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		<br>
-		<h3>${welcomeMessage1}<strong> ${user.username}</strong>,
-		</h3>
-		<h4>${welcomeMessage2}</h4>
+		<h3>${welcomeMessage1}<strong> ${user.username}</strong>, ${welcomeMessage2}</h3>
 		<br>
 	</div>
 </div>
@@ -22,15 +20,24 @@
 			</div>
 		</div>
 		<div class="col-sm-3 col-md-3 col-lg-3">
+
 			<p>
 				<strong><spring:message code="message.homeStudentCourses" /></strong>
 			</p>
-			<ul>
-				<li><a href="#">Corso 1</a></li>
-				<li><a href="#">Corso 2</a></li>
-				<li><a href="#">Corso 3</a></li>
-				<li><a href="#">Corso 4</a></li>
-			</ul>
+			<c:if test="${empty courseList}">
+				<br>
+				<div class="alert alert-info" role="alert">
+					<spring:message code="message.noCourseList" />
+				</div>
+			</c:if>
+			<c:if test="${not empty courseList}">
+				<ul>
+					<c:forEach items="${courseList.list}" var="singleCourse">
+						<li><a href="#">${singleCourse.field1}</a></li>
+					</c:forEach>
+				</ul>
+			</c:if>
+
 		</div>
 	</div>
 </div>
@@ -52,36 +59,40 @@
 				<div id="collapseOne" class="panel-collapse collapse in"
 					role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
-						<table class="table table-condensed">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th><spring:message code="message.homeTableMsg7" /></th>
-									<th><spring:message code="message.homeTableMsg4" /></th>
-									<th><spring:message code="message.homeTableMsg5" /></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td><a href="#">Lecture 1</a></td>
-									<td>12/06/2014</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td><a href="#">Lecture 2</a></td>
-									<td>12/06/2014</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Stephan</td>
-									<td><a href="#">Lecture 3</a></td>
-									<td>12/06/2014</td>
-								</tr>
-							</tbody>
-						</table>
+
+						<c:if test="${empty lastLectureList}">
+							<br>
+							<div class="alert alert-info" role="alert">
+								<spring:message code="message.nolastLectureList" />
+							</div>
+						</c:if>
+						<c:if test="${not empty lastLectureList}">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th><spring:message code="message.homeTableMsg2" /></th>
+										<th><spring:message code="message.homeTableMsg4" /></th>
+										<th><spring:message code="message.homeTableMsg5" /></th>
+										<th><spring:message code="message.homeTableMsg7" /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="k" value="0" />
+									<c:forEach items="${lastLectureList.list}" var="singleLecture">
+										<tr>
+											<c:set var="k" value="${k+1}" />
+											<th scope="row">${k}</th>
+											<td>${singleLecture.field1}</td>
+											<td><a href="#">${singleLecture.field2}</a></td>
+											<td>${singleLecture.field3}</td>
+											<td>${singleLecture.field4}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
+
 					</div>
 				</div>
 			</div>
@@ -98,36 +109,41 @@
 				<div id="collapseTwo" class="panel-collapse collapse"
 					role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th><spring:message code="message.homeTableMsg7" /></th>
-									<th><spring:message code="message.homeTableMsg6" /></th>
-									<th><spring:message code="message.homeTableMsg5" /></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td><a href="#">Materiale 1</a></td>
-									<td>12/06/2014</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td><a href="#">Materiale 2</a></td>
-									<td>12/06/2014</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Stephan</td>
-									<td><a href="#">Materiale 3</a></td>
-									<td>12/06/2014</td>
-								</tr>
-							</tbody>
-						</table>
+
+						<c:if test="${empty lastMaterialList}">
+							<br>
+							<div class="alert alert-info" role="alert">
+								<spring:message code="message.nolastMaterialList" />
+							</div>
+						</c:if>
+						<c:if test="${not empty lastMaterialList}">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th><spring:message code="message.homeTableMsg7" /></th>
+										<th><spring:message code="message.homeTableMsg6" /></th>
+										<th><spring:message code="message.homeTableMsg5" /></th>
+										<th><spring:message code="message.homeTableMsg2" /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="k" value="0" />
+									<c:forEach items="${lastMaterialList.list}"
+										var="singleMaterial">
+										<tr>
+											<c:set var="k" value="${k+1}" />
+											<th scope="row">${k}</th>
+											<td>${singleMaterial.field1}</td>
+											<td><a href="#">${singleMaterial.field2}</a></td>
+											<td>${singleMaterial.field3}</td>
+											<td>${singleMaterial.field4}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
+
 					</div>
 				</div>
 			</div>
@@ -144,44 +160,43 @@
 				<div id="collapseThree" class="panel-collapse collapse"
 					role="tabpanel" aria-labelledby="headingThree">
 					<div class="panel-body">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th><spring:message code="message.homeTableMsg7" /></th>
-									<th><spring:message code="message.homeTableMsg2" /></th>
-									<th><spring:message code="message.homeTableMsg3" /></th>
-									<th><spring:message code="message.homeTableMsg5" /></th>
-									<th><spring:message code="message.homeTableMsg8" /></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Course 1</td>
-									<td><a href="#">Homework 1</a></td>
-									<td>12/06/2014</td>
-									<td>27</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Course 3</td>
-									<td><a href="#">Homework 2</a></td>
-									<td>12/06/2014</td>
-									<td>27</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Stephan</td>
-									<td>Course 4</td>
-									<td><a href="#">Homework 3</a></td>
-									<td>12/06/2014</td>
-									<td>27</td>
-								</tr>
-							</tbody>
-						</table>
+
+						<c:if test="${empty lastHomeworkList}">
+							<br>
+							<div class="alert alert-info" role="alert">
+								<spring:message code="message.nolastHomeworkList" />
+							</div>
+						</c:if>
+						<c:if test="${not empty lastHomeworkList}">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th><spring:message code="message.homeTableMsg7" /></th>
+										<th><spring:message code="message.homeTableMsg2" /></th>
+										<th><spring:message code="message.homeTableMsg3" /></th>
+										<th><spring:message code="message.homeTableMsg5" /></th>
+										<th><spring:message code="message.homeTableMsg8" /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="k" value="0" />
+									<c:forEach items="${lastHomeworkList.list}"
+										var="singleHomework">
+										<tr>
+											<c:set var="k" value="${k+1}" />
+											<th scope="row">${k}</th>
+											<td>${singleHomework.field1}</td>
+											<td>${singleHomework.field2}</td>
+											<td><a href="#">${singleHomework.field3}</a></td>
+											<td>${singleHomework.field4}</td>
+											<td>${singleHomework.field5}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
+
 					</div>
 				</div>
 			</div>

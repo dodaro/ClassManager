@@ -162,24 +162,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getSelectableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;
     }
     
@@ -218,24 +200,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getCancellableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;	
     }
     
@@ -260,25 +224,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getSelectableStudent("+courseClass.getName()+")");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	
-	//	Object[] el1 = {"Studente1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente2"};
-	//	result.add(el2);
-	
 	return result;	
     }
     
@@ -301,24 +246,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	query.setParameter("nameCourse", courseClass.getName());
 	result = query.list();
 	session.close();
-	
-	//	System.err.println("getCancellableStudent("+courseClass.getName()+")");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();	
-	//	Object[] el1 = {"Studente1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente2"};
-	//	result.add(el2);
 	
 	return result;	
     }
@@ -343,24 +270,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getAcceptableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;
     }
     
@@ -383,26 +292,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	query.setParameter("nameProfessor", professor.getUsername());
 	result = query.list();
 	session.close();
-	
-	//	System.err.println("getAcceptableStudent(Professor professor)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();	
-	//	Object[] el1 = {"Studente1", "Corso1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente1", "Corso2"};
-	//	result.add(el2);
-	//	Object[] el3 = {"Studente2", "Corso1"};
-	//	result.add(el3);
 	
 	return result;	
     }

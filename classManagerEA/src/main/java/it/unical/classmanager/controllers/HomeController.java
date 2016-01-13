@@ -24,7 +24,6 @@ import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
-import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;

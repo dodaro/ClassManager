@@ -4,6 +4,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script>
+	var events = ${events};
+	$("#calendar").fullcalendar(events);
+</script>
+
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		<br>

@@ -940,7 +940,8 @@ public class DBInitializatorController {
 			"questionAttachedFile", 
 			"txt", 
 			"files/questionAttachedFile.txt", 
-			question);
+			question,
+			new Date());
 		questionAttachedContentDAO.create(questionAttachedContent);
 		logger.info("Created "+questionAttachedContent, locale);
 		k++;		

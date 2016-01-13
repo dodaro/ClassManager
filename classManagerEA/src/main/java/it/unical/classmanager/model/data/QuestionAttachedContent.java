@@ -1,6 +1,7 @@
 package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,9 @@ public class QuestionAttachedContent implements Serializable  {
 	@Column(name="filePath", nullable=false, length=1000)
 	private String filePath;
 	
+	@Column(name="creationDate")
+	private Date creationDate;
+	
 	//	Foreign key section
 	@ManyToOne
 	@JoinColumn(name = "question")
@@ -40,15 +44,17 @@ public class QuestionAttachedContent implements Serializable  {
 		this.name = "";
 		this.type = "";
 		this.filePath = "";
-		this.question = null;		
+		this.question = null;
+		this.creationDate = null;
 	}
 
-	public QuestionAttachedContent(int id, String name, String type, String filePath, Question question) {
+	public QuestionAttachedContent(int id, String name, String type, String filePath, Question question, Date creationDate) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.filePath = filePath;
 		this.question = question;
+		this.creationDate = creationDate;
 	}
 
 	public int getId() {
@@ -89,6 +95,15 @@ public class QuestionAttachedContent implements Serializable  {
 
 	public void setQuestion(Question question) {
 		this.question = question;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}	
+	
 
 }

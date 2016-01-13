@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.unical.classmanager.controllers.forum.manager.ForumAttachmentGCManager;
+import it.unical.classmanager.controllers.forum.manager.QuestionManager;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
-import it.unical.classmanager.forumData.QuestionManager;
 import it.unical.classmanager.managers.EnvironmentManger;
 import it.unical.classmanager.model.dao.AnswerDAO;
 import it.unical.classmanager.model.dao.AnswerDAOImpl;
@@ -45,6 +46,15 @@ public class QuestionsController {
 	@RequestMapping(value = {"/questions", "/forum"}, method = RequestMethod.GET)
 	public String redirectToQuestions(Locale locale, Model model) {
 		return "redirect:/forum/questions";
+	}
+	
+	@RequestMapping(value = "gc", method = RequestMethod.GET)
+	public String attachmentGarbageCollect(Locale locale, Model model) {
+		
+		ForumAttachmentGCManager gc = new ForumAttachmentGCManager();
+		gc.garbageCollect();
+		
+		return "";
 	}
 	
 	

@@ -6,7 +6,7 @@
 
 <script>
 	var events = ${events};
-	$("#calendar").fullcalendar({events:events});
+	$("#calendar").fullcalendar(events);
 </script>
 
 <div class="col-sm-12 col-md-12 col-lg-12">

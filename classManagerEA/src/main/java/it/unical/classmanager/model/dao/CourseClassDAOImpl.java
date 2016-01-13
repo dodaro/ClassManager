@@ -1,5 +1,6 @@
 package it.unical.classmanager.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,6 +9,7 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 
 public class CourseClassDAOImpl implements CourseClassDAO {
     private DBHandler dbHandler;
@@ -94,6 +96,51 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 		+ "WHERE professor = :professor").setParameter("professor", professor).list();  
 	session.close();  
 	return courseClasses;  
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Object[]> getCourses(Professor professor) {
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	// Course, Professor
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	
+	String hql = " select C.name, P.username "
+		+ " from CourseClass C "
+		+ " join C.professor P "
+		+ " where P.username = :nameProfessor "
+		+ " ";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("nameProfessor", professor.getUsername());
+	result = query.list();
+	session.close();
+	
+	return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Object[]> getCourses(Student student) {
+	List<Object[]> result = new ArrayList<Object[]>();
+	
+	// Course, Student
+	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
+	
+	String hql = " select C.name, S.username "
+		+ " from CourseClass C "
+		+ " join C.registrationStudentClasses R "
+		+ " join R.student S "
+		+ " where S.username = :nameStudent "
+		+ " ";
+	
+	Query query = session.createQuery(hql);
+	query.setParameter("nameStudent", student.getUsername());
+	result = query.list();
+	session.close();
+	
+	return result;
     }  
     
 }

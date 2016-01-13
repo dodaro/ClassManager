@@ -1,6 +1,7 @@
 package it.unical.classmanager.controllers;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,7 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.FullCalendarEventBean;
 import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.dao.EventDAO;
+import it.unical.classmanager.model.dao.LectureDAO;
+import it.unical.classmanager.model.dao.LectureDAOImpl;
+import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -56,10 +64,12 @@ public class HomeController {
 	}
 	
 	setWelcomeMessage(locale, model, request);
+	setCalendar(locale, model, request, user);
 	
 	if(user instanceof Student){
 	    model.addAttribute("student", (Student)user);
 	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
+	    setCourses(locale, model, request, (Student)user);
 	    setLastLectures(locale, model, request, (Student)user);
 	    setLastMaterials(locale, model, request, (Student)user);
 	    setLastHomeworks(locale, model, request, (Student)user);
@@ -68,6 +78,7 @@ public class HomeController {
 	if(user instanceof Professor){
 	    model.addAttribute("professor", (Professor)user);
 	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
+	    setCourses(locale, model, request, (Professor)user);
 	    setLastLectures(locale, model, request, (Professor)user);
 	    setLastMaterials(locale, model, request, (Professor)user);
 	    setLastHomeworks(locale, model, request, (Professor)user);
@@ -80,13 +91,13 @@ public class HomeController {
     private void setWelcomeMessage(Locale locale, Model model,HttpServletRequest request){
 	Time time = new Time(System.currentTimeMillis());
 	String message1="", message2="";
-	if(time.getHours()>=7 && time.getHours()<12){
+	if(time.getHours()>=7 && time.getHours()<13){
 	    message1 = messageSource.getMessage("message.homeGoodMorning1",null,locale);
 	    message2 = messageSource.getMessage("message.homeGoodMorning2",null,locale);
-	} else if(time.getHours()>=12 && time.getHours()<16){
+	} else if(time.getHours()>=13 && time.getHours()<18){
 	    message1 = messageSource.getMessage("message.homeGoodAfternoon1",null,locale);
 	    message2 = messageSource.getMessage("message.homeGoodAfternoon2",null,locale);	    
-	} else if(time.getHours()>=16 && time.getHours()<21){
+	} else if(time.getHours()>=18 && time.getHours()<21){
 	    message1 = messageSource.getMessage("message.homeGoodEvening1",null,locale);
 	    message2 = messageSource.getMessage("message.homeGoodEvening2",null,locale);	    
 	} else {
@@ -96,6 +107,55 @@ public class HomeController {
 	
 	model.addAttribute("welcomeMessage1", message1);
 	model.addAttribute("welcomeMessage2", message2);	
+    }
+    
+    private void setCalendar(Locale locale, Model model,HttpServletRequest request, User user){
+	//is the string containing all the events of the calendar	
+	EventDAO eventDao = DaoHelper.getEventDAO();
+	
+	//retrieves all the event of an user
+	List<Event> events = eventDao.getAllEventsOfUser(user.getUsername());
+	
+	List<FullCalendarEventBean> eventsAdaped = new ArrayList<FullCalendarEventBean>();
+	for (Event event : events) {
+	    eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+	}
+	
+	/*
+	 * Is necessary to retrieve create events related to the course schedule
+	 */
+	
+	//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
+	
+	if(user.getRole().equals(User.PROFESSOR)){
+	    LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
+	    List<Lecture> allLectures = lectureDAO.getAllLecturesOfAProfessor(user.getUsername());
+	    
+	    for (Lecture lecture : allLectures) {
+		eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(lecture, user));
+	    }
+	}
+	
+	model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+	
+	//String json = new Gson().toJson(eventsAdaped);
+	//return json; 
+    }
+    
+    private void setCourses( Locale locale, Model model, HttpServletRequest request, Professor professor) {
+	List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(professor);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("courseList", beanList);
+	}	
+    }
+    
+    private void setCourses( Locale locale, Model model, HttpServletRequest request, Student student) {
+	List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(student);
+	if(objectList.size()>0){
+	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+	    model.addAttribute("courseList", beanList);
+	}
     }
     
     private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Student student){

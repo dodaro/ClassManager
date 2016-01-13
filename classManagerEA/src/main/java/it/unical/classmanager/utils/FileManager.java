@@ -2,7 +2,6 @@ package it.unical.classmanager.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -13,14 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
-import it.unical.classmanager.model.dao.CourseClassDAO;
-import it.unical.classmanager.model.dao.CourseClassDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkDAO;
-import it.unical.classmanager.model.dao.HomeworkDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
-import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
-import it.unical.classmanager.model.data.CourseClass;
-import it.unical.classmanager.model.data.HomeworkStudentSolving;
 
 public class FileManager {
 

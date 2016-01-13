@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -85,6 +86,7 @@ public class QuestionAttachmentController {
 		questionAttached.setName(newFileName);
 		questionAttached.setFilePath(filePath);
 		questionAttached.setType(tmpMimeType);
+		questionAttached.setCreationDate(new Date());
 		questionAttached = questionAttachedDAO.create(questionAttached);
 		
 		

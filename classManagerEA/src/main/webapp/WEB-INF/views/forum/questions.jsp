@@ -89,12 +89,6 @@
 								
 								<div class="row">
 									<div class="col-md-12">
-										<a href="">garbage collectami</a>
-									</div>
-								</div>
-								
-								<div class="row">
-									<div class="col-md-12">
 										<form action="insertQuestion">
 											<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertQuestion"/>" style="float:right;"/>
 										</form>

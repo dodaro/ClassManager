@@ -23,8 +23,12 @@ import it.unical.classmanager.controllers.forum.manager.QuestionManager;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
+import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
+import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.AnswerDAO;
 import it.unical.classmanager.model.dao.AnswerDAOImpl;
+import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;
+import it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.data.Answer;
@@ -46,15 +50,6 @@ public class QuestionsController {
 	@RequestMapping(value = {"/questions", "/forum"}, method = RequestMethod.GET)
 	public String redirectToQuestions(Locale locale, Model model) {
 		return "redirect:/forum/questions";
-	}
-	
-	@RequestMapping(value = "gc", method = RequestMethod.GET)
-	public String attachmentGarbageCollect(Locale locale, Model model) {
-		
-		ForumAttachmentGCManager gc = new ForumAttachmentGCManager();
-		gc.garbageCollect();
-		
-		return "";
 	}
 	
 	

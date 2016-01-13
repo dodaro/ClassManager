@@ -4,52 +4,72 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
-import it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl;
+import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
+import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
 import it.unical.classmanager.model.data.QuestionAttachedContent;
+import it.unical.classmanager.utils.FileManager;
 
 public class ForumAttachmentGCManager {
 
-	private QuestionAttachedContentDAOImpl questionDAO;
-	private AnswerAttachedContentDAOImpl answerDAO;
+	private QuestionAttachedContentDAO questionDAO;
+	private AnswerAttachedContentDAO answerDAO;
 	
 	private final long DAY_TIMEOUT = 10;
 	
 	
-	public ForumAttachmentGCManager() {
+	public ForumAttachmentGCManager(QuestionAttachedContentDAO questionDAO, AnswerAttachedContentDAO answerDAO) {
 		
-		this.questionDAO = new QuestionAttachedContentDAOImpl();
-		this.answerDAO = new AnswerAttachedContentDAOImpl();
+		this.questionDAO = questionDAO;
+		this.answerDAO = answerDAO;
 	}
 	
 	
 	public void garbageCollect() {
 		
 
-		List<QuestionAttachedContent> questionAttachment = questionDAO.getAllQuestionAttachedContents();
-		List<AnswerAttachedContent> answerAttachemnt = answerDAO.getAllAnswerAttachedContents();
+		List<QuestionAttachedContent> questionAttachments = questionDAO.getAllQuestionAttachedContents();
+		List<AnswerAttachedContent> answerAttachments = answerDAO.getAllAnswerAttachedContents();
 		
 		//check for question
-		for(QuestionAttachedContent tmpAttachment : questionAttachment) {
+		for(QuestionAttachedContent tmpAttachment : questionAttachments) {
 			
 			if(tmpAttachment.getQuestion() == null) {
 				
-				long millisDiff = tmpAttachment.getCreationDate().getTime() - new Date().getTime();
+				long millisDiff = new Date().getTime() - tmpAttachment.getCreationDate().getTime();
 				//long daysDiff = TimeUnit.MILLISECONDS.toDays(millisDiff);
 				
 				long daysDiff = TimeUnit.MILLISECONDS.toSeconds(millisDiff);
 				
 				if(daysDiff >= DAY_TIMEOUT) {
 					
-					System.out.println("da cancellare");
+					questionDAO.delete(tmpAttachment);
+					FileManager fm = new FileManager();
+					fm.deleteFile(tmpAttachment.getFilePath());
 				}
 			}
 			
 		}
 		
 		//check for answer
+		for(AnswerAttachedContent tmpAttachment : answerAttachments) {
+			
+			if(tmpAttachment.getAnswer() == null) {
 				
+				long millisDiff = new Date().getTime() - tmpAttachment.getCreationDate().getTime();
+				//long daysDiff = TimeUnit.MILLISECONDS.toDays(millisDiff);
+				
+				long daysDiff = TimeUnit.MILLISECONDS.toSeconds(millisDiff);
+				
+				if(daysDiff >= DAY_TIMEOUT) {
+					
+					answerDAO.delete(tmpAttachment);
+					FileManager fm = new FileManager();
+					fm.deleteFile(tmpAttachment.getFilePath());
+				}
+			}
+			
+		}
 				
 		
 		

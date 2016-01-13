@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,7 +77,41 @@ public class InsertAnswerController {
 	
 	
 	@RequestMapping(value = "/forum/insertAnswer", method = RequestMethod.POST)
-	public String insertAnswer(Locale locale, Model model, @ModelAttribute("answer") Answer answer, HttpServletRequest request) {
+	public String insertAnswer(@Valid @ModelAttribute("answer") Answer answer, BindingResult result, Locale locale, Model model, HttpServletRequest request) {
+		
+		if(result.hasErrors()) {
+			
+			System.out.println("Errore nei dati");
+			
+			int qid = Integer.parseInt(request.getParameter("qid"));
+			QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+			Question question = questionDAO.get(qid);
+			
+			model.addAttribute("question", question);
+			
+			List<AnswerAttachedContent> attachemnts = new ArrayList<AnswerAttachedContent>();
+			String attachedFilesID = request.getParameter("attachedFiles");
+
+			if(attachedFilesID != null && !attachedFilesID.equals("")) {
+				
+				StringTokenizer tokenizer = new StringTokenizer(attachedFilesID, ";");
+				AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);
+			
+				while(tokenizer.hasMoreTokens()) {
+					String tmpID = tokenizer.nextToken();
+					
+					AnswerAttachedContent tmpAnswerContent = answerAttachedDAO.get(Integer.parseInt(tmpID));
+					attachemnts.add(tmpAnswerContent);
+				}
+			}
+			
+			
+			model.addAttribute("attachments", attachemnts);
+			model.addAttribute("attachmentsID", attachedFilesID);
+			
+			return "forum/insertAnswer";
+		}
+		
 		
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
@@ -175,7 +212,7 @@ public class InsertAnswerController {
 	
 	
 	@RequestMapping(value = "/forum/uploadAnswerAttachment", method = RequestMethod.POST)
-	public @ResponseBody String uploadQuestionAttachment(Locale locale, Model model, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
+	public @ResponseBody String uploadAnswerAttachment(Locale locale, Model model, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		
@@ -232,9 +269,13 @@ public class InsertAnswerController {
 	
 	
 	@RequestMapping(value = "/forum/removeAnswerAttachment", method = RequestMethod.POST)
-	public @ResponseBody boolean removeQuestionAttachment(Locale locale, Model model, HttpServletRequest request) {
+	public @ResponseBody boolean removeAnswerAttachment(Locale locale, Model model, HttpServletRequest request) {
+		
+		System.out.println("EEEEEE");
 		
 		int attachedFilesIDRemove = Integer.parseInt(request.getParameter("attachedIdRemove"));
+		
+		System.out.println("YYYYY: " + attachedFilesIDRemove);
 		
 		AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);
 		

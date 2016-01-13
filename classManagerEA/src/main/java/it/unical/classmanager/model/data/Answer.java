@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -31,6 +32,7 @@ public class Answer implements Serializable  {
 	private int id;
 	
 	@Column(name="description", nullable=false, length=10000)
+	@Size(min=1, max=10000)
 	private String description;
 	
 	//	Foreign key section

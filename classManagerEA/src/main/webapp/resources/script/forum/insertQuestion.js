@@ -160,7 +160,6 @@ var ListenersManager = (function(){
   									attachmentsIDs = attachmentsIDs.replace(";;", ";");
   									$('#attachedFiles').val(attachmentsIDs);
   									
-  									parameters.type = "remove";
   								}
   								else {
   									alert("remove non andata a buon fine")

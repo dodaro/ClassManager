@@ -1,9 +1,13 @@
 package it.unical.classmanager.model;
 
+import org.hibernate.validator.constraints.Range;
+
 public class PartecipationWrapper {
 
 	private String studentId;
 	private int parentId;
+	
+	@Range(min = 0, max = 30)
 	private int score;
 	private boolean praise;
 	

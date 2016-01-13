@@ -15,8 +15,15 @@ $(document).ready(function() {
 		placement: 'right',
 		url: function(params){
 
-			var type = 'update'
-				updateData(params, type);
+			var type = 'update';
+			updateData(params, type);
+		},
+		validate: function(data){
+
+			if(!data.score.match("^[0-9]+?"))
+				return "invalid text";
+			if(data.score < 0 || data.score > 30 || (data.score < 30 && data.praise))
+				return "invalid range";
 		},
 		title: 'Change score'
 	});
@@ -26,8 +33,15 @@ $(document).ready(function() {
 		placement: 'right',
 		url: function(params){
 
-			var type = 'new'
-				updateData(params, type);
+			var type = 'new';
+			updateData(params, type);
+		},
+		validate: function(data){
+
+			if(!data.score.match("^[0-9]+?"))
+				return "invalid text";
+			if(data.score < 0 || data.score > 30 || (data.score < 30 && data.praise))
+				return "invalid range";
 		},
 		title: 'Change score'
 	});
@@ -37,8 +51,16 @@ $(document).ready(function() {
 		placement: 'right',
 		url: function(params){
 
-			var type = 'update'
-				updateExam(params, type);
+			var type = 'update';
+			updateExam(params, type);
+		},
+		address: {},
+		validate: function(data){
+
+			if(!data.score.match("^[0-9]+?"))
+				return "invalid text";
+			if(data.score < 0 || data.score > 30 || (data.score < 30 && data.praise))
+				return "invalid range";
 		},
 		title: 'Change score'
 	});
@@ -48,17 +70,14 @@ $(document).ready(function() {
 		placement: 'right',
 		url: function(params){
 
-			var type = 'new'
-				updateExam(params, type);
+			var type = 'new';
+			updateExam(params, type);
 		},
-		success: function(data){
-			//return data.success.code;
-		},
-		validate: function(response, newValue){
+		validate: function(data){
 
-			if(!data.match("^[0-9]+?"))
+			if(!data.score.match("^[0-9]+?"))
 				return "invalid text";
-			if(data < 0 || data > 30)
+			if(data.score < 0 || data.score > 30 || (data.score < 30 && data.praise))
 				return "invalid range";
 		},
 		title: 'Change score',
@@ -77,20 +96,20 @@ function updateExam(data, type){
 		url = "/create_Partecipation";
 		parentId = data.pk.split(" ")[0];
 		studentId = data.pk.split(" ")[1];
-		part = {'parentId':parentId, 'studentId' : studentId,'score':data.value};
+		part = {'parentId':parentId, 'studentId' : studentId,'score':data.value.score, 'praise':data.value.praise};
 	}
 	else{
 		url = "/update_Partecipation";
-		part = {'id':data.pk, 'score':data.value, 'type':data.type};
+		part = {'id':data.pk, 'score': data.value.score, 'praise': data.value.praise};
 	}
 
-	$.ajax({ 
+/*	$.ajax({ 
 		url: url, 
 		type: 'POST',  
 		data: JSON.stringify(part), 
 		dataType: 'json',
 		contentType: 'application/json',
-	});
+	});*/
 }
 
 var ListenersManager = (function(){

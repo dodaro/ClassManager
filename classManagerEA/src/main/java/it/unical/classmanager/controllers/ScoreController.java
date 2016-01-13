@@ -4,12 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -106,12 +109,12 @@ public class ScoreController {
 	}
 
 	@RequestMapping(value = "/update_score", method = RequestMethod.POST)
-	public @ResponseBody String updateHomework(Model model, @RequestBody HomeworkStudentSolving homeworkStudentSolving) {
+	public @ResponseBody String updateHomework(@Valid @RequestBody HomeworkStudentSolving homeworkStudentSolving, BindingResult result, Model model) {
 
 		int id = homeworkStudentSolving.getId();
 		int score = homeworkStudentSolving.getScore();
 
-		if(score > 30 || score < 0)
+		if(result.hasErrors())
 			return "{errors:{'code': 400, 'msg': \"incorrect range\"}}";
 		
 		HomeworkStudentSolvingDAO dao = appContext.getBean("homeworkStudentSolvingDAO",HomeworkStudentSolvingDAOImpl.class);
@@ -121,20 +124,23 @@ public class ScoreController {
 		dao.update(original);
 
 		logger.info("update_score");
-		return "200";
+		return "{errors:{'code': 200, 'msg': \"ok\"}}";
 
 	}
 	
 	@RequestMapping(value = "/create_Partecipation", method = RequestMethod.POST)
-	public @ResponseBody String updateExam(@RequestBody PartecipationWrapper part, Model model) {
+	public @ResponseBody String updateExam(@Valid @RequestBody PartecipationWrapper part, BindingResult result, Model model) {
 
 		boolean praise = part.getPraise();
 		int examId = part.getParentId();
 		String studentId = part.getStudentId();
 		int score = part.getScore();
 		
-		if(score > 30 || score < 0)
+		if(result.hasErrors())
 			return "{errors:{'code': 400, 'msg': \"incorrect range\"}}";
+		
+		if(praise && score < 30)
+			praise = false;
 		
 		Exam exam = DaoHelper.getExamDAO().get(examId);
 		Student student = new Student(DaoHelper.getUserDAO().get(studentId));
@@ -154,22 +160,27 @@ public class ScoreController {
 	}
 	
 	@RequestMapping(value = "/update_Partecipation", method = RequestMethod.POST)
-	public @ResponseBody String updatePartecipation(Model model, @RequestBody StudentExamPartecipation studentExamPartecipation) {
+	public @ResponseBody String updatePartecipation(@Valid @RequestBody StudentExamPartecipation studentExamPartecipation, BindingResult result,Model model) {
 
 		int id = studentExamPartecipation.getId();
 		int score = studentExamPartecipation.getScore();
+		boolean praise = studentExamPartecipation.isPraise();
 
-		if(score > 30 || score < 0)
+		if(result.hasErrors())
 			return "{errors:{'code': 400, 'msg': \"incorrect range\"}}";
+		
+		if(praise && score < 30)
+			praise = false;
 		
 		StudentExamPartecipationDAO studentExamPartecipationDAO = DaoHelper.getStudentExamPartecipationDAO();
 		StudentExamPartecipation original = studentExamPartecipationDAO.get(id);
 		original.setScore(score);
+		original.setPraise(praise);
 
 		studentExamPartecipationDAO.update(original);
 
 		logger.info("update partecipation");
-		return "200";
+		return "{errors:{'code': 200, 'msg': \"ok\"}}";
 
 	}
 }

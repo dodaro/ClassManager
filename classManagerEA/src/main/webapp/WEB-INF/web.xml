@@ -45,6 +45,10 @@
     <url-pattern>/homeworks</url-pattern>
     <url-pattern>/update_homeworks</url-pattern>
     <url-pattern>/delete_homeworks</url-pattern>
+    <url-pattern>/scores</url-pattern>
+    <url-pattern>/update_scores</url-pattern>
+    <url-pattern>/create_Partecipation</url-pattern>
+    <url-pattern>/update_Partecipation</url-pattern>
   </filter-mapping>
   
   <!-- 

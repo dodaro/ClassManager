@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <br>
 
@@ -11,7 +12,9 @@
       <span class="input-group-addon" id="basic-addon1">
 	  	<span class="glyphicon glyphicon-filter"></span>
 	  </span>
-      <input id="filter" name="filterText" type="text" class="form-control" aria-label="..." placeholder="type for filter">
+	  
+	  <spring:message code="scores.typeForFilter" text="default text" var="message"/>
+      <input id="filter" name="filterText" type="text" class="form-control" aria-label="..." placeholder="${message}">
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
   
@@ -19,7 +22,7 @@
 <br>
 
 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
-	More Filters
+	<spring:message code="scores.moreFilters"/>
 </button>
 <div class="row collapse" id="filters_collapse">
 	  <div class="col-lg-8">
@@ -31,15 +34,17 @@
 				        <c:forEach items="${lectures}" var="item" varStatus="count"> 
 				            <option value="${item.id}">${item.number} - ${item.topic}</option>
 				        </c:forEach>
-				        <option value="">all</option>
+				        <option value="" selected><spring:message code="scores.all"/></option>
 				    </select> 
 				    
 			     			
-			  		<span class="input-group-addon">Exam year</span>
+			  		<span class="input-group-addon"><spring:message code="scores.examYear"/></span>
 			  		<input name="yearFilter" type="text" class="form-control" placeholder="exam year..">
 			  		
 			  		<span class="input-group-btn">
-	      				<button id="filter_btn" class="btn btn-success" type="submit">Apply</button>
+	      				<button id="filter_btn" class="btn btn-success" type="submit">
+							<spring:message code="scores.apply"/>
+						</button>
 	   		  		</span>
 	   		  	
 		  		</div>
@@ -49,10 +54,10 @@
 	  
 	<div class="btn-group" data-toggle="buttons">
 	  <label class="btn btn-primary active">
-	    <input id="exams_checkbox" type="checkbox" checked>Exams
+	    <input id="exams_checkbox" type="checkbox" checked><spring:message code="scores.exams"/>
 	  </label>
 	  <label class="btn btn-primary active">
-	    <input id="homeworks_checkbox" type="checkbox" checked>Homeworks
+	    <input id="homeworks_checkbox" type="checkbox" checked><spring:message code="scores.homework"/>
 	  </label>
 	</div>
 </div>
@@ -85,12 +90,12 @@
 							<c:when test="${not empty yearFilter}">
 								<c:if test="${exam.date.getYear() == yearFilter}">
 									<fmt:formatDate value="${exam.date}"  type="date"  pattern="dd-mm-yyyy" var="formattedDate" />
-									<th class="exam-td" style="color:red">Exam: ${formattedDate}</th>
+									<th class="exam-td" style="color:red"><spring:message code="scores.exam"/>: ${formattedDate}</th>
 								</c:if>
 							</c:when>
 							<c:otherwise>
 								<fmt:formatDate value="${exam.date}"  type="date"  var="formattedDate" />
-								<th class="exam-td" style="color:red">Exam: ${formattedDate}</th>							
+								<th class="exam-td" style="color:red"><spring:message code="scores.exam"/>: ${formattedDate}</th>							
 							</c:otherwise>
 						</c:choose>						
 					</c:forEach>
@@ -118,7 +123,7 @@
 													<c:set var="index" value="${index + 1}" scope="page" />
 												</c:when>
 												<c:otherwise>
-													<td class="homework-td"><a class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
+													<td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
 												</c:otherwise>
 											</c:choose>
 										</c:if>
@@ -130,7 +135,7 @@
 												<c:set var="index" value="${index + 1}" scope="page" />
 											</c:when>
 											<c:otherwise>
-												<td class="homework-td"><a class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
+												<td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -156,7 +161,7 @@
 													<c:set var="index" value="${index + 1}" scope="page" />
 												</c:when>
 												<c:otherwise>
-													<td class="exam-td"><a class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
+													<td class="exam-td"><a data-type="address" class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
 												</c:otherwise>
 											</c:choose>
 										</c:if>
@@ -168,7 +173,7 @@
 												<c:set var="index" value="${index + 1}" scope="page" />
 											</c:when>
 											<c:otherwise>
-												<td class="exam-td"><a class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
+												<td class="exam-td"><a data-type="address" class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
 											</c:otherwise>
 										</c:choose>										
 									</c:otherwise>
@@ -186,7 +191,3 @@
 	  </table>
 	</div>
 </div>
-
-<script>
-$("th").css("font-size", 10 + "px");
-</script>

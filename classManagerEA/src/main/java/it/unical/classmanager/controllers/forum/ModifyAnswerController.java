@@ -34,63 +34,102 @@ import it.unical.classmanager.model.data.User;
  * Handles requests for the forum page.
  */
 @Controller
-public class InsertAnswerController {
+public class ModifyAnswerController {
 	
 	@Autowired
 	private ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/forum/createAnswer", method = RequestMethod.POST)
-	public String createAnswer(Locale locale, Model model, HttpServletRequest request) {
+	
+	@RequestMapping(value = "/forum/modifyAnswer", method = RequestMethod.POST)
+	public String modifyAnswer(Locale locale, Model model, HttpServletRequest request) {
 		
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-		
 		int qid = Integer.parseInt(request.getParameter("qid"));
 		Question question = questionDAO.get(qid);
-		
+
 		model.addAttribute("question", question);
 		
-		Answer answer = new Answer();
+		AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		Answer answer = answerDAO.get(aid);
+		
 		model.addAttribute("answer", answer);
+		
+		List<AnswerAttachedContent> preAttachements = new ArrayList<AnswerAttachedContent>();
+		String preAttachmentsID = "";
+		
+		for(AnswerAttachedContent tmpAttachment : answer.getAnswerAttachedContents()) {
+			preAttachmentsID += tmpAttachment.getId() + ";";
+			preAttachements.add(tmpAttachment);
+		}
+		
+		preAttachmentsID = preAttachmentsID.substring(0, preAttachmentsID.length()-1);
+		
+		model.addAttribute("preAttachments", preAttachements);
+		model.addAttribute("preAttachmentsID", preAttachmentsID);
+		
 			
-		return "forum/insertAnswer";
+		return "forum/modifyAnswer";
 	}
 	
 	
-	@RequestMapping(value = "/forum/insertAnswer", method = RequestMethod.POST)
-	public String insertAnswer(@Valid @ModelAttribute("answer") Answer answer, BindingResult result, Locale locale, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/forum/updateAnswer", method = RequestMethod.POST)
+	public String updateAnswer(@Valid @ModelAttribute("answer") Answer answer, BindingResult result, Locale locale, Model model, HttpServletRequest request) {
 		
 		if(result.hasErrors()) {
 			
 			System.out.println("Errore nei dati");
 			
-			int qid = Integer.parseInt(request.getParameter("qid"));
-			QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-			Question question = questionDAO.get(qid);
 			
-			model.addAttribute("question", question);
+			//PRE ATTACHMENT
+			List<AnswerAttachedContent> preAttachements = new ArrayList<AnswerAttachedContent>();
+			String preAttachmentsID = request.getParameter("preAttachedFilesID");
 			
-			List<AnswerAttachedContent> attachemnts = new ArrayList<AnswerAttachedContent>();
-			String attachedFilesID = request.getParameter("attachedFiles");
-
-			if(attachedFilesID != null && !attachedFilesID.equals("")) {
+			if(preAttachmentsID != null && !preAttachmentsID.equals("")) {
 				
-				StringTokenizer tokenizer = new StringTokenizer(attachedFilesID, ";");
+				StringTokenizer tokenizer = new StringTokenizer(preAttachmentsID, ";");
 				AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);
 			
 				while(tokenizer.hasMoreTokens()) {
 					String tmpID = tokenizer.nextToken();
 					
 					AnswerAttachedContent tmpAnswerContent = answerAttachedDAO.get(Integer.parseInt(tmpID));
-					attachemnts.add(tmpAnswerContent);
+					preAttachements.add(tmpAnswerContent);
 				}
 			}
 			
+			model.addAttribute("preAttachments", preAttachements);
+			model.addAttribute("preAttachmentsID", preAttachmentsID);
 			
-			model.addAttribute("attachments", attachemnts);
-			model.addAttribute("attachmentsID", attachedFilesID);
+			//NEW ATTACHMENT
+			String newAttachedFilesID = request.getParameter("newAttachedFilesID");
+			List<AnswerAttachedContent> newAttachemnts = new ArrayList<AnswerAttachedContent>();
 			
-			return "forum/insertAnswer";
+			if(newAttachedFilesID != null && !newAttachedFilesID.equals("")) {
+				
+				StringTokenizer tokenizer = new StringTokenizer(newAttachedFilesID, ";");
+				AnswerAttachedContentDAO answerAttachedDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);
+			
+				while(tokenizer.hasMoreTokens()) {
+					String tmpID = tokenizer.nextToken();
+					
+					AnswerAttachedContent tmpAnswerContent = answerAttachedDAO.get(Integer.parseInt(tmpID));
+					newAttachemnts.add(tmpAnswerContent);
+				}
+			}
+
+			
+			model.addAttribute("newAttachments", newAttachemnts);
+			model.addAttribute("newAttachmentsID", newAttachedFilesID);
+			
+			QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+			int qid = Integer.parseInt(request.getParameter("qid"));
+			Question question = questionDAO.get(qid);
+
+			model.addAttribute("question", question);
+			
+			return "forum/modifyAnswer";
 		}
 		
 		
@@ -108,11 +147,10 @@ public class InsertAnswerController {
 		answer.setUser(tmpUser);
 		answer.setQuestion(tmpQuestion);
 		
-		Answer newAnswer =  answerDAO.create(answer);
-		
+		Answer newAnswer =  answerDAO.update(answer);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
-
+		
 		if(attachedFilesID != null && !attachedFilesID.equals("")) {
 			
 			StringTokenizer tokenizer = new StringTokenizer(attachedFilesID, ";");

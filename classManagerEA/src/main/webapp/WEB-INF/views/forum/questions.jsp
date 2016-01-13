@@ -20,6 +20,7 @@
 <script src='/resources/lib/jquery/jquery.min.js'></script>
 <script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <script src="/resources/script/nav-bar.js"></script>
+<script src="/resources/lib/bootpag/jquery.bootpag.min.js"></script>
 <script src="/resources/script/forum/questions.js"></script>
 </head>
 
@@ -96,23 +97,8 @@
 								
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
-										<ul id="" class="pagination">
-										  
-										  <c:forEach begin="0" end="${pageCount-1}" var="i">
-										  
-										  	<c:choose>
-											  <c:when test="${i eq currPage}">
-											    <li class="active"><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
-											  </c:when>
-											  <c:otherwise>
-											    <li><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
-											  </c:otherwise>
-											</c:choose>
-											
-									 	  </c:forEach>
-									 	  
-									 	  
-										</ul>
+										<div id="paginatorTop">
+										</div>
 									</div>
 								</div>
 								
@@ -147,27 +133,14 @@
 								
 								<div class="row">
 									<div class="col-sm-12 col-md-12 col-lg-12">
-										<ul class="pagination">
-										  
-										  <c:forEach begin="0" end="${pageCount-1}" var="i">
-										  
-										  	<c:choose>
-											  <c:when test="${i eq currPage}">
-											    <li class="active"><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
-											  </c:when>
-											  <c:otherwise>
-											    <li><a href="questionsPage?page=<c:out value="${i}"/>"><c:out value="${i+1}"/></a></li>
-											  </c:otherwise>
-											</c:choose>
-											
-									 	  </c:forEach>
-									 	  
-									 	  
-										</ul>
+										<div id="paginatorBottom">
+										</div>
 									</div>
 								</div>
 								
-							
+								<input type="hidden" value="${currPage }" id="currPage" />
+								<input type="hidden" value="${pageCount }" id="pageCount" />
+								<input type="hidden" value="${pageSize }" id="pageSize" />
 							</div>
 
 						</div>

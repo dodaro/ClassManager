@@ -34,7 +34,6 @@ $(document).ready(function() {
 		url: function(params){
 
 			var type = 'new';
-			updateData(params, type);
 		},
 		validate: function(data){
 
@@ -129,6 +128,24 @@ function updateExam(data, type){
 		url = "/update_Partecipation";
 		part = {'id':data.pk, 'score': data.value.score, 'praise': data.value.praise};
 	}
+
+	$.ajax({ 
+		url: url, 
+		type: 'POST',  
+		data: JSON.stringify(part), 
+		dataType: 'json',
+		contentType: 'application/json',
+	});
+}
+
+function updateData(data, type){
+
+	var part;
+	var url;
+
+	url = "/update_Partecipation";
+	part = {'id':data.pk, 'score': data.value.score, 'praise': data.value.praise};
+
 
 	$.ajax({ 
 		url: url, 

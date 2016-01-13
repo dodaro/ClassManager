@@ -444,6 +444,7 @@ public class LectureController {
 
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		eventDao.create(event);
+	
 	}
 	
 	/*

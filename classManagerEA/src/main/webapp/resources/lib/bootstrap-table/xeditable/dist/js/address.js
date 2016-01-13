@@ -159,7 +159,7 @@ $(function(){
     });
 
     Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div class="editable-address"><input type="text" name="score" class="input-small"><br><div class="checkbox"><label><input name="praise" type="checkbox" value="false">laude</label></div></div>',       
+        tpl: '<div class="editable-address"><input type="text" name="score" class="input-small"><br><div class="checkbox"><label><input name="praise" type="checkbox" value="">laude</label></div></div>',       
         inputclass: ''
     });
 

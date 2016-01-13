@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,11 +59,14 @@ public class ScoreController {
 	 */
 	//TODO ADD ALSO EXAM EVALUATION
 	@RequestMapping(value = "/scores", method = RequestMethod.GET)
-	public String getScores(Model model, Integer yearFilter, Integer lectureFilter) {
+	public String getScores(Model model, Integer yearFilter, Integer lectureFilter, Integer pagination) {
 
 		//TODO prendere dalla sessione
 		int idCourse = 1;
-
+		
+		if(pagination == null)
+			pagination = 25;
+				
 		model.addAttribute("customHeader",ScoreController.HEADER);
 		model.addAttribute("customBody",ScoreController.BODY);
 
@@ -75,25 +79,24 @@ public class ScoreController {
 		RegistrationStudentClassDAO userDao = appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 		List<Student> students = userDao.getStudentsRegisteredToACourse(course);
 		
-		StudentExamPartecipationDAO studentExamPartecipationDAO = DaoHelper.getStudentExamPartecipationDAO();
-		
-		
 		List<Exam> exams = course.getExams();
-		List<StudentExamPartecipation> partecipations = new ArrayList<StudentExamPartecipation>();
 		
-		for (Student student : students) {
-			for (Exam exam : exams) {
-
-				List<StudentExamPartecipation> partecipationBy = studentExamPartecipationDAO.getPartecipationBy(student, exam);
-				if(partecipationBy != null)
-					partecipations.addAll(partecipationBy);
-			}
-		}
-
-		partecipations.remove(0);
-		model.addAttribute("students", students);
+		/* pagination */
+		PagedListHolder<Student> studentsPaged = new PagedListHolder<Student>(students);
+		studentsPaged.setPage(pagination);
+		
+		int pageNumber = studentsPaged.getPage() + 1;
+		int pageCount = studentsPaged.getPageCount();
+		
+		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageCount",pageCount);
+		
+		model.addAttribute("pageSize", pagination);
+		/* ** */
+		
+		model.addAttribute("students", studentsPaged.getPageList());
 		model.addAttribute("homeworks", homeworks);
-		model.addAttribute("partecipations", partecipations);
+
 		model.addAttribute("exams", exams);
 
 		model.addAttribute("lectureId", lectureFilter);

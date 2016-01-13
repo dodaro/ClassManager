@@ -162,18 +162,6 @@ public class RequestInvitationController {
     }
     
     private GenericContainerBeanList getSelectableCourse(Student student){
-	//	List<Object[]> selectableCourse = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
-	//	if(selectableCourse.size()>0){
-	//	    GenericContainerBeanList list = new GenericContainerBeanList();
-	//	    for(int i=0; i<selectableCourse.size(); i++){
-	//		list.addToList(new GenericContainerBean(
-	//			selectableCourse.get(i)[0].toString(), 
-	//			selectableCourse.get(i)[1].toString()));	    
-	//	    }
-	//	    return list;
-	//	}	
-	//	return null;
-	
 	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
 	if(objectList.size()>0){
 	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);

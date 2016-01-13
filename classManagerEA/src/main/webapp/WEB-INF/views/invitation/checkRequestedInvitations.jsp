@@ -32,6 +32,10 @@
 									<th><spring:message
 											code="message.invitation.requestTableHeadField1" /></th>
 									<th><spring:message
+											code="message.invitation.requestTableHeadField4" /></th>
+									<th><spring:message
+											code="message.invitation.requestTableHeadField5" /></th>
+									<th><spring:message
 											code="message.invitation.requestTableHeadField2" /></th>
 									<th><form:form id="acceptAll"
 											action="checkRequestedInvitations_All" method="POST">
@@ -53,6 +57,8 @@
 										<th scope="row">${k}</th>
 										<td>${singleCourse.field1}</td>
 										<td>${singleCourse.field2}</td>
+										<td>${singleCourse.field3}</td>
+										<td>${singleCourse.field4}</td>
 										<td><form:form id="accept${k}"
 												action="checkRequestedInvitations_Single" method="POST">
 												<button

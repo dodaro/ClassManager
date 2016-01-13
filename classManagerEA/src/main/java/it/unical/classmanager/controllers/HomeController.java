@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+
 import it.unical.classmanager.model.FullCalendarEventBean;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
@@ -138,8 +140,8 @@ public class HomeController {
 	
 	model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
 	
-	//String json = new Gson().toJson(eventsAdaped);
-	//return json; 
+	String json = new Gson().toJson(eventsAdaped);
+	model.addAttribute("events", json);
     }
     
     private void setCourses( Locale locale, Model model, HttpServletRequest request, Professor professor) {

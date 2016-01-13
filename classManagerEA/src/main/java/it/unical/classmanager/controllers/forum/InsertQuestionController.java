@@ -181,7 +181,7 @@ public class InsertQuestionController {
 			
 			//PRE ATTACHMENT
 			List<QuestionAttachedContent> preAttachements = new ArrayList<QuestionAttachedContent>();
-			String preAttachmentsID = request.getParameter("preAttachedFilesID");;
+			String preAttachmentsID = request.getParameter("preAttachedFilesID");
 			
 			if(preAttachmentsID != null && !preAttachmentsID.equals("")) {
 				

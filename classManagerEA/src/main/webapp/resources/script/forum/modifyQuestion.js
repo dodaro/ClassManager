@@ -129,7 +129,7 @@ var ListenersManager = (function(){
 							var result = data.responseText;
 							if(result === "true") {
 
-								$(attachment).closest(".attachmentContainer").remove();
+								$(attachment).closest(".newAttachmentContainer").remove();
 								
 								var newAttachmentsIDs = $('#newAttachedFilesID').val();
 								newAttachmentsIDs = newAttachmentsIDs.replace(parameters.id, "");

@@ -26,7 +26,7 @@ public class ForumGarbageCollectorController {
 	
 
 	
-	@RequestMapping(value = "gc", method = RequestMethod.GET)
+	@RequestMapping(value = "/gc", method = RequestMethod.GET)
 	public String attachmentGarbageCollect(Locale locale, Model model) {
 		
 		QuestionAttachedContentDAO questionAttachedDAO = (QuestionAttachedContentDAOImpl) appContext.getBean("questionAttachedContentDAO", QuestionAttachedContentDAOImpl.class);

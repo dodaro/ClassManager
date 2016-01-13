@@ -113,8 +113,6 @@ var ListenersManager = (function(){
 			
 			$(".removeNewAttachmentBtn").on("click", function(){
 					
-				console.log("s")
-				
 				var attachment = $(this);
 				var parameters = {name: $(attachment).data("aname"), id: $(attachment).data("aid"), type: "remove"};
 				
@@ -129,8 +127,6 @@ var ListenersManager = (function(){
 							var result = data.responseText;
 							if(result === "true") {
 								
-								console.log(attachment)
-
 								$(attachment).closest(".newAttachmentContainer").remove();
 								
 								var newAttachmentsIDs = $('#newAttachedFilesID').val();

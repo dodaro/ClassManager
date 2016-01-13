@@ -87,6 +87,9 @@
 														<label for="questionTitleInpt"><spring:message code="message.forum.questionTitle"/></label>
 														<spring:message code="message.forum.insertTitle" var="insertTitle"/>
 														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="${insertTitle }"/>
+														<div class="form-group has-error">
+															<label class="control-label"><form:errors path="title"/></label>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -127,6 +130,9 @@
 											<div class="col-md-12">
 									        	<div id="area" style="margin-top: 15px;">
 										            <form:textarea path="description" id="textEditor"></form:textarea>
+										            <div class="form-group has-error">
+														<label class="control-label"><form:errors path="description"/></label>
+													</div>
 									        	</div>
 									        </div>
 										</div>
@@ -152,6 +158,23 @@
 												
 										  				<div class="row">
 										  					<div id="attachmentSection" class="col-sm-12 col-md-12 col-lg-12">
+										  						<c:forEach var="attachment" items="${attachments }">
+										  							<div class="attachmentContainer" data-aid="'+ parameters.id +'" class="row">
+																		<div class="col-sm-10 col-md-10 col-lg-10">
+																			<div class="row">
+																				<div class="col-sm-2 col-md-2 col-lg-2">
+																	  			<span style="font-size:2em;" class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+																				</div>
+																				<div class="col-sm-8 col-md-8 col-lg-8">
+																					<p>${attachment.getName()}</p>
+																				</div>
+																				<div class="col-sm-2 col-md-2 col-lg-2">
+																					<div data-aname="${attachment.getName()}" data-aid="${attachment.getId()}" class="btn btn-danger removeAttachmentBtn">delete</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+										  						</c:forEach>
 										  					</div>
 										  				</div>
 												
@@ -161,7 +184,7 @@
 									</div>	
 						  		</div>
 						  	</div>									
-							<input id="attachedFiles" style="display: none;" name="attachedFiles">
+							<input id="attachedFiles" value="${attachmentsID }" style="display: none;" name="attachedFiles">
 
 						</form:form>
 						

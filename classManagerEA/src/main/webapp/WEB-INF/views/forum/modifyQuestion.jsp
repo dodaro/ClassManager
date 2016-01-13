@@ -31,7 +31,7 @@
 <script src="/resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
 <script src="/resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
 
-<script src="/resources/script/forum/uploadAttachment.js"></script>
+<script src="/resources/script/forum/uploadModifyAttachment.js"></script>
 </head>
 
 <body style="background-color: #E6E6E6">
@@ -88,6 +88,9 @@
 														<label for="questionTitleInpt"><spring:message code="message.forum.questionTitle"/></label>
 														<spring:message code="message.forum.insertTitle" var="insertTitle"/>
 														<form:input path="title" id="questionTitleInpt" class="form-control" type="text" placeholder="${insertTitle }"/>
+														<div class="form-group has-error">
+															<label class="control-label"><form:errors path="title"/></label>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -126,6 +129,9 @@
 											<div class="col-md-12">
 									        	<div id="area" style="margin-top: 15px;">
 										            <form:textarea path="description" id="textEditor"></form:textarea>
+									        		<div class="form-group has-error">
+														<label class="control-label"><form:errors path="description"/></label>
+													</div>
 									        	</div>
 									        </div>
 										</div>
@@ -151,7 +157,7 @@
 												
 										  				<div class="row">
 										  					<div id="attachmentSection" class="col-sm-12 col-md-12 col-lg-12">
-										  						<c:forEach var="attachment" items="${question.getQuestionAttachedContents() }">
+										  						<c:forEach var="attachment" items="${preAttachments }">
 										  							<div class="attachmentContainer" data-aid="'+ parameters.id +'" class="row">
 																		<div class="col-sm-10 col-md-10 col-lg-10">
 																			<div class="row">
@@ -168,6 +174,23 @@
 																		</div>
 																	</div>
 										  						</c:forEach>
+										  						<c:forEach var="attachment" items="${newAttachments }">
+										  							<div class="newAttachmentContainer" data-aid="'+ parameters.id +'" class="row">
+																		<div class="col-sm-10 col-md-10 col-lg-10">
+																			<div class="row">
+																				<div class="col-sm-2 col-md-2 col-lg-2">
+																	  			<span style="font-size:2em;" class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+																				</div>
+																				<div class="col-sm-8 col-md-8 col-lg-8">
+																					<p>${attachment.getName()}</p>
+																				</div>
+																				<div class="col-sm-2 col-md-2 col-lg-2">
+																					<div data-aname="${attachment.getName()}" data-aid="${attachment.getId()}" class="btn btn-danger removeNewAttachmentBtn">delete</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+										  						</c:forEach>
 										  					</div>
 										  				</div>
 												
@@ -177,7 +200,8 @@
 									</div>	
 						  		</div>
 						  	</div>									
-							<input id="attachedFiles" style="display: none;" name="attachedFiles">
+							<input id="preAttachedFilesID" value="${preAttachmentsID }" style="display: none;" name="preAttachedFilesID" />
+							<input id="newAttachedFilesID" value="${newAttachmentsID }" style="display: none;" name="newAttachedFilesID" />
 						</form:form>
 						
 						<div class="row" style="margin-top: 20px">

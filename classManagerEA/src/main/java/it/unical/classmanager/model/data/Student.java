@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -22,6 +24,7 @@ public class Student extends User implements Serializable  {
 	private static final long serialVersionUID = -8091594666965016805L;
 
 	@Column(name="identificationNumber", unique=true, nullable=false, length=32)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int identificationNumber;
 
 	@Column(name="subscriptionDate", nullable=false)

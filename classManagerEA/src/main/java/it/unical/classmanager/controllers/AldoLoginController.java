@@ -75,10 +75,11 @@ public class AldoLoginController {
 		Event event = new Event(0, "event", "", startDate, endDate, "", null, null, user);
 		eventDao.create(event);
 		
+		User aldoUser = userDao.get(username);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 		String dateString = sdf.format(Calendar.getInstance().getTime());
-		String toHash = user.getHash().split(":")[0] +":"+ dateString;
+		String toHash = aldoUser.getHash().split(":")[0] +":"+ dateString;
 		String toSaveInSession = PasswordHashing.getInstance().getHashAndSalt(toHash);
 		request.getSession().setAttribute("hash", toSaveInSession);
 		request.getSession().setAttribute("loggedIn",username);

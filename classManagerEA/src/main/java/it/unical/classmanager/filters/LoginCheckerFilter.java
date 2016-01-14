@@ -58,6 +58,8 @@ public class LoginCheckerFilter implements Filter {
 		String hashAndDateFromSession = hash.split(":")[0];
 		String salt = hash.split(":")[1];
 		
+		
+		
 		UserDAO userDao = DaoHelper.getUserDAO();
 		User user = userDao.get(username);
 		String userHash = user.getHash().split(":")[0];

@@ -45,7 +45,7 @@ function createCalendar(editable, currentDate){
 	 * The javascript script "fullCalendar" creates and initializes the calendar.
 	 * the parameters of the calendar ar defined using a JSON.
 	 */
-	$('#calendar').fullCalendar({
+	$('#ccalendar').fullCalendar({
 
 		/*
 		 *defines the option to show in the header of the graphics component. Here are defined tree buttons to change
@@ -76,7 +76,7 @@ function createCalendar(editable, currentDate){
 		/*
 		 * loads the events from the server. The event should be represented in JSON format
 		 */
-		events: "/events",
+		events: "/calendar/events",
 
 		/*
 		 * Defines what happens when an event is clicked.
@@ -155,28 +155,33 @@ $(document).ready(function(){
 				eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color, "editable":true};
 			
 			$('#calendar').fullCalendar('renderEvent',eventJson,true);
+			$("#createEvent_modal").modal('hide');
 		}
 		//$('#calendar').fullCalendar('unselect');
-		$("#createEvent_modal").modal('hide');
 	});
 
 
 
 	$("#modalButton_updateEvent").click(function(event)
 			{
-				$('#calendar').fullCalendar('removeEvents', $("#eventId_update").val());
-				$('#calendar').fullCalendar('renderEvent',
-				{
-					id: $("#eventId_update").val(),
-					title: $("#eventTitle_update").val(),
-					start: $("#eventStart_update").val(),
-					end: $("#eventEnd_update").val(),
-					color: $('#colorPicker_update').val()
-				},
-				true // make the event "stick"
-		);
+				
+				if($("#eventTitle_update").val()){
+					var old = $('#calendar').fullCalendar( 'clientEvents', $("#eventId_update").val());
+					$('#calendar').fullCalendar('removeEvents', $("#eventId_update").val());
+					$('#calendar').fullCalendar('renderEvent',
+					{
+						id: $("#eventId_update").val(),
+						title: $("#eventTitle_update").val(),
+						start: $("#eventStart_update").val(),
+						end: $("#eventEnd_update").val(),
+						color: $('#colorPicker_update').val(),
+						pow: old[0].pow,
+						editable: old[0].editable
+					},
+					true); // make the event "stick"
+					$("#updateEvent_modal").modal('hide');
+				}
 
-		$("#updateEvent_modal").modal('hide');
 	});
 
 	$("#editCalendar_btn").click(function(event){
@@ -199,6 +204,8 @@ $(document).ready(function(){
 	$("#revert_btn").click(function(event){
 		revertFunc();
 	});
+	
+
 });
 
 
@@ -249,7 +256,7 @@ $(document).ready(function(){
 			headers: {
 				Accept : "text/plain; charset=utf-8"
 			},
-			url: "/update_calendar", 
+			url: "/calendar/update_calendar", 
 			type: 'POST', 
 			dataType: 'json', 
 			data: calendar, 
@@ -276,7 +283,7 @@ function sendDelete(data){
 		headers: {
 			Accept : "text/plain; charset=utf-8"
 		},
-		url: "/delete_events", 
+		url: "calendar/delete_events", 
 		type: 'POST', 
 		dataType: 'json', 
 		data: data,

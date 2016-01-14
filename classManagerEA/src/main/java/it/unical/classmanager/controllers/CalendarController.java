@@ -76,7 +76,7 @@ public class CalendarController {
 	 * Refer: calendar.jsp
 	 * input: String start, String end - the range of the events to retrieve
 	 */
-	@RequestMapping(value = "/events", method = RequestMethod.GET)
+	@RequestMapping(value = "/calendar/events", method = RequestMethod.GET)
 	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching, HttpServletRequest request) {
 
 		//is the string containing all the events of the calendar
@@ -118,6 +118,61 @@ public class CalendarController {
 		return json;
 	}
 
+
+	@RequestMapping(value = "/calendar/update_calendar", method = RequestMethod.POST)
+	public @ResponseBody String updateCalendar(Model model, @RequestBody Set<Event> events, HttpServletRequest request) {
+		
+		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
+
+		String username = (String) request.getSession().getAttribute("loggedIn");
+
+		User user = userDao.get(username);
+
+		for (Event event : events) {
+			if(event.getId() > Event.ID_EVENT_TEMP){
+
+				Event old = eventDao.get(event.getId());
+				if(old.getUser().getUsername().equals(username)){
+
+					old.update(event);			
+					eventDao.update(old);	
+				}
+			}
+			else{
+				event.setCourseClass(null);
+				event.setUser(user);
+				eventDao.create(event);
+			}
+		}
+	
+		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+
+		logger.info("updateEvent");
+		return "200";
+	}
+	
+	@RequestMapping(value = "/calendar/delete_events", method = RequestMethod.POST)
+	public @ResponseBody String deleteCalendar(Model model, @RequestBody Set<Integer> events, HttpServletRequest request) {
+
+		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+		String username = (String) request.getSession().getAttribute("loggedIn");
+
+		for (Integer eventId : events) {
+
+			Event old = eventDao.get(eventId);
+			if(old.getUser().getUsername().equals(username)){
+			
+				eventDao.delete(old);	
+			}
+		}
+	
+		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+
+		logger.info("updateEvent");
+		return "200";
+	}
+	
 	//	/**
 	//	 * This path is invoked every time an event is updated (moved in another date or hour)
 	//	 */
@@ -153,59 +208,5 @@ public class CalendarController {
 	//		logger.info("updateEvent");
 	//		return "redirect:calendar";
 	//	}
-
-	@RequestMapping(value = "/update_calendar", method = RequestMethod.POST)
-	public @ResponseBody String updateCalendar(Model model, @RequestBody Set<Event> events, HttpServletRequest request) {
-
-		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
-		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
-
-		String username = (String) request.getSession().getAttribute("loggedIn");
-
-		User user = userDao.get(username);
-
-		for (Event event : events) {
-			if(event.getId() > Event.ID_EVENT_TEMP){
-
-				Event old = eventDao.get(event.getId());
-				if(old.getUser().getUsername().equals(username)){
-
-					old.update(event);			
-					eventDao.update(old);	
-				}
-			}
-			else{
-				event.setCourseClass(null);
-				event.setUser(user);
-				eventDao.create(event);
-			}
-		}
-	
-		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-
-		logger.info("updateEvent");
-		return "200";
-	}
-	
-	@RequestMapping(value = "/delete_events", method = RequestMethod.POST)
-	public @ResponseBody String deleteCalendar(Model model, @RequestBody Set<Integer> events, HttpServletRequest request) {
-
-		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
-		String username = (String) request.getSession().getAttribute("loggedIn");
-
-		for (Integer eventId : events) {
-
-			Event old = eventDao.get(eventId);
-			if(old.getUser().getUsername().equals(username)){
-			
-				eventDao.delete(old);	
-			}
-		}
-	
-		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-
-		logger.info("updateEvent");
-		return "200";
-	}
 
 }

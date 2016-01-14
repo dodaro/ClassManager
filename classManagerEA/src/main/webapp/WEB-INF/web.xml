@@ -28,6 +28,7 @@
   <filter-mapping>
     <filter-name>LoginCheckerFilter</filter-name>
     <url-pattern>/forum/*</url-pattern>
+    <url-pattern>/calendar/*</url-pattern>
   </filter-mapping>
   
   <filter>

@@ -32,6 +32,14 @@
 											code="message.invitation.sendTableHeadField1" /></th>
 									<th><spring:message
 											code="message.invitation.sendTableHeadField2" /></th>
+									<th><spring:message
+											code="message.invitation.sendTableHeadField3" /></th>
+									<th><spring:message
+											code="message.invitation.sendTableHeadField4" /></th>
+									<th><spring:message
+											code="message.invitation.sendTableHeadField5" /></th>
+									<th><spring:message
+											code="message.invitation.sendTableHeadField6" /></th>
 									<th><form:form id="acceptAll"
 											action="checkInvitations_AcceptAll" method="POST">
 											<button
@@ -50,8 +58,12 @@
 									<tr>
 										<c:set var="k" value="${k+1}" />
 										<th scope="row">${k}</th>
-										<td>${singleStudent.field1}</td>
-										<td>${singleStudent.field2}</td>
+											<td>${singleStudent.field1}</td>
+											<td>${singleStudent.field2}</td>
+											<td>${singleStudent.field3}</td>
+											<td>${singleStudent.field4}</td>
+											<td>${singleStudent.field5}</td>
+											<td>${singleStudent.field6}</td>
 										<td><form:form id="accept${k}"
 												action="checkInvitations_AcceptSingle" method="POST">
 												<button

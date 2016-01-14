@@ -4,6 +4,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script>
+	var events = ${events};
+	$("#calendar").fullcalendar(events);
+	$("#calendar").fullcalendar({events:events, editable:false});
+</script>
+
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		<br>
@@ -36,7 +42,9 @@
 		</div>
 		<div class="col-sm-9 col-md-9 col-lg-9">
 			<div class="panel panel-default">
-				<div class="panel-body">Qui va il calendario!</div>
+				<div class="panel-body">
+					<div id="calendar"></div>
+				</div>
 			</div>
 		</div>
 		<br>
@@ -174,7 +182,8 @@
 								</thead>
 								<tbody>
 									<c:set var="k" value="0" />
-									<c:forEach items="${lastMaterialList.list}" var="singleMaterial">
+									<c:forEach items="${lastMaterialList.list}"
+										var="singleMaterial">
 										<tr>
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
@@ -186,7 +195,7 @@
 								</tbody>
 							</table>
 						</c:if>
-												
+
 					</div>
 				</div>
 			</div>

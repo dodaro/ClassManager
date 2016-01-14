@@ -54,6 +54,14 @@
 										<th>#</th>
 										<th><spring:message
 												code="message.invitation.sendTableHeadField1" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField3" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField4" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField5" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField6" /></th>
 										<th><form:form id="inviteAll"
 												action="sendInvitation_InviteAll" method="POST">
 												<button
@@ -75,6 +83,10 @@
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
 											<td>${singleStudent.field1}</td>
+											<td>${singleStudent.field2}</td>
+											<td>${singleStudent.field3}</td>
+											<td>${singleStudent.field4}</td>
+											<td>${singleStudent.field5}</td>
 											<td><form:form id="invite${k}"
 													action="sendInvitation_InviteSingle" method="POST">
 													<button
@@ -118,6 +130,14 @@
 										<th>#</th>
 										<th><spring:message
 												code="message.invitation.sendTableHeadField1" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField3" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField4" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField5" /></th>
+										<th><spring:message
+												code="message.invitation.sendTableHeadField6" /></th>
 										<th><form:form id="cancelAll"
 												action="sendInvitation_CancelAll" method="POST">
 												<button
@@ -139,6 +159,10 @@
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
 											<td>${singleStudent.field1}</td>
+											<td>${singleStudent.field2}</td>
+											<td>${singleStudent.field3}</td>
+											<td>${singleStudent.field4}</td>
+											<td>${singleStudent.field5}</td>
 											<td><form:form id="cancel${k}"
 													action="sendInvitation_CancelSingle" method="POST">
 													<button

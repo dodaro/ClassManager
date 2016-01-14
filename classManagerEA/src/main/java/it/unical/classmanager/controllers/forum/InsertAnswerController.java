@@ -12,8 +12,6 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -25,15 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import it.unical.classmanager.editorData.EditorStatus;
-import it.unical.classmanager.editorData.Environment;
-import it.unical.classmanager.managers.EnvironmentManger;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.AnswerDAO;
 import it.unical.classmanager.model.dao.AnswerDAOImpl;
-import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;
-import it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
@@ -41,10 +34,8 @@ import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Answer;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
 import it.unical.classmanager.model.data.Question;
-import it.unical.classmanager.model.data.QuestionAttachedContent;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
-import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 /**
  * Handles requests for the forum page.

@@ -29,7 +29,6 @@
     <filter-name>LoginCheckerFilter</filter-name>
     <url-pattern>/forum/*</url-pattern>
   </filter-mapping>
-  
   <filter>
     <display-name>ProfessorCheckerFilter</display-name>
     <filter-name>ProfessorCheckerFilter</filter-name>
@@ -46,16 +45,14 @@
     <url-pattern>/update_homeworks</url-pattern>
     <url-pattern>/delete_homeworks</url-pattern>
   </filter-mapping>
-  
-  <!-- 
-  <filter>
-    <display-name>InternationalizationCheckerFilter</display-name>
-    <filter-name>InternationalizationCheckerFilter</filter-name>
-    <filter-class>it.unical.classmanager.filters.InternationalizationCheckerFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>InternationalizationCheckerFilter</filter-name>
-    <url-pattern>*</url-pattern>
-  </filter-mapping>
-  -->
+  <servlet>
+    <description></description>
+    <display-name>MyServlet</display-name>
+    <servlet-name>MyServlet</servlet-name>
+    <servlet-class>it.unical.classmanager.MyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyServlet</servlet-name>
+    <url-pattern>/MyServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

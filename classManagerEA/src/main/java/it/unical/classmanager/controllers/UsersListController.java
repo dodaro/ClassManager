@@ -60,7 +60,7 @@ public class UsersListController {
 	public String usersList(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+		if ( !request.getSession().getAttribute("role").equals("admin") ) {
 			return "redirect:/";
 		}
 		
@@ -135,7 +135,7 @@ public class UsersListController {
 	public String searchUsers(Model model,Locale locale,HttpServletRequest request ) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+		if ( !request.getSession().getAttribute("role").equals("admin") ) {
 			return "redirect:/";
 		}
 		
@@ -228,7 +228,7 @@ public class UsersListController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		UserJsonResponse userJsonResponse = new UserJsonResponse();
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
+		if ( !request.getSession().getAttribute("role").equals("admin")  ) {
 			userJsonResponse = new UserJsonResponse();
 			userJsonResponse.setStatus("ERROR");
 			HashMap<String,String> errorsMap = new HashMap<String, String>();
@@ -277,7 +277,7 @@ public class UsersListController {
 	public String sort(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
+		if ( !request.getSession().getAttribute("role").equals("admin")  ) {
 			return "redirect:/";
 		}
 		

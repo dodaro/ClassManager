@@ -59,12 +59,11 @@ public class LoginCheckerFilter implements Filter {
 		String salt = hash.split(":")[1];
 		
 		
-		
 		UserDAO userDao = DaoHelper.getUserDAO();
 		User user = userDao.get(username);
 		String userHash = user.getHash().split(":")[0];
 		
-	
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 		String dateString = sdf.format(Calendar.getInstance().getTime());

@@ -160,9 +160,10 @@ public class LectureController {
 			return "redirect:/sessionerror";
 		}
 
+		//TODO retrieve from session
 		int idLecture = params.getParentId();
-		String path = params.getPath();
-
+		int idCourse = 1;
+		
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 		model.addAttribute("pwd",FileManager.MATERIALS_PATH);
@@ -175,7 +176,7 @@ public class LectureController {
 		for (Material material : allLectureMaterials) {
 
 			String name = material.getName();
-			String filePath = path + File.separator + name;
+			String filePath = FileManager.RESOURCES_PATH + File.separator + idCourse + File.separator + FileManager.LECTURES_PATH + File.separator + idLecture + File.separator + FileManager.MATERIALS_PATH + File.separator + name;;
 
 			File file = new File(filePath);
 			if(file.exists()){
@@ -186,6 +187,7 @@ public class LectureController {
 			}
 		}	
 
+		model.addAttribute("contents", allLectureMaterials);
 		model.addAttribute("files", materials);
 		model.addAttribute("parentId",idLecture);
 
@@ -292,7 +294,10 @@ public class LectureController {
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
-
+			
+			if(canCreate(request))
+				model.addAttribute("canCreate", true);
+			
 			return getLectures(model);
 		}
 
@@ -418,7 +423,7 @@ public class LectureController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "/lectureContent?parentId=" + material.getLecture().getId();
+		return "redirect:/materials?parentId=" + material.getLecture().getId();
 	}
 
 	/*

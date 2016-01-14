@@ -160,6 +160,7 @@ public class HomeworkController {
 		model.addAttribute("pwd",FileManager.HOMEWORK_ATTACHED_PATH);
 		model.addAttribute("parentId",idHomework);
 		model.addAttribute("files", homeworksAttacheds);
+		model.addAttribute("contents", homeworksAttacheds);
 
 
 		String username = (String) request.getSession().getAttribute("loggedIn");
@@ -272,7 +273,7 @@ public class HomeworkController {
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 
 		String lessonName = Integer.toString(lectureId);
-		String currentPath = "enterpriseApplication/lectures" + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
+		String currentPath = lecture.getCourseClass().getId() + File.separator + FileManager.LECTURES_PATH  + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
 
 		Homework newHomework = homeworkDAO.create(homework);
 		
@@ -493,7 +494,7 @@ public class HomeworkController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/homeworkAttached?path=" + path + "&parentId=" + homeworkAttached.getHomework().getId();
 	}
 
 	@RequestMapping(value="/delete_homeworkStudentSolving", method=RequestMethod.POST)

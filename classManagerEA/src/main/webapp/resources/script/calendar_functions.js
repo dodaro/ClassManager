@@ -45,7 +45,7 @@ function createCalendar(editable, currentDate){
 	 * The javascript script "fullCalendar" creates and initializes the calendar.
 	 * the parameters of the calendar ar defined using a JSON.
 	 */
-	$('#ccalendar').fullCalendar({
+	$('#calendar').fullCalendar({
 
 		/*
 		 *defines the option to show in the header of the graphics component. Here are defined tree buttons to change

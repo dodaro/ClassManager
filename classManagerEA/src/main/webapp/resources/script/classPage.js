@@ -11,25 +11,25 @@ $(document).ready(function() {
 	buttons = ["#uploadFile_btn", "#createNewClass_btn", "#addHomework_btn","#addMaterials_btn"];
 
 	$("#uploadFile_div").hide();
-	
+
 	/*$( ".datepicker" ).datepicker({
     	changeYear: true,
     	dateFormat: "dd/mm/yy",
     	yearRange: "-100:+100",	
     });*/
-	
+
 	$( ".datepicker" ).datetimepicker({
 		format: 'DD/MM/YYYY'
 	});
-	
+
 	$( ".timepicker" ).datetimepicker({
 		format: 'HH:mm'
 	});
-	
+
 });
 
 
-    
+
 //class
 var ListenersManager = (function(){
 
@@ -94,17 +94,6 @@ var ListenersManager = (function(){
 				window.open("/download?path=" + url);
 
 			});
-			
-			
-
-			/*$("#delete_btn_modal").click(function(){
-				var url = $("#visualizer").attr("href");
-				$.get( "/contents/delete", {"path" : url}, function(data){
-
-					if(data == true)
-						window.location.replace("fileBrowser");
-				});	
-			});*/
 
 		}
 		else {
@@ -129,66 +118,81 @@ var ListenersManager = (function(){
 
 })();
 
+
+function download(event){
+
+	event.stopPropagation();
+
+	var url = $(event.srcElement).closest("form").find("input[name=path]").val();
+	window.open("/download?path=" + url);
+}
+
 function delete_lectures(event){
 
-	event.stopImmediatePropagation();
-
+	event.stopPropagation();
 	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
-	$.post("/delete_lecture",{'lectureId':lectureId},function(){
 
-	});
+	submit("/delete_lecture","lectureId",lectureId);
 }
 
 function delete_homeworks(event){
 
-	event.stopImmediatePropagation();
-	alert("deleteHomeworks");
+	event.stopPropagation();
+	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+
+	submit("/delete_homeworks","homeworkId",homeworkId);
 }
 
 function delete_homeworkAttached(event){
 
-	event.stopImmediatePropagation();
+	event.stopPropagation();
+	var homeworkAId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	$.post("/delete_homeworkAttached",{'homeworkAttachedId':homeworkId},function(){
-
-	});
+	submit("/delete_homeworkAttached","homeworkAttachedId",homeworkAId);
 }
 
 function delete_homeworkStudentSolving(event){
 
 	event.stopImmediatePropagation();
-
 	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	$.post("/delete_homeworkStudentSolving",{'homeworkStudentSolvingId':hssId},function(){
 
-	});
+	submit("/delete_homeworkStudentSolving","homeworkStudentSolvingAttachedId",hssId);
 }
 
-function delete_homeworkAttached(event){
+function delete_homeworkStudentSolvingAttached(event){
 
-	event.stopImmediatePropagation();
-
+	event.stopPropagation();
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	$.post("/delete_homeworkStudentSolvingAttachment",{'homeworkStudentSolvingAttachedId':homeworkId},function(){
 
-	});
+	submit("/delete_homeworkStudentSolvingAttachment","homeworkStudentSolvingAttachedId",homeworkId);
 }
 
 function delete_materials(event){
 
-	event.stopImmediatePropagation();
 
+	event.stopPropagation();
 	var materialId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	$.post("\delete_homeworkAttached",{'materialId':materialId},function(){
 
-	});
+	submit("\delete_materials","materialId",materialId);
 }
 
+function submit(path, name, id){
+
+	$('body')
+	.append('<form id="delete_form"></form>');
+	$('#delete_form') 
+	.attr("action", path) .attr("method","post")
+	.append('<input type="hidden" name="' + name + '" value="' + id + '">');
+
+	$('#delete_form').submit();
+	$('#delete_form').remove();
+}
+
+
 function update_lectures(event){
-	
+
 	event.stopImmediatePropagation();
-	
+
 	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
 	var topic = $(event.srcElement).closest("form").find("input[name=topic]").val();
 	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
@@ -196,48 +200,48 @@ function update_lectures(event){
 	var date = $(event.srcElement).closest("form").find("input[name=date]").val();
 	var bhour = $(event.srcElement).closest("form").find("input[name=beginHour]").val();
 	var ehour = $(event.srcElement).closest("form").find("input[name=endHour]").val();
-	
+
 	$("#createLectureModal_id").val(lectureId);
-	
+
 	$("#lecture-form").find("input[name=parentId]").val(lectureId);
 	$("#lecture-form").find("input[name=topic]").val(topic);
 	$("#lecture-form").find("input[name=description]").val(description);
 	$("#lecture-form").find("input[name=classroom]").val(classroom);
+
+	date = new Date(date);
+	date = String([date.getDate(), date.getMonth()+1, date.getFullYear()].join('/'));
 	$("#lecture-form").find("input[name=date]").val(date);
 	$("#lecture-form").find("input[name=beginHour]").val(bhour);
 	$("#lecture-form").find("input[name=endHour]").val(ehour);
-	
+
 	$("#lecture-form").attr("action", "/update_lecture");
 	$("#createNewClass_modal").modal().show();
-	
+
 }
 
+
 function update_homeworks(event){
-	
+
 	event.stopImmediatePropagation();
-	
+
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
 	var name = $(event.srcElement).closest("form").find("input[name=name]").val();
 	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
-	
+
 	$("#addHomeworkModal_id").val(homeworkId);
-	
+
 	$("#homework-form").find("input[name=id]").val(homeworkId);
 	$("#homework-form").find("input[name=name]").val(name);
 	$("#homework-form").find("input[name=description]").val(description);
-	
-	$("#homework-form").attr("action", "/update_homework");
+
+	$("#homework-form").attr("action", "/update_homeworks");
 	$("#addHomework_modal").modal().show();
-	
+
 }
 
-function addLink(){
-	
-	alert("ciao");
-}
 
 function reloadHomework(event){
-	
+
 	var homeworkId = $("#addHomeworkModal_id").val()
 	window.location.reload("/homework?path=&parentId=" + homeworkId);
 }

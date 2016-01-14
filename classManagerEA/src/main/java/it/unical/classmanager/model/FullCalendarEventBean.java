@@ -16,6 +16,8 @@ public class FullCalendarEventBean{
 	private String place;
 	private String username;
 	private String color;
+	private int[] dow;
+	private boolean editable;
 
 	public FullCalendarEventBean(){
 
@@ -27,6 +29,7 @@ public class FullCalendarEventBean{
 		this.place = "";
 		this.color = null;
 		this.setUsername(null);
+		this.editable = true;
 	}
 
 	/*public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
@@ -105,6 +108,14 @@ public class FullCalendarEventBean{
 	public void setColor(String color) {
 		this.color = color;
 	}
+	
+	public int[] getDow() {
+		return dow;
+	}
+
+	public void setDow(int[] dow) {
+		this.dow = dow;
+	}
 
 	public static FullCalendarEventBean toFullCalendarEventBean(Event event){
 
@@ -117,6 +128,8 @@ public class FullCalendarEventBean{
 		toReturn.setPlace(event.getPlace());
 		toReturn.setUsername(event.getUser().getUsername());
 		toReturn.setColor(event.getColor());
+		toReturn.setDow(event.getDow());
+		toReturn.setEditable(true);
 
 		return toReturn;
 	}
@@ -132,8 +145,17 @@ public class FullCalendarEventBean{
 		toReturn.setPlace(lecture.getClassroom());
 		toReturn.setUsername(user.getUsername());
 		toReturn.setColor(Color.darkGray.toString());
+		toReturn.setEditable(false);
 
 		return toReturn;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }

@@ -208,7 +208,7 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
-	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
+	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 	
 		if(result.hasErrors()){
 
@@ -250,9 +250,15 @@ public class LectureController {
 		lecture.setDate(lecture.getDate());
 		lecture.setClassroom(lecture.getClassroom());
 
-		int newId = lectureDao.create(lecture);
+		Lecture newLecture = lectureDao.create(lecture);
+		if(newLecture == null){
+			redirect.addAttribute("error", "server error when creating lecture");
+			return "redirect:/sessionerror";
+		}
 
-		createCalendarEvent(lecture);
+		int newId = newLecture.getId();
+		
+		createCalendarEvent(lecture, courseClass);
 
 		//creates the corresponding folder
 		String name = Integer.toString(newId);
@@ -357,8 +363,13 @@ public class LectureController {
 		material.setLecture(lecture);
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
-		materialDAO.create(material);
-
+		Material newMaterial = materialDAO.create(material);
+		if(newMaterial == null){
+			
+			new FileManager().deleteDirectory(filePath + fileName);
+			return "400";
+		}
+			
 		logger.info("saving file");
 
 		return "200";
@@ -370,8 +381,11 @@ public class LectureController {
 
 		LectureDAOImpl lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
 		Lecture lecture = lectureDao.get(id);
+		
 		if(lecture != null)
 			lectureDao.delete(lecture);
+		else
+			return "redirect:/lectures?path=lectures";
 
 		String name = Integer.toString(lecture.getId());
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
@@ -391,9 +405,12 @@ public class LectureController {
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
 		Material material = materialDAO.get(id);
+		
 		if(material != null)
 			materialDAO.delete(material);
-
+		else
+			return "redirect:/lectures?path=lectures";
+		
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);
 
@@ -401,7 +418,7 @@ public class LectureController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "redirect:/lectures?path=lectures";
+		return "/lectureContent?parentId=" + material.getLecture().getId();
 	}
 
 	/*
@@ -429,7 +446,7 @@ public class LectureController {
 	/*
 	 * creates a calendar event starting from the new lecture
 	 */
-	private void createCalendarEvent(Lecture lecture) {
+	private void createCalendarEvent(Lecture lecture, CourseClass courseClass) {
 
 		Event event = new Event();
 		event.setColor("##0000ff");
@@ -441,7 +458,10 @@ public class LectureController {
 		event.setPlace("");
 		event.setTitle(lecture.getTopic());
 		event.setUser(lecture.getCourseClass().getProfessor());
-
+		event.setType(Event.EVENT_LECTURE_TYPE);
+		//TODO
+		event.setCourseClass(courseClass);
+		
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		eventDao.create(event);
 	

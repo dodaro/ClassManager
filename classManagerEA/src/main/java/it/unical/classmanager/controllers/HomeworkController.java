@@ -251,7 +251,7 @@ public class HomeworkController {
 	 * @param lecture the lecture to which this homework is referred
 	 */
 	@RequestMapping(value = "/homeworks", method = RequestMethod.POST)
-	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model) {
+	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model, RedirectAttributes redirect) {
 
 		if(result.hasErrors()){
 
@@ -274,7 +274,14 @@ public class HomeworkController {
 		String lessonName = Integer.toString(lectureId);
 		String currentPath = "enterpriseApplication/lectures" + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
 
-		int newId = homeworkDAO.create(homework);
+		Homework newHomework = homeworkDAO.create(homework);
+		
+		if(newHomework == null){
+			redirect.addAttribute("error", "error when creating homework");
+			return "redirect:/sessionerror";
+		}
+		
+		int newId = homework.getId();
 		homework.setFilePath(currentPath + File.separator + newId);
 		homeworkDAO.update(homework);
 
@@ -304,7 +311,7 @@ public class HomeworkController {
 	 * @param homeworkId the homework to which this homeworStudentSolving is referred
 	 */
 	@RequestMapping(value = "/homeworksStudentSolving", method = RequestMethod.POST)
-	public String addHomeworkStudentSolving(@RequestParam("parentId") int homeworkId, HttpServletRequest request, Model model) {
+	public String addHomeworkStudentSolving(@RequestParam("parentId") int homeworkId, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
 		//TODO Devo ricavarlo dalla sessione
 		int idCourse = 1;
@@ -321,14 +328,20 @@ public class HomeworkController {
 		Homework homework = homeworkDAO.get(homeworkId);
 
 		//creating the solution
-		HomeworkStudentSolving hss = new  HomeworkStudentSolving();
+		HomeworkStudentSolving hss = new HomeworkStudentSolving();
 		hss.setDate(new Date());
 		hss.setStudent(student);
 		hss.setHomework(homework);
 
 		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
-		int hssId = homeworkStudentSolvingDAO.create(hss).getId();
+		HomeworkStudentSolving newHss = homeworkStudentSolvingDAO.create(hss);
+		
+		if(newHss == null){
+			redirect.addAttribute("error", "path error");
+			return "redirect:/sessionerror";
+		}
 
+		int hssId = newHss.getId();
 		String folderPath = courseName + File.separator + FileManager.STUDENTS_PATH + File.separator + username + File.separator + FileManager.HOMEWORK_PATH;
 		boolean success = new FileManager().mkDir(folderPath, Integer.toString(hssId));
 
@@ -430,6 +443,9 @@ public class HomeworkController {
 		HomeworkAttachedStudentSolvingDAO homeworkAttachedStudentSolvingDAO = appContext.getBean("homeworkAttachedStudentSolvingDAO", HomeworkAttachedStudentSolvingDAOImpl.class);
 		HomeworkAttachedStudentSolving attached = homeworkAttachedStudentSolvingDAO.create(hss_attachment);
 
+		if(attached == null)
+			return "400";
+		
 		boolean success = new FileManager().mkMultipartFile(file, folderPath, file.getOriginalFilename());
 
 		if(!success){

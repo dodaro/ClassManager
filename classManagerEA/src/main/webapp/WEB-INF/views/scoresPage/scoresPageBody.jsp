@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <br>
-
+<div class="row-content">
 	<div class="row">
 	  <div class="col-lg-6">
 	    <div class="input-group">
@@ -17,11 +17,11 @@
 	      <input id="filter" name="filterText" type="text" class="form-control" aria-label="..." placeholder="${message}">
 	    </div><!-- /input-group -->
 	  </div><!-- /.col-lg-6 -->
-	  
 	</div><!-- /.row -->
+	
 	<br>
 	
-	<div class="row">
+	<div class="row-content">
 		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
 			<spring:message code="scores.moreFilters"/>
 		</button>
@@ -85,8 +85,8 @@
 	<div class="col-lg-12">
 	
 		<div class="row">
-			<div class="col-md-12">
-		<table id="scores_table" class="table table-bordered table-condensed">
+			<div class="col-md-12 table-responsive">
+		<table id="scores_table" class="table table-bordered table-condensed" style="white-space:nowrap;}">
 			<thead>
 				<tr>
 					<th></th>
@@ -218,11 +218,14 @@
 	  </div>
 	</div>
 	
-		<form id="options">
-			<input name="total-pages" type="hidden" value="${pageCount}"/> 
-			<input name="page-number" type="hidden" value="${pageNumber}"/> 
-		</form>
-		<div id="paginator">
+		<div class="row-content">
+			<form id="options">
+				<input name="total-pages" type="hidden" value="${pageCount}"/> 
+				<input name="page-number" type="hidden" value="${pageNumber}"/> 
+			</form>
+			<div id="paginator">
+			</div>
 		</div>
-			
+	
+</div>
 </div>

@@ -24,9 +24,9 @@ public class LectureDAOImpl implements LectureDAO
 		return dbHandler;
 	}
 
-	public int create(Lecture lecture)
+	public Lecture create(Lecture lecture)
 	{
-		return ((Lecture) this.dbHandler.create(lecture)).getId();
+		return ((Lecture) this.dbHandler.create(lecture));
 	}
 
 	public void update(Lecture lecture)

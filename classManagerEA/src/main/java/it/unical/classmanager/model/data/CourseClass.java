@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,6 +77,10 @@ public class CourseClass implements Serializable  {
 	@OneToMany(mappedBy = "courseClass", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Lecture> lectures;
+	
+	/*@OneToMany(mappedBy = "courseClass", fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Set<Event> events;*/
 	
 	public CourseClass() {
 		this.id = 0;
@@ -281,6 +286,14 @@ public class CourseClass implements Serializable  {
 				+ ", degreeCourse=" + degreeCourse + ", exams=" + exams + ", registrationStudentClasses="
 				+ registrationStudentClasses + ", lectures=" + lectures + "]";
 	}
+
+	/*public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}*/
 	
 	
 }

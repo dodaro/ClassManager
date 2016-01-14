@@ -6,7 +6,7 @@ import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 
 public interface LectureDAO {
-	public int create(Lecture lecture);
+	public Lecture create(Lecture lecture);
 
 	public void update(Lecture lecture);
 

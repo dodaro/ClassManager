@@ -128,7 +128,7 @@
 										</div>
 									</div>
 									
-									<form:form id="editorForm" action="/editor" method="post" commandName="status" >
+									<form:form id="editorForm" action="/editor" method="post" commandName="status" acceptCharset="utf-8">
 										<form:textarea id="codeTextarea" path="code"></form:textarea>
 										<form:textarea id="consoleTextarea" path="consoleContent"></form:textarea>
 										<form:input id="themeInput" path="theme"/>

@@ -62,10 +62,6 @@ public class Lecture implements Serializable  {
 	
 	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Question> questions;
-	
-	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<AttendanceStudentLecture> attendanceStudentLectures;
 	
 	@OneToMany(mappedBy = "lecture", fetch = FetchType.EAGER)
@@ -83,13 +79,12 @@ public class Lecture implements Serializable  {
 		this.classroom = "";
 		this.courseClass = null;
 		this.materials = new ArrayList<Material>();
-		this.questions = new ArrayList<Question>();
 		this.attendanceStudentLectures = new ArrayList<AttendanceStudentLecture>();
 		this.homeworks = new ArrayList<Homework>();
 	}
 
 	public Lecture(int id, int number, String topic, String description, Date date, Time beginHour, Time endHour,
-			String classroom, CourseClass courseClass, List<Material> materials, List<Question> questions,
+			String classroom, CourseClass courseClass, List<Material> materials,
 			List<AttendanceStudentLecture> attendanceStudentLectures, List<Homework> homeworks) {
 		this.id = id;
 		this.number = number;
@@ -101,7 +96,6 @@ public class Lecture implements Serializable  {
 		this.classroom = classroom;
 		this.courseClass = courseClass;
 		this.materials = materials;
-		this.questions = questions;
 		this.attendanceStudentLectures = attendanceStudentLectures;
 		this.homeworks = homeworks;
 	}
@@ -186,14 +180,6 @@ public class Lecture implements Serializable  {
 		this.materials = materials;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
-
 	public List<AttendanceStudentLecture> getAttendanceStudentLectures() {
 		return attendanceStudentLectures;
 	}
@@ -225,7 +211,6 @@ public class Lecture implements Serializable  {
 		result = prime * result + id;
 		result = prime * result + ((materials == null) ? 0 : materials.hashCode());
 		result = prime * result + number;
-		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
 		result = prime * result + ((topic == null) ? 0 : topic.hashCode());
 		return result;
 	}
@@ -287,11 +272,6 @@ public class Lecture implements Serializable  {
 		} else if (!materials.equals(other.materials))
 			return false;
 		if (number != other.number)
-			return false;
-		if (questions == null) {
-			if (other.questions != null)
-				return false;
-		} else if (!questions.equals(other.questions))
 			return false;
 		if (topic == null) {
 			if (other.topic != null)

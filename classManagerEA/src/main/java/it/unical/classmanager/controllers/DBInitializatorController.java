@@ -541,7 +541,6 @@ public class DBInitializatorController {
 			"MT"+(1+random.nextInt(100)),	// Set a random classroom 
 			courseClass, 
 			new ArrayList<Material>(), 
-			new ArrayList<Question>(), 
 			new ArrayList<AttendanceStudentLecture>(), 
 			new ArrayList<Homework>());
 		lectureDateStart.add(Calendar.DAY_OF_MONTH, 2);

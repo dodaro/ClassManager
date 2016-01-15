@@ -9,8 +9,6 @@
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Class Manager</title>
-	
 	<link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 	<!-- <link rel="stylesheet" type="text/css" href="resources/style/style.css" /> -->
 	<link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />	

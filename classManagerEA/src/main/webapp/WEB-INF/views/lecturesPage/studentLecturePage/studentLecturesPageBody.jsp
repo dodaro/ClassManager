@@ -135,7 +135,8 @@
 <script>
 $(document).ready(function() 
 {
-	$('#createNewClass_modal_open').modal('show');
 	$('#addHomework_modal_open').modal('show');
+	$('#addHomework_modal_open').attr("id","addHomework_modal");
+	$('#addHomework_modal_open').find("form").attr("action", "/lectures/update_homeworks");
 });
 </script>

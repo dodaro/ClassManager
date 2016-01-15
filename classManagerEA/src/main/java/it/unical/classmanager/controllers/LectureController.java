@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,10 +100,10 @@ public class LectureController {
 
 		logger.info("getLectures");
 
-		return "layout";
+		return "/layout";
 	}
 
-	@RequestMapping(value = "/lectureContent", method = RequestMethod.GET)
+	@RequestMapping(value = "/lectures/lectureContent", method = RequestMethod.GET)
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
@@ -131,9 +130,9 @@ public class LectureController {
 		FolderBean homeworks = new FolderBean(lectureId,listOfFiles[0].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[0].getPath(), listOfFiles[0].listFiles().length);
 		FolderBean materials = new FolderBean(lectureId,listOfFiles[1].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[1].getPath(), listOfFiles[1].listFiles().length);
 
-		homeworks.setAction("/homeworks");
+		homeworks.setAction("/lectures/homeworks");
 		homeworks.setParentId(lectureId);
-		materials.setAction("/materials");
+		materials.setAction("/lectures/materials");
 		materials.setParentId(lectureId);
 
 
@@ -147,11 +146,11 @@ public class LectureController {
 		
 		logger.info("getLectureContent");
 
-		return "layout";
+		return "/layout";
 	}
 
 
-	@RequestMapping(value = "/materials", method = RequestMethod.GET)
+	@RequestMapping(value = "/lectures/materials", method = RequestMethod.GET)
 	public String getMaterials(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
@@ -194,12 +193,12 @@ public class LectureController {
 		if(canCreate(request))
 			model.addAttribute("canCreate", true);
 		
-		String referred = "/lectureContent?parentId=" + idLecture;
+		String referred = "/lectures/lectureContent?parentId=" + idLecture;
 		model.addAttribute("backPage", referred);
 		
 		logger.info("getMaterials");
 
-		return "layout";
+		return "/layout";
 	}
 
 
@@ -287,7 +286,7 @@ public class LectureController {
 
 
 
-	@RequestMapping(value = "/update_lecture", method = RequestMethod.POST)
+	@RequestMapping(value = "/lectures/update_lecture", method = RequestMethod.POST)
 	public String updateLecture(@Valid @ModelAttribute("lecture") Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
 		if(result.hasErrors()){
@@ -309,7 +308,7 @@ public class LectureController {
 			old.setTopic(lecture.getTopic());
 
 		if(!lecture.getDescription().equals(old.getDescription()) && !lecture.getDescription().equals(""))
-			old.setTopic(lecture.getDescription());
+			old.setDescription(lecture.getDescription());
 
 		if(lecture.getDate() != null)
 			if(lecture.getDate().compareTo(old.getDate()) != 0)
@@ -339,7 +338,7 @@ public class LectureController {
 	 * @param parentId the id of the parentFolder
 	 * @return
 	 */
-	@RequestMapping(value="/upload_materials", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/upload_materials", method=RequestMethod.POST)
 	public @ResponseBody String uploadMaterial(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
 
 		//TODO retrieve from session
@@ -381,7 +380,7 @@ public class LectureController {
 	}
 
 
-	@RequestMapping(value="/delete_lecture", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/delete_lecture", method=RequestMethod.POST)
 	public String deleteLecture(@RequestParam("lectureId") int id) {
 
 		LectureDAOImpl lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
@@ -405,7 +404,7 @@ public class LectureController {
 		return "redirect:/lectures?path=lectures";
 	}
 
-	@RequestMapping(value="/delete_materials", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/delete_materials", method=RequestMethod.POST)
 	public String deleteMaterial(@RequestParam("materialId") int id) {
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
@@ -423,7 +422,7 @@ public class LectureController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "redirect:/materials?parentId=" + material.getLecture().getId();
+		return "redirect:/lectures/materials?parentId=" + material.getLecture().getId();
 	}
 
 	/*
@@ -442,7 +441,7 @@ public class LectureController {
 				childs = new File(folderPath).listFiles().length;
 
 			FolderBean folder = new FolderBean(lecture.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
-			folder.setAction("lectureContent");
+			folder.setAction("/lectures/lectureContent");
 			folder.setParentId(lecture.getId());
 			dest.add(folder);
 		}	

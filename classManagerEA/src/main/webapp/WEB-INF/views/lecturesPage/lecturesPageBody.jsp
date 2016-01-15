@@ -47,7 +47,7 @@
 				</c:if>
 
 				<div id="uploadFile_div" style="display: none;">
-					<form id="upload" method="post" action="/upload_${pwd}"
+					<form id="upload" method="post" action="/lectures/upload_${pwd}"
 						enctype="multipart/form-data" onsubmit="return reload();">
 						<div id="drop">
 							<spring:message code="lectureManager.drophere"
@@ -154,7 +154,12 @@
 <script>
 $(document).ready(function() 
 {	
+	$('#createNewClass_modal_open').modal('show');
+	$('#createNewClass_modal_open').modal('show');
+	$('#createNewClass_modal_open').find("form").attr("action", "/lectures/update_lecture");
+	
 	$('#addHomework_modal_open').modal('show');
-	$('#addHomework_modal_open').attr("id","addHomework_modal");
+	$('#addHomework_modal_open').modal('show');
+	$('#addHomework_modal_open').find("form").attr("action", "/lectures/update_homeworks");
 });
 </script>

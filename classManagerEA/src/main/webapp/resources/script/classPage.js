@@ -23,7 +23,7 @@ $(document).ready(function() {
 	});
 
 	$( ".timepicker" ).datetimepicker({
-		format: 'HH:mm'
+		format: 'HH:mm:ss'
 	});
 
 });
@@ -61,7 +61,7 @@ var ListenersManager = (function(){
 
 			$("#addHomework_btn").on("click", function() {
 
-				$("#homework-form").attr("action", "/create_homeworks");
+				$("#homework-form").attr("action", "/lectures/create_homeworks");
 				$("#addHomework_modal").modal().show();
 			});
 
@@ -132,7 +132,7 @@ function delete_lectures(event){
 	event.stopPropagation();
 	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
 
-	submit("/delete_lecture","lectureId",lectureId);
+	submit("/lectures/delete_lecture","lectureId",lectureId);
 }
 
 function delete_homeworks(event){
@@ -140,7 +140,7 @@ function delete_homeworks(event){
 	event.stopPropagation();
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("/delete_homeworks","homeworkId",homeworkId);
+	submit("/lectures/delete_homeworks","homeworkId",homeworkId);
 }
 
 function delete_homeworkAttached(event){
@@ -148,7 +148,7 @@ function delete_homeworkAttached(event){
 	event.stopPropagation();
 	var homeworkAId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("/delete_homeworkAttached","homeworkAttachedId",homeworkAId);
+	submit("/lectures/delete_homeworkAttached","homeworkAttachedId",homeworkAId);
 }
 
 function delete_homeworkStudentSolving(event){
@@ -156,7 +156,7 @@ function delete_homeworkStudentSolving(event){
 	event.stopPropagation();
 	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("/delete_homeworkStudentSolving","homeworkStudentSolvingId",hssId);
+	submit("/lectures/delete_homeworkStudentSolving","homeworkStudentSolvingId",hssId);
 }
 
 function delete_homeworkStudentSolvingAttachment(event){
@@ -164,7 +164,7 @@ function delete_homeworkStudentSolvingAttachment(event){
 	event.stopPropagation();
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("/delete_homeworkStudentSolvingAttachment","homeworkStudentSolvingAttachedId",homeworkId);
+	submit("/lectures/delete_homeworkStudentSolvingAttachment","homeworkStudentSolvingAttachedId",homeworkId);
 }
 
 function delete_materials(event){
@@ -173,7 +173,7 @@ function delete_materials(event){
 	event.stopPropagation();
 	var materialId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("\delete_materials","materialId",materialId);
+	submit("/lectures/delete_materials","materialId",materialId);
 }
 
 function submit(path, name, id){
@@ -214,7 +214,7 @@ function update_lectures(event){
 	$("#lecture-form").find("input[name=beginHour]").val(bhour);
 	$("#lecture-form").find("input[name=endHour]").val(ehour);
 
-	$("#lecture-form").attr("action", "/update_lecture");
+	$("#lecture-form").attr("action", "/lectures/update_lecture");
 	$("#createNewClass_modal").modal().show();
 
 }
@@ -234,7 +234,7 @@ function update_homeworks(event){
 	$("#homework-form").find("input[name=name]").val(name);
 	$("#homework-form").find("input[name=description]").val(description);
 
-	$("#homework-form").attr("action", "/update_homeworks");
+	$("#homework-form").attr("action", "/lectures/update_homeworks");
 	$("#addHomework_modal").modal().show();
 
 }
@@ -243,5 +243,5 @@ function update_homeworks(event){
 function reloadHomework(event){
 
 	var homeworkId = $("#addHomework_modal").find("input[name=parentId]").val();
-	window.location.replace("/homeworks?parentId=" + homeworkId);
+	window.location.replace("/lectures/homeworks?parentId=" + homeworkId);
 }

@@ -21,10 +21,12 @@
 	
 	<br>
 	
-	<div class="row-content">
-		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
-			<spring:message code="scores.moreFilters"/>
-		</button>
+	<div class="row-content">		
+		<div class="btn-group" data-toggle="buttons">		
+			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
+				<spring:message code="scores.moreFilters"/>
+			</button>
+		</div>
 	</div>
 
 <div class="row collapse" id="filters_collapse">
@@ -106,7 +108,8 @@
 					<c:forEach items="${exams}" var="exam">
 						<c:choose>
 							<c:when test="${not empty yearFilter}">
-								<c:if test="${exam.date.getYear() == yearFilter}">
+								<fmt:formatDate value="${exam.date}"  type="date"  pattern="yyyy" var="dateYear" />									
+								<c:if test="${dateYear == yearFilter}">
 									<fmt:formatDate value="${exam.date}"  type="date"  pattern="dd-mm-yyyy" var="formattedDate" />
 									<th class="exam-td" style="color:red"><spring:message code="scores.exam"/>: ${formattedDate}</th>
 								</c:if>
@@ -140,7 +143,7 @@
 													<c:set var="index" value="${index + 1}" scope="page" />
 												</c:when>
 												<c:otherwise>
-													<td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
+													<!-- <td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>-->
 												</c:otherwise>
 											</c:choose>
 										</c:if>
@@ -152,7 +155,8 @@
 												<c:set var="index" value="${index + 1}" scope="page" />
 											</c:when>
 											<c:otherwise>
-												<td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>
+												<!-- <td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>-->
+												<td class="homework-td"></td>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -171,7 +175,8 @@
 							<c:set var="count" value="${count + 1}" scope="page" />
 								<c:choose>
 									<c:when test="${not empty yearFilter}">
-										<c:if test="${exam.date.getYear() == yearFilter}">
+										<fmt:formatDate value="${exam.date}"  type="date"  pattern="yyyy" var="dateYear" />
+										<c:if test="${dateYear == yearFilter}">											
 											<c:set var="check" value="false" scope="page" />
 											<c:forEach items="${exam.studentExamPartecipations}" var="part">
 													<c:if test="${part.exam.id == exam.id && part.student.username == student.username}">
@@ -229,3 +234,4 @@
 	
 </div>
 </div>
+

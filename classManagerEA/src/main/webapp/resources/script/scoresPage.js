@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	listenersManager = ListenersManager.getInstance();
 	listenersManager.initListeners();
-	
+
 	//toggle `popup` / `inline` mode
 	$.fn.editable.defaults.mode = 'popup';     
 
@@ -81,33 +81,41 @@ $(document).ready(function() {
 		},
 		title: 'Change score',
 	});
-	
-	
+
+
 	$("#page-size").change(function() {
 		var url = "noticeboard?notices=" + $( this ).find("option:selected").text();
 		console.log(url);
-				window.location.href=url;
+		window.location.href=url;
 	});
-	
+
 	var value = $("#selected-value").val();
 	$("#page-size").val(value);
-	
-	
+
+
 	var totalPages = parseInt($("#options :input[name='total-pages']").val());
 	var currentPage = parseInt($("#options :input[name='page-number']").val());
-	
+
 	$('#paginator').bootpag({
-	    total: totalPages,
-	    page: currentPage,
-	    maxVisible: 5,
-//	    href: "searchusers?page={{number}}",
-	    leaps: false
+		total: totalPages,
+		page: currentPage,
+		maxVisible: 5,
+//		href: "searchusers?page={{number}}",
+		leaps: false
 	}).on("page", function(event, num){
-	    window.location.href = "noticeboard?page="+num;
+		window.location.href = "noticeboard?page="+num;
 	});
-    
+
 	var value = $("#selected-value").val();
 	$("#page-size").val(value);
+	
+	$("#scores_table").tableExport({
+	    headings: true,                    // (Boolean), display table headings (th elements) in the first row
+	    formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    fileName: "id",                    // (id, String), filename for the downloaded file
+	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
+	    position: "bottom"                 // (top, bottom), position of the caption element relative to table
+	});
 
 });
 
@@ -174,36 +182,37 @@ var ListenersManager = (function(){
 
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
-			
+
 			$('#filter').keyup(function () {
 
-	            var rex = new RegExp($(this).val(), 'i');
-	            $('.searchable tr').hide();
-	            $('.searchable tr').filter(function () {
-	                return rex.test($(this).text());
-	            }).show();
+				var rex = new RegExp($(this).val(), 'i');
+				$('.searchable tr').hide();
+				$('.searchable tr').filter(function () {
+					return rex.test($(this).text());
+				}).show();
 
-	        });
-			
+			});
+
 			$('#exams_checkbox').change(function(){
 
-			    if($(this).is(':checked')){
-			       $(".exam-td").show();
-			    }
-			    else{
-			    	$(".exam-td").hide();
-			    }    
+				if($(this).is(':checked')){
+					$(".exam-td").show();
+				}
+				else{
+					$(".exam-td").hide();
+				}    
 			});
-			
+
 			$('#homeworks_checkbox').change(function(){
 
-			    if($(this).is(':checked')){
-			       $(".homework-td").show();
-			    }
-			    else{
-			    	$(".homework-td").hide();
-			    }    
+				if($(this).is(':checked')){
+					$(".homework-td").show();
+				}
+				else{
+					$(".homework-td").hide();
+				}    
 			});
+
 
 		}
 		else {

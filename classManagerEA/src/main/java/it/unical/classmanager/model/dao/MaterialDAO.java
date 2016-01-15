@@ -3,6 +3,8 @@ package it.unical.classmanager.model.dao;
 import java.util.List;
 
 import it.unical.classmanager.model.data.Material;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 
 public interface MaterialDAO {
 	public void create(Material material);
@@ -18,4 +20,10 @@ public interface MaterialDAO {
 	public int numberOfMaterials();
 
 	public List<Material> getAllMaterials();
+
+	public List<Material> getAllLectureMaterials(int idLecture);
+
+	public List<Object[]> getLastMaterials( Professor professor);
+
+	public List<Object[]> getLastMaterials( Student student);
 }

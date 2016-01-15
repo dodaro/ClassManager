@@ -3,133 +3,33 @@ $(document).ready(function() {
 	listenersManager = ListenersManager.getInstance();
 	listenersManager.initListeners();
 
-	navigationManager = NavigationManager.getInstance();
-	navigationManager.init();
-
 	uploadFile_index = 0;
 	createClass_index = 1;
 	addHomework_index = 2;
+	addMaterials_index = 3;
 
-	buttons = ["#uploadFile_btn", "#createNewClass_btn", "#addHomework_btn"];
+	buttons = ["#uploadFile_btn", "#createNewClass_btn", "#addHomework_btn","#addMaterials_btn"];
 
 	$("#uploadFile_div").hide();
+	
+	/*$( ".datepicker" ).datepicker({
+    	changeYear: true,
+    	dateFormat: "dd/mm/yy",
+    	yearRange: "-100:+100",	
+    });*/
+	
+	$( ".datepicker" ).datetimepicker({
+		format: 'DD/MM/YYYY'
+	});
+	
+	$( ".timepicker" ).datetimepicker({
+		format: 'HH:mm'
+	});
+	
 });
 
-/*
- * This singleton class contains methods to keep track about the navigation among the folders
- * 
- */
-var NavigationManager = (function(){
 
-	//private fields
-	var currentPath;
-	var alreadyInitialized = false;
-	var instance;
-	var currentLesson;
-
-	//constructor
-	var NavigationManager = function() {
-
-		this.init = init;
-		this.getCurrentPath = getCurrentPath;
-		this.imInHomeworks = imInHomeworks; 
-		this.imInLectures = imInLectures; 
-		this.getCurrentFolder = getCurrentFolder;
-		this.getPreviousFolder = getPreviousFolder;
-	}
-
-	var init = function(){
-
-		if(alreadyInitialized === false){
-			alreadyInitialized = true;
-			this.currentPath = getCurrentPath();
-		}
-	}
-
-	var getInstance = function() {
-
-		if (!instance) {
-			instance = new NavigationManager();  
-		} 
-		return instance; 
-	};
-
-	/**
-	 * return the complete current path, obtained splitting the window.location.href.
-	 * The path returned looks like "root/lessons/lesson"
-	 */
-	var getCurrentPath = function(){
-
-		var url = (window.location.href).split("#")[1];
-		url = typeof url != 'undefined' ? escapeHTML(url) : "";
-		this.currentPath = url;
-
-		return this.currentPath;
-	};
-
-	/**
-	 * return true if the current folder is "homeworks"
-	 */
-	var imInHomeworks = function(){
-
-		var currentFolder = this.getCurrentFolder();
-
-		var res = (currentFolder == "homeworks") ? true : false;
-		return res;
-	};
-
-	/**
-	 * return true if the current folder is "lectures"
-	 */
-	var imInLectures = function(){
-
-		var currentFolder = this.getCurrentFolder();
-
-		var res = (currentFolder == "lectures") || (currentFolder == "") ? true : false;
-		return res;
-	};
-
-	/**
-	 * return the name of the current folder, that is the last element of the {currentPath}
-	 */
-	var getCurrentFolder = function(){
-
-		var url = this.getCurrentPath();
-		url = url.split("/");
-		var index = url.length - 1;
-
-		return url[index];
-	};
-
-	/**
-	 * returns the previous folder with respect to the currentFolder. That is the one-to-last element of the {currentPath}
-	 */
-	var getPreviousFolder = function(){
-
-		var url = this.getCurrentPath();
-		url = url.split("/");
-		var index = url.length - 2;
-
-		if(index >= 0)
-			return url[index];
-		else 
-			return url[0];
-	};
-
-
-	//return singleton obj
-	return {
-		getInstance: getInstance,
-		getCurrentPath: getCurrentPath,
-		imInHomeworks: imInHomeworks,
-		imInLectures: imInLectures,
-		getCurrentFolder: getCurrentFolder,
-		getPreviousFolder: getPreviousFolder
-	};
-
-})();
-
-
+    
 //class
 var ListenersManager = (function(){
 
@@ -150,14 +50,19 @@ var ListenersManager = (function(){
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 
+
+
 			$("#createNewClass_btn").on("click", function() {
 
+				$("#lecture-form").attr("action", "/lectures");
 				$("#createNewClass_modal").modal().show();
+
 			});
+
 
 			$("#addHomework_btn").on("click", function() {
 
-				$("#referredLesson_input").val(navigationManager.getPreviousFolder());
+				$("#homework-form").attr("action", "/homeworks");
 				$("#addHomework_modal").modal().show();
 			});
 
@@ -167,37 +72,40 @@ var ListenersManager = (function(){
 			$("#uploadFile_btn").on("click", function() {
 
 				if($("#uploadFile_div").is(":hidden")){
-
-					var url = navigationManager.getCurrentPath();
-
-					$('#toUpload_input').val(url);
 					$("#uploadFile_div").show();
 				}
 				else
 					$("#uploadFile_div").hide();
 			});
 
-			/*
-			 * used to display the correct components when navigating in folders
-			 */
-			$(window).on('hashchange', function() {
+			$("div.file").click(function(event){
 
-				if(navigationManager.imInLectures()){
+				var path = $(this).siblings("input[name=path]").val();
+				$("#visualizer").attr("href", path);
 
-					hideAllButtons();
-					$(buttons[createClass_index]).show();
-				}
-				else if(navigationManager.imInHomeworks()){
+				$("#visualizer_modal").modal().show();
+				$("#visualizer").gdocsViewer({ width: '100%', height: '100%' });
 
-					hideAllButtons();
-					$(buttons[addHomework_index]).show();
-				}
-				else {
+				event.preventDefault();
+			});
 
-					hideAllButtons();
-				}
+			$("#download_btn_modal").click(function(){
+
+				var url = $("#visualizer").attr("href");
+				window.open("/download?path=" + url);
 
 			});
+			
+			
+
+			/*$("#delete_btn_modal").click(function(){
+				var url = $("#visualizer").attr("href");
+				$.get( "/contents/delete", {"path" : url}, function(data){
+
+					if(data == true)
+						window.location.replace("fileBrowser");
+				});	
+			});*/
 
 		}
 		else {
@@ -222,13 +130,115 @@ var ListenersManager = (function(){
 
 })();
 
-function escapeHTML(text) {
-	return text.replace(/%20/g, ' ').replace(/%2F/g, '/');
+function delete_lectures(event){
+
+	event.stopImmediatePropagation();
+
+	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
+	$.post("/delete_lecture",{'lectureId':lectureId},function(){
+
+	});
 }
 
-function hideAllButtons(){
+function delete_homeworks(event){
 
-	buttons.forEach(function(id) {
-		$(id).hide();
+	event.stopImmediatePropagation();
+	alert("deleteHomeworks");
+}
+
+function delete_homeworkAttached(event){
+
+	event.stopImmediatePropagation();
+
+	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("/delete_homeworkAttached",{'homeworkAttachedId':homeworkId},function(){
+
 	});
+}
+
+function delete_homeworkStudentSolving(event){
+
+	event.stopImmediatePropagation();
+
+	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("/delete_homeworkStudentSolving",{'homeworkStudentSolvingId':hssId},function(){
+
+	});
+}
+
+function delete_homeworkAttached(event){
+
+	event.stopImmediatePropagation();
+
+	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("/delete_homeworkStudentSolvingAttachment",{'homeworkStudentSolvingAttachedId':homeworkId},function(){
+
+	});
+}
+
+function delete_materials(event){
+
+	event.stopImmediatePropagation();
+
+	var materialId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	$.post("\delete_homeworkAttached",{'materialId':materialId},function(){
+
+	});
+}
+
+function update_lectures(event){
+	
+	event.stopImmediatePropagation();
+	
+	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
+	var topic = $(event.srcElement).closest("form").find("input[name=topic]").val();
+	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
+	var classroom = $(event.srcElement).closest("form").find("input[name=classroom]").val();
+	var date = $(event.srcElement).closest("form").find("input[name=date]").val();
+	var bhour = $(event.srcElement).closest("form").find("input[name=beginHour]").val();
+	var ehour = $(event.srcElement).closest("form").find("input[name=endHour]").val();
+	
+	$("#createLectureModal_id").val(lectureId);
+	
+	$("#lecture-form").find("input[name=parentId]").val(lectureId);
+	$("#lecture-form").find("input[name=topic]").val(topic);
+	$("#lecture-form").find("input[name=description]").val(description);
+	$("#lecture-form").find("input[name=classroom]").val(classroom);
+	$("#lecture-form").find("input[name=date]").val(date);
+	$("#lecture-form").find("input[name=beginHour]").val(bhour);
+	$("#lecture-form").find("input[name=endHour]").val(ehour);
+	
+	$("#lecture-form").attr("action", "/update_lecture");
+	$("#createNewClass_modal").modal().show();
+	
+}
+
+function update_homeworks(event){
+	
+	event.stopImmediatePropagation();
+	
+	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var name = $(event.srcElement).closest("form").find("input[name=name]").val();
+	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
+	
+	$("#addHomeworkModal_id").val(homeworkId);
+	
+	$("#homework-form").find("input[name=id]").val(homeworkId);
+	$("#homework-form").find("input[name=name]").val(name);
+	$("#homework-form").find("input[name=description]").val(description);
+	
+	$("#homework-form").attr("action", "/update_homework");
+	$("#addHomework_modal").modal().show();
+	
+}
+
+function addLink(){
+	
+	alert("ciao");
+}
+
+function reloadHomework(event){
+	
+	var homeworkId = $("#addHomeworkModal_id").val()
+	window.location.reload("/homework?path=&parentId=" + homeworkId);
 }

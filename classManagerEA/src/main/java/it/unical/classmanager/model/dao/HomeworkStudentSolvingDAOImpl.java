@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
@@ -21,9 +22,9 @@ public class HomeworkStudentSolvingDAOImpl implements HomeworkStudentSolvingDAO
 		return dbHandler;
 	}
 
-	public void create(HomeworkStudentSolving homeworkStudentSolving)
+	public HomeworkStudentSolving create(HomeworkStudentSolving homeworkStudentSolving)
 	{
-		this.dbHandler.create(homeworkStudentSolving);
+		return ((HomeworkStudentSolving) this.dbHandler.create(homeworkStudentSolving));
 	}
 
 	public void update(HomeworkStudentSolving homeworkStudentSolving)
@@ -68,6 +69,19 @@ public class HomeworkStudentSolvingDAOImpl implements HomeworkStudentSolvingDAO
 		List<HomeworkStudentSolving> homeworkStudentSolving = session.createQuery("FROM HomeworkStudentSolving").list();
 		session.close();
 		return homeworkStudentSolving;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HomeworkStudentSolving> getAllHomeworkStudentSolvings(String studentId) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM HomeworkStudentSolving as h WHERE h.student.username = :id");
+		query.setParameter("id", studentId);
+		List<HomeworkStudentSolving> homeworkStudentSolving = query.list();
+		session.close();
+		return homeworkStudentSolving;
+
 	}
 
 }

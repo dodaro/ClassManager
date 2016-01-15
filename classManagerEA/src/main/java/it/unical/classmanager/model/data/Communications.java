@@ -11,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -28,15 +29,20 @@ public class Communications implements Serializable  {
 	private int id;
 	
 	@Column(name="name", nullable=false, length=32)
+	@Size(min=4,max=20)
 	private String name;
 	
 	@Column(name="description", nullable=false, length=256)
+	@Size(min=4,max=256)
 	private String description;	
 	
 	@Column(name="date", nullable=false)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date date;
 
+	@Type(type="yes_no")
+	private boolean serviceMessage;
+	
 	//	Foreign key section
 	@ManyToOne
 	@JoinColumn(name = "professor")
@@ -48,14 +54,16 @@ public class Communications implements Serializable  {
 		this.description = "";
 		this.professor = null;
 		this.date = null;
+		this.serviceMessage = false;	
 	}
 
-	public Communications(int id, String name, String description, Professor professor,Date date) {
+	public Communications(int id, String name, String description, Professor professor,Date date,boolean serviceMessage) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.professor = professor;
 		this.date = date;
+		this.serviceMessage = serviceMessage;
 	}
 
 	public int getId() {
@@ -96,6 +104,20 @@ public class Communications implements Serializable  {
 	
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public void setServiceMessage(boolean serviceMessage) {
+		this.serviceMessage = serviceMessage;
+	}
+	
+	public boolean isServiceMessage() {
+		return serviceMessage;
+	}
+	
+	@Override
+	public String toString() {
+		return id + ", " + name + ", " + description + ", " + date + ", " + professor.getLastName();
+		
 	}
 	
 }

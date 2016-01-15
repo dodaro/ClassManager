@@ -100,4 +100,52 @@ public class DegreeCourse implements Serializable  {
 		this.departement = departement;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((courseClasses == null) ? 0 : courseClasses.hashCode());
+		result = prime * result + ((courseCode == null) ? 0 : courseCode.hashCode());
+		result = prime * result + ((departement == null) ? 0 : departement.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DegreeCourse other = (DegreeCourse) obj;
+		if (courseClasses == null) {
+			if (other.courseClasses != null)
+				return false;
+		} else if (!courseClasses.equals(other.courseClasses))
+			return false;
+		if (courseCode == null) {
+			if (other.courseCode != null)
+				return false;
+		} else if (!courseCode.equals(other.courseCode))
+			return false;
+		if (departement == null) {
+			if (other.departement != null)
+				return false;
+		} else if (!departement.equals(other.departement))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	
+	
+
 }

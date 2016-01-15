@@ -28,10 +28,10 @@ public class Question implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 		
-	@Column(name="title", nullable=false, length=20)
+	@Column(name="title", nullable=false, length=100)
 	private String title;
 	
-	@Column(name="description", nullable=false, length=256)	
+	@Column(name="description", nullable=false, length=10000)	
 	private String description;
 
 	//	Foreign key section
@@ -127,5 +127,64 @@ public class Question implements Serializable  {
 	public void setQuestionAttachedContents(List<QuestionAttachedContent> questionAttachedContents) {
 		this.questionAttachedContents = questionAttachedContents;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((lecture == null) ? 0 : lecture.hashCode());
+		result = prime * result + ((questionAttachedContents == null) ? 0 : questionAttachedContents.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (answers == null) {
+			if (other.answers != null)
+				return false;
+		} else if (!answers.equals(other.answers))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (lecture == null) {
+			if (other.lecture != null)
+				return false;
+		} else if (!lecture.equals(other.lecture))
+			return false;
+		if (questionAttachedContents == null) {
+			if (other.questionAttachedContents != null)
+				return false;
+		} else if (!questionAttachedContents.equals(other.questionAttachedContents))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+	
 	
 }

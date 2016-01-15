@@ -72,7 +72,11 @@ public class AttendanceLessonController
 		List<Student> studentsNotPresent = attendanceStudentLectureDAO.getAllStudentsNotPresentOnALecture(currentLecture);
 		List<Student> studentsPresent = attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfALecture(currentLecture);
 		initialStudends = studentsPresent;
-				
+			
+		// TODO prendere corso e professore dalla session
+		//model.addAttribute("professor", lecture.getCourseClass().getProfessor());
+		//model.addAttribute("course", lecture.getCourseClass());
+		
 		model.addAttribute("lecture", currentLecture);
 		model.addAttribute("studentsPresent", studentsPresent);
 		model.addAttribute("studentsNotPresent", studentsNotPresent);
@@ -85,7 +89,7 @@ public class AttendanceLessonController
 	@RequestMapping(value = "/attendance", method = RequestMethod.POST)
 	public String saveLessonAttendances(HttpServletRequest request, @ModelAttribute("lecture") Lecture lecture, Model model) 
 	{
-		// Se la lista tornata risulta nulla senza questo ocntrollo va in eccezione
+		// Se la lista tornata risulta nulla senza questo controllo va in eccezione
 		if(lecture == null || lecture.getAttendanceStudentLectures() == null)
 		{
 			lecture = new Lecture();
@@ -113,10 +117,14 @@ public class AttendanceLessonController
 		LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
 		lectureDAO.update(currentLecture);	
 		
+		//model.addAttribute("professor", lecture.getCourseClass().getProfessor());
+		//model.addAttribute("course", lecture.getCourseClass());
+		
 		// TODO Effettuare l'update della lezione
-		model.addAttribute("customHeader", AttendanceLessonController.HEADER);
-		model.addAttribute("customBody", AttendanceLessonController.BODY);
-		return "layout";
+		//model.addAttribute("customHeader", AttendanceLessonController.HEADER);
+		//model.addAttribute("customBody", AttendanceLessonController.BODY);
+		model.addAttribute("id", currentLecture.getId());
+		return "redirect:attendance";
 	}
 	
 	/**

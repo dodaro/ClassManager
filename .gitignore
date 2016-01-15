@@ -3,5 +3,6 @@
 /classManagerEA/target/**
 /classManagerEA/files/**
 /classManagerEA/h2-1.4.190.jar
-**/.DS_Store
-**/classManagerEA/.DS_Store
+/.DS_Store
+/classManagerEA/.DS_Store
+/classManagerEA/target/classes/META-INF/maven/it.unical/classmanager/pom.properties

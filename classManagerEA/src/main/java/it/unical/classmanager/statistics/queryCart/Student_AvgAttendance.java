@@ -1,0 +1,91 @@
+/**
+ * 
+ */
+package it.unical.classmanager.statistics.queryCart;
+
+import java.util.List;
+
+import it.unical.classmanager.model.dao.CartQueryDAO;
+import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.statistics.cart.AbstractCart;
+import it.unical.classmanager.statistics.cart.ColumnDrilldownCart;
+
+/**
+ * @author Aloisius92
+ * Query: "Per ogni corso la media delle presenze"
+ */
+public class Student_AvgAttendance extends AbstractQueryCart {
+    
+    public Student_AvgAttendance() {
+	super();
+    }
+    
+    public Student_AvgAttendance(User user){
+	super(user);
+    }
+    
+    /* (non-Javadoc)
+     * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery()
+     */
+    @Override
+    protected AbstractCart buildCartFromQuery() {
+	return buildCartFromQuery(new ColumnDrilldownCart());
+    }
+    
+    @Override
+    protected AbstractCart buildCartFromQuery(AbstractCart cart) {
+	// Query
+	CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
+	List<Object[]> avgAttendanceByStudent = cartQueryDAO.getAvgAttendanceByStudent((Student)this.getUser());
+	
+	/*
+	 * avgAttendanceByStudent
+	 * CourseName1, Avg1
+	 * CourseName2, Avg2
+	 * CourseName3, Avg3
+	 * ...
+	 * CourseNameN, AvgN
+	 */	
+	
+	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_Title",null,locale));
+	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_SubTitle",null,locale));
+	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_xAxisTitle",null,locale));
+	StringBuilder seriesContent = new StringBuilder("");
+	seriesContent.append("{");
+	{
+	    seriesContent.append("\n");
+	    seriesContent.append("name: \'"+messageSource.getMessage("message.statistics.Student_AvgAttendance_SeriesContentName",null,locale)+"\',\n");
+	    seriesContent.append("colorByPoint: true,\n");
+	    seriesContent.append("data: [");
+	    
+	    if(avgAttendanceByStudent.size()>0){
+		String name = avgAttendanceByStudent.get(0)[0].toString();
+		float value = Float.parseFloat(avgAttendanceByStudent.get(0)[1].toString());
+		seriesContent.append("{ name: \'"+name+"\',\n");
+		seriesContent.append("y: "+value+",\n");
+		seriesContent.append("drilldown: null}\n");
+		
+		for(int i=1; i<avgAttendanceByStudent.size(); i++){
+		    name = avgAttendanceByStudent.get(i)[0].toString();
+		    value = Float.parseFloat(avgAttendanceByStudent.get(i)[1].toString());
+		    seriesContent.append(", { name: \'"+name+"\',\n");
+		    seriesContent.append("y: "+value+",\n");
+		    seriesContent.append("drilldown: null}\n");
+		}
+	    }
+	    seriesContent.append("]\n");
+	    seriesContent.append("}");
+	}
+	cart.setSeriesContent(seriesContent);
+	
+	StringBuilder drilldownContent = new StringBuilder("");
+	drilldownContent.append("{}");
+	
+	cart.setDrilldownContent(drilldownContent);
+	
+	return cart;
+    }
+    
+}

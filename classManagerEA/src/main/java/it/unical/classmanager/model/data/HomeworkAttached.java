@@ -21,6 +21,9 @@ public class HomeworkAttached implements Serializable  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@Column(name="name", nullable=true, length=256)
+	private String name;
+	
 	@Column(name="filePath", nullable=false, length=256)
 	private String filePath;
 
@@ -32,7 +35,8 @@ public class HomeworkAttached implements Serializable  {
 	public HomeworkAttached(){
 		this.id = 0;
 		this.filePath = "";
-		this.homework = null;		
+		this.name = "tmp";
+		this.homework = null;	
 	}
 
 	public HomeworkAttached(int id, String filePath, Homework homework) {
@@ -63,6 +67,14 @@ public class HomeworkAttached implements Serializable  {
 
 	public void setHomework(Homework homework) {
 		this.homework = homework;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

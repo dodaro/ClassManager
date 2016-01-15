@@ -21,12 +21,12 @@ public class QuestionAttachedContentDAOImpl implements QuestionAttachedContentDA
 		return dbHandler;
 	}
 	
-	public void create(QuestionAttachedContent questionAttachedContent){
-		this.dbHandler.create(questionAttachedContent);
+	public QuestionAttachedContent create(QuestionAttachedContent questionAttachedContent){
+		return (QuestionAttachedContent) this.dbHandler.create(questionAttachedContent);
 	}
 
-	public void update(QuestionAttachedContent questionAttachedContent){
-		this.dbHandler.update(questionAttachedContent);
+	public QuestionAttachedContent update(QuestionAttachedContent questionAttachedContent){
+		return (QuestionAttachedContent) this.dbHandler.update(questionAttachedContent);
 	}
 
 	public void delete(QuestionAttachedContent questionAttachedContent){
@@ -65,6 +65,19 @@ public class QuestionAttachedContentDAOImpl implements QuestionAttachedContentDA
 				session.createQuery("FROM QuestionAttachedContent").list();
 		session.close();
 		return questionAttachedContents;
+	}
+	
+	
+	public QuestionAttachedContent searchByPath(String path) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		QuestionAttachedContent questionAttachedContent = 
+				(QuestionAttachedContent) session
+				.createSQLQuery("SELECT * FROM questionAttachedContent WHERE filePath = '" + path + "'")
+				.addEntity(QuestionAttachedContent.class)
+				.uniqueResult();
+		session.close();
+		return questionAttachedContent;
 	}
 
 }

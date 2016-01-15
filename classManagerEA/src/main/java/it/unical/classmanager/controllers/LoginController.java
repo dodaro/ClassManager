@@ -1,6 +1,8 @@
 package it.unical.classmanager.controllers;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -104,9 +106,15 @@ public class LoginController {
 		String calculated = PasswordHashing.getInstance().getHash(givenPassword,salt);
 		
 		if ( calculated.equals(hash) ) {
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+			String dateString = sdf.format(Calendar.getInstance().getTime());
+			String toHash = calculated+":"+dateString;
+			String toSaveInSession = PasswordHashing.getInstance().getHashAndSalt(toHash);
+			request.getSession().setAttribute("hash", toSaveInSession);
 			request.getSession().setAttribute("loggedIn", user.getUsername());
 			request.getSession().setAttribute("role", userfromDB.getRole());
-			logger.info(user.getUsername() +  " has logged");
+//			logger.info(user.getUsername() +  " has logged");
 		} else {
 			return handleError(model, locale,messageSource.getMessage("message.invalidUser",null,locale));
 		}

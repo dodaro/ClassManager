@@ -194,6 +194,84 @@ public class CourseClass implements Serializable  {
 	public void setLectures(List<Lecture> lectures) {
 		this.lectures = lectures;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((activationDate == null) ? 0 : activationDate.hashCode());
+		result = prime * result + cfu;
+		result = prime * result + ((degreeCourse == null) ? 0 : degreeCourse.hashCode());
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((exams == null) ? 0 : exams.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((lectures == null) ? 0 : lectures.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
+		result = prime * result + referenceYear;
+		result = prime * result + ((registrationStudentClasses == null) ? 0 : registrationStudentClasses.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CourseClass other = (CourseClass) obj;
+		if (activationDate == null) {
+			if (other.activationDate != null)
+				return false;
+		} else if (!activationDate.equals(other.activationDate))
+			return false;
+		if (cfu != other.cfu)
+			return false;
+		if (degreeCourse == null) {
+			if (other.degreeCourse != null)
+				return false;
+		} else if (!degreeCourse.equals(other.degreeCourse))
+			return false;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (exams == null) {
+			if (other.exams != null)
+				return false;
+		} else if (!exams.equals(other.exams))
+			return false;
+		if (id != other.id)
+			return false;
+		if (lectures == null) {
+			if (other.lectures != null)
+				return false;
+		} else if (!lectures.equals(other.lectures))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (professor == null) {
+			if (other.professor != null)
+				return false;
+		} else if (!professor.equals(other.professor))
+			return false;
+		if (referenceYear != other.referenceYear)
+			return false;
+		if (registrationStudentClasses == null) {
+			if (other.registrationStudentClasses != null)
+				return false;
+		} else if (!registrationStudentClasses.equals(other.registrationStudentClasses))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString()

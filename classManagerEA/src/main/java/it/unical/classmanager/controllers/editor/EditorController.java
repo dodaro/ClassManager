@@ -20,13 +20,13 @@ import it.unical.classmanager.managers.EnvironmentManger;
 import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the editor page.
  */
 @Controller
 public class EditorController {
 	
 	@Autowired
-	ApplicationContext appContext;
+	private ApplicationContext appContext;
 	
 	private final static String HEADER = "editor/editorHeader.jsp";
 	private final static String BODY = "editor/editorBody.jsp";

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.classmanager.utils.FileManager;
 
+//to delete?
 @Controller
 public class UploadController {
 

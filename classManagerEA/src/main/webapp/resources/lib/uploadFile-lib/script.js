@@ -44,8 +44,13 @@ $(function(){
 
             });
 
+            $('#file_upload_btn').click(function () {
+                
+                data.submit();
+            });
+            
             // Automatically upload the file once it is added to the queue
-            var jqXHR = data.submit();
+          //  var jqXHR = data.submit();
         },
 
         progress: function(e, data){
@@ -65,6 +70,10 @@ $(function(){
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');
+        },
+        
+        always: function (e, data) {
+        	window.location.reload()
         }
 
     });

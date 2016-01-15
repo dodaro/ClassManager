@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -24,11 +24,11 @@ public class Professor extends User implements Serializable  {
 //	private int identificationNumber;
 
 	//	Foreign key section
-	@OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Communications>  communications;
 	
-	@OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<CourseClass> courseClasses;
 	

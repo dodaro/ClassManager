@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -32,9 +33,11 @@ public class Homework implements Serializable {
 	private int id;
 	
 	@Column(name="name", nullable=false, length=32)
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String name;
 	
 	@Column(name="description", nullable=false, length=256)
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String description;
 	
 	@Column(name="filePath", nullable=false, length=256)

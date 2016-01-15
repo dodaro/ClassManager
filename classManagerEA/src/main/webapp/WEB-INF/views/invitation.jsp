@@ -1,1 +1,0 @@
-<%@include file="./invitation/invitationContent.jsp"%>

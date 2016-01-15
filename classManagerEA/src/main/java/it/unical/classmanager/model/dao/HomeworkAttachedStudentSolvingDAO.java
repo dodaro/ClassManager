@@ -5,7 +5,7 @@ import java.util.List;
 import it.unical.classmanager.model.data.HomeworkAttachedStudentSolving;
 
 public interface HomeworkAttachedStudentSolvingDAO {
-	public void create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving);
+	public HomeworkAttachedStudentSolving create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving);
 
 	public void update(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving);
 
@@ -18,4 +18,6 @@ public interface HomeworkAttachedStudentSolvingDAO {
 	public int numberOfHomeworkAttachedStudentSolvings();
 
 	public List<HomeworkAttachedStudentSolving> getAllHomeworkAttachedStudentSolvings();
+
+	public List<HomeworkAttachedStudentSolving> getAllHomeworkAttachedStudentSolvings(int homeworkStudentSolvingId);
 }

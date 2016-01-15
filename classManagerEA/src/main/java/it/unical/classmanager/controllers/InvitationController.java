@@ -15,20 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.dao.DaoHelper;
-import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.CustomHeaderAndBody;
+import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
  * @author Aloisius92
  * Handles requests for the statistics page.
  */
 @Controller
-public class InvitationController {
-    
+public class InvitationController {    
     private static final Logger logger = LoggerFactory.getLogger(InvitationController.class);
+    private final static String HEADER = "pageCommons/head.jsp";
+    private final static String BODY_STUDENT = "invitation/invitationStudent.jsp";
+    private final static String BODY_PROFESSOR = "invitation/invitationProfessor.jsp";
     
     @Autowired
     ApplicationContext appContext;
@@ -60,29 +62,26 @@ public class InvitationController {
     public String statistics(Locale locale, Model model,HttpServletRequest request) {
 	logger.info("Invitation Page", locale);
 	
-	String username = (String) request.getSession().getAttribute("loggedIn");
-	
-	if ( username == null ) {			
+	User user = UserSessionChecker.checkUserSession(model, request);
+	if ( user == null ) {			
 	    return "redirect:/";
-	}	
-	
-	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	User user = userDao.get(username);
-	model.addAttribute("user",user.getUsername());
+	}
 	
 	if(user instanceof Student){
 	    logger.info("Student invitation page accessed by "+user.getUsername(), locale);
 	    model.addAttribute("student", (Student)user);
-	    
+	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
 	}
+	
 	if(user instanceof Professor){
 	    logger.info("Professor invitation page accessed by "+user.getUsername(), locale);	
 	    model.addAttribute("professor", (Professor)user);
+	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
 	}
 	
 	InvitationController.checkNewInvitations(model, user);
 	
-	return "invitation";
+	return "layout";
     }
     
 }

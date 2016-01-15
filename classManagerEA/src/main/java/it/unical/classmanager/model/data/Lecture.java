@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,9 +35,11 @@ public class Lecture implements Serializable  {
 	private int number;
 	
 	@Column(name="topic", nullable=false, length=32)
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String topic;
 	
 	@Column(name="description", nullable=false, length=256)
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String description;
 	
 	@Column(name="date", nullable=false, length=32)
@@ -49,6 +52,7 @@ public class Lecture implements Serializable  {
 	private Time endHour;
 	
 	@Column(name="classroom", nullable=false, length=32)
+	@Pattern(regexp = "^[A-Za-z0-9]+$")
 	private String classroom;
 
 	//	Foreign key section

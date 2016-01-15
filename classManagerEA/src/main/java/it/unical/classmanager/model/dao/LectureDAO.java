@@ -4,9 +4,11 @@ import java.util.List;
 
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 
 public interface LectureDAO {
-	public void create(Lecture lecture);
+	public int create(Lecture lecture);
 
 	public void update(Lecture lecture);
 
@@ -26,5 +28,9 @@ public interface LectureDAO {
 
 	public List<Lecture> getAllLecturesOfACourse(int courseID);
 
-	List<Lecture> getAllLecturesOfAProfessor(String professorId);
+	public List<Lecture> getAllLecturesOfAProfessor(String professorId);
+
+	public List<Object[]> getLastLectures( Professor professor);
+
+	public List<Object[]> getLastLectures( Student student);
 }

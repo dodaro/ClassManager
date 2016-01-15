@@ -2,7 +2,6 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -13,7 +12,7 @@ public interface UserDAO {
 
 	public void update(User user);
 
-	public void delete(User user);
+	public boolean delete(User user);
 
 	public void deleteAllUser();
 
@@ -31,8 +30,7 @@ public interface UserDAO {
 	
 	public List<User> getUsersByLastName(String lastName);
 	
-	public void promoteUser(User user);
+	public boolean doAction(User user,String action);
 
 }
-
 

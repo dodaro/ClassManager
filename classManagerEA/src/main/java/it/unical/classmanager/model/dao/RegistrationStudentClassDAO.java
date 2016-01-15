@@ -43,4 +43,10 @@ public interface RegistrationStudentClassDAO {
 
 	public int getNewInvitationsOfProfessor( Professor professor);
 
+	public int getMaxIndex();
+
+	public boolean existRegistration(Student student, CourseClass courseClass);
+
+	public RegistrationStudentClass getRegistration(Student student, CourseClass courseClass);
+
 }

@@ -49,16 +49,6 @@ public class NoticeBoardController {
 	@RequestMapping(value = "/noticeboard", method = RequestMethod.GET)
 	public String noticeBoard(Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		
-		/**
-		 * handle errors like this, add the RedirectAttributes to the method and add the parameter to pass
-		 * this methods redirect passing parameters
-		 */
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null ) {
-			redirectAttributes.addAttribute("error", "session");
-			return "redirect:/sessionerror";
-		}
-		
-		
 		
 		String init = request.getParameter("init");
 		if ( init != null && init.equals("1") ) {
@@ -84,7 +74,7 @@ public class NoticeBoardController {
 				String stringdate = sdf.format(Calendar.getInstance().getTime());
 				Communications comm;
 				try {
-					comm = new Communications(0, "nuovo messaggio", "testo del messaggio",professor,sdf.parse(stringdate));
+					comm = new Communications(0, "nuovo messaggio", "testo del messaggio",professor,sdf.parse(stringdate),false);
 					communicationsDAO.create(comm);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -135,6 +125,7 @@ public class NoticeBoardController {
 		model.addAttribute("pageCount",pageCount);
 		
 		model.addAttribute("new-notice", new Communications());
+		model.addAttribute("edit-notice", new Communications());
 		
 
 		return "layout";
@@ -142,7 +133,7 @@ public class NoticeBoardController {
 	}
 	
 	/**
-	 * saves a new notice
+	 * saves a new notice or updates a previous one.
 	 */
 	@RequestMapping(value = "/newnotice", method = RequestMethod.POST)
 	public String newNotice(@Valid @ModelAttribute("new-notice") Communications communication,BindingResult result,Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
@@ -167,33 +158,62 @@ public class NoticeBoardController {
 			return "layout";
 		}
 		
+			
+		//check if this is a fake auth 
 		Professor professor = (Professor) userDao.get(username);
 		if ( professor == null ) {
-			model.addAttribute("customHeader", NoticeBoardController.HEADER);
-			model.addAttribute("customBody", NoticeBoardController.BODY);
-			return "layout";
+			return handleFakeAuth(model);
 		}
 		
-		communication.setProfessor(professor);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
-		String dateString = sdf.format(Calendar.getInstance().getTime());
-		
-		try {
-			communication.setDate(sdf.parse(dateString));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		logger.info(communication.toString());
 		CommunicationsDAO communicationsDAO = DaoHelper.getCommunicationsDAO();
-		communicationsDAO.create(communication);
+		
+		if ( communication.getId() == -1 ) {
+			communication.setProfessor(professor);
+			
+			if ( role.equals("admin") ) {
+				communication.setServiceMessage(true);
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
+			String dateString = sdf.format(Calendar.getInstance().getTime());
+			
+			try {
+				communication.setDate(sdf.parse(dateString));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			communicationsDAO.create(communication);
+		} else {
+			//I am updating
+			Communications toEdit = communicationsDAO.get(communication.getId());
+			
+			if ( toEdit == null || ( !role.equals("admin") && !toEdit.getProfessor().getUsername().equals(username) ) ) {
+				return handleFakeAuth(model);
+			}
+			
+			
+			toEdit.setName(communication.getName());
+			toEdit.setDescription(communication.getDescription());
+			
+			communicationsDAO.update(toEdit);
+		}
+		
+		
+//		logger.info(communication.toString());
 
 		
 		return "redirect:/noticeboard";
 	}
 	
+	
+	
+	private String handleFakeAuth(Model model) {
+		model.addAttribute("customHeader", NoticeBoardController.HEADER);
+		model.addAttribute("customBody", NoticeBoardController.BODY);
+		return "layout";
+	}
+
 	/**
 	 * deletes a notice
 	 */

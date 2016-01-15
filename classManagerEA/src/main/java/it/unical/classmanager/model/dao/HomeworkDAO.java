@@ -3,9 +3,11 @@ package it.unical.classmanager.model.dao;
 import java.util.List;
 
 import it.unical.classmanager.model.data.Homework;
+import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 
 public interface HomeworkDAO {
-	public void create(Homework homework);
+	public int create(Homework homework);
 
 	public void update(Homework homework);
 
@@ -22,4 +24,8 @@ public interface HomeworkDAO {
 	public List<Homework> getAllHomeworks(int idCourse);
 	
 	public List<Homework> getAllLectureHomeworks(int idLecture);
+
+	public List<Object[]> getLastHomeworks( Professor professor);
+
+	public List<Object[]> getLastHomeworks( Student student);
 }

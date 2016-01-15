@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,12 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Event;
+import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -34,8 +37,6 @@ public class AldoLoginController {
 	private static final Logger logger = LoggerFactory.getLogger(AldoLoginController.class);
 	
 	
-	private final static String HEADER = "userslist/userslistHeader.jsp";
-	private final static String BODY = "userslist/userslistBody.jsp";
 	
 	/**
 	 * Manages the request related to the calendar
@@ -56,13 +57,15 @@ public class AldoLoginController {
 	    
 		user.setBirthDate(date.getTime());
 		user.setEmail("aldo@aldo.it");
-		user.setRole(User.PROFESSOR);
+		user.setRole("admin");
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
-		user.setHash(user.getPassword());
-		user.setRole("admin");
+		String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+		user.setHash(hash);
 		
-		userDao.create(user);
+		Professor aldo = new Professor(user);
+		
+		userDao.create(aldo);
 		
 		
 		EventDAO eventDao = context.getBean("eventDao",EventDAOImpl.class);
@@ -71,6 +74,14 @@ public class AldoLoginController {
 		
 		Event event = new Event(0, "event", "", startDate, endDate, "", null, null, user);
 		eventDao.create(event);
+		
+		User aldoUser = userDao.get(username);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+		String dateString = sdf.format(Calendar.getInstance().getTime());
+		String toHash = aldoUser.getHash().split(":")[0] +":"+ dateString;
+		String toSaveInSession = PasswordHashing.getInstance().getHashAndSalt(toHash);
+		request.getSession().setAttribute("hash", toSaveInSession);
 		request.getSession().setAttribute("loggedIn",username);
 		request.getSession().setAttribute("role",user.getRole());
 		return "redirect:/";

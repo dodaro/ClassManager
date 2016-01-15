@@ -1,12 +1,10 @@
 package it.unical.classmanager.model;
 
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class LectureControllerWrapper {
 
-	@Size(min=4,max=4)
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	@Size(min=1,max=100)
 	private String path;
 	private int parentId;
 	

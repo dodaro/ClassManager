@@ -107,9 +107,14 @@
 								<c:if test="${user.username != loggedIn }">
 									<button type="submit" class="btn btn-danger"><spring:message code="message.delete" text="default text"/></button>
 								</c:if>
-								<c:if test="${user.role == 'Student'}">
-									<button type="submit" class="btn btn-success"><spring:message code="message.professor" text="default text"/></button>
-								</c:if>
+								<c:choose>
+									<c:when test="${ user.role.equals('Student') }">
+										<button type="submit" class="btn btn-success promote"><spring:message code="message.professor" text="default text"/></button>
+									</c:when>
+									<c:when test="${ user.role.equals('Professor') }">
+										<button type="submit" class="btn btn-primary demote"><spring:message code="message.student" text="default text"/></button>
+									</c:when>
+								</c:choose>
 								</td>
 							</tr>
 						</c:forEach>
@@ -121,3 +126,39 @@
 				</form>
 				<div id="paginator">
 				</div>
+				
+				
+				<div id="result-modal" class="modal fade" tabindex="-1" role="dialog">
+					<div class="modal-dialog">
+					  <div class="modal-content">
+					    <div class="modal-header">
+					      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					      <h4 class="modal-title"><spring:message text="default text" code="message.prompttitle"/></h4>
+					    </div>
+					    <div class="modal-body">
+					      <p><spring:message text="default text" code="message.result"/></p>
+					    </div>
+					    <div class="modal-footer">
+					      <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+					    </div>
+					  </div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				<div id="prompt-modal" class="modal fade" tabindex="-1" role="dialog">
+					<div class="modal-dialog">
+					  <div class="modal-content">
+					    <div class="modal-header">
+					      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					      <h4 class="modal-title">Modal title</h4>
+					    </div>
+					    <div class="modal-body">
+					      <p><spring:message text="default text" code="message.prompt"/></p>
+					    </div>
+					    <div class="modal-footer">
+					      <button id="do-delete" type="button" class="btn btn-success" data-dismiss="modal"><spring:message text="default text" code="message.confirm"/></button>
+					      <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+					    </div>
+					  </div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				

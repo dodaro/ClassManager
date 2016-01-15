@@ -3,7 +3,6 @@ package it.unical.classmanager.model.dao;
 import java.util.List;
 
 import it.unical.classmanager.model.data.AnswerAttachedContent;
-import it.unical.classmanager.model.data.QuestionAttachedContent;
 
 public interface AnswerAttachedContentDAO {
 	public AnswerAttachedContent create(AnswerAttachedContent answerAttachedContent);

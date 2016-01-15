@@ -2,6 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
@@ -21,9 +22,9 @@ public class HomeworkAttachedStudentSolvingDAOImpl implements HomeworkAttachedSt
 		return dbHandler;
 	}
 
-	public void create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)
+	public HomeworkAttachedStudentSolving create(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)
 	{
-		this.dbHandler.create(homeworkAttachedStudentSolving);
+		return (HomeworkAttachedStudentSolving) this.dbHandler.create(homeworkAttachedStudentSolving);
 	}
 
 	public void update(HomeworkAttachedStudentSolving homeworkAttachedStudentSolving)
@@ -68,6 +69,18 @@ public class HomeworkAttachedStudentSolvingDAOImpl implements HomeworkAttachedSt
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		List<HomeworkAttachedStudentSolving> homeworkAttachedStudentSolving = session
 				.createQuery("FROM HomeworkAttachedStudentSolving").list();
+		session.close();
+		return homeworkAttachedStudentSolving;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HomeworkAttachedStudentSolving> getAllHomeworkAttachedStudentSolvings(int homeworkStudentSolvingId) {
+		
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		Query query = session.createQuery("FROM HomeworkAttachedStudentSolving as h WHERE h.homeworkStudentSolving.id = :id");
+		query.setParameter("id", homeworkStudentSolvingId);
+		List<HomeworkAttachedStudentSolving> homeworkAttachedStudentSolving = query.list();
 		session.close();
 		return homeworkAttachedStudentSolving;
 	}

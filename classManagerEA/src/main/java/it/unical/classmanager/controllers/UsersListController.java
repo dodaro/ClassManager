@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.AttendanceStudentLecture;
 import it.unical.classmanager.model.data.Communications;
@@ -58,44 +60,45 @@ public class UsersListController {
 	public String usersList(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+		if ( !request.getSession().getAttribute("role").equals("admin") ) {
 			return "redirect:/";
 		}
 		
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
 		
 		
-		
-		for(int i=0; i<50; i++)	{
-			String username = "StudentAldo";
-			
-			User user = new User();
-			user.setUsername(username+i);
-			user.setFirstName("Aldo_FirstName");
-			user.setLastName("Aldo_LastName");
-			user.setRole("Student");				    	
-			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
-				Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
-			user.setEmail("studentaldo@profaldo.it");
-			user.setPassword(username+i);
-			user.setConfirmPassword(user.getPassword());
-			user.setHash(user.getPassword());
-			user.setAddress("address");		
-			
-			Student student = new Student(user, 
-				i, 
-				DateTimeFactory.getRandomDate().getTime(), 
-				new ArrayList<StudentExamPartecipation>(), 
-				new ArrayList<AttendanceStudentLecture>(), 
-				new ArrayList<RegistrationStudentClass>(), 
-				new ArrayList<HomeworkStudentSolving>());
-			
-			User retrievedUser = userDao.get(username+i);
-				if(retrievedUser==null){
-				    userDao.create(student);
-				    logger.info("Created "+student, locale);						
-				} 
-	    }					
+		if ( request.getParameter("init") != null ) {  
+			for(int i=0; i<50; i++)	{
+				String username = "StudentAldo";
+				
+				User user = new User();
+				user.setUsername(username+i);
+				user.setFirstName("Aldo_FirstName");
+				user.setLastName("Aldo_LastName");
+				user.setRole("Student");				    	
+				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
+					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
+				user.setEmail("studentaldo@profaldo.it");
+				user.setPassword(username+i);
+				user.setConfirmPassword(user.getPassword());
+				user.setHash(user.getPassword());
+				user.setAddress("address");		
+				
+				Student student = new Student(user, 
+					i, 
+					DateTimeFactory.getRandomDate().getTime(), 
+					new ArrayList<StudentExamPartecipation>(), 
+					new ArrayList<AttendanceStudentLecture>(), 
+					new ArrayList<RegistrationStudentClass>(), 
+					new ArrayList<HomeworkStudentSolving>());
+				
+				User retrievedUser = userDao.get(username+i);
+					if(retrievedUser==null){
+					    userDao.create(student);
+					    logger.info("Created "+student, locale);						
+					} 
+		    }					
+		}
 		
 		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
 		if ( usersList == null ) {
@@ -132,7 +135,7 @@ public class UsersListController {
 	public String searchUsers(Model model,Locale locale,HttpServletRequest request ) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin") ) {
+		if ( !request.getSession().getAttribute("role").equals("admin") ) {
 			return "redirect:/";
 		}
 		
@@ -221,15 +224,26 @@ public class UsersListController {
 	 * makes user Professor or deletes
 	 */
 	@RequestMapping(value = "/edituser", method = RequestMethod.POST)
-	public @ResponseBody String promoteuser(Locale locale, Model model,HttpServletRequest request,@RequestParam("user") String userName,@RequestParam("action") String action) {
+	public @ResponseBody UserJsonResponse promoteuser(Locale locale, Model model,HttpServletRequest request,@RequestParam("user") String userName,@RequestParam("action") String action) {
 		logger.info("Welcome home! The client locale is {}.", locale);
+		UserJsonResponse userJsonResponse = new UserJsonResponse();
 				
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
-			return "redirect:/";
+		if ( !request.getSession().getAttribute("role").equals("admin")  ) {
+			userJsonResponse = new UserJsonResponse();
+			userJsonResponse.setStatus("ERROR");
+			HashMap<String,String> errorsMap = new HashMap<String, String>();
+			errorsMap.put("delete", messageSource.getMessage("message.errordelete", null, locale));
+			userJsonResponse.setErrorsMap(errorsMap);
+			return userJsonResponse;
 		}
 				
 		if ( userName == null || userName.length() <= 0 || action == null || action.length() <= 0 ) {
-			return "redirect:/userslist";
+			userJsonResponse = new UserJsonResponse();
+			userJsonResponse.setStatus("ERROR");
+			HashMap<String,String> errorsMap = new HashMap<String, String>();
+			errorsMap.put("delete", messageSource.getMessage("message.errordelete", null, locale));
+			userJsonResponse.setErrorsMap(errorsMap);
+			return userJsonResponse;
 		}
 		
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
@@ -237,14 +251,22 @@ public class UsersListController {
 		if ( action.equals("delete") ) {
 			logger.info("deleting " + userName + " on action " + action);
 			userDao.delete(user);
-		} else if ( action.equals("promote") ) {
-			userDao.promoteUser(user);
-		}
+		} else if ( action.equals("promote") || action.equals("demote") ) {
+			if ( !userDao.doAction(user,action) ) {
+				userJsonResponse = new UserJsonResponse();
+				userJsonResponse.setStatus("ERROR");
+				HashMap<String,String> errorsMap = new HashMap<String, String>();
+				errorsMap.put("delete", messageSource.getMessage("message.errordelete", null, locale));
+				userJsonResponse.setErrorsMap(errorsMap);
+				return userJsonResponse;
+			}
+		} 
 		
 		model.addAttribute("customHeader", UsersListController.HEADER);
 		model.addAttribute("customBody", UsersListController.BODY);
 		
-		return "userslist";
+		userJsonResponse.setStatus("SUCCESS");
+		return userJsonResponse;
 	}
 	
 	
@@ -255,7 +277,7 @@ public class UsersListController {
 	public String sort(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null || !request.getSession().getAttribute("role").equals("admin")  ) {
+		if ( !request.getSession().getAttribute("role").equals("admin")  ) {
 			return "redirect:/";
 		}
 		
@@ -285,7 +307,7 @@ public class UsersListController {
 		model.addAttribute("customHeader", UsersListController.HEADER);
 		model.addAttribute("customBody", UsersListController.BODY);
 		
-		return "layout";
+		return "redirect:/userslist";
 	}
 	
 	private String handleSessionTimeOut() {

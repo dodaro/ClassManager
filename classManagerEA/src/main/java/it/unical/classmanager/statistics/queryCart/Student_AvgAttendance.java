@@ -48,10 +48,12 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	 * ...
 	 * CourseNameN, AvgN
 	 */	
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Student_AvgAttendance_Title",null,locale));
+	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Student_AvgAttendance_SubTitle",null,locale));
+	cart.setProperty("#xAxisTitle", messageSource.getMessage("message.statistics.Student_AvgAttendance_xAxisTitle",null,locale));
 	
-	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_Title",null,locale));
-	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_SubTitle",null,locale));
-	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_AvgAttendance_xAxisTitle",null,locale));
 	StringBuilder seriesContent = new StringBuilder("");
 	seriesContent.append("{");
 	{
@@ -78,12 +80,13 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	    seriesContent.append("]\n");
 	    seriesContent.append("}");
 	}
-	cart.setSeriesContent(seriesContent);
-	
+	cart.setProperty("#series", seriesContent.toString());
 	StringBuilder drilldownContent = new StringBuilder("");
-	drilldownContent.append("{}");
+	drilldownContent.append("{}");	
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
 	
-	cart.setDrilldownContent(drilldownContent);
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

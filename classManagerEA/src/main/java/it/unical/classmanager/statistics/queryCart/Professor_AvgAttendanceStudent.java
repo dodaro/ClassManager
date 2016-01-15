@@ -45,13 +45,12 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	 * CourseClass, AvgAttendance
 	 * CourseClass, AvgAttendance
 	 */
-	
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_Title",null,locale));
-	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SubTitle",null,locale));
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_yAxisTitle",null,locale));
-	cart.setxAxisTitle("");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(0);
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_Title",null,locale));
+	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SubTitle",null,locale));
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_yAxisTitle",null,locale));
+	cart.setProperty("#xAxisTitle", "");
 	
 	StringBuilder categories = new StringBuilder("");	
 	for(int i=0; i<avgAttendanceStudent.size(); i++){
@@ -62,34 +61,28 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 		categories.append(", "+currentData);		
 	    }
 	}	
-	cart.setxAxisCategories(categories.toString());
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(0);
-	cart.setyAxisCategories("");
-	cart.setCategories("");
-	StringBuilder categoriesDataContent = new StringBuilder("");
-	cart.setCategoriesDataContent(categoriesDataContent);
-	cart.setxPlotText("");
-	cart.setyPlotText("");
-	cart.setxPointTooltip("");
-	cart.setyPointTooltip("");
-	cart.setzPointTooltip("");
-	cart.setToolTipValueSuffix("");
+	cart.setProperty("#xAxisCategories", categories.toString());
+	cart.setProperty("#yAxisCategories", "");
+	cart.setProperty("#tooltipValueSuffix", "");
+	
 	StringBuilder seriesContent = new StringBuilder("");	
 	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avgAttendanceStudent.size(); i++){
 	    float currentData = Float.parseFloat(avgAttendanceStudent.get(i)[1].toString());
 	    if(i==0){
-		seriesContent.append(currentData);
+		seriesContent.append(currentData+"\n");
 	    } else {
-		seriesContent.append(", "+currentData);		
+		seriesContent.append(", "+currentData+"\n");		
 	    }
 	}
 	seriesContent.append("]}");	
+	cart.setProperty("#series", seriesContent.toString());
 	
-	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
-	cart.setDrilldownContent(drilldownContent);
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
+	
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

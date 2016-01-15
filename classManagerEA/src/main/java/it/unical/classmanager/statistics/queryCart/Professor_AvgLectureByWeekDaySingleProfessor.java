@@ -50,28 +50,18 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	 * Sunday, NumberLecture
 	 * 
 	 */
-		
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_Title",null,locale));
-	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SubTitle",null,locale));	
-	cart.setxAxisCategories(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_xAxisCategories",null,locale));
-	cart.setxAxisTitle("");
-	cart.setyAxisTitle("");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(360);
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(0);
-	cart.setyAxisCategories("");
-	cart.setCategories("");
-	StringBuilder categoriesDataContent = new StringBuilder("");
-	cart.setCategoriesDataContent(categoriesDataContent);
-	cart.setxPlotText("");
-	cart.setyPlotText("");
-	cart.setxPointTooltip("");
-	cart.setyPointTooltip("");
-	cart.setzPointTooltip("");
-	cart.setToolTipValueSuffix("");
-	StringBuilder seriesContent = new StringBuilder("");
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_Title",null,locale));
+	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SubTitle",null,locale));
+	cart.setProperty("#xAxisCategories", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_xAxisCategories",null,locale));
+	cart.setProperty("#xAxisTitle", "");
+	cart.setProperty("#yAxisTitle", "");
+	cart.setProperty("#xAxisMax", "360");
+	cart.setProperty("#yAxisMax", "0");
+	cart.setProperty("#tooltipValueSuffix", "");
 	
+	StringBuilder seriesContent = new StringBuilder("");
 	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDaySingleProfessor_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avg.size(); i++){
 	    float avgValue = Float.parseFloat(avg.get(i)[1].toString());
@@ -82,11 +72,12 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	    }
 	}
 	seriesContent.append("], pointPlacement: \'on\'}");
-	cart.setSeriesContent(seriesContent);
-	
-	cart.setSeriesContent(seriesContent);
+	cart.setProperty("#series", seriesContent.toString());
 	StringBuilder drilldownContent = new StringBuilder("");
-	cart.setDrilldownContent(drilldownContent);
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
+	
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

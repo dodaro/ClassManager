@@ -52,27 +52,16 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 	 * 
 	 */
 
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_Title",null,locale));
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_yAxisTitle",null,locale));
-	cart.setxAxisCategories(messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_xAxisCategories",null,locale));
-	cart.setSubTitle("");
-	cart.setxAxisTitle("");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(0);	
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(0);
-	cart.setyAxisCategories("");
-	cart.setCategories("");
-	StringBuilder categoriesDataContent = new StringBuilder("");
-	cart.setCategoriesDataContent(categoriesDataContent);
-	cart.setxPlotText("");
-	cart.setyPlotText("");
-	cart.setxPointTooltip("");
-	cart.setyPointTooltip("");
-	cart.setzPointTooltip("");
-	cart.setToolTipValueSuffix("");
-	StringBuilder seriesContent = new StringBuilder("");	
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_Title",null,locale));
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_yAxisTitle",null,locale));
+	cart.setProperty("#xAxisCategories", messageSource.getMessage("message.statistics.Professor_AvgLectureByWeekDayAllProfessor_xAxisCategories",null,locale));
+	cart.setProperty("#xAxisTitle", "");
+	cart.setProperty("#xAxisMax", "0");	
+	cart.setProperty("#yAxisMax", "0");
+	cart.setProperty("#tooltipValueSuffix", "");
 	
+	StringBuilder seriesContent = new StringBuilder("");	
 	for(int i=0; i<avg.size(); i+=7){
 	    if(i==0){
 		seriesContent.append("{");		
@@ -98,10 +87,12 @@ public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart
 		seriesContent.append("}");
 	    }
 	}
-	
-	cart.setSeriesContent(seriesContent);
+	cart.setProperty("#series", seriesContent.toString());
 	StringBuilder drilldownContent = new StringBuilder("");
-	cart.setDrilldownContent(drilldownContent);
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
+	
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

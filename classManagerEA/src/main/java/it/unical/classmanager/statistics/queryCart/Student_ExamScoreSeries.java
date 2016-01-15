@@ -51,17 +51,17 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	 * ...
 	 * Anno, Date, ExamName, Score
 	 */
-		
-	cart.setTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_Title",null,locale));
-	cart.setSubTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_SubTitle",null,locale));
-	cart.setxAxisTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_xAxisTitle",null,locale));
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Student_ExamScoreSeries_yAxisTitle",null,locale));
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(30);
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Student_ExamScoreSeries_Title",null,locale));
+	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Student_ExamScoreSeries_SubTitle",null,locale));
+	cart.setProperty("#xAxisTitle", messageSource.getMessage("message.statistics.Student_ExamScoreSeries_xAxisTitle",null,locale));
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Student_ExamScoreSeries_yAxisTitle",null,locale));
+	cart.setProperty("#yAxisMin", "0");
+	cart.setProperty("#yAxisMax", "30");
+	
 	StringBuilder seriesContent = new StringBuilder("");
-	
 	int currentYear = 0;
-	
 	if(examScoreSeriesByStudent.size()>0){
 	    for(int i=0; i<examScoreSeriesByStudent.size(); i++){
 		int year = Integer.parseInt(examScoreSeriesByStudent.get(i)[0].toString());
@@ -101,8 +101,10 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 		seriesContent.append("data: ["+data+"]}\n");
 	    }
 	}
+	cart.setProperty("#series", seriesContent.toString());
 	
-	cart.setSeriesContent(seriesContent);
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

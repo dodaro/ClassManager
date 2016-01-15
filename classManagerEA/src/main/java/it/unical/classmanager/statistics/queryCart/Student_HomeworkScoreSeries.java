@@ -50,8 +50,9 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 	 * Course, Homework, Score
 	 */	
 	
-	cart.setTitle(messageSource.getMessage("message.statistics.Student_HomeworkScoreSeries_Title",null,locale));
-	cart.setSubTitle("");
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Student_HomeworkScoreSeries_Title",null,locale));
+	cart.setProperty("#subTitleText", "");
 	
 	StringBuilder categories = new StringBuilder("");
 	String lastCategorie = "";
@@ -69,13 +70,13 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 		}
 	    }
 	}
-	cart.setxAxisCategories(" ");
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Student_HomeworkScoreSeries_yAxisTitle",null,locale));
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(30);	
-	cart.setToolTipValueSuffix("");
-	StringBuilder seriesContent = new StringBuilder("");
 	
+	cart.setProperty("#xAxisCategories", "");
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Student_HomeworkScoreSeries_yAxisTitle",null,locale));
+	cart.setProperty("#yAxisMax", "30");
+	cart.setProperty("#tooltipValueSuffix", "");	
+	
+	StringBuilder seriesContent = new StringBuilder("");
 	String currentCourse = "";	
 	if(homeworkScoreSeriesByStudent.size()>0){
 	    for(int i=0; i<homeworkScoreSeriesByStudent.size(); i++){
@@ -111,8 +112,11 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 		seriesContent.append("data: ["+data+"]}\n");
 	    }
 	}
+	cart.setProperty("#series", seriesContent.toString());
 	
-	cart.setSeriesContent(seriesContent);
+	// Build the final cart!
+	cart.getCartScript();
+	
 	return cart;
     }
     

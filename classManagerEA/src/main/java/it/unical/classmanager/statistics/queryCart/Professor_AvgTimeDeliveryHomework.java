@@ -51,13 +51,12 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 	 * CourseClass, AvgTime
 	 * CourseClass, AvgTime
 	 */
-	
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_Title",null,locale));
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_yAxisTitle",null,locale));
-	cart.setSubTitle("");
-	cart.setxAxisTitle("");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(0);
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_Title",null,locale));
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Professor_AvgTimeDeliveryHomework_yAxisTitle",null,locale));
+	cart.setProperty("#xAxisTitle", "");
+	cart.setProperty("#xAxisMax", "0");
 	
 	StringBuilder categories = new StringBuilder("");
 	String lastCourse = "";
@@ -72,21 +71,11 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 		}
 	    }
 	}	
-	cart.setxAxisCategories(categories.toString());
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(0);
-	cart.setyAxisCategories("");
-	cart.setCategories("");
-	StringBuilder categoriesDataContent = new StringBuilder("");
-	cart.setCategoriesDataContent(categoriesDataContent);
-	cart.setxPlotText("");
-	cart.setyPlotText("");
-	cart.setxPointTooltip("");
-	cart.setyPointTooltip("");
-	cart.setzPointTooltip("");
-	cart.setToolTipValueSuffix("");
-	StringBuilder seriesContent = new StringBuilder("");
+	cart.setProperty("#xAxisCategories", categories.toString());
+	cart.setProperty("#yAxisMax", "0");
+	cart.setProperty("#tooltipValueSuffix", "");
 	
+	StringBuilder seriesContent = new StringBuilder("");
 	HashMap<String, List<Float>> studentTime = new HashMap<String, List<Float>>();
 	for(int i=0; i<avgTimeDeliveryHomework.size(); i++){
 	    String student = avgTimeDeliveryHomework.get(i)[1].toString();
@@ -128,10 +117,12 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 	    
 	    k++;
 	}
-	
-	cart.setSeriesContent(seriesContent);
+	cart.setProperty("#series", seriesContent.toString());
 	StringBuilder drilldownContent = new StringBuilder("");
-	cart.setDrilldownContent(drilldownContent);
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
+	
+	// Build the final cart!
+	cart.getCartScript();
 	
 	return cart;
     }

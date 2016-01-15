@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
@@ -58,10 +59,38 @@ public class SendInvitationController {
 		}		
 		
 		if(courseName!=null){
+		    model.addAttribute("courseSelected", courseName);
+		}
+		
+		processSelectableCourse(locale, model, request, user.getUsername());
+		processSelectableStudent(locale, model, request, courseName);
+		processCancellableStudent(locale, model, request, courseName);
+		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
+		
+		return "layout";
+    }
+    
+    @RequestMapping(value = "/sendInvitation", method = RequestMethod.POST)
+    public String sendInvitation(
+	    @RequestParam(value = "courseName", required = false) String courseName,
+	    @RequestParam(value = "sendFile", required = false) CommonsMultipartFile sendFile,
+	    Locale locale, 
+	    Model model,
+	    HttpServletRequest request) {
+		logger.info("SendInvitation Page", locale);
+		
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+		    return "redirect:/";
+		}		
+		
+		if(courseName!=null){
 		    System.err.println("CourseName received: "+courseName.trim());
 		    model.addAttribute("courseSelected", courseName);
 		}
 		
+		processInviteStudentFromFile(sendFile, (Professor) user);
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseName);
 		processCancellableStudent(locale, model, request, courseName);
@@ -77,8 +106,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "InviteAll", required = true) String value, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){		
-		System.err.println("Received: "+value);
+	    HttpServletRequest request){
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -86,7 +114,7 @@ public class SendInvitationController {
 		}	
 		
 		model.addAttribute("courseSelected", courseSelected);
-		
+
 		processInviteAll((Professor) user, courseSelected);
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
@@ -103,7 +131,6 @@ public class SendInvitationController {
 	    Locale locale,
 	    Model model,
 	    HttpServletRequest request){		
-		System.err.println("Received: "+studentName);
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -111,7 +138,7 @@ public class SendInvitationController {
 		}	
 		
 		model.addAttribute("courseSelected", courseSelected);
-		
+
 		processInviteSingle((Professor) user, courseSelected, studentName);
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
@@ -127,8 +154,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "CancelAll", required = true) String value, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){		
-		System.err.println("Received: "+value);
+	    HttpServletRequest request){	
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -136,7 +162,7 @@ public class SendInvitationController {
 		}	
 		
 		model.addAttribute("courseSelected", courseSelected);
-		
+
 		processCancellAll((Professor) user, courseSelected);
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
@@ -152,9 +178,7 @@ public class SendInvitationController {
 	    @RequestParam(value = "StudentName", required = true) String studentName, 
 	    Locale locale,
 	    Model model,
-	    HttpServletRequest request){
-		
-		System.err.println("Cancel: "+studentName);
+	    HttpServletRequest request){		
 		
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -162,7 +186,7 @@ public class SendInvitationController {
 		}	
 		
 		model.addAttribute("courseSelected", courseSelected);
-		
+
 		processCancellSingle((Professor) user, courseSelected, studentName);
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
@@ -243,7 +267,7 @@ public class SendInvitationController {
 	int maxIndex = registrationStudentClassDAO.getMaxIndex();
 	Calendar cal = Calendar.getInstance();
 	
-	if(!registrationStudentClassDAO.existRegistration(student, courseClass)){
+	if(courseClass!=null && student!=null && !registrationStudentClassDAO.existRegistration(student, courseClass)){
 	    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
 		    maxIndex+1,
 		    cal.getTime(), 
@@ -252,14 +276,38 @@ public class SendInvitationController {
 		    student, 
 		    courseClass);
 	    
-	    registrationStudentClassDAO.create(registrationStudentClass);	    
+	    registrationStudentClassDAO.create(registrationStudentClass);
+	    //System.err.println("Correct invitation for "+student.getUsername()+", Course: "+courseClass.getName()+"\n");
 	}
     }  
+    
+    private void processInviteStudentFromFile(CommonsMultipartFile sendFile, Professor professor) {
+	if(sendFile != null){
+	    if (!sendFile.isEmpty()) {
+		byte[] bytes = sendFile.getBytes();
+		String fileContent = new String(bytes);
+		String[] courseStudentRows = fileContent.split(";");
+		for (String row : courseStudentRows){
+		    String[] rowSplitted = row.split(",");
+		    if(rowSplitted.length==2){
+			String courseName = rowSplitted[0].trim();
+			String studentUsername = rowSplitted[1].trim();
+			//System.out.println("Send invitations to "+studentUsername+" for "+courseName);
+			processInviteSingle(professor, courseName, studentUsername);
+		    } else {
+			// File format wrong
+			System.err.println("Wrong file format! File:"+sendFile.getOriginalFilename());
+			return;
+		    }
+		}
+	    } 
+	}
+    }
     
     private void processCancellAll(Professor professor, String courseSelected) {
 	GenericContainerBeanList cancellableStudent = getCancellableStudent(courseSelected);
 	for(int i=0; i<cancellableStudent.size(); i++){
-	    processInviteSingle(professor, courseSelected, cancellableStudent.get(i).getField1());
+	    processCancellSingle(professor, courseSelected, cancellableStudent.get(i).getField1());
 	}
     }
     

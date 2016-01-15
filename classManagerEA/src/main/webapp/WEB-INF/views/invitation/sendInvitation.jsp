@@ -4,6 +4,40 @@
 
 <jsp:include page="../pageCommons/head.jsp" flush="true" />
 
+
+<div class="col-sm-12 col-md-12 col-lg-12">
+	<br>
+	<div class="row">
+		<div class="col-sm-7 col-md-7 col-lg-7"></div>
+		<div class="col-sm-5 col-md-5 col-lg-5">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form action="/sendInvitation" enctype="multipart/form-data"
+						method="post">
+						<h4>
+							<spring:message code="message.invitation.sendFile" />
+						</h4>
+						<br> <input
+							class="btn btn-default invitationActionButton pull-right"
+							type="file" name="sendFile" value="Input"> <br>
+						<hr>
+						<button class="btn btn-default invitationActionButton pull-right"
+							type="submit">Send</button>
+					</form>
+					<hr>
+					<div class="alert alert-warning" role="alert">
+						<spring:message code="message.invitation.sendFileFormatHeader" /><br>
+						<spring:message code="message.invitation.sendFileFormatContent" /><br>
+						<spring:message code="message.invitation.sendFileFormatContent" /><br>
+						...<br>
+						<spring:message code="message.invitation.sendFileFormatContent" /><br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="panel panel-default">

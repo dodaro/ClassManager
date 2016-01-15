@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.controllers.CalendarController;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
@@ -27,6 +28,9 @@ public class EditorController {
 	@Autowired
 	ApplicationContext appContext;
 	
+	private final static String HEADER = "editor/editorHeader.jsp";
+	private final static String BODY = "editor/editorBody.jsp";
+	
 	
 	@RequestMapping(value = "/editor/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -37,7 +41,10 @@ public class EditorController {
 		model.addAttribute("status", status);
 		model.addAttribute("aviableLangs", envLangs);
 			
-		return "editor/editor";
+		model.addAttribute("customHeader",EditorController.HEADER);
+		model.addAttribute("customBody",EditorController.BODY);
+		
+		return "layout";
 	}
 	
 	@RequestMapping(value = "/editor/editor", method = RequestMethod.POST)
@@ -54,7 +61,10 @@ public class EditorController {
 		model.addAttribute("status", status);
 		model.addAttribute("aviableLangs", envLangs);
 
-		return "editor/editor";
+		model.addAttribute("customHeader",EditorController.HEADER);
+		model.addAttribute("customBody",EditorController.BODY);
+		
+		return "layout";
 	}
 	
 	

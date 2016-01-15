@@ -154,9 +154,10 @@
 <script>
 $(document).ready(function() 
 {	
+
 	$('#createNewClass_modal_open').modal('show');
 	$('#createNewClass_modal_open').modal('show');
-	$('#createNewClass_modal_open').find("form").attr("action", "/lectures/update_lecture");
+	$('#createNewClass_modal_open').find("form").attr("action", "/lectures");
 	
 	$('#addHomework_modal_open').modal('show');
 	$('#addHomework_modal_open').modal('show');

@@ -702,8 +702,8 @@ public class DBInitializatorController {
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
 			    courseClass.getProfessor(), 
-			    new ArrayList<Answer>(), 
-			    new ArrayList<QuestionAttachedContent>());
+			    new HashSet<Answer>(), 
+			    new HashSet<QuestionAttachedContent>());
 		    questionDAO.create(question);
 		    logger.info("Created "+question, locale);
 		    k++;
@@ -714,8 +714,8 @@ public class DBInitializatorController {
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
 			    registrationStudentClass.getStudent(), 
-			    new ArrayList<Answer>(), 
-			    new ArrayList<QuestionAttachedContent>());
+			    new HashSet<Answer>(), 
+			    new HashSet<QuestionAttachedContent>());
 		    questionDAO.create(question);
 		    logger.info("Created "+question, locale);
 		    k++;

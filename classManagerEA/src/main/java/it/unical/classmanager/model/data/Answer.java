@@ -102,15 +102,14 @@ public class Answer implements Serializable  {
 	public void setAnswerAttachedContents(Set<AnswerAttachedContent> answerAttachedContents) {
 		this.answerAttachedContents = answerAttachedContents;
 	}
+	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((answerAttachedContents == null) ? 0 : answerAttachedContents.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -124,22 +123,12 @@ public class Answer implements Serializable  {
 		if (getClass() != obj.getClass())
 			return false;
 		Answer other = (Answer) obj;
-		if (answerAttachedContents == null) {
-			if (other.answerAttachedContents != null)
-				return false;
-		} else if (!answerAttachedContents.equals(other.answerAttachedContents))
-			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
-			return false;
-		if (question == null) {
-			if (other.question != null)
-				return false;
-		} else if (!question.equals(other.question))
 			return false;
 		if (user == null) {
 			if (other.user != null)

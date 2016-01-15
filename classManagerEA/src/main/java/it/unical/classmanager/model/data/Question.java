@@ -2,7 +2,9 @@ package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,23 +46,23 @@ public class Question implements Serializable  {
 	
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Answer> answers;
+	private Set<Answer> answers;
 	
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<QuestionAttachedContent> questionAttachedContents;
+	private Set<QuestionAttachedContent> questionAttachedContents;
 	
 	public Question(){
 		this.id = 0;
 		this.title = "";
 		this.description = "";
 		this.user = null;
-		this.answers = new ArrayList<Answer>();
-		this.questionAttachedContents = new ArrayList<QuestionAttachedContent>();
+		this.answers = new HashSet<Answer>();
+		this.questionAttachedContents = new HashSet<QuestionAttachedContent>();
 	}
 
-	public Question(int id, String title, String description, User user, List<Answer> answers,
-			List<QuestionAttachedContent> questionAttachedContents) {
+	public Question(int id, String title, String description, User user, Set<Answer> answers,
+			Set<QuestionAttachedContent> questionAttachedContents) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -101,19 +103,19 @@ public class Question implements Serializable  {
 		this.user = user;
 	}
 
-	public List<Answer> getAnswers() {
+	public Set<Answer> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(Set<Answer> answers) {
 		this.answers = answers;
 	}
 
-	public List<QuestionAttachedContent> getQuestionAttachedContents() {
+	public Set<QuestionAttachedContent> getQuestionAttachedContents() {
 		return questionAttachedContents;
 	}
 
-	public void setQuestionAttachedContents(List<QuestionAttachedContent> questionAttachedContents) {
+	public void setQuestionAttachedContents(Set<QuestionAttachedContent> questionAttachedContents) {
 		this.questionAttachedContents = questionAttachedContents;
 	}
 

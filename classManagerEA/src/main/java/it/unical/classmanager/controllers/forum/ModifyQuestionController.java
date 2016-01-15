@@ -37,6 +37,8 @@ public class ModifyQuestionController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "forum/modifyQuestionHead.jsp";
+	private final static String BODY = "forum/modifyQuestionBody.jsp";
 	
 	
 	@RequestMapping(value = "/forum/modifyQuestion", method = RequestMethod.POST)
@@ -67,8 +69,10 @@ public class ModifyQuestionController {
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		model.addAttribute("username", username);
 		
+		model.addAttribute("customHeader", ModifyQuestionController.HEADER);
+		model.addAttribute("customBody", ModifyQuestionController.BODY);
 		
-		return "forum/modifyQuestion";
+		return "layout";
 	}
 	
 	
@@ -124,7 +128,10 @@ public class ModifyQuestionController {
 			String username = (String) request.getSession().getAttribute("loggedIn");
 			model.addAttribute("username", username);
 			
-			return "forum/modifyQuestion";
+			model.addAttribute("customHeader", ModifyQuestionController.HEADER);
+			model.addAttribute("customBody", ModifyQuestionController.BODY);
+			
+			return "layout";
 		}
 		
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);

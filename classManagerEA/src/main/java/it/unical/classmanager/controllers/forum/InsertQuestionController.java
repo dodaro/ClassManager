@@ -36,6 +36,9 @@ public class InsertQuestionController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "forum/insertQuestionHead.jsp";
+	private final static String BODY = "forum/insertQuestionBody.jsp";
+	
 	
 	@RequestMapping(value = "/forum/insertQuestion", method = RequestMethod.GET)
 	public String createQuestion(Locale locale, Model model, HttpServletRequest request) {
@@ -47,7 +50,10 @@ public class InsertQuestionController {
 		model.addAttribute("question", question);
 		
 		
-		return "forum/insertQuestion";
+		model.addAttribute("customHeader", InsertQuestionController.HEADER);
+		model.addAttribute("customBody", InsertQuestionController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -80,7 +86,10 @@ public class InsertQuestionController {
 			model.addAttribute("attachments", attachemnts);
 			model.addAttribute("attachmentsID", attachedFilesID);
 			
-			return "forum/insertQuestion";
+			model.addAttribute("customHeader", InsertQuestionController.HEADER);
+			model.addAttribute("customBody", InsertQuestionController.BODY);
+			
+			return "layout";
 		}
 		
 		

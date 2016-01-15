@@ -7,7 +7,7 @@
 
 <script>
  document.title = '<spring:message code="message.forum.questionsTitle"/>';
- </script>
+</script>
 
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 

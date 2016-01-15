@@ -37,9 +37,13 @@ public class DLVEnvironment extends Environment{
 			createSandbox(tmpfileName, content);
 			
 			ExecutionResult result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
-					tmpDir + ":/home/docker"+ tmpDir +":ro",
+					tmpDir + ":/home/docker"+ tmpDir +":ro", "-m", "4m",
 					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/home/docker/dlv", "/home/docker" + tmpDir + tmpfileName + this.extension);
 			
+			//remove warning message
+			String tmpExitConsole = result.getConsoleResult();
+			tmpExitConsole = tmpExitConsole.replace("WARNING: Your kernel does not support swap limit capabilities, memory limited without swap.\n", "");
+			result.setConsoleResult(tmpExitConsole);
 			
 			//ExecutionResult result = this.terminal.executeCommand(tmpDir, "/home/sera/Programs/dlv/dlv", "./"+tmpfileName+this.extension);
 			

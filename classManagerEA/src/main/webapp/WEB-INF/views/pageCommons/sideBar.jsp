@@ -25,6 +25,9 @@
 		class="glyphicon glyphicon-send"></span> <spring:message
 			code="message.noticeboard" text="default text" /> senza init
 </a></li>
-<li><a href="#"> <span class="glyphicon glyphicon-send"></span>
+<li><a href="/forum"> <span class="glyphicon glyphicon-book"></span>
+		Forum
+</a></li>
+<li><a href="#"> <span class="glyphicon glyphicon-th-list"></span>
 		Apri cancello
 </a></li>

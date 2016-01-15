@@ -5,18 +5,18 @@
 <html>
 <head>
 	<title>Editor page</title>
-	<link rel="stylesheet" type="text/css" href="resources/style/editor.css">
-	<link rel="stylesheet" type="text/css" href="resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="resources/style/nav-bar.css" />
+	<link rel="stylesheet" type="text/css" href="/resources/style/editor.css">
+	<link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />
 
-	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="/resources/lib/jquery/jquery.min.js"></script>
 	
-	<script src="resources/lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script src="resources/lib/ace/ext-language_tools.js"></script>
-	<script src="resources/script/editor.js"></script>
+	<script src="/resources/lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/resources/lib/ace/ext-language_tools.js"></script>
+	<script src="/resources/script/editor.js"></script>
 	
-	<script src="resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-	<script src="resources/script/nav-bar.js"></script>
+	<script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+	<script src="/resources/script/nav-bar.js"></script>
 
 </head>
 
@@ -128,7 +128,7 @@
 										</div>
 									</div>
 									
-									<form:form id="editorForm" action="/editor" method="post" commandName="status" acceptCharset="utf-8">
+									<form:form id="editorForm" action="/editor/editor" method="post" commandName="status" acceptCharset="utf-8">
 										<form:textarea id="codeTextarea" path="code"></form:textarea>
 										<form:textarea id="consoleTextarea" path="consoleContent"></form:textarea>
 										<form:input id="themeInput" path="theme"/>
@@ -137,8 +137,6 @@
 								
 								</div>
 							</div>
-						
-
 						
 					</div>
 				</div>

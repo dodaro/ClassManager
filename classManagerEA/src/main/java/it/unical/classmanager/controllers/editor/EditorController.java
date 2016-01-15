@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers;
+package it.unical.classmanager.controllers.editor;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class EditorController {
 	ApplicationContext appContext;
 	
 	
-	@RequestMapping(value = "/editor", method = RequestMethod.GET)
+	@RequestMapping(value = "/editor/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		EditorStatus status = initEditorStatus();
@@ -37,10 +37,10 @@ public class EditorController {
 		model.addAttribute("status", status);
 		model.addAttribute("aviableLangs", envLangs);
 			
-		return "editor";
+		return "editor/editor";
 	}
 	
-	@RequestMapping(value = "/editor", method = RequestMethod.POST)
+	@RequestMapping(value = "/editor/editor", method = RequestMethod.POST)
 	public String compileSnippet(Locale locale, Model model, @ModelAttribute("status") EditorStatus status) {
 
 		String lang = status.getLanguage();
@@ -54,7 +54,7 @@ public class EditorController {
 		model.addAttribute("status", status);
 		model.addAttribute("aviableLangs", envLangs);
 
-		return "editor";
+		return "editor/editor";
 	}
 	
 	

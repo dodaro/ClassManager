@@ -88,9 +88,12 @@
 								</div>
 								
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-offset-8 col-md-2">
+										<a class="btn btn-primary btn-sm" href="/forum/searchQuestion"><spring:message code="message.forum.searchQuestion"/></a>
+									</div>
+									<div class="col-md-2">
 										<form action="insertQuestion">
-											<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertQuestion"/>" style="float:right;"/>
+											<input class="btn btn-primary btn-sm" type="submit" value="<spring:message code="message.forum.insertQuestion"/>"/>
 										</form>
 									</div>
 								</div>
@@ -112,16 +115,31 @@
 												<li class="list-group-item answerRow" data-qid="${question.getId() }">
 												  <div class="row text-center">
 													<div class="col-md-2">
-														<div class="col-md-12">
-															<div class="row"><div class="col-md-12">${question.getAnswers().size()}</div></div>
-															<div class="row"><div class="col-md-12">answer</div></div>
-														</div>
+														<div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px">
+												  			<div class="pull-right" style="background-color: #8096A5; padding: 10 10 10 10">
+													  			<div class="row">
+																	<div class="col-md-12">
+																		${question.getAnswers().size()}
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-12">answer</div>
+																</div>
+												  			</div>
+											  			</div>
 													</div>
 													<div class="col-md-10">
 														<div class="row"><div class="col-md-12"><h4>
 														<a class="questionLink" href="/forum/detailedQuestion?qid=${question.getId()}">${question.getTitle()}</a>
 														</h4></div></div>
-														<div class="row"><div class="col-md-12 text-right">${question.getUser().getUsername() }</div></div>
+														<div class="row">
+															<div class="col-sm-12 col-md-12 col-lg-12">
+													  			<p class="pull-right" style="background-color: #E0EAF1; padding: 5 5 5 5">
+														  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+													  			${question.getUser().getUsername() }
+													  			</p>
+													  		</div>
+														</div>
 													</div>
 												  </div>
 												</li>

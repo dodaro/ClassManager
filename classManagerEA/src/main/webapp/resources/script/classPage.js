@@ -61,7 +61,7 @@ var ListenersManager = (function(){
 
 			$("#addHomework_btn").on("click", function() {
 
-				$("#homework-form").attr("action", "/homeworks");
+				$("#homework-form").attr("action", "/create_homeworks");
 				$("#addHomework_modal").modal().show();
 			});
 
@@ -153,13 +153,13 @@ function delete_homeworkAttached(event){
 
 function delete_homeworkStudentSolving(event){
 
-	event.stopImmediatePropagation();
+	event.stopPropagation();
 	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
 
-	submit("/delete_homeworkStudentSolving","homeworkStudentSolvingAttachedId",hssId);
+	submit("/delete_homeworkStudentSolving","homeworkStudentSolvingId",hssId);
 }
 
-function delete_homeworkStudentSolvingAttached(event){
+function delete_homeworkStudentSolvingAttachment(event){
 
 	event.stopPropagation();
 	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
@@ -242,6 +242,6 @@ function update_homeworks(event){
 
 function reloadHomework(event){
 
-	var homeworkId = $("#addHomeworkModal_id").val()
-	window.location.reload("/homework?path=&parentId=" + homeworkId);
+	var homeworkId = $("#addHomework_modal").find("input[name=parentId]").val();
+	window.location.replace("/homeworks?parentId=" + homeworkId);
 }

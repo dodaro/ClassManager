@@ -153,10 +153,7 @@
 
 <script>
 $(document).ready(function() 
-{
-	$('#createNewClass_modal_open').modal('show');
-	$('#createNewClass_modal_open').attr("id","createNewClass_modal");
-	
+{	
 	$('#addHomework_modal_open').modal('show');
 	$('#addHomework_modal_open').attr("id","addHomework_modal");
 });

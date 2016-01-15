@@ -116,7 +116,7 @@ public class HomeworkController {
 		//BACK PAGE
 		String referred = "/lectureContent?parentId=" + idLecture;
 		model.addAttribute("backPage", referred);
-		
+
 		logger.info("getHomeworks");
 
 		return "layout";
@@ -242,6 +242,11 @@ public class HomeworkController {
 		model.addAttribute("parentId",idHomeworkStudentSolving);
 		model.addAttribute("files", homeworksAttacheds);
 
+		//BACK PAGE
+		HomeworkStudentSolvingDAO dao = DaoHelper.getHomeworkStudentSolvingDAO();
+		String referred = "/homeworkAttached?parentId=" + dao.get(idHomeworkStudentSolving).getHomework().getId();
+		model.addAttribute("backPage", referred);
+
 		logger.info("getHomeworkStudentSolvingAttached");
 		return "layout";
 	}
@@ -251,8 +256,8 @@ public class HomeworkController {
 	 * allows to create a new directory in which store the files related to a particular homework
 	 * @param lecture the lecture to which this homework is referred
 	 */
-	@RequestMapping(value = "/homeworks", method = RequestMethod.POST)
-	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model, RedirectAttributes redirect) {
+	@RequestMapping(value = "/create_homeworks", method = RequestMethod.POST)
+	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model, RedirectAttributes redirect, HttpServletRequest request) {
 
 		if(result.hasErrors()){
 
@@ -264,6 +269,9 @@ public class HomeworkController {
 
 			model.addAttribute("parentId", lectureId);
 
+			if(canCreate(request))
+				model.addAttribute("canCreate", true);
+			
 			return getHomeworks(model,lectureId, homework.getFilePath());
 		}
 
@@ -276,12 +284,12 @@ public class HomeworkController {
 		String currentPath = lecture.getCourseClass().getId() + File.separator + FileManager.LECTURES_PATH  + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
 
 		Homework newHomework = homeworkDAO.create(homework);
-		
+
 		if(newHomework == null){
 			redirect.addAttribute("error", "error when creating homework");
 			return "redirect:/sessionerror";
 		}
-		
+
 		int newId = homework.getId();
 		homework.setFilePath(currentPath + File.separator + newId);
 		homeworkDAO.update(homework);
@@ -336,7 +344,7 @@ public class HomeworkController {
 
 		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
 		HomeworkStudentSolving newHss = homeworkStudentSolvingDAO.create(hss);
-		
+
 		if(newHss == null){
 			redirect.addAttribute("error", "path error");
 			return "redirect:/sessionerror";
@@ -446,7 +454,7 @@ public class HomeworkController {
 
 		if(attached == null)
 			return "400";
-		
+
 		boolean success = new FileManager().mkMultipartFile(file, folderPath, file.getOriginalFilename());
 
 		if(!success){
@@ -455,7 +463,7 @@ public class HomeworkController {
 		}
 
 
-		return "redirect:/homeworkAttached?path=" + hss.getHomework().getFilePath() + "&parentId=" + hss.getHomework().getId();
+		return "200";
 	}
 
 
@@ -538,7 +546,7 @@ public class HomeworkController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/studentHomeworkAttachments?id=" + homeworkAttachedStudentSolving.getHomeworkStudentSolving().getId();
 	}
 
 	/*

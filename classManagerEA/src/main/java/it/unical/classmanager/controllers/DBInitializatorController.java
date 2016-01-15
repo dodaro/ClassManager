@@ -703,7 +703,6 @@ public class DBInitializatorController {
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
 			    courseClass.getProfessor(), 
-			    lecture, 
 			    new ArrayList<Answer>(), 
 			    new ArrayList<QuestionAttachedContent>());
 		    questionDAO.create(question);
@@ -716,7 +715,6 @@ public class DBInitializatorController {
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
 			    registrationStudentClass.getStudent(), 
-			    lecture, 
 			    new ArrayList<Answer>(), 
 			    new ArrayList<QuestionAttachedContent>());
 		    questionDAO.create(question);

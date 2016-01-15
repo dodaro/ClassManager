@@ -2,6 +2,7 @@ package it.unical.classmanager.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 
 import it.unical.classmanager.model.FullCalendarEventBean;
 import it.unical.classmanager.model.dao.CourseClassDAO;
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
@@ -31,6 +33,8 @@ import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -41,8 +45,8 @@ public class CalendarController {
 
 	private final static String HEADER = "calendar/calendarHeader.jsp";
 	private final static String BODY = "calendar/calendarBody.jsp";
-	
-	
+
+
 	@Autowired
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
@@ -53,15 +57,15 @@ public class CalendarController {
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public String getCalendar(Model model) {
 
-		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-		
+		model.addAttribute("FullCalendarEventBean", new Event());
+
 		/*
 		 * You can return the layout.jsp setting your custom header and body
 		 * using the parameters "customHeader" and "customBody"
 		 */
 		model.addAttribute("customHeader",CalendarController.HEADER);
 		model.addAttribute("customBody",CalendarController.BODY);
-		
+
 		logger.info("getCalendar");
 		return "layout";
 
@@ -72,7 +76,7 @@ public class CalendarController {
 	 * Refer: calendar.jsp
 	 * input: String start, String end - the range of the events to retrieve
 	 */
-	@RequestMapping(value = "/events", method = RequestMethod.GET)
+	@RequestMapping(value = "/calendar/events", method = RequestMethod.GET)
 	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching, HttpServletRequest request) {
 
 		//is the string containing all the events of the calendar
@@ -87,90 +91,122 @@ public class CalendarController {
 			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
 
 		/*
-		 * Is necessary to retrieve create events related to the course schedule
+		 * Is necessary retrieve created events related to the course schedule
 		 */
 
-		//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
-		UserDAO userDAO = appContext.getBean("userDao", UserDAO.class);
+		//We retrieve the lectures of all the courses where the student is registered
+		UserDAO userDAO = DaoHelper.getUserDAO();
 		User user = userDAO.get(username);
 
-		if(user.getRole().equals(User.PROFESSOR)){
-			
-			//CourseClassDAO courseClassDao = appContext.getBean("courseClassDAO", CourseClassDAO.class);
-			LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
-			//List<Lecture> allLectures = courseClassDao.getAllCourseClasses((Professor) user);
-			List<Lecture> allLectures = lectureDAO.getAllLecturesOfAProfessor(username);
-			
-			//TODO to check
-			for (Lecture lecture : allLectures) 
-				eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(lecture, user));
-		}
+		/*if(user.getRole().equals(User.STUDENT)){
+
+			Student student = new Student(user);
+			List<RegistrationStudentClass> registrationStudentClasses = student.getRegistrationStudentClasses();
+
+			for (RegistrationStudentClass registrationStudentClass : registrationStudentClasses) {
+				for (Event event : registrationStudentClass.getCourseClass().getEvents()) {
+
+					eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+				}	
+			}
+		}*/
 
 		String json = new Gson().toJson(eventsAdaped);
-		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+		model.addAttribute("FullCalendarEventBean", new Event());
 
 		logger.info("getEvents");
 		return json;
 	}
 
-//	/**
-//	 * This path is invoked every time an event is updated (moved in another date or hour)
-//	 */
-//	@RequestMapping(value = "/update_event", method = RequestMethod.POST)
-//	public @ResponseBody String updateEvent(Model model, @RequestBody FullCalendarEventBean event) {
-//
-//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-//		logger.info("updateEvent");
-//		return "redirect:calendar";
-//	}
-//
-//	/**
-//	 * This path is invoked every time an event is deleted
-//	 */
-//	@RequestMapping(value = "/delete_event", method = RequestMethod.POST)
-//	public String deleteEvent(Model model, FullCalendarEventBean event) {
-//
-//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-//		logger.info("deleteEvent");
-//		return "redirect:calendar";
-//	}
-//
-//	/**
-//	 * This path is invoked every time an new event is created
-//	 */
-//	@RequestMapping(value = "/create_event", method = RequestMethod.POST)
-//	public @ResponseBody String createEvent(Model model, @RequestBody Event event) {
-//
-//		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
-//		eventDao.create(event);
-//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-//
-//		logger.info("updateEvent");
-//		return "redirect:calendar";
-//	}
 
-	@RequestMapping(value = "/update_calendar", method = RequestMethod.POST)
-	public String updateCalendar(Model model, @RequestBody List<Event> events, HttpServletRequest request) {
-
+	@RequestMapping(value = "/calendar/update_calendar", method = RequestMethod.POST)
+	public @ResponseBody String updateCalendar(Model model, @RequestBody Set<Event> events, HttpServletRequest request) {
+		
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		UserDAO userDao = appContext.getBean("userDao",UserDAOImpl.class);
 
 		String username = (String) request.getSession().getAttribute("loggedIn");
-		eventDao.deleteAllEvents(username);
-	
+
 		User user = userDao.get(username);
 
 		for (Event event : events) {
+			if(event.getId() > Event.ID_EVENT_TEMP){
 
-			event.setUser(user);
-			eventDao.create(event);
+				Event old = eventDao.get(event.getId());
+				if(old.getUser().getUsername().equals(username)){
 
+					old.update(event);			
+					eventDao.update(old);	
+				}
+			}
+			else{
+				event.setCourseClass(null);
+				event.setUser(user);
+				eventDao.create(event);
+			}
 		}
-
+	
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
 
 		logger.info("updateEvent");
-		return "redirect:/calendar";
+		return "200";
 	}
+	
+	@RequestMapping(value = "/calendar/delete_events", method = RequestMethod.POST)
+	public @ResponseBody String deleteCalendar(Model model, @RequestBody Set<Integer> events, HttpServletRequest request) {
+
+		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+		String username = (String) request.getSession().getAttribute("loggedIn");
+
+		for (Integer eventId : events) {
+
+			Event old = eventDao.get(eventId);
+			if(old.getUser().getUsername().equals(username)){
+			
+				eventDao.delete(old);	
+			}
+		}
+	
+		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+
+		logger.info("updateEvent");
+		return "200";
+	}
+	
+	//	/**
+	//	 * This path is invoked every time an event is updated (moved in another date or hour)
+	//	 */
+	//	@RequestMapping(value = "/update_event", method = RequestMethod.POST)
+	//	public @ResponseBody String updateEvent(Model model, @RequestBody FullCalendarEventBean event) {
+	//
+	//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+	//		logger.info("updateEvent");
+	//		return "redirect:calendar";
+	//	}
+	//
+	//	/**
+	//	 * This path is invoked every time an event is deleted
+	//	 */
+	//	@RequestMapping(value = "/delete_event", method = RequestMethod.POST)
+	//	public String deleteEvent(Model model, FullCalendarEventBean event) {
+	//
+	//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+	//		logger.info("deleteEvent");
+	//		return "redirect:calendar";
+	//	}
+	//
+	//	/**
+	//	 * This path is invoked every time an new event is created
+	//	 */
+	//	@RequestMapping(value = "/create_event", method = RequestMethod.POST)
+	//	public @ResponseBody String createEvent(Model model, @RequestBody Event event) {
+	//
+	//		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+	//		eventDao.create(event);
+	//		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+	//
+	//		logger.info("updateEvent");
+	//		return "redirect:calendar";
+	//	}
 
 }

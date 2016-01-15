@@ -100,10 +100,10 @@ public class LectureController {
 
 		logger.info("getLectures");
 
-		return "layout";
+		return "/layout";
 	}
 
-	@RequestMapping(value = "/lectureContent", method = RequestMethod.GET)
+	@RequestMapping(value = "/lectures/lectureContent", method = RequestMethod.GET)
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
@@ -130,9 +130,9 @@ public class LectureController {
 		FolderBean homeworks = new FolderBean(lectureId,listOfFiles[0].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[0].getPath(), listOfFiles[0].listFiles().length);
 		FolderBean materials = new FolderBean(lectureId,listOfFiles[1].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[1].getPath(), listOfFiles[1].listFiles().length);
 
-		homeworks.setAction("/homeworks");
+		homeworks.setAction("/lectures/homeworks");
 		homeworks.setParentId(lectureId);
-		materials.setAction("/materials");
+		materials.setAction("/lectures/materials");
 		materials.setParentId(lectureId);
 
 
@@ -146,11 +146,11 @@ public class LectureController {
 		
 		logger.info("getLectureContent");
 
-		return "layout";
+		return "/layout";
 	}
 
 
-	@RequestMapping(value = "/materials", method = RequestMethod.GET)
+	@RequestMapping(value = "/lectures/materials", method = RequestMethod.GET)
 	public String getMaterials(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
@@ -159,9 +159,10 @@ public class LectureController {
 			return "redirect:/sessionerror";
 		}
 
+		//TODO retrieve from session
 		int idLecture = params.getParentId();
-		String path = params.getPath();
-
+		int idCourse = 1;
+		
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 		model.addAttribute("pwd",FileManager.MATERIALS_PATH);
@@ -174,7 +175,7 @@ public class LectureController {
 		for (Material material : allLectureMaterials) {
 
 			String name = material.getName();
-			String filePath = path + File.separator + name;
+			String filePath = FileManager.RESOURCES_PATH + File.separator + idCourse + File.separator + FileManager.LECTURES_PATH + File.separator + idLecture + File.separator + FileManager.MATERIALS_PATH + File.separator + name;;
 
 			File file = new File(filePath);
 			if(file.exists()){
@@ -185,18 +186,19 @@ public class LectureController {
 			}
 		}	
 
+		model.addAttribute("contents", allLectureMaterials);
 		model.addAttribute("files", materials);
 		model.addAttribute("parentId",idLecture);
 
 		if(canCreate(request))
 			model.addAttribute("canCreate", true);
 		
-		String referred = "/lectureContent?parentId=" + idLecture;
+		String referred = "/lectures/lectureContent?parentId=" + idLecture;
 		model.addAttribute("backPage", referred);
 		
 		logger.info("getMaterials");
 
-		return "layout";
+		return "/layout";
 	}
 
 
@@ -207,7 +209,7 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
-	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model) {
+	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 	
 		if(result.hasErrors()){
 
@@ -249,9 +251,15 @@ public class LectureController {
 		lecture.setDate(lecture.getDate());
 		lecture.setClassroom(lecture.getClassroom());
 
-		int newId = lectureDao.create(lecture);
+		Lecture newLecture = lectureDao.create(lecture);
+		if(newLecture == null){
+			redirect.addAttribute("error", "server error when creating lecture");
+			return "redirect:/sessionerror";
+		}
 
-		createCalendarEvent(lecture);
+		int newId = newLecture.getId();
+		
+		createCalendarEvent(lecture, courseClass);
 
 		//creates the corresponding folder
 		String name = Integer.toString(newId);
@@ -278,14 +286,17 @@ public class LectureController {
 
 
 
-	@RequestMapping(value = "/update_lecture", method = RequestMethod.POST)
+	@RequestMapping(value = "/lectures/update_lecture", method = RequestMethod.POST)
 	public String updateLecture(@Valid @ModelAttribute("lecture") Lecture lecture, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
 		if(result.hasErrors()){
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
-
+			
+			if(canCreate(request))
+				model.addAttribute("canCreate", true);
+			
 			return getLectures(model);
 		}
 
@@ -297,7 +308,7 @@ public class LectureController {
 			old.setTopic(lecture.getTopic());
 
 		if(!lecture.getDescription().equals(old.getDescription()) && !lecture.getDescription().equals(""))
-			old.setTopic(lecture.getDescription());
+			old.setDescription(lecture.getDescription());
 
 		if(lecture.getDate() != null)
 			if(lecture.getDate().compareTo(old.getDate()) != 0)
@@ -327,7 +338,7 @@ public class LectureController {
 	 * @param parentId the id of the parentFolder
 	 * @return
 	 */
-	@RequestMapping(value="/upload_materials", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/upload_materials", method=RequestMethod.POST)
 	public @ResponseBody String uploadMaterial(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
 
 		//TODO retrieve from session
@@ -356,21 +367,29 @@ public class LectureController {
 		material.setLecture(lecture);
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
-		materialDAO.create(material);
-
+		Material newMaterial = materialDAO.create(material);
+		if(newMaterial == null){
+			
+			new FileManager().deleteDirectory(filePath + fileName);
+			return "400";
+		}
+			
 		logger.info("saving file");
 
 		return "200";
 	}
 
 
-	@RequestMapping(value="/delete_lecture", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/delete_lecture", method=RequestMethod.POST)
 	public String deleteLecture(@RequestParam("lectureId") int id) {
 
 		LectureDAOImpl lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
 		Lecture lecture = lectureDao.get(id);
+		
 		if(lecture != null)
 			lectureDao.delete(lecture);
+		else
+			return "redirect:/lectures?path=lectures";
 
 		String name = Integer.toString(lecture.getId());
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
@@ -385,14 +404,17 @@ public class LectureController {
 		return "redirect:/lectures?path=lectures";
 	}
 
-	@RequestMapping(value="/delete_materials", method=RequestMethod.POST)
+	@RequestMapping(value="/lectures/delete_materials", method=RequestMethod.POST)
 	public String deleteMaterial(@RequestParam("materialId") int id) {
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
 		Material material = materialDAO.get(id);
+		
 		if(material != null)
 			materialDAO.delete(material);
-
+		else
+			return "redirect:/lectures?path=lectures";
+		
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);
 
@@ -400,7 +422,7 @@ public class LectureController {
 			logger.info("cannot delete the file " + path);
 		}
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures/materials?parentId=" + material.getLecture().getId();
 	}
 
 	/*
@@ -419,7 +441,7 @@ public class LectureController {
 				childs = new File(folderPath).listFiles().length;
 
 			FolderBean folder = new FolderBean(lecture.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
-			folder.setAction("lectureContent");
+			folder.setAction("/lectures/lectureContent");
 			folder.setParentId(lecture.getId());
 			dest.add(folder);
 		}	
@@ -428,7 +450,7 @@ public class LectureController {
 	/*
 	 * creates a calendar event starting from the new lecture
 	 */
-	private void createCalendarEvent(Lecture lecture) {
+	private void createCalendarEvent(Lecture lecture, CourseClass courseClass) {
 
 		Event event = new Event();
 		event.setColor("##0000ff");
@@ -440,9 +462,13 @@ public class LectureController {
 		event.setPlace("");
 		event.setTitle(lecture.getTopic());
 		event.setUser(lecture.getCourseClass().getProfessor());
-
+		event.setType(Event.EVENT_LECTURE_TYPE);
+		//TODO
+		event.setCourseClass(courseClass);
+		
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		eventDao.create(event);
+	
 	}
 	
 	/*

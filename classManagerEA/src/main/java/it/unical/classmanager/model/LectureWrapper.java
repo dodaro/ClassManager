@@ -29,10 +29,10 @@ public class LectureWrapper{
 	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String classroom;
 	
-	@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
+	//@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
 	private String beginHour;
 
-	@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
+	//@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
 	private String endHour;
 	
 	public LectureWrapper(){

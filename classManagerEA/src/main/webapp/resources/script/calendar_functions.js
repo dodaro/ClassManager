@@ -2,15 +2,25 @@
 var EventTmp = (function(){
 
 	var tmpIds;
+	var toDelete;
+	
 	var EventTmp = function(){
 
 		tmpIds = -1;
 		this.getNextId = getNextId;
+		this.toDelete = [];
+		this.deleteEvent = deleteEvent;
+		
 	}
 
 	var getNextId = function(){
 		return tmpIds--;
 	}
+	
+	var deleteEvent = function(id){
+		this.toDelete.push(id);
+	}
+	
 	return EventTmp;
 
 })();
@@ -66,18 +76,14 @@ function createCalendar(editable, currentDate){
 		/*
 		 * loads the events from the server. The event should be represented in JSON format
 		 */
-		events: "/events",
+		events: "/calendar/events",
 
 		/*
 		 * Defines what happens when an event is clicked.
 		 */
 		eventClick: function(calEvent, jsEvent, view) {
 
-			//shows the delete form and fill it with the id of the event to delete
-			//$("#delete_event_form").show();
-			//$("#update_event_div").show();
-			//$("#toDelete_input").val(event.id);
-			if(editable){
+			if(editable && calEvent.editable){
 				
 				$("#updateEvent_modal").modal('show');
 				$("#eventStart_update").val(calEvent.start.format());
@@ -110,13 +116,13 @@ function createCalendar(editable, currentDate){
 		select: 		
 			function(start, end, allDay) 
 			{ 
-			$("#createEvent_modal").modal('show');
-			$("#eventTitle_create").val("");
-			$("#eventStart_create").val(start.format());
-			$("#eventEnd_create").val(end.format());
-			$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
-
-			$('#calendar').fullCalendar('unselect');
+				$("#createEvent_modal").modal('show');
+				$("#eventTitle_create").val("");
+				$("#eventStart_create").val(start.format());
+				$("#eventEnd_create").val(end.format());
+				$('select[name="colorpicker"]').simplecolorpicker('selectColor', '#7bd148');
+	
+				$('#calendar').fullCalendar('unselect');
 			}
 	});
 }
@@ -135,32 +141,48 @@ $(document).ready(function(){
 			var start = $("#eventStart_create").val();
 			var end = $("#eventEnd_create").val();
 			var color = $('#colorPicker_create').val();
+			var dow = [];
+			$("#dow-group input[value=1]").each(function(index){
+				var val = $(this).attr("name");
+				dow.push(val);
+			})
 			
-			var eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color};
+			var eventJson;
+			
+			if(dow.length != 0)
+				eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color, "dow":dow, "editable":true};
+			else
+				eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color, "editable":true};
+			
 			$('#calendar').fullCalendar('renderEvent',eventJson,true);
+			$("#createEvent_modal").modal('hide');
 		}
 		//$('#calendar').fullCalendar('unselect');
-		$("#createEvent_modal").modal('hide');
 	});
 
 
 
 	$("#modalButton_updateEvent").click(function(event)
 			{
-		$('#calendar').fullCalendar('removeEvents', $("#eventId_update").val());
-		$('#calendar').fullCalendar('renderEvent',
-				{
-			id: $("#eventId_update").val(),
-			title: $("#eventTitle_update").val(),
-			start: $("#eventStart_update").val(),
-			end: $("#eventEnd_update").val(),
-			color: $('#colorPicker_update').val()
-				},
-				true // make the event "stick"
-		);
+				
+				if($("#eventTitle_update").val()){
+					var old = $('#calendar').fullCalendar( 'clientEvents', $("#eventId_update").val());
+					$('#calendar').fullCalendar('removeEvents', $("#eventId_update").val());
+					$('#calendar').fullCalendar('renderEvent',
+					{
+						id: $("#eventId_update").val(),
+						title: $("#eventTitle_update").val(),
+						start: $("#eventStart_update").val(),
+						end: $("#eventEnd_update").val(),
+						color: $('#colorPicker_update').val(),
+						pow: old[0].pow,
+						editable: old[0].editable
+					},
+					true); // make the event "stick"
+					$("#updateEvent_modal").modal('hide');
+				}
 
-		$("#updateEvent_modal").modal('hide');
-			});
+	});
 
 	$("#editCalendar_btn").click(function(event){
 
@@ -182,6 +204,8 @@ $(document).ready(function(){
 	$("#revert_btn").click(function(event){
 		revertFunc();
 	});
+	
+
 });
 
 
@@ -208,32 +232,72 @@ $(document).ready(function(){
 			if(value.end != null)
 			event.endDate = value.end.format();
 			event.color = value.color;
+			event.dow = value.dow;
 
-			toSend.push(event);
+			var check = false;
+			for (i = 0; i < toSend.length; i++) { 
+			    if(toSend[i].id == event.id){
+			    	check = true;
+			    	break;
+			    }
+			}
+			
+			if(!check)
+				toSend.push(event);
 		});
 
+		/* deletes the event removed */
+		var toDelete = JSON.stringify(eventTmp.toDelete);
+		
 		calendar = JSON.stringify(toSend);
-
+		var success = false;
+		
 		$.ajax({ 
 			headers: {
 				Accept : "text/plain; charset=utf-8"
 			},
-			url: "/update_calendar", 
+			url: "/calendar/update_calendar", 
 			type: 'POST', 
 			dataType: 'json', 
 			data: calendar, 
 			contentType: 'application/json',
 			mimeType: 'application/json',
 			success: function(data) { 
-				window.redirect("/calendar");
+				
+				sendDelete(toDelete);
 			},
-			error:function(data,status,er) { 
-				revertFunc();
-
+			error:function(data,status,er) {   
+				
+				 $("#alert").alert().show();
 			}
 		});
+		
+		
 	});
 });
+
+
+function sendDelete(data){
+	
+	$.ajax({ 
+		headers: {
+			Accept : "text/plain; charset=utf-8"
+		},
+		url: "calendar/delete_events", 
+		type: 'POST', 
+		dataType: 'json', 
+		data: data,
+		contentType: 'application/json',
+		mimeType: 'application/json',
+		success: function(data) { 
+			window.location.replace("/calendar");
+		},
+		error:function(data,status,er) {   
+			
+			 $("#alert").alert().show();
+		}
+	});
+}
 
 /**
  * called when the "delete" button is clicked
@@ -244,7 +308,18 @@ $(document).ready(function(){
 
 		var eventToRemove = $("#eventId_update").val();
 		$('#calendar').fullCalendar('removeEvents', eventToRemove);
+		eventTmp.deleteEvent(eventToRemove);
+		
 	});
+	
+
+	$('.btn[data-checkbox-name]').click(function() {
+	    $('input[name="'+$(this).data('checkboxName')+'"]').val(
+	        $(this).hasClass('active') ? 0 : 1
+	    );
+	});
+	
+	$("#alert").alert().hide();
 });
 
 function revertFunc(){
@@ -255,13 +330,13 @@ function revertFunc(){
  * TODO CHECK INPUT AND DATE VALIDITY
  */
 
-/*
-events: [
+
+/*events: [
 {
 	 title: 'All Day Event',
 	 start: '2015-12-01',
-	 editable: true
-	 dow: [1, 4];
+	 editable: false,
+	 dow: [1, 4]
 },
 {
 	 title: 'Long Event',

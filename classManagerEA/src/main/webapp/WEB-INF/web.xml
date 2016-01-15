@@ -28,6 +28,7 @@
   <filter-mapping>
     <filter-name>LoginCheckerFilter</filter-name>
     <url-pattern>/forum/*</url-pattern>
+    <url-pattern>/calendar/*</url-pattern>
     <url-pattern>/noticeboard/*</url-pattern>
     <url-pattern>/newnotice/*</url-pattern>
     <url-pattern>/deletenotice/*</url-pattern>
@@ -52,6 +53,10 @@
     <url-pattern>/homeworks</url-pattern>
     <url-pattern>/update_homeworks</url-pattern>
     <url-pattern>/delete_homeworks</url-pattern>
+    <url-pattern>/scores</url-pattern>
+    <url-pattern>/update_scores</url-pattern>
+    <url-pattern>/create_Partecipation</url-pattern>
+    <url-pattern>/update_Partecipation</url-pattern>
   </filter-mapping>
   
   <!-- 

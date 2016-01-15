@@ -25,12 +25,20 @@
 							type="submit">Send</button>
 					</form>
 					<hr>
+					<c:if test="${not empty fileFormatError}">
+						<div class="alert alert-danger" role="alert">
+							<spring:message code="message.invitation.sendFileFormatError" />
+						</div>
+					</c:if>
 					<div class="alert alert-warning" role="alert">
-						<spring:message code="message.invitation.sendFileFormatHeader" /><br>
-						<spring:message code="message.invitation.sendFileFormatContent" /><br>
-						<spring:message code="message.invitation.sendFileFormatContent" /><br>
-						...<br>
-						<spring:message code="message.invitation.sendFileFormatContent" /><br>
+						<spring:message code="message.invitation.sendFileFormatHeader" />
+						<br>
+						<spring:message code="message.invitation.sendFileFormatContent" />
+						<br>
+						<spring:message code="message.invitation.sendFileFormatContent" />
+						<br> ...<br>
+						<spring:message code="message.invitation.sendFileFormatContent" />
+						<br>
 					</div>
 				</div>
 			</div>

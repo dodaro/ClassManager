@@ -34,7 +34,7 @@ public class CourseClass implements Serializable  {
 	private int id;
 	
 	@Size(min = 4, max = 64)
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	@Column(name="name", nullable=false, length=64)
 	private String name;
 	

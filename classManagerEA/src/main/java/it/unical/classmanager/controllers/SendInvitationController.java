@@ -90,7 +90,7 @@ public class SendInvitationController {
 		    model.addAttribute("courseSelected", courseName);
 		}
 		
-		processInviteStudentFromFile(sendFile, (Professor) user);
+		processInviteStudentFromFile(model, sendFile, (Professor) user);
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseName);
 		processCancellableStudent(locale, model, request, courseName);
@@ -281,7 +281,7 @@ public class SendInvitationController {
 	}
     }  
     
-    private void processInviteStudentFromFile(CommonsMultipartFile sendFile, Professor professor) {
+    private void processInviteStudentFromFile(Model model, CommonsMultipartFile sendFile, Professor professor) {
 	if(sendFile != null){
 	    if (!sendFile.isEmpty()) {
 		byte[] bytes = sendFile.getBytes();
@@ -297,6 +297,7 @@ public class SendInvitationController {
 		    } else {
 			// File format wrong
 			System.err.println("Wrong file format! File:"+sendFile.getOriginalFilename());
+			model.addAttribute("fileFormatError", "fileFormatErrorMessage");
 			return;
 		    }
 		}

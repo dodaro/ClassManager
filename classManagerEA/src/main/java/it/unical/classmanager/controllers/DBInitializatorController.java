@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,7 +72,6 @@ import it.unical.classmanager.utils.DateTimeFactory;
  */
 @Controller
 public class DBInitializatorController {
-    
     /**
      * This flag is for avoiding the duplication of the db
      */
@@ -101,7 +99,7 @@ public class DBInitializatorController {
     /**
      * The probability for a student for the attendance of a lesson
      */
-    private static float attendanceStudentProbability = 0.1f;
+    private static float attendanceStudentProbability = 0.25f;
     /**
      * The probability for a lecture that contains materials
      */
@@ -109,7 +107,7 @@ public class DBInitializatorController {
     /**
      * The probability for a student that has done a homework
      */
-    private static float homeworkStudentProbability = 1.0f;
+    private static float homeworkStudentProbability = 0.1f;
     /**
      * The probability that a student ask a question
      */
@@ -171,21 +169,22 @@ public class DBInitializatorController {
 	    dbCourseClassInit(locale, model, request);
 	    dbLectureInit(locale, model, request);
 	    dbRegistrationStudentClassInit(locale, model, request);
-	    //dbAttendanceStudentLectureInit(locale, model, request);
-	    //dbMaterialInit(locale, model, request);
+	    dbAttendanceStudentLectureInit(locale, model, request);
+	    dbMaterialInit(locale, model, request);
 	    dbHomeworkInit(locale, model, request);
 	    dbHomeworkStudentSolvingInit(locale, model, request);
 	    dbExamInit(locale, model, request);
 	    dbStudentExamPartecipationInit(locale, model, request);
 	    dbEventInit(locale, model, request);
+	    
 	    //dbCommunicationInit(locale, model, request);
 	    //dbQuestionAnswerInit(locale, model, request);
 	    
 	    // Attached contents
-	    			//dbQuestionAttachedContentInit(locale, model, request);
-	    			//dbAnswerAttachedContentInit(locale, model, request);
-	    			//dbHomeworkAttachedInit(locale, model, request);
-	    			//dbHomeworkAttachedStudentSolvingInit(locale, model, request);
+	    //dbQuestionAttachedContentInit(locale, model, request);
+	    //dbAnswerAttachedContentInit(locale, model, request);
+	    //dbHomeworkAttachedInit(locale, model, request);
+	    //dbHomeworkAttachedStudentSolvingInit(locale, model, request);
 	    
 	    initialized = true;
 	} else {
@@ -200,7 +199,6 @@ public class DBInitializatorController {
      */
     private void dbUserStudentProfessorInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("User, Student, Professor creation...", locale);			
-	//UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
 	UserDAO userDao = DaoHelper.getUserDAO();
 	
 	for(int i=0; i<numUser; i++){
@@ -267,8 +265,6 @@ public class DBInitializatorController {
     private void dbDegreeCourseDepartmentInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("DegreeCourses creation...", locale);
 	logger.info("Departments creation...", locale);
-	//		DepartementDAO departementDAO = (DepartementDAOImpl) appContext.getBean("departementDAO", DepartementDAOImpl.class);		
-	//		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAOImpl) appContext.getBean("degreeCourseDAO", DegreeCourseDAOImpl.class);
 	DepartementDAO departementDAO = DaoHelper.getDepartementDAO();
 	DegreeCourseDAO degreeCourseDAO = DaoHelper.getDegreeCourseDAO();
 	
@@ -305,12 +301,9 @@ public class DBInitializatorController {
      */
     private void dbCourseClassInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("CourseClasses creation...", locale);	
-	//CourseClassDAO courseClassDao = (CourseClassDAOImpl) appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 	CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
-	//UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
 	UserDAO userDao = DaoHelper.getUserDAO();
 	List<Professor> allProfessors = userDao.getAllProfessors();
-	//DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAOImpl) appContext.getBean("degreeCourseDAO", DegreeCourseDAOImpl.class);
 	DegreeCourseDAO degreeCourseDAO = DaoHelper.getDegreeCourseDAO();
 	List<DegreeCourse> allDegreeCourses = degreeCourseDAO.getAllDegreeCourses();
 	
@@ -321,7 +314,7 @@ public class DBInitializatorController {
 	
 	CourseClass courseClass1 = new CourseClass(
 		1, 
-		"EnterpriseApplications", 
+		"Enterprise Applications", 
 		5, 
 		DateTimeFactory.getRandomDateBetweenMonths(year+deltaYear, Calendar.SEPTEMBER, Calendar.JUNE).getTime(), 
 		null, 
@@ -460,9 +453,6 @@ public class DBInitializatorController {
     @SuppressWarnings("deprecation")
     private void dbRegistrationStudentClassInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("RegistrationStudentClasses creation...", locale);
-	//		RegistrationStudentClassDAO registrationStudentClassDAO = (RegistrationStudentClassDAOImpl) appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
-	//		UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	//		CourseClassDAO courseClassDao = (CourseClassDAOImpl) appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	UserDAO userDao = DaoHelper.getUserDAO();
 	CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
@@ -498,8 +488,6 @@ public class DBInitializatorController {
     @SuppressWarnings("deprecation")
     private void dbLectureInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Lectures creation...", locale);
-	//	LectureDAO lectureDAO = (LectureDAOImpl) appContext.getBean("lectureDAO", LectureDAOImpl.class);
-	//	CourseClassDAO courseClassDao = (CourseClassDAOImpl) appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 	LectureDAO lectureDAO = DaoHelper.getLectureDAO();
 	CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
 	
@@ -558,8 +546,6 @@ public class DBInitializatorController {
      */
     private void dbAttendanceStudentLectureInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("AttendanceStudentLectures creation...", locale);
-	//	AttendanceStudentLectureDAO attendanceStudentLectureDAO = (AttendanceStudentLectureDAOImpl) appContext.getBean("attendanceStudentLectureDAO", AttendanceStudentLectureDAOImpl.class);	
-	//	RegistrationStudentClassDAO registrationStudentClassDAO = (RegistrationStudentClassDAOImpl) appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 	AttendanceStudentLectureDAO attendanceStudentLectureDAO = DaoHelper.getAttendanceStudentLectureDAO();	
 	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	
@@ -592,8 +578,6 @@ public class DBInitializatorController {
      */
     private void dbMaterialInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Materials creation...", locale);		
-	//	MaterialDAO materialDAO = (MaterialDAOImpl) appContext.getBean("materialDAO", MaterialDAOImpl.class);
-	//	LectureDAO lectureDAO = (LectureDAOImpl) appContext.getBean("lectureDAO", LectureDAOImpl.class);
 	MaterialDAO materialDAO = DaoHelper.getMaterialDAO();
 	LectureDAO lectureDAO = DaoHelper.getLectureDAO();
 	
@@ -619,8 +603,6 @@ public class DBInitializatorController {
      */
     private void dbHomeworkInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Homeworks creation...", locale);		
-	//	HomeworkDAO homeworkDAO = (HomeworkDAOImpl) appContext.getBean("homeworkDAO", HomeworkDAOImpl.class);
-	//	LectureDAO lectureDAO = (LectureDAOImpl) appContext.getBean("lectureDAO", LectureDAOImpl.class);
 	HomeworkDAO homeworkDAO = DaoHelper.getHomeworkDAO();
 	LectureDAO lectureDAO = DaoHelper.getLectureDAO();
 	
@@ -643,10 +625,9 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table HomeworkStudentSolving.
      */
+    @SuppressWarnings("deprecation")
     private void dbHomeworkStudentSolvingInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("HomeworkStudentSolvings creation...", locale);	
-	//	HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = (HomeworkStudentSolvingDAOImpl) appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
-	//	RegistrationStudentClassDAO registrationStudentClassDAO = (RegistrationStudentClassDAOImpl) appContext.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 	HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = DaoHelper.getHomeworkStudentSolvingDAO();
 	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	
@@ -681,12 +662,9 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table QuestionAnswer.
      */
+    @SuppressWarnings("unused")
     private void dbQuestionAnswerInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Question and Answer creation...", locale);	
-	//	AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
-	//	QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
-	//	LectureDAO lectureDAO = (LectureDAOImpl) appContext.getBean("lectureDAO", LectureDAOImpl.class);
-	//	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
 	AnswerDAO answerDAO = DaoHelper.getAnswerDAO();
 	QuestionDAO questionDAO = DaoHelper.getQuestionDAO();
 	LectureDAO lectureDAO = DaoHelper.getLectureDAO();
@@ -764,8 +742,6 @@ public class DBInitializatorController {
     @SuppressWarnings("deprecation")
     private void dbExamInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Exams creation...", locale);	
-	//	ExamDAO examDAO = (ExamDAOImpl) appContext.getBean("examDAO", ExamDAOImpl.class);	
-	//	CourseClassDAO courseClassDao = (CourseClassDAOImpl) appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 	ExamDAO examDAO = DaoHelper.getExamDAO();	
 	CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
 	
@@ -818,9 +794,6 @@ public class DBInitializatorController {
      */
     private void dbStudentExamPartecipationInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("StudentExamPartecipations creation...", locale);
-	//	StudentExamPartecipationDAO studentExamPartecipationDAO = (StudentExamPartecipationDAOImpl) appContext.getBean("studentExamPartecipationDAO", StudentExamPartecipationDAOImpl.class);	
-	//	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	//	ExamDAO examDAO = (ExamDAOImpl) appContext.getBean("examDAO", ExamDAOImpl.class);	
 	StudentExamPartecipationDAO studentExamPartecipationDAO = DaoHelper.getStudentExamPartecipationDAO();	
 	UserDAO userDao = DaoHelper.getUserDAO();		
 	ExamDAO examDAO = DaoHelper.getExamDAO();
@@ -856,9 +829,6 @@ public class DBInitializatorController {
     @SuppressWarnings("deprecation")
     private void dbEventInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Events creation...", locale);	
-	//	EventDAO eventDAO = (EventDAOImpl) appContext.getBean("eventDao", EventDAOImpl.class);	
-	//	UserDAO userDao = (UserDAOImpl)  appContext.getBean("userDao", UserDAOImpl.class);		
-	//	CourseClassDAO courseClassDao = (CourseClassDAOImpl) appContext.getBean("courseClassDAO", CourseClassDAOImpl.class);
 	EventDAO eventDAO = DaoHelper.getEventDAO();	
 	UserDAO userDao = DaoHelper.getUserDAO();		
 	CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
@@ -897,6 +867,7 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table Communication.
      */
+    @SuppressWarnings("unused")
     private void dbCommunicationInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("Communications creation...", locale);	
 	//	CommunicationsDAO communicationsDAO = (CommunicationsDAOImpl) appContext.getBean("communicationsDAO", CommunicationsDAOImpl.class);	
@@ -926,6 +897,7 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table QuestionAttachedContent.
      */
+    @SuppressWarnings("unused")
     private void dbQuestionAttachedContentInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("QuestionAttachedContents creation...", locale);	
 	//	QuestionAttachedContentDAO questionAttachedContentDAO = (QuestionAttachedContentDAOImpl) appContext.getBean("questionAttachedContentDAO", QuestionAttachedContentDAOImpl.class);
@@ -952,6 +924,7 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table AnswerAttachedContent.
      */
+    @SuppressWarnings("unused")
     private void dbAnswerAttachedContentInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("AnswerAttachedContents creation...", locale);	
 	//	AnswerAttachedContentDAO answerAttachedContentDAO = (AnswerAttachedContentDAOImpl) appContext.getBean("answerAttachedContentDAO", AnswerAttachedContentDAOImpl.class);	
@@ -978,6 +951,7 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table HomeworkAttached.
      */
+    @SuppressWarnings("unused")
     private void dbHomeworkAttachedInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("HomeworkAttacheds creation...", locale);
 	//	HomeworkAttachedDAO homeworkAttachedDAO = (HomeworkAttachedDAOImpl) appContext.getBean("homeworkAttachedDAO", HomeworkAttachedDAOImpl.class);	
@@ -1002,6 +976,7 @@ public class DBInitializatorController {
     /**
      * Functions that insert values in table HomeworkAttachedStudentSolving.
      */
+    @SuppressWarnings("unused")
     private void dbHomeworkAttachedStudentSolvingInit(Locale locale, Model model, HttpServletRequest request){
 	logger.info("HomeworkAttachedStudentSolvings creation...", locale);
 	//	HomeworkAttachedStudentSolvingDAO homeworkAttachedStudentSolvingDAO = (HomeworkAttachedStudentSolvingDAOImpl) appContext.getBean("homeworkAttachedStudentSolvingDAO", HomeworkAttachedStudentSolvingDAOImpl.class);	

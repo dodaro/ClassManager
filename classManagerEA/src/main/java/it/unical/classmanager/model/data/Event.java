@@ -57,7 +57,7 @@ public class Event implements Serializable  {
 	private int type;
 	
 	@Column(name="editable", nullable=true)
-	private boolean editable;
+	private Boolean editable;
 	
 	//	Foreign key section	
 	@ManyToOne

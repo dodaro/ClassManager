@@ -48,6 +48,7 @@
 				<beans:value>/i18n/invitation/messages_invitation</beans:value>
 				<beans:value>/i18n/course/messages_course</beans:value>
 				<beans:value>/i18n/scores/messages_scores</beans:value>
+				<beans:value>/i18n/attendance/messages_attendance</beans:value>
 			</beans:array>
 		</beans:property>
 		<beans:property name="fallbackToSystemLocale" value="false" />

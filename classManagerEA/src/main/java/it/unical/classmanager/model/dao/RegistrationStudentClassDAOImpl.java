@@ -148,7 +148,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = "select C.name, P.username "
+	String hql = "select C.name, C.cfu, C.referenceYear, P.username "
 		+ "from CourseClass C join C.professor P "
 		+ "where C.name not in ("
 		+ " select C1.name "
@@ -162,39 +162,18 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getSelectableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;
     }
     
     @Override
     public List<Object[]> getSelectableCourse(Professor professor) {
 	List<Object[]> result = new ArrayList<Object[]>();
-	
 	List<CourseClass> courseClasses = DaoHelper.getCourseClassDAO().getCourseClasses(professor);
-	
 	for(int i=0; i<courseClasses.size(); i++){
 	    Object[] row = {""};
 	    row[0] = courseClasses.get(i).getName();
 	    result.add(row);
 	}
-	
 	return result;
     }
     
@@ -205,7 +184,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = " select C.name, P.username"
+	String hql = " select C.name, C.cfu, C.referenceYear, P.username "
 		+ " from RegistrationStudentClass R join R.student S "
 		+ " join R.courseClass C join C.professor P "
 		+ " where S.username = :nameStudent "
@@ -218,24 +197,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getCancellableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;	
     }
     
@@ -246,7 +207,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = "select S.username, S.identificationNumber "
+	String hql = "select S.username, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName "
 		+ "from Student S  "
 		+ "where S.username not in ("
 		+ " select S1.username "
@@ -260,25 +221,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getSelectableStudent("+courseClass.getName()+")");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	
-	//	Object[] el1 = {"Studente1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente2"};
-	//	result.add(el2);
-	
 	return result;	
     }
     
@@ -289,7 +231,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = " select S.username, S.identificationNumber "
+	String hql = " select S.username, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName "
 		+ " from RegistrationStudentClass R join R.student S "
 		+ " join R.courseClass C "
 		+ " where C.name = :nameCourse "
@@ -302,24 +244,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getCancellableStudent("+courseClass.getName()+")");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();	
-	//	Object[] el1 = {"Studente1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente2"};
-	//	result.add(el2);
-	
 	return result;	
     }
     
@@ -330,7 +254,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = " select C.name, P.username"
+	String hql = " select C.name, C.cfu, C.referenceYear, P.username "
 		+ " from RegistrationStudentClass R join R.student S "
 		+ " join R.courseClass C join C.professor P "
 		+ " where S.username = :nameStudent "
@@ -343,24 +267,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	result = query.list();
 	session.close();
 	
-	//	System.err.println("getAcceptableCourse(Student student)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();
-	//	Object[] el1 = {"Corso1", "Professore1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Corso2", "Professore2"};
-	//	result.add(el2);
-	
 	return result;
     }
     
@@ -371,7 +277,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = " select S.username, C.name "
+	String hql = " select S.username, C.name, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName  "
 		+ " from RegistrationStudentClass R join R.student S "
 		+ " join R.courseClass C join C.professor P "
 		+ " where P.username = :nameProfessor "
@@ -383,26 +289,6 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 	query.setParameter("nameProfessor", professor.getUsername());
 	result = query.list();
 	session.close();
-	
-	//	System.err.println("getAcceptableStudent(Professor professor)");
-	//	for(int i=0; i<result.size(); i++){
-	//	    Object[] objects = result.get(i);
-	//	    for(int j=0; j<objects.length; j++){
-	//		if(j>0){
-	//		    System.out.print(", ");
-	//		}
-	//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-	//	    }
-	//	    System.out.println();
-	//	}
-	
-	//	result = new ArrayList<Object[]>();	
-	//	Object[] el1 = {"Studente1", "Corso1"};
-	//	result.add(el1);
-	//	Object[] el2 = {"Studente1", "Corso2"};
-	//	result.add(el2);
-	//	Object[] el3 = {"Studente2", "Corso1"};
-	//	result.add(el3);
 	
 	return result;	
     }

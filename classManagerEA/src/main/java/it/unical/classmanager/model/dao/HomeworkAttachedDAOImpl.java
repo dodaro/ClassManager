@@ -67,6 +67,7 @@ public class HomeworkAttachedDAOImpl implements HomeworkAttachedDAO {
 		return homeworkAttached;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<HomeworkAttached> getAllHomeworkAttacheds(int idHomework) {
 		

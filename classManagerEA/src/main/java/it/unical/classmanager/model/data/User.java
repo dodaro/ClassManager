@@ -250,7 +250,7 @@ public class User implements Serializable {
 	}
 	
 	public void setHash(String hash) {
-		this.hash = PasswordHashing.getInstance().getHashAndSalt(hash);
+		this.hash = hash;
 	}
 	
 	public String getHash() {

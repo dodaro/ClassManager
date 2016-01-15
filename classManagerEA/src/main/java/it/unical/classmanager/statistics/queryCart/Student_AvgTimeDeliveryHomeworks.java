@@ -48,8 +48,9 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	 * ...
 	 * Course, AvgTime
 	 */
-	
-	cart.setTitle(messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_Title",null,locale));
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_Title",null,locale));
 	
 	StringBuilder categories = new StringBuilder("");
 	for(int i=0; i<avgTimeDeliveryHomeworksByStudent.size(); i++){
@@ -59,10 +60,10 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 		categories.append(", \'"+avgTimeDeliveryHomeworksByStudent.get(i)[0].toString()+"\'");		
 	    }
 	}
-	cart.setxAxisCategories(categories.toString());
-	cart.setyAxisMinValue(0);
-	StringBuilder seriesContent = new StringBuilder("");
+	cart.setProperty("#xAxisCategories", categories.toString());
+	cart.setProperty("#yAxisMin", "0");
 	
+	StringBuilder seriesContent = new StringBuilder("");
 	seriesContent.append("{name: \'"+messageSource.getMessage("message.statistics.Student_AvgTimeDeliveryHomeworks_SeriesContentName",null,locale)+"\', data: [");
 	for(int i=0; i<avgTimeDeliveryHomeworksByStudent.size(); i++){
 	    float avgValue = Float.parseFloat(avgTimeDeliveryHomeworksByStudent.get(i)[1].toString());
@@ -73,8 +74,7 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	    }
 	}
 	seriesContent.append("], pointPlacement: \'on\'}");
-	
-	cart.setSeriesContent(seriesContent);
+	cart.setProperty("#series", seriesContent.toString());
 	
 	return cart;
     }

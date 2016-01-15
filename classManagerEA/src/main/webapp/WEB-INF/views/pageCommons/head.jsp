@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script src="/resources/lib/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 
+
 <link rel="stylesheet" type="text/css" href="/resources/lib/bootstrap-3.3.5-dist/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="resources/style/style.css" />
 <link rel="stylesheet" type="text/css" href="/resources/style/nav-bar.css" />

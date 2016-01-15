@@ -1,11 +1,11 @@
 package it.unical.classmanager.model.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Communications;
@@ -37,8 +37,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void delete(User user){
-		this.dbHandler.delete(user);
+	public boolean delete(User user){
+		return this.dbHandler.delete(user) == null;
 	}
 
 
@@ -115,34 +115,27 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public void promoteUser(User user) {
-//		delete(user);
-//		Session session = this.dbHandler.getSessionFactory().openSession();
-//		Transaction tx = null;
-//		try {
-//			tx = session.beginTransaction();
-//			//THIS IS A FAKE PASSWORD
-//			user.setPassword("password");
-//			user.setConfirmPassword(user.getPassword());
-//			user.setRole("Professor");
-//			Professor professor = new Professor(user,0,new ArrayList<Communications>(),new ArrayList<CourseClass>());
-//			create(professor);
-//			tx.commit();
-//		} catch ( Exception e ) {
-//			tx.rollback();
-//			create(user);
-//		} finally {
-//			session.close();
-//		}
-		delete(user);
+	public boolean doAction(User user,String action) {
+
+		if ( !delete(user) ) {
+			return false;
+		}
+		
 		//THIS IS A FAKE PASSWORD
 		user.setPassword("password");
 		user.setConfirmPassword(user.getPassword());
-		user.setRole("Professor");
-		Professor professor = new Professor(user,0,new ArrayList<Communications>(),new ArrayList<CourseClass>());
-		create(professor);
+		if ( action.equals("promote") ) {
+			user.setRole("Professor");
+			Professor professor = new Professor(user,0,new ArrayList<Communications>(),new ArrayList<CourseClass>());
+			create(professor);
+		} else if ( action.equals("demote") ) {
+			user.setRole("Student");
+			Student student = new Student(user);
+			student.setSubscriptionDate(new Date());
+			create(student);
+		}
+		return true;
 	}
 	
 }
-
 

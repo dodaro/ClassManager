@@ -71,6 +71,7 @@ public class HomeworkStudentSolvingDAOImpl implements HomeworkStudentSolvingDAO
 		return homeworkStudentSolving;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<HomeworkStudentSolving> getAllHomeworkStudentSolvings(String studentId) {
 		

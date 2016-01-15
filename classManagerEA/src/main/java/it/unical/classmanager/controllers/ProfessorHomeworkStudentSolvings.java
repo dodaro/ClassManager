@@ -125,7 +125,7 @@ public class ProfessorHomeworkStudentSolvings {
 	}
 
 	@RequestMapping(value = "/studentHomeworks", method = RequestMethod.GET)
-	public String getStudentsHomeworkSolvings(Model model, @RequestParam("id") String studentId) {
+	public String getStudentsHomeworkSolvings(Model model, @RequestParam("username") String studentId) {
 
 		model.addAttribute("customHeader", ProfessorHomeworkStudentSolvings.HEADER);
 		model.addAttribute("customBody", ProfessorHomeworkStudentSolvings.HSS_BODY);
@@ -142,12 +142,12 @@ public class ProfessorHomeworkStudentSolvings {
 		for (HomeworkStudentSolving solution : allHomeworkStudentSolvings) {
 
 			String name = solution.getHomework().getName();
-			String folderPath = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.STUDENTS_PATH + File.separator + solution.getStudent().getUsername() + File.separator + FileManager.HOMEWORK_PATH + solution.getId();
+			String folderPath = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.STUDENTS_PATH + File.separator + solution.getStudent().getUsername() + File.separator + FileManager.HOMEWORK_PATH + File.separator + solution.getId();
 
 			int childs = solution.getHomeworkAttachedStudentSolvings().size();
 
 			FolderBean folder = new FolderBean(solution.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
-			folder.setParentId(solution.getStudent().getIdentificationNumber());
+			//folder.setParentId(studentId);
 			folder.setAction("/professorStudentHomeworkAttachments");
 			folder.setId(solution.getId());
 			files.add(folder);
@@ -158,15 +158,17 @@ public class ProfessorHomeworkStudentSolvings {
 		model.addAttribute("pwd",FileManager.HOMEWORK_PATH);
 
 		//BACK PAGE
-		String referred = "/studentsHomeworks?id" + studentId;
+		String referred = "/students";
 		model.addAttribute("backPage", referred);
+		
+		model.addAttribute("parentId", studentId);
 
 		return "layout";
 	}
 
 
 	@RequestMapping(value = "/professorStudentHomeworkAttachments", method = RequestMethod.GET)
-	public String getStudentsHomeworkSolvingsAttachmets(Model model, @RequestParam("id") int homeworkStudentSolvingId) {
+	public String getStudentsHomeworkSolvingsAttachmets(Model model, @RequestParam("id") int homeworkStudentSolvingId, @RequestParam("parentId") String parentId) {
 
 		model.addAttribute("customHeader", ProfessorHomeworkStudentSolvings.HEADER);
 		model.addAttribute("customBody", ProfessorHomeworkStudentSolvings.HSS_BODY);
@@ -195,7 +197,7 @@ public class ProfessorHomeworkStudentSolvings {
 		model.addAttribute("pwd",FileManager.HOMEWORK_PATH);
 
 		//BACK PAGE
-		String referred = "/professorStudentHomeworkAttachments?path=" + homeworkStudentSolvingId;
+		String referred = "/studentHomeworks?username=" + parentId;
 		model.addAttribute("backPage", referred);
 
 		return "layout";

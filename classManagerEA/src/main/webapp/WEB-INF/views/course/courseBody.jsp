@@ -1,10 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="row row-content">
 	<div class="col-sm-6 col-md-6 col-lg-6">
-		<h3 class="text-muted">Courses <small>- ${professor.username}</small></h3>
+		<h3 class="text-muted"><spring:message code="message.course.courses" text="default text"/> <small>- ${professor.username}</small></h3>
 	</div>
 	<div class="col-sm-6 col-md-6 col-lg-6">
 		<div style="float:right;">
@@ -110,7 +110,9 @@
 	      	 	</form:form>
 	      	</div>
 	      	<div class="modal-footer">
-	        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">
+					<spring:message code="message.course.closeModal" text="default text"/>
+				</button>
 	      	</div>
 	    </div>	
 	 </div>

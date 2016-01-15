@@ -108,29 +108,43 @@ var ListenersManager = (function(){
 			alreadyInitialized = true;
 			
 			$("#new-post").click(function(data) {
+				toggleEditor();
+				$("#notice-id").val(-1);
+			});
+			
+			function toggleEditor() {
 				if ( $("#form-div").is(":visible") ) {
 					$("#form-div").hide();
 				} else {
 					$("#form-div").show();
 				}
-			});
+			}
 			
 			
 			$(".edit").click(function(data) {
-				var form = $(this).closest(".row").find(".form-edit-div");
-				console.log(form);
-				if ( form.is(":visible") ) {
-					form.hide();
-				} else {
-					form.show();
-				}
+				$("#form-div").show();
+				var id = $(this).parent().find("form > input[name=post-id]").val();
+				var title = $(this).closest(".row").find("h4").first().html();
+				var message = $(this).closest(".row").find("p").html();
+				console.log(message);
+				$("#notice-title").val(title);
+				$("#notice-id").val(id);
+				CKEDITOR.instances["textEditor"].setData(message);
 				
-				form.find(".textEditor")
-				CKEDITOR.replace(newPostAreaName);
 			});
-		
+			
+			var form;
+			
+			$("form[action=deletenotice]").find("button[type=submit]").click(function(event){
+				event.preventDefault();
+				$('#prompt-modal').modal('toggle')
+				form = $(this).parent();
+			});
 			
 			
+			$("#do-delete").click(function(){
+				form.submit();
+			});
 			
 			
 		}
@@ -155,5 +169,4 @@ var ListenersManager = (function(){
     };
     
 })();
-
 

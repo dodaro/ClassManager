@@ -39,6 +39,9 @@ public class InsertAnswerController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "forum/insertAnswerHead.jsp";
+	private final static String BODY = "forum/insertAnswerBody.jsp";
+	
 	
 	@RequestMapping(value = "/forum/createAnswer", method = RequestMethod.POST)
 	public String createAnswer(Locale locale, Model model, HttpServletRequest request) {
@@ -53,7 +56,10 @@ public class InsertAnswerController {
 		Answer answer = new Answer();
 		model.addAttribute("answer", answer);
 			
-		return "forum/insertAnswer";
+		model.addAttribute("customHeader", InsertAnswerController.HEADER);
+		model.addAttribute("customBody", InsertAnswerController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -90,7 +96,10 @@ public class InsertAnswerController {
 			model.addAttribute("attachments", attachemnts);
 			model.addAttribute("attachmentsID", attachedFilesID);
 			
-			return "forum/insertAnswer";
+			model.addAttribute("customHeader", InsertAnswerController.HEADER);
+			model.addAttribute("customBody", InsertAnswerController.BODY);
+			
+			return "layout";
 		}
 		
 		

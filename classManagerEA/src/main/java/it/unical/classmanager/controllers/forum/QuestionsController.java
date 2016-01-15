@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import it.unical.classmanager.controllers.CalendarController;
 import it.unical.classmanager.controllers.forum.manager.QuestionManager;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
@@ -27,6 +27,9 @@ public class QuestionsController {
 	private ApplicationContext appContext;
 	
 	private QuestionManager questionManager;
+	
+	private final static String HEADER = "forum/questionsHead.jsp";
+	private final static String BODY = "forum/questionsBody.jsp";
 	
 
 	@RequestMapping(value = {"/questions", "/forum"}, method = RequestMethod.GET)
@@ -49,7 +52,11 @@ public class QuestionsController {
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber())+1);
 		model.addAttribute("pageSize", this.questionManager.getPageSize());
 		
-		return "forum/questions";
+		
+		model.addAttribute("customHeader", QuestionsController.HEADER);
+		model.addAttribute("customBody", QuestionsController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -68,7 +75,10 @@ public class QuestionsController {
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber())+1);
 		model.addAttribute("pageSize", this.questionManager.getPageSize());
 		
-		return "forum/questions";
+		model.addAttribute("customHeader", QuestionsController.HEADER);
+		model.addAttribute("customBody", QuestionsController.BODY);
+		
+		return "layout";
 	}
 	
 	

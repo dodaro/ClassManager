@@ -39,7 +39,8 @@ public class ModifyAnswerController {
 	@Autowired
 	private ApplicationContext appContext;
 	
-	
+	private final static String HEADER = "forum/modifyAnswerHead.jsp";
+	private final static String BODY = "forum/modifyAnswerBody.jsp";
 	
 	@RequestMapping(value = "/forum/modifyAnswer", method = RequestMethod.POST)
 	public String modifyAnswer(Locale locale, Model model, HttpServletRequest request) {
@@ -70,7 +71,10 @@ public class ModifyAnswerController {
 		model.addAttribute("preAttachmentsID", preAttachmentsID);
 		
 			
-		return "forum/modifyAnswer";
+		model.addAttribute("customHeader", ModifyAnswerController.HEADER);
+		model.addAttribute("customBody", ModifyAnswerController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -129,7 +133,10 @@ public class ModifyAnswerController {
 
 			model.addAttribute("question", question);
 			
-			return "forum/modifyAnswer";
+			model.addAttribute("customHeader", ModifyAnswerController.HEADER);
+			model.addAttribute("customBody", ModifyAnswerController.BODY);
+			
+			return "layout";
 		}
 		
 		

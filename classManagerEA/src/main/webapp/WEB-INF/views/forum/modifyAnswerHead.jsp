@@ -7,14 +7,13 @@
 
 
 <script>
- document.title = '<spring:message code="message.forum.modifyQuestionTitle"/>';
+ document.title = '<spring:message code="message.forum.modifyAnswerTitle"/>';
 </script>
 
 <link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
 
 <script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="/resources/script/forum/modifyQuestion.js"></script>
-
+<script type="text/javascript" src="/resources/script/forum/modifyAnswer.js"></script>
 
 <script src="/resources/script/fileBrowserScript.js"></script>
 <script src="/resources/lib/uploadFile-lib/jquery.knob.js"></script>
@@ -24,6 +23,7 @@
 <script src="/resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
 
 <script src="/resources/script/forum/uploadModifyAttachment.js"></script>
+
 
 <style>
 	body {

@@ -84,10 +84,7 @@ public class Student_AvgAttendance extends AbstractQueryCart {
 	StringBuilder drilldownContent = new StringBuilder("");
 	drilldownContent.append("{}");	
 	cart.setProperty("#drilldownSeries", drilldownContent.toString());
-	
-	// Build the final cart!
-	cart.getCartScript();
-	
+
 	return cart;
     }
     

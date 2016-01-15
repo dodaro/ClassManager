@@ -45,7 +45,7 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	 * CourseClass, AvgAttendance
 	 * CourseClass, AvgAttendance
 	 */
-
+	
 	cart.setProperty("#container", idContainer);
 	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_Title",null,locale));
 	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Professor_AvgAttendanceStudent_SubTitle",null,locale));
@@ -80,9 +80,6 @@ public class Professor_AvgAttendanceStudent extends AbstractQueryCart {
 	
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setProperty("#drilldownSeries", drilldownContent.toString());
-	
-	// Build the final cart!
-	cart.getCartScript();
 	
 	return cart;
     }

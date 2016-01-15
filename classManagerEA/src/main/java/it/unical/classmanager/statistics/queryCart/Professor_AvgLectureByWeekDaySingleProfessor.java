@@ -76,9 +76,6 @@ public class Professor_AvgLectureByWeekDaySingleProfessor extends AbstractQueryC
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setProperty("#drilldownSeries", drilldownContent.toString());
 	
-	// Build the final cart!
-	cart.getCartScript();
-	
 	return cart;
     }
     

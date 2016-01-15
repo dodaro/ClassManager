@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;

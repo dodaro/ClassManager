@@ -119,9 +119,6 @@ public class Professor_AvgScoreHomework extends AbstractQueryCart {
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setProperty("#drilldownSeries", drilldownContent.toString());
 	
-	// Build the final cart!
-	cart.getCartScript();
-	
 	return cart;
     }
     

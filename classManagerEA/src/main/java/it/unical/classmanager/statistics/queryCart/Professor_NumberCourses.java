@@ -73,10 +73,7 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	seriesContent.append("]\n");
 	seriesContent.append("}");
 	cart.setProperty("#series", seriesContent.toString());
-	
-	// Build the final cart!
-	cart.getCartScript();
-	
+
 	return cart;
     }
     

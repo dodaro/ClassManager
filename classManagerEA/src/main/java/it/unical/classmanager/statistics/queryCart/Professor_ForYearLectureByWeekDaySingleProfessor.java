@@ -130,9 +130,6 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	StringBuilder drilldownContent = new StringBuilder("");
 	cart.setProperty("#drilldownSeries", drilldownContent.toString());
 	
-	// Build the final cart!
-	cart.getCartScript();
-	
 	return cart;
     }
     

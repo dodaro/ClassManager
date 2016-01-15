@@ -135,6 +135,10 @@ public abstract class AbstractCart  {
 	
 	return cartScript.toString();
     }
+ 
+    /*********************/
+    /*	  SET AND GET	 */
+    /*********************/
     
     public StringBuilder getCartScript() {
 	if(cartScript==null){
@@ -142,10 +146,6 @@ public abstract class AbstractCart  {
 	}
 	return cartScript;
     }
-    
-    /*********************/
-    /*	  SET AND GET	 */
-    /*********************/
     
     public void setCartScript(StringBuilder cartScript) {
 	this.cartScript = cartScript;

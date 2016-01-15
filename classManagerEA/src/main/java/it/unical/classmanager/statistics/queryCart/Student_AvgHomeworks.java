@@ -75,10 +75,7 @@ public class Student_AvgHomeworks extends AbstractQueryCart {
 	}
 	seriesContent.append("], pointPlacement: \'on\'}");
 	cart.setProperty("#series", seriesContent.toString());
-	
-	// Build the final cart!
-	cart.getCartScript();
-	
+
 	return cart;
     }
     

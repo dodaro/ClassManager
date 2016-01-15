@@ -103,9 +103,6 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	}
 	cart.setProperty("#series", seriesContent.toString());
 	
-	// Build the final cart!
-	cart.getCartScript();
-	
 	return cart;
     }
     

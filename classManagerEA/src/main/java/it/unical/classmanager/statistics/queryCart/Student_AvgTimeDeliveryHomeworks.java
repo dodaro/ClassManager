@@ -76,9 +76,6 @@ public class Student_AvgTimeDeliveryHomeworks extends AbstractQueryCart {
 	seriesContent.append("], pointPlacement: \'on\'}");
 	cart.setProperty("#series", seriesContent.toString());
 	
-	// Build the final cart!
-	cart.getCartScript();
-	
 	return cart;
     }
     

@@ -31,7 +31,6 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
      */
     @Override
     protected AbstractCart buildCartFromQuery() {
-	//return buildCartFromQuery(new AreaStackedCart());
 	return buildCartFromQuery(new LineBasicCart());
     }
     
@@ -113,10 +112,7 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 	    }
 	}
 	cart.setProperty("#series", seriesContent.toString());
-	
-	// Build the final cart!
-	cart.getCartScript();
-	
+
 	return cart;
     }
     

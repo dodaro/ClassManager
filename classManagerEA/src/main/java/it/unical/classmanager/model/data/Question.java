@@ -42,10 +42,6 @@ public class Question implements Serializable  {
 	@JoinColumn(name = "user")
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name = "lecture")
-	private Lecture lecture;
-	
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Answer> answers;
@@ -59,18 +55,16 @@ public class Question implements Serializable  {
 		this.title = "";
 		this.description = "";
 		this.user = null;
-		this.lecture = null;
 		this.answers = new ArrayList<Answer>();
 		this.questionAttachedContents = new ArrayList<QuestionAttachedContent>();
 	}
 
-	public Question(int id, String title, String description, User user, Lecture lecture, List<Answer> answers,
+	public Question(int id, String title, String description, User user, List<Answer> answers,
 			List<QuestionAttachedContent> questionAttachedContents) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.user = user;
-		this.lecture = lecture;
 		this.answers = answers;
 		this.questionAttachedContents = questionAttachedContents;
 	}
@@ -107,14 +101,6 @@ public class Question implements Serializable  {
 		this.user = user;
 	}
 
-	public Lecture getLecture() {
-		return lecture;
-	}
-
-	public void setLecture(Lecture lecture) {
-		this.lecture = lecture;
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -138,7 +124,6 @@ public class Question implements Serializable  {
 		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((lecture == null) ? 0 : lecture.hashCode());
 		result = prime * result + ((questionAttachedContents == null) ? 0 : questionAttachedContents.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
@@ -165,11 +150,6 @@ public class Question implements Serializable  {
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
-			return false;
-		if (lecture == null) {
-			if (other.lecture != null)
-				return false;
-		} else if (!lecture.equals(other.lecture))
 			return false;
 		if (questionAttachedContents == null) {
 			if (other.questionAttachedContents != null)

@@ -25,6 +25,9 @@
 		class="glyphicon glyphicon-send"></span> <spring:message
 			code="message.noticeboard" text="default text" /> senza init
 </a></li>
+<li><a href="/editor"> <span class="glyphicon glyphicon-modal-window"></span>
+		Editor
+</a></li>
 <li><a href="#"> <span class="glyphicon glyphicon-send"></span>
 		Apri cancello
 </a></li>

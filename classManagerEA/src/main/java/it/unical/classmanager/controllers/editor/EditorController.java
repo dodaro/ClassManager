@@ -32,6 +32,12 @@ public class EditorController {
 	private final static String BODY = "editor/editorBody.jsp";
 	
 	
+	@RequestMapping(value = "/editor", method = RequestMethod.GET)
+	public String redirecting(Locale locale, Model model) {
+		return "redirect:/editor/editor";
+	}
+	
+	
 	@RequestMapping(value = "/editor/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		

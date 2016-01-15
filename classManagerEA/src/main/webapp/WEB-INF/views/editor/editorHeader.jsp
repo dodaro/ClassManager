@@ -1,4 +1,7 @@
-	<title>Editor page</title>
+	
+	<script>
+	 document.title = "Editor page";
+	</script>
 	<link rel="stylesheet" type="text/css" href="/resources/style/editor.css">
 
 	<script src="/resources/lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>

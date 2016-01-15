@@ -3,7 +3,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false" %>
 
-	<div class="col-sm-12 col-md-12 col-lg-12 editorContainer">
+<div class="row row-content">
+	<div class="col-sm-12 col-md-12 col-lg-12 ">
 		
 			<div class="row">
 				<div class="col-md-2">
@@ -81,3 +82,4 @@
 			</div>
 		
 	</div>
+</div>

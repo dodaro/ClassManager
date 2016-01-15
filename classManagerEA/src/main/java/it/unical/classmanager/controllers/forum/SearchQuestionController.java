@@ -27,6 +27,8 @@ public class SearchQuestionController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "forum/searchQuestionHead.jsp";
+	private final static String BODY = "forum/searchQuestionBody.jsp";
 	
 	@RequestMapping(value = "/forum/searchQuestion", method = RequestMethod.GET)
 	public String getSearchQuestionForm(Locale locale, Model model) {
@@ -35,7 +37,10 @@ public class SearchQuestionController {
 		model.addAttribute("searchSettings", new QuestionSearchSetting());
 		model.addAttribute("questionsList", new ArrayList<Question>());
 		
-		return "forum/searchQuestion";
+		model.addAttribute("customHeader", SearchQuestionController.HEADER);
+		model.addAttribute("customBody", SearchQuestionController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -49,7 +54,10 @@ public class SearchQuestionController {
 		model.addAttribute("searchSettings", searchSettings);
 		model.addAttribute("questionsList", searchedQuestions);
 		
-		return "forum/searchQuestion";
+		model.addAttribute("customHeader", SearchQuestionController.HEADER);
+		model.addAttribute("customBody", SearchQuestionController.BODY);
+		
+		return "layout";
 	}
 	
 }

@@ -14,8 +14,10 @@ public class LectureWrapper{
 
 	private Lecture lecture;
 	
+	@SuppressWarnings("unused")
 	private int id;
 	
+	@SuppressWarnings("unused")
 	private int number;
 	
 	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
@@ -24,14 +26,17 @@ public class LectureWrapper{
 	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String description;
 	
+	@SuppressWarnings("unused")
 	private Date date;
 	
 	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	private String classroom;
-	
+
+	@SuppressWarnings("unused")
 	//@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
 	private String beginHour;
 
+	@SuppressWarnings("unused")
 	//@Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$")
 	private String endHour;
 	

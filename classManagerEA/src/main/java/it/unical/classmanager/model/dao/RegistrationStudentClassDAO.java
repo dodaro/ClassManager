@@ -31,9 +31,9 @@ public interface RegistrationStudentClassDAO {
 
 	public List<Object[]> getCancellableCourse( Student student);
 
-	public List<Object[]> getSelectableStudent( CourseClass courseClass);
+	public List<Object[]> getSelectableStudent( CourseClass courseClass, String research);
 
-	public List<Object[]> getCancellableStudent( CourseClass courseClass);
+	public List<Object[]> getCancellableStudent( CourseClass courseClass, String research);
 
 	public List<Object[]> getAcceptableCourse( Student student);
 

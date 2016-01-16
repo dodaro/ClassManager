@@ -4,41 +4,75 @@
 
 <jsp:include page="../pageCommons/head.jsp" flush="true" />
 
-
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="row">
-		<div class="col-sm-7 col-md-7 col-lg-7"></div>
-		<div class="col-sm-5 col-md-5 col-lg-5">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<form action="/sendInvitation" enctype="multipart/form-data"
-						method="post">
-						<h4>
-							<spring:message code="message.invitation.sendFile" />
-						</h4>
-						<br> <input
-							class="btn btn-default invitationActionButton pull-right"
-							type="file" name="sendFile" value="Input"> <br>
-						<hr>
-						<button class="btn btn-default invitationActionButton pull-right"
-							type="submit">Send</button>
-					</form>
-					<hr>
-					<c:if test="${not empty fileFormatError}">
-						<div class="alert alert-danger" role="alert">
-							<spring:message code="message.invitation.sendFileFormatError" />
+		<div class="col-sm-7 col-md-7 col-lg-7">
+			<!-- RESEARCH BAR -->
+			<c:if test="${not empty courseSelected}">
+				<form class="form-inline" action="/sendInvitation_research"
+					method="post">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</div>
+							<input type="text" class="form-control" name="researchBar"
+								placeholder="Reserch..."> <input type="hidden"
+								name="courseName" value="${courseSelected}">
 						</div>
-					</c:if>
-					<div class="alert alert-warning" role="alert">
-						<spring:message code="message.invitation.sendFileFormatHeader" />
-						<br>
-						<spring:message code="message.invitation.sendFileFormatContent" />
-						<br>
-						<spring:message code="message.invitation.sendFileFormatContent" />
-						<br> ...<br>
-						<spring:message code="message.invitation.sendFileFormatContent" />
-						<br>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						GO! <span class="glyphicon glyphicon-arrow-right"
+							aria-hidden="true"></span>
+					</button>
+					<button class="btn invitationActionButton" type="button"
+						data-toggle="collapse" data-target="#fileUpload"
+						aria-expanded="false" aria-controls="fileUpload">FileUpload</button>
+				</form>
+			</c:if>
+			<c:if test="${empty courseSelected}">
+				<button class="btn invitationActionButton" type="button"
+					data-toggle="collapse" data-target="#fileUpload"
+					aria-expanded="false" aria-controls="fileUpload">FileUpload</button>
+			</c:if>
+		</div>
+		<div class="col-sm-5 col-md-5 col-lg-5">
+			<div class="collapse" id="fileUpload">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<form action="/sendInvitation" enctype="multipart/form-data"
+							method="post">
+							<h4>
+								<spring:message code="message.invitation.sendFile" />
+							</h4>
+							<hr>
+							<input class="btn btn-default invitationActionButton pull-right"
+								type="file" name="sendFile" value="Input"> <br> <br>
+							<button class="btn btn-default invitationActionButton pull-right"
+								type="submit">
+								<span class="glyphicon glyphicon-cloud-upload"
+									aria-hidden="true"></span>
+								<spring:message code="message.sendFileUpload" />
+							</button>
+							<br> <br>
+						</form>
+						<c:if test="${not empty fileFormatError}">
+							<hr>
+							<div class="alert alert-danger" role="alert">
+								<spring:message code="message.invitation.sendFileFormatError" />
+							</div>
+						</c:if>
+						<div class="alert alert-warning" role="alert">
+							<spring:message code="message.invitation.sendFileFormatHeader" />
+							<br>
+							<spring:message code="message.invitation.sendFileFormatContent" />
+							<br>
+							<spring:message code="message.invitation.sendFileFormatContent" />
+							<br> ...<br>
+							<spring:message code="message.invitation.sendFileFormatContent" />
+							<br>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -74,6 +108,9 @@
 						</c:forEach>
 					</ul>
 				</div>
+				<c:if test="${not empty courseSelected}">
+					<button type="button" class="btn btn-success pull-right">${courseSelected}</button>
+				</c:if>
 			</div>
 			<br> <br> <br>
 			<c:if test="${not empty courseSelected}">

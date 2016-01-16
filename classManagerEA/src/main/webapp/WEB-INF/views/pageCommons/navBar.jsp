@@ -10,7 +10,17 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span>
 			</a> <a class="navbar-brand" href="#"> Class Manager </a>
 		</div>
-		<div class="navbar-header pull-right">
+		 <ul class="nav navbar-nav pull-right">
+			<li class="nav-bar-button dropdown pull-right">						
+				<input id="websocketUser" type="hidden" value="${loggedIn}" />		
+				<a onclick="resetBadge()" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-as-popup="true" aria-expanded="false" data-target="dropdown-menu">
+					<span class="glyphicon glyphicon-globe color-text-white" style="top:1px;">
+					</span>
+					<span id="badge" class="badge"></span>
+				</a>
+				<ul class="dropdown-menu notificationsWidth"  id="panelNotifications">
+				</ul>					
+			</li>
 			<a class="nav-bar-button logout" href="./db_init"><span
 				class="glyphicon glyphicon-log-out"></span>InitDB</a>
 			<c:if test="${empty loggedIn}">
@@ -30,7 +40,7 @@
 			<c:if test="${not empty loggedIn && role == 'admin' }">
 				<a class="nav-bar-button logout" href="userslist"><span
 					class="glyphicon glyphicon-log-out"></span>User List</a>
-			</c:if>
-		</div>
+			</c:if>	
+		</ul>
 	</div>
 </nav>

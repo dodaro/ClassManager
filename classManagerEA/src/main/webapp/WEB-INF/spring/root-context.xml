@@ -17,6 +17,7 @@
 	<context:component-scan
 		base-package="it.unical.classmanager.controllers.CalendarController" />
 	<mvc:annotation-driven />
+	
 
 	<!-- Configure the multipart resolver -->
 	<bean id="multipartResolver"
@@ -144,6 +145,9 @@
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 	<!-- End CartQueryDAO -->
+	<bean id="notificationDAO" class="it.unical.classmanager.model.dao.NotificationDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
 
 	<!-- DAO Helper -->
 	<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">

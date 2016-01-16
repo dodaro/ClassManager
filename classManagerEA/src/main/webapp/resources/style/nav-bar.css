@@ -50,8 +50,12 @@
 	background-color: #fff;
 }
 
+.color-text-white {
+	color: white;
+}
+
 /* NAV BAR BUTTONS */
-.nav-bar-button {
+a.nav-bar-button {
 	margin-bottom: 8px;
 	margin: 0;
 	padding: 15px 15px;
@@ -155,4 +159,56 @@ a:hover.nav-bar-button {
 .invitationCancelButton {
 	background-color: #FF0000;
 	color: #FFFFFF;
+}
+
+/* NOTIFICATIONS */
+.
+
+li.nav-bar-button 
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+li:hover.nav-bar-button 
+{
+	background: #FF9900;
+}
+
+li.nav-bar-button 
+{
+	height: 50px;
+	float: right;
+	transition: background-color 0.5s ease;
+}
+
+li:hover.open
+{
+	background: white;
+}
+
+li.open > a > span
+{
+	color: #FF6600;
+}
+
+.dropdown-toggle
+{
+	height: 50px;
+}
+
+.notificationsWidth
+{
+	min-width: 350px;
+}
+
+.badge
+{
+	background-color: white; color: #FF6600;
+}
+
+.notificationRow
+{
+	width:100%;
+	text-decoration: none;
 }

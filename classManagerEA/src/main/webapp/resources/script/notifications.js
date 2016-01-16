@@ -1,15 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Insert title here</title>
-<script src="resources/lib/jquery/jquery.min.js"></script>
-</head>
-<body>
-	<script>
-	var ws = new WebSocket("ws://localhost:8080/wsexample");
+var ws = new WebSocket("ws://localhost:8080/wsexample");
 
 	ws.onopen = function() 
 	{
@@ -19,24 +8,24 @@
 	ws.onmessage = function(evt) 
 	{
 	    //document.write("Message: " + evt.data);
-		takeNotifications();
+		takeNewNotifications();
 	};
 
 	ws.onclose = function() 
 	{
-	    document.write("<br>WebSocket closed");
+	    //document.write("<br>WebSocket closed");
 	};
 
 	ws.onerror = function(err) 
 	{
-	    document.write("Error: " + err);
+	    //document.write("Error: " + err);
 	};
 	
-	function takeNotifications() 
+	function takeNewNotifications() 
 	{		
         $.ajax(
         {
-            url : 'ajaxtest',
+            url : 'getNewNotifications',
 	  		datatype : 'text',
             success : function(data) 
             {
@@ -53,9 +42,11 @@
     }
 	function drawNotifications(notification)
 	{		
-		var source = 	'<span class="text-danger">'+notification[3]+'</span>' + 
-						'<span class="text-muted">'+notification[2]+'</span>' + 
-						'<spring:message code="'+notification[0]+'" text="Notification."/>';
+		var source = 	
+			'<span class="label label-success">New</span> ' + 
+			'<span class="text-muted">'+notification[2]+'</span>, ' + 
+			'<span class="text-danger">'+notification[3]+'</span>' + 
+			'<p class="text-info">'+notification[0]+'</p>';
 		var div = '<div class="notificationRow">'+source+'</div>';
 		var a = '<a href="'+notification[1]+'">'+div+'<a>';
 		var li = '<li>'+ a +'</li>'
@@ -66,11 +57,8 @@
     {
         ws.send(document.getElementById("message").value + "");
 	}
-	</script>
-	<input id="websocketUser" type="hidden" value="${websocketUser}" />
-				
-	<div id="panelNotifications">
 	
-	</div>	
-</body>
-</html>
+function resetBadge()
+{
+	$('#badge').html('');
+}

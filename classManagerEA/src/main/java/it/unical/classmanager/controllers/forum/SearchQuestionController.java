@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
+import it.unical.classmanager.controllers.forum.manager.QuestionManager;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.data.Question;
@@ -26,6 +28,8 @@ public class SearchQuestionController {
 	
 	@Autowired
 	private ApplicationContext appContext;
+	
+	//private QuestionManager questionManager;
 	
 	private final static String HEADER = "forum/searchQuestionHead.jsp";
 	private final static String BODY = "forum/searchQuestionBody.jsp";
@@ -50,14 +54,49 @@ public class SearchQuestionController {
 		
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
 		List<Question> searchedQuestions = questionDAO.searchQuestion(searchSettings);
+		//this.questionManager = new QuestionManager(searchedQuestions);
 		
 		model.addAttribute("searchSettings", searchSettings);
+		
 		model.addAttribute("questionsList", searchedQuestions);
+		
+		/*
+		model.addAttribute("questionsList", this.questionManager.getCurrentPageQuestions());
+		model.addAttribute("pageCount", this.questionManager.getPageCount());
+		
+		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber())+1);
+		model.addAttribute("pageSize", this.questionManager.getPageSize());
+		*/
 		
 		model.addAttribute("customHeader", SearchQuestionController.HEADER);
 		model.addAttribute("customBody", SearchQuestionController.BODY);
 		
 		return "layout";
 	}
+	
+	
+	/*
+	@RequestMapping(value = "/forum/questionsSearchedPage", method = RequestMethod.GET)
+	public String getSpecificSearchedPage(Locale locale, Model model, @ModelAttribute("searchSettings") QuestionSearchSetting searchSettings, @RequestParam("page") int pageNumber) {
+		
+		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		System.out.println(searchSettings.getUsername());
+		List<Question> searchedQuestions = questionDAO.searchQuestion(searchSettings);
+		
+		this.questionManager = new QuestionManager(searchedQuestions);
+		
+		model.addAttribute("searchSettings", searchSettings);
+		
+		model.addAttribute("questionsList", this.questionManager.getSpecificPageQuestions(pageNumber));
+		model.addAttribute("pageCount", this.questionManager.getPageCount());
+		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber())+1);
+		model.addAttribute("pageSize", this.questionManager.getPageSize());
+		
+		model.addAttribute("customHeader", SearchQuestionController.HEADER);
+		model.addAttribute("customBody", SearchQuestionController.BODY);
+		
+		return "layout";
+	}
+	*/
 	
 }

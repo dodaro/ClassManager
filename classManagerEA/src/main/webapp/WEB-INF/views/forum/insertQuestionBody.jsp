@@ -150,7 +150,7 @@
 							<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 								<div class="panel-body">
 									<div id="uploadFile_div">
-										<form id="upload" method="POST" action="/forum/uploadQuestionAttachment">
+										<form id="upload" method="POST" action="/forum/uploadQuestionAttachment" accept-charset="utf-8">
 											<div id="drop">
 												<spring:message code="lectureManager.drophere" text="default text" /> 
 												<a> <spring:message code="lectureManager.browse" text="default text" /> </a>

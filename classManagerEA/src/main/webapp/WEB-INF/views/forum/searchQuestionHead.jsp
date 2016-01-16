@@ -12,6 +12,9 @@
 <link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
+<script src="/resources/lib/bootpag/jquery.bootpag.min.js"></script>
+<script src="/resources/script/forum/searchQuestions.js"></script>
+
 
 <style>
 	body {

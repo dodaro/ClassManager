@@ -27,7 +27,7 @@
 									<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 										<div class="panel-body">
 
-											<form:form commandName="searchSettings" action="searchQuestion" method="POST">
+											<form:form commandName="searchSettings" action="searchQuestion" method="POST" acceptCharset="utf-8">
 
 												<div class="form-group">
 													<label for="questionNameInp"><spring:message code="message.forum.questionName" /></label>
@@ -70,7 +70,6 @@
 						</div>
 					</div>
 
-
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<div class="panel panel-default">
@@ -85,6 +84,18 @@
 
 								</div>
 								<div class="panel-body">
+								
+									<%--
+									<c:if test="${pageCount != 0}">
+										<div class="row">
+											<div class="col-sm-12 col-md-12 col-lg-12">
+												<div id="paginatorTop">
+												</div>
+											</div>
+										</div>
+									</c:if>
+									--%>
+								
 									<div class="row">
 										<div class="col-md-12">
 											
@@ -134,15 +145,28 @@
 										
 										</div>
 									</div>
+									
+									<%--
+									<c:if test="${pageCount != 0}">
+										<div class="row">
+											<div class="col-sm-12 col-md-12 col-lg-12">
+												<div id="paginatorBottom">
+												</div>
+											</div>
+										</div>
+									</c:if>
+									
+									<input type="hidden" value="${currPage }" id="currPage" />
+									<input type="hidden" value="${pageCount }" id="pageCount" />
+									<input type="hidden" value="${pageSize }" id="pageSize" />
+									--%>
 
 								</div>
 							</div>
 						</div>
 					</div>
-
-
-
-
+					
+					
 
 				</div>
 

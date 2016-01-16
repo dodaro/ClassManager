@@ -37,9 +37,8 @@ var QuestionsManager = (function(){
 			    maxVisible: $("#pageSize").val(),
 			    leaps: false
 			}).on("page", function(event, num){
-			    window.location.href = "questionsPage?page="+(num-1);
+			    window.location.href = "questionsSearchedPage?page="+(num-1);
 			});
-			
 			
 			$('#paginatorBottom').bootpag({
 			    total: $("#pageCount").val(),
@@ -47,7 +46,7 @@ var QuestionsManager = (function(){
 			    maxVisible: $("#pageSize").val(),
 			    leaps: false
 			}).on("page", function(event, num){
-			    window.location.href = "questionsPage?page="+(num-1);
+			    window.location.href = "questionsSearchedPage?page="+(num-1);
 			});
 			
 			

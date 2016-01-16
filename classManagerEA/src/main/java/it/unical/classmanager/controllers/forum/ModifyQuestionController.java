@@ -52,7 +52,6 @@ public class ModifyQuestionController {
 		
 		model.addAttribute("question", question);
 		
-		
 		List<QuestionAttachedContent> preAttachements = new ArrayList<QuestionAttachedContent>();
 		String preAttachmentsID = "";
 		
@@ -61,7 +60,10 @@ public class ModifyQuestionController {
 			preAttachements.add(tmpAttachment);
 		}
 		
-		preAttachmentsID = preAttachmentsID.substring(0, preAttachmentsID.length()-1);
+		if(preAttachmentsID.length() != 0) {
+			
+			preAttachmentsID = preAttachmentsID.substring(0, preAttachmentsID.length()-1);
+		}
 		
 		model.addAttribute("preAttachments", preAttachements);
 		model.addAttribute("preAttachmentsID", preAttachmentsID);
@@ -138,9 +140,10 @@ public class ModifyQuestionController {
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
+
 		User tmpUser = userDao.get(username);
-		
 		question.setUser(tmpUser);
+		
 		Question newQuestion =  questionDAO.update(question);
 		
 		String newAttachedFilesID = request.getParameter("newAttachedFilesID");

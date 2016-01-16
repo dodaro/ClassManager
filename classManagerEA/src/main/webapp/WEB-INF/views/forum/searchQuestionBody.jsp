@@ -46,6 +46,12 @@
 													<spring:message code='message.forum.questionAuthorPlace' var="authorPlace" />
 													<form:input path="username" type="text" class="form-control" id="authorInp" placeholder="${authorPlace }"></form:input>
 												</div>
+												
+												<div class="form-group">
+													<label for="authorInp"><spring:message code="message.forum.tags" /></label>
+													<spring:message code='message.forum.insertTags' var="tagsPlace" />
+													<form:input path="tags" type="text" class="form-control" id="tagsInp" placeholder="${tagsPlace }"></form:input>
+												</div>
 
 												<!-- 
 												<div class="form-group">
@@ -85,21 +91,41 @@
 											<c:forEach var="question" items="${questionsList}">
 											<li class="list-group-item answerRow" data-qid="${question.getId() }">
 											  <div class="row text-center">
-												<div class="col-md-3">
-													<div class="col-md-6">
-														<div class="row"><div class="col-md-12">${question.getAnswers().size()}</div></div>
-														<div class="row"><div class="col-md-12">answer</div></div>
-													</div>
-													<div class="col-md-6">
-														<div class="row"><div class="col-md-12">15(fittizio)</div></div>
-														<div class="row"><div class="col-md-12">views</div></div>
-													</div>
+												<div class="col-md-2">
+													<div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px">
+											  			<div class="pull-right" style="border-radius: 5px; background-color: #8096A5; padding: 10 10 10 10">
+												  			<div class="row">
+																<div class="col-md-12">
+																	${question.getAnswers().size()}
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-12">answer</div>
+															</div>
+											  			</div>
+										  			</div>
 												</div>
-												<div class="col-md-9">
-													<div class="row"><div class="col-md-12"><h4>
-													<a class="questionLink" href="/forum/detailedQuestion?qid=${question.getId()}">${question.getTitle()}</a>
-													</h4></div></div>
-													<div class="row"><div class="col-md-12 text-right">${question.getUser().getUsername() }</div></div>
+												<div class="col-md-10">
+													<div class="row">
+														<div class="col-md-12">
+															<h4><a class="questionLink" href="/forum/detailedQuestion?qid=${question.getId()}">${question.getTitle()}</a></h4>
+														</div>
+													</div>
+													<div class="row">
+												    	<div class="col-md-12">
+												    		<c:forEach var="tag" items="${question.getTags().split(',')}">
+												    			<span class="label label-info">${tag}</span>
+												    		</c:forEach>
+												    	</div>
+												    </div>
+													<div class="row">
+														<div class="col-sm-12 col-md-12 col-lg-12">
+												  			<p class="pull-right" style="border-radius: 3px; background-color: #E0EAF1; padding: 5 5 5 5">
+													  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+												  			${question.getUser().getUsername() }
+												  			</p>
+												  		</div>
+													</div>
 												</div>
 											  </div>
 											</li>

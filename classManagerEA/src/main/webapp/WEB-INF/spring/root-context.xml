@@ -48,8 +48,6 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<!-- create -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>

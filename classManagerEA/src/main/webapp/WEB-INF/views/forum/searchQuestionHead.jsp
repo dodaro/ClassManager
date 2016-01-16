@@ -10,6 +10,8 @@
 </script>
 
 <link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
+
 
 <style>
 	body {

@@ -11,6 +11,7 @@
 </script>
 
 <link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
+<link href="/resources/lib/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
 
 <script type="text/javascript" src="/resources/script/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/resources/script/forum/insertQuestion.js"></script>
@@ -22,6 +23,7 @@
 <script src="/resources/lib/uploadFile-lib/jquery.iframe-transport.js"></script>
 <script src="/resources/lib/uploadFile-lib/jquery.fileupload.js"></script>
 
+<script src="/resources/lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 <script src="/resources/script/forum/uploadAttachment.js"></script>
 
 <style>

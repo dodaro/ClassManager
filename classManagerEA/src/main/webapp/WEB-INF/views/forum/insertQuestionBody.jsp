@@ -37,6 +37,17 @@
 										</div>
 									</fieldset>
 								</div>
+								<div class="row" id="tagRow" style="margin-top:20px;" >
+									<div class="form-group">
+										<div class="col-md-8">
+											<label for="tagsInp"><spring:message code="message.forum.tags" /></label>
+											<form:input path="tags" id="tagsInp" class="form-control" data-role="tagsinput" ></form:input>
+											<div class="form-group has-error">
+												<label class="control-label"><form:errors path="tags"/></label>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					
@@ -160,3 +171,4 @@
 			
 		</div>
 	</div>
+

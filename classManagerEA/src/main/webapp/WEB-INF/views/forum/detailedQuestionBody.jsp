@@ -27,6 +27,14 @@
 					  		</div>
 					  	</div>
 					  	
+					  	<div class="row" style="margin-top:20px">
+					    	<div class="col-md-12">
+					    		<c:forEach var="tag" items="${question.getTags().split(',')}">
+					    			<span class="label label-info">${tag}</span>
+					    		</c:forEach>
+					    	</div>
+					    </div>
+					  	
 						<c:if test="${question.getQuestionAttachedContents().size() != 0 }">
 							<div class="row" style="margin-top: 20px;">
 						  		<div class="col-sm-8 col-md-8 col-lg-8">
@@ -72,7 +80,7 @@
 					  	
 					  	<div class="row">
 					  		<div class="col-sm-12 col-md-12 col-lg-12">
-					  			<p class="pull-right" style="background-color: #E0EAF1; padding: 10 10 10 10">
+					  			<p class="pull-right" style="border-radius: 3px; background-color: #E0EAF1; padding: 10 10 10 10">
 						  		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					  			${question.getUser().getUsername()}
 					  			</p>

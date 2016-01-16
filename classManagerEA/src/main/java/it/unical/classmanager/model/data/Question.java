@@ -38,6 +38,10 @@ public class Question implements Serializable  {
 	@Column(name="description", nullable=false, length=10000)
 	@Size(min=1, max=10000)
 	private String description;
+	
+	@Column(name="tags", length=100)
+	@Size(max=100)
+	private String tags;
 
 	//	Foreign key section
 	@ManyToOne
@@ -56,16 +60,18 @@ public class Question implements Serializable  {
 		this.id = 0;
 		this.title = "";
 		this.description = "";
+		this.tags = "";
 		this.user = null;
 		this.answers = new HashSet<Answer>();
 		this.questionAttachedContents = new HashSet<QuestionAttachedContent>();
 	}
 
-	public Question(int id, String title, String description, User user, Set<Answer> answers,
+	public Question(int id, String title, String description, String tags, User user, Set<Answer> answers,
 			Set<QuestionAttachedContent> questionAttachedContents) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.tags = tags;
 		this.user = user;
 		this.answers = answers;
 		this.questionAttachedContents = questionAttachedContents;
@@ -93,6 +99,15 @@ public class Question implements Serializable  {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 	public User getUser() {

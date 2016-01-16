@@ -64,6 +64,7 @@ public class InsertQuestionController {
 			
 			System.out.println("Errore nei dati");
 			
+			
 			List<QuestionAttachedContent> attachemnts = new ArrayList<QuestionAttachedContent>();
 			String attachedFilesID = request.getParameter("attachedFiles");
 
@@ -97,9 +98,10 @@ public class InsertQuestionController {
 		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
 		
 		String username = (String) request.getSession().getAttribute("loggedIn");
-		User tmpUser = userDao.get(username);
 		
+		User tmpUser = userDao.get(username);
 		question.setUser(tmpUser);
+		
 		Question newQuestion =  questionDAO.create(question);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");

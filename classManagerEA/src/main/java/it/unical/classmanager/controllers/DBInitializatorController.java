@@ -701,6 +701,7 @@ public class DBInitializatorController {
 			    k, 
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
+			    null,
 			    courseClass.getProfessor(), 
 			    new HashSet<Answer>(), 
 			    new HashSet<QuestionAttachedContent>());
@@ -713,6 +714,7 @@ public class DBInitializatorController {
 			    k, 
 			    "Question"+k, 
 			    "DescriptionQuestion"+k, 
+			    null,
 			    registrationStudentClass.getStudent(), 
 			    new HashSet<Answer>(), 
 			    new HashSet<QuestionAttachedContent>());

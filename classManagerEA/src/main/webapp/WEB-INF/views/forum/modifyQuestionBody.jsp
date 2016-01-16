@@ -8,7 +8,7 @@
 	<div class="row row-content">
 		<div class="col-sm-12 col-md-12 col-lg-12">
 			
-			<form:form action="updateQuestion" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
+			<form:form action="updateQuestion" enctype="multipart/form-data" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
 				<form:input path="id" style="display:none;"/>
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12">
@@ -37,6 +37,17 @@
 											</div>
 										</div>
 									</fieldset>
+								</div>
+								<div class="row" id="tagRow" style="margin-top:20px;" >
+									<div class="form-group">
+										<div class="col-md-8">
+											<label for="tagsInp"><spring:message code="message.forum.tags" /></label>
+											<form:input path="tags" id="tagsInp" class="form-control" data-role="tagsinput" ></form:input>
+											<div class="form-group has-error">
+												<label class="control-label"><form:errors path="tags"/></label>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

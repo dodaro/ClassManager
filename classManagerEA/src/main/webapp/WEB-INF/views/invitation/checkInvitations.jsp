@@ -21,6 +21,26 @@
 						</div>
 					</c:if>
 					<c:if test="${not empty studentList}">
+						<br>
+						<div class="pull-right">
+							<form class="form-inline" action="/checkInvitations_research"
+								method="post">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon">
+											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+										</div>
+										<input type="text" class="form-control" name="researchBar"
+											placeholder="Reserch..."> 
+									</div>
+								</div>
+								<button type="submit" class="btn btn-primary">
+									GO! <span class="glyphicon glyphicon-arrow-right"
+										aria-hidden="true"></span>
+								</button>
+							</form>
+						</div>
+
 						<table class="table">
 							<caption>
 								<spring:message code="message.invitation.sendHelpInfo6" />
@@ -58,12 +78,12 @@
 									<tr>
 										<c:set var="k" value="${k+1}" />
 										<th scope="row">${k}</th>
-											<td>${singleStudent.field1}</td>
-											<td>${singleStudent.field2}</td>
-											<td>${singleStudent.field3}</td>
-											<td>${singleStudent.field4}</td>
-											<td>${singleStudent.field5}</td>
-											<td>${singleStudent.field6}</td>
+										<td>${singleStudent.field1}</td>
+										<td>${singleStudent.field2}</td>
+										<td>${singleStudent.field3}</td>
+										<td>${singleStudent.field4}</td>
+										<td>${singleStudent.field5}</td>
+										<td>${singleStudent.field6}</td>
 										<td><form:form id="accept${k}"
 												action="checkInvitations_AcceptSingle" method="POST">
 												<button

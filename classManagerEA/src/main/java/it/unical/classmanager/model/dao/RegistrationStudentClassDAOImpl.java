@@ -294,7 +294,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> getAcceptableStudent(Professor professor) {
+	public List<Object[]> getAcceptableStudent(Professor professor, String research) {
 		List<Object[]> result = new ArrayList<Object[]>();
 
 		Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
@@ -312,7 +312,8 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 		result = query.list();
 		session.close();
 
-		return result;	
+		return filterResultSet(result, research);
+		//		return result;
 	}
 
 	@Override

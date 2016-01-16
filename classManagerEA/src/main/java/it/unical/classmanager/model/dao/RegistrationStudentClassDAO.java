@@ -8,7 +8,7 @@ import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 
 public interface RegistrationStudentClassDAO {
-	
+
 	public void create(RegistrationStudentClass registrationStudentClass);
 
 	public void update(RegistrationStudentClass registrationStudentClass);
@@ -26,7 +26,7 @@ public interface RegistrationStudentClassDAO {
 	public List<Student> getStudentsRegisteredToACourse( CourseClass course);
 
 	public List<Object[]> getSelectableCourse( Student student);
-	
+
 	public List<Object[]> getSelectableCourse( Professor professor);
 
 	public List<Object[]> getCancellableCourse( Student student);
@@ -37,7 +37,7 @@ public interface RegistrationStudentClassDAO {
 
 	public List<Object[]> getAcceptableCourse( Student student);
 
-	public List<Object[]> getAcceptableStudent( Professor professor);
+	public List<Object[]> getAcceptableStudent( Professor professor, String research);
 
 	public int getNewInvitationsOfStudent( Student student);
 

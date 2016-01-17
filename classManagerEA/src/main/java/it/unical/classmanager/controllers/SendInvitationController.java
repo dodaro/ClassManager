@@ -113,7 +113,8 @@ public class SendInvitationController {
 			model.addAttribute("courseSelected", courseName);
 		}
 
-		System.out.println("Research: "+research);
+		System.out.println("Research: "+research);		
+		model.addAttribute("researchField", research);
 
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseName, research);

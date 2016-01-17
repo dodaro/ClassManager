@@ -70,6 +70,8 @@ public class CheckInvitationsController {
 		if ( user == null ) {			
 			return "redirect:/";
 		}	
+		
+		model.addAttribute("researchField", research);
 
 		processAcceptableStudent(locale, model, request, (Professor) user, research);
 		InvitationController.checkNewInvitations(model, user);

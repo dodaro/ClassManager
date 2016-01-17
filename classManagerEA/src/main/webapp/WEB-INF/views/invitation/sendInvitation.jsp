@@ -17,9 +17,15 @@
 							<div class="input-group-addon">
 								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 							</div>
-							<input type="text" class="form-control" name="researchBar"
-								placeholder="Reserch..."> <input type="hidden"
-								name="courseName" value="${courseSelected}">
+							<c:if test="${empty researchField}">
+								<input type="text" class="form-control" name="researchBar"
+									placeholder="Reserch...">
+							</c:if>
+							<c:if test="${not empty researchField}">
+								<input type="text" class="form-control" name="researchBar"
+									value="${researchField}" placeholder="Reserch...">
+							</c:if>
+							<input type="hidden" name="courseName" value="${courseSelected}">
 						</div>
 					</div>
 					<button type="submit" class="btn btn-primary">

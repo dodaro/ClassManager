@@ -1,12 +1,10 @@
 package it.unical.classmanager.controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -26,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.AttendanceStudentLecture;
-import it.unical.classmanager.model.data.Communications;
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
-import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.RegistrationStudentClass;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.StudentExamPartecipation;
@@ -56,6 +51,7 @@ public class UsersListController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/userslist", method = RequestMethod.GET)
 	public String usersList(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -131,6 +127,7 @@ public class UsersListController {
 	/**
 	 * Search for user
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/searchusers", method = RequestMethod.GET)
 	public String searchUsers(Model model,Locale locale,HttpServletRequest request ) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -273,6 +270,7 @@ public class UsersListController {
 	/**
 	 * changes the sort definition
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sort", method = RequestMethod.GET)
 	public String sort(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);

@@ -34,110 +34,140 @@ import it.unical.classmanager.utils.UserSessionChecker;
  */
 @Controller
 public class CheckInvitationsController {
-    private static final Logger logger = LoggerFactory.getLogger(CheckInvitationsController.class);
-    private final static String HEADER = "pageCommons/head.jsp";
-    private final static String BODY = "invitation/checkInvitations.jsp";
-    
-    @Autowired
-    ApplicationContext appContext;
-    
-    @Autowired  
-    MessageSource messageSource;
-    
-    @RequestMapping(value = "/checkInvitations", method = RequestMethod.GET)
-    public String checkInvitations(Locale locale, Model model,HttpServletRequest request) {
-	logger.info("CheckInvitations Page", locale);
-	
-	User user = UserSessionChecker.checkUserSession(model, request);
-	if ( user == null ) {			
-	    return "redirect:/";
-	}	
-	
-	processAcceptableStudent(locale, model, request, (Professor) user);
-	InvitationController.checkNewInvitations(model, user);
-	CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-	
-	return "layout";
-    }
-    
-    @RequestMapping(value = "/checkInvitations_AcceptAll", method = RequestMethod.POST)
-    public String inviteAll(
-	    @RequestParam(value = "AcceptAll", required = true) String value, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
-		System.err.println("Received: "+value);
-		
+	private static final Logger logger = LoggerFactory.getLogger(CheckInvitationsController.class);
+	private final static String HEADER = "pageCommons/head.jsp";
+	private final static String BODY = "invitation/checkInvitations.jsp";
+
+	@Autowired
+	ApplicationContext appContext;
+
+	@Autowired  
+	MessageSource messageSource;
+
+	@RequestMapping(value = "/checkInvitations", method = RequestMethod.GET)
+	public String checkInvitations(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("CheckInvitations Page", locale);
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
+		}	
+
+		processAcceptableStudent(locale, model, request, (Professor) user);
+		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
+
+		return "layout";
+	}
+	
+	@RequestMapping(value = "/checkInvitations_research", method = RequestMethod.POST)
+	public String checkInvitationsResearch(
+			@RequestParam(value = "researchBar", required = true) String research,
+			Locale locale, Model model, HttpServletRequest request) {
+		logger.info("CheckInvitations Page", locale);
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+			return "redirect:/";
 		}	
 		
+		model.addAttribute("researchField", research);
+
+		processAcceptableStudent(locale, model, request, (Professor) user, research);
+		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
+
+		return "layout";
+	}
+
+
+	@RequestMapping(value = "/checkInvitations_AcceptAll", method = RequestMethod.POST)
+	public String inviteAll(
+			@RequestParam(value = "AcceptAll", required = true) String value, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
+		System.err.println("Received: "+value);
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+			return "redirect:/";
+		}	
+
 		processInviteAll((Professor) user);
 		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    @RequestMapping(value = "/checkInvitations_AcceptSingle", method = RequestMethod.POST)
-    public String inviteSingle(
-	    @RequestParam(value = "courseName", required = true) String courseName,
-	    @RequestParam(value = "studentName", required = true) String studentName, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
+	}
+
+	@RequestMapping(value = "/checkInvitations_AcceptSingle", method = RequestMethod.POST)
+	public String inviteSingle(
+			@RequestParam(value = "courseName", required = true) String courseName,
+			@RequestParam(value = "studentName", required = true) String studentName, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
 		System.err.println("Received: "+studentName+", Course: "+courseName);
-		
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}	
-		
+
 		processInviteSingle((Professor) user, studentName, courseName);
 		processAcceptableStudent(locale, model, request, (Professor) user);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request, Professor professor){
-	GenericContainerBeanList list = getAcceptableStudent(professor);
-	if(list!=null){
-	    model.addAttribute("studentList", list);
 	}
-    }
-    
-    private GenericContainerBeanList getAcceptableStudent(Professor professor){
-	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getAcceptableStudent(professor);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    return beanList;
+
+	private void processAcceptableStudent(Locale locale, Model model,HttpServletRequest request, Professor professor){
+		processAcceptableStudent(locale, model, request, professor, null);
 	}
-	return null;
-    }
-    
-    private void processInviteAll(Professor professor) {
-	GenericContainerBeanList acceptableStudent = getAcceptableStudent(professor);
-	for(int i=0; i<acceptableStudent.size(); i++){
-	    processInviteSingle(professor, acceptableStudent.get(i).getField1(), acceptableStudent.get(i).getField2());
+
+	private void processAcceptableStudent(Locale locale, Model model, HttpServletRequest request, Professor professor,
+			String research) {
+		GenericContainerBeanList list = getAcceptableStudent(professor, research);
+		if(list!=null){
+			model.addAttribute("studentList", list);
+		}
 	}
-    }
-    
-    private void processInviteSingle(Professor professor, String studentName, String courseSelected) {
-	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
-	Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
-	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 	
-	if(registrationStudentClassDAO.existRegistration(student, courseClass)){
-	    RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
-	    registrationStudentClass.setAcceptedDate(Calendar.getInstance().getTime());
-	    registrationStudentClassDAO.update(registrationStudentClass);
+	private GenericContainerBeanList getAcceptableStudent(Professor professor){
+		return getAcceptableStudent(professor, null);
 	}
-    }  
-    
+	
+	private GenericContainerBeanList getAcceptableStudent(Professor professor, String research) {
+		List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getAcceptableStudent(professor, research);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			return beanList;
+		}
+		return null;
+	}
+
+	private void processInviteAll(Professor professor) {
+		GenericContainerBeanList acceptableStudent = getAcceptableStudent(professor);
+		for(int i=0; i<acceptableStudent.size(); i++){
+			processInviteSingle(professor, acceptableStudent.get(i).getField1(), acceptableStudent.get(i).getField2());
+		}
+	}
+
+	private void processInviteSingle(Professor professor, String studentName, String courseSelected) {
+		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
+		Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
+		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
+
+		if(registrationStudentClassDAO.existRegistration(student, courseClass)){
+			RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
+			registrationStudentClass.setAcceptedDate(Calendar.getInstance().getTime());
+			registrationStudentClassDAO.update(registrationStudentClass);
+		}
+	}  
+
 }

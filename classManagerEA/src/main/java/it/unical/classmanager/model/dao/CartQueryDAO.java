@@ -64,7 +64,7 @@ public interface CartQueryDAO {
      * @param professor
      * @return
      */
-    public List<Object[]> getAvgTimeDeliveryHomework(Professor professor);
+    public List<Object[]> getAvgTimeDeliveryHomework(Professor professor, String research);
     
     /**Grafico Studenti che volgono i compiti dati: Valutazione
      * Chi prende i voti migliori?
@@ -73,9 +73,10 @@ public interface CartQueryDAO {
      * (se uno studente non svolge il compito allora valutazione 0).
      * 
      * @param professor
+     * @param research 
      * @return
      */
-    public List<Object[]> getAvgScoreHomework(Professor professor);
+    public List<Object[]> getAvgScoreHomework(Professor professor, String research);
     
     /**Grafico presenze Studenti
      * Per ogni corso

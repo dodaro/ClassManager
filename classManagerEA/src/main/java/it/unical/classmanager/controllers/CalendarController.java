@@ -21,20 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import it.unical.classmanager.model.FullCalendarEventBean;
-import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
-import it.unical.classmanager.model.dao.LectureDAO;
-import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Event;
-import it.unical.classmanager.model.data.Lecture;
-import it.unical.classmanager.model.data.Professor;
-import it.unical.classmanager.model.data.RegistrationStudentClass;
-import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 /**
@@ -76,6 +68,7 @@ public class CalendarController {
 	 * Refer: calendar.jsp
 	 * input: String start, String end - the range of the events to retrieve
 	 */
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/calendar/events", method = RequestMethod.GET)
 	public @ResponseBody String getEvents(Model model, @RequestParam("start") String start, @RequestParam("end") String end, @RequestParam("_") Long preventCaching, HttpServletRequest request) {
 

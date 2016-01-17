@@ -1,7 +1,5 @@
 package it.unical.classmanager.model;
 
-import javax.validation.constraints.Size;
-
 public class LectureControllerWrapper {
 
 	private String path;

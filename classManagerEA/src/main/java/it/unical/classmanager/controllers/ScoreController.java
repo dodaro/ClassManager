@@ -1,15 +1,10 @@
 package it.unical.classmanager.controllers;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.Gson;
-
 import it.unical.classmanager.model.AllScoresWrapper;
 import it.unical.classmanager.model.PartecipationWrapper;
-import it.unical.classmanager.model.ScoresPageTransformView;
-import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
-import it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.DaoHelper;

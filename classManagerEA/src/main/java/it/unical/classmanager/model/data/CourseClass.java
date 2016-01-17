@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,7 @@ public class CourseClass implements Serializable  {
 	private int id;
 	
 	@Size(min = 4, max = 64)
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	@Pattern(regexp = "^[A-Za-z0-9 ]+$")
 	@Column(name="name", nullable=false, length=64)
 	private String name;
 	

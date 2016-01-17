@@ -50,6 +50,8 @@ public class QuestionsController {
 		model.addAttribute("questions", this.questionManager.getCurrentPageQuestions());
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
 		
+		model.addAttribute("elemNum", this.questionManager.getElementCount());
+		
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()+1));
 		model.addAttribute("pageSize", this.questionManager.getPageSize());
 		
@@ -73,6 +75,9 @@ public class QuestionsController {
 		
 		model.addAttribute("questions", this.questionManager.getSpecificPageQuestions(pageNumber));
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
+		
+		model.addAttribute("elemNum", this.questionManager.getElementCount());
+		
 		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()+1));
 		model.addAttribute("pageSize", this.questionManager.getPageSize());
 		

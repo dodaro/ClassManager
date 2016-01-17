@@ -37,8 +37,18 @@ var QuestionsManager = (function(){
 			    maxVisible: $("#pageSize").val(),
 			    leaps: false
 			}).on("page", function(event, num){
-			    window.location.href = "questionsSearchedPage?page="+(num-1);
+				
+				$("#qname").val($("#questionNameInp").val());
+				$("#qdescription").val($("#descriptionInp").val());
+				$("#qauthor").val($("#authorInp").val());
+				$("#qtags").val($("#tagsInp").val());
+				$("#pagenum").val(num-1);
+				
+				$("#pageSearchPag").submit();
+				
 			});
+			
+			
 			
 			$('#paginatorBottom').bootpag({
 			    total: $("#pageCount").val(),
@@ -46,7 +56,15 @@ var QuestionsManager = (function(){
 			    maxVisible: $("#pageSize").val(),
 			    leaps: false
 			}).on("page", function(event, num){
-			    window.location.href = "questionsSearchedPage?page="+(num-1);
+			   
+				$("#qname").val($("#questionNameInp").val());
+				$("#qdescription").val($("#descriptionInp").val());
+				$("#qauthor").val($("#authorInp").val());
+				$("#qtags").val($("#tagsInp").val());
+				$("#pagenum").val(num-1);
+				
+				$("#pageSearchPag").submit();
+				
 			});
 			
 			

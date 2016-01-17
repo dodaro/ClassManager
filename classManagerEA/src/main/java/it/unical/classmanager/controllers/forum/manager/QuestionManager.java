@@ -67,7 +67,9 @@ public class QuestionManager {
 		return this.paginationHolder.getPageCount();
 	}
 	
-	
+	public int getElementCount() {
+		return this.paginationHolder.getNrOfElements();
+	}
 	
 	
 	public List<Question> getSpecificPageQuestions(int index) {

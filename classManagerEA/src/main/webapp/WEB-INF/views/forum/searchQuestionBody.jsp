@@ -53,13 +53,6 @@
 													<form:input path="tags" type="text" class="form-control" id="tagsInp" placeholder="${tagsPlace }"></form:input>
 												</div>
 
-												<!-- 
-												<div class="form-group">
-													<label for="lectureInp">Lecture name</label>
-													<form:input path="lectureName" type="text" class="form-control" id="lectureInp" placeholder="insert lecture name..."></form:input>
-												</div>
-												-->
-
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</form:form>
 
@@ -85,8 +78,8 @@
 								</div>
 								<div class="panel-body">
 								
-									<%--
-									<c:if test="${pageCount != 0}">
+									
+									<c:if test="${elemNum != 0}">
 										<div class="row">
 											<div class="col-sm-12 col-md-12 col-lg-12">
 												<div id="paginatorTop">
@@ -94,7 +87,7 @@
 											</div>
 										</div>
 									</c:if>
-									--%>
+									
 								
 									<div class="row">
 										<div class="col-md-12">
@@ -145,9 +138,8 @@
 										
 										</div>
 									</div>
-									
-									<%--
-									<c:if test="${pageCount != 0}">
+
+									<c:if test="${elemNum != 0}">
 										<div class="row">
 											<div class="col-sm-12 col-md-12 col-lg-12">
 												<div id="paginatorBottom">
@@ -156,10 +148,18 @@
 										</div>
 									</c:if>
 									
+									<form id="pageSearchPag" accept-charset="utf-8" method="post" action="/forum/questionsSearchedPage" style="display: none;">
+										<input type="text" id="qname" name="qname" />
+										<input type="text" id="qdescription" name="qdescription" />
+										<input type="text" id="qauthor" name="qauthor" />
+										<input type="text" id="qtags" name="qtags" />
+										<input type="text" id="pagenum" name="pagenum" />
+									</form>
+									
 									<input type="hidden" value="${currPage }" id="currPage" />
 									<input type="hidden" value="${pageCount }" id="pageCount" />
 									<input type="hidden" value="${pageSize }" id="pageSize" />
-									--%>
+									
 
 								</div>
 							</div>

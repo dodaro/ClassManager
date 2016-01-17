@@ -5,7 +5,6 @@ public class QuestionSearchSetting {
 	private String questionName;
 	private String questionDescription;
 	private String username;
-	private String lectureName;
 	private String tags;
 	
 	public QuestionSearchSetting() {
@@ -13,7 +12,6 @@ public class QuestionSearchSetting {
 		this.questionName = null;
 		this.questionDescription = null;
 		this.username = null;
-		this.lectureName = null;
 		this.tags = null;
 	}
 
@@ -39,14 +37,6 @@ public class QuestionSearchSetting {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getLectureName() {
-		return lectureName;
-	}
-
-	public void setLectureName(String lectureName) {
-		this.lectureName = lectureName;
 	}
 
 	public String getTags() {

@@ -38,7 +38,7 @@
 						</div>
 					</div>
 					
-					<c:if test="${pageCount != 0}">
+					<c:if test="${elemNum != 0}">
 						<div class="row">
 							<div class="col-sm-12 col-md-12 col-lg-12">
 								<div id="paginatorTop">
@@ -97,7 +97,7 @@
 						</div>
 					</div>
 					
-					<c:if test="${pageCount != 0}">
+					<c:if test="${elemNum != 0}">
 						<div class="row">
 							<div class="col-sm-12 col-md-12 col-lg-12">
 								<div id="paginatorBottom">

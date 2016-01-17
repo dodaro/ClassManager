@@ -1,8 +1,12 @@
 package it.unical.classmanager.websocket;
 
 import java.net.URI;
+import java.util.List;
+
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
+
+import it.unical.classmanager.model.data.User;
 
 public class JettyWebSocketClient
 {
@@ -17,20 +21,55 @@ public class JettyWebSocketClient
 
 	private JettyWebSocketClient()
 	{}
+	
+	private final String NOTIFICATION_MESSAGE = "Notify:";
+	private final String WEB_SOCKET_URI = "ws://localhost:8080/wsexample";
 
-	public void sendMessage(String message)
+	public void sendNotification(User user)
 	{
-		String dest = "ws://localhost:8080/wsexample";
 		WebSocketClient client = new WebSocketClient();
 		try
 		{
 			ClientWebSocket socket = new ClientWebSocket();
 			client.start();
-			URI echoUri = new URI(dest);
+			URI echoUri = new URI(WEB_SOCKET_URI);
 			ClientUpgradeRequest request1 = new ClientUpgradeRequest();
 			client.connect(socket, echoUri, request1);
 			socket.getLatch().await();
-			socket.sendMessage(message);
+			socket.sendMessage(NOTIFICATION_MESSAGE + user.getUsername());
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				client.stop();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void sendNotification(List<User> users)
+	{
+		WebSocketClient client = new WebSocketClient();
+		try
+		{
+			ClientWebSocket socket = new ClientWebSocket();
+			client.start();
+			URI echoUri = new URI(WEB_SOCKET_URI);
+			ClientUpgradeRequest request1 = new ClientUpgradeRequest();
+			client.connect(socket, echoUri, request1);
+			socket.getLatch().await();
+			for (User user : users)
+			{
+				socket.sendMessage(NOTIFICATION_MESSAGE + user.getUsername());
+			}
 		}
 		catch (Throwable t)
 		{

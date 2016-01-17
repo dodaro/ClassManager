@@ -54,7 +54,7 @@ public class AttendanceCourseController
 		
 		// TODO Prendere il corso selezionato in precedenza
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
-		CourseClass course = courseClassDAO.get(4);	
+		CourseClass course = courseClassDAO.get(7);	
 		//LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
 		List<Lecture> lectures = course.getLectures();//lectureDAO.getAllLecturesOfACourse(course);
 
@@ -74,7 +74,7 @@ public class AttendanceCourseController
 		model.addAttribute("course", course);
 		model.addAttribute("lectures", lectures);
 		model.addAttribute("students", students);
-		model.addAttribute("lecture", lecture);		
+		model.addAttribute("lectureToModify", lecture);		
 		
 		model.addAttribute("customHeader", AttendanceCourseController.HEADER);
 		model.addAttribute("customBody", AttendanceCourseController.BODY);

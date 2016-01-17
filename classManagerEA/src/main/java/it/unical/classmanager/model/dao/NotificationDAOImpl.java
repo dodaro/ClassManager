@@ -55,14 +55,14 @@ public class NotificationDAOImpl implements NotificationDAO
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<NotificationJSON> getNotifications(User user)
+	public List<NotificationJSON> getNewNotifications(User user)
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();		
 		List<NotificationJSON> notifications = session.createQuery("SELECT N.message, N.url, N.date, N.source.username, N.destination.username "
 				+ "FROM Notification N "
 				+ "WHERE N.destination = :user AND "
 					+ "read = false "
-				+ "ORDER BY N.date ASC").setParameter("user", user).list();
+				+ "ORDER BY N.date DESC ").setParameter("user", user).list();
 		session.close();
 		return notifications;
 	}
@@ -73,8 +73,22 @@ public class NotificationDAOImpl implements NotificationDAO
 		Session session = this.dbHandler.getSessionFactory().openSession();		
 		session.createQuery("UPDATE Notification  "
 				+ "SET read = true "
-				+ "WHERE destination = :user AND" 
+				+ "WHERE destination = :user AND " 
 					+ "read = false").setParameter("user", user).executeUpdate();
 		session.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<NotificationJSON> getOldNotifications(User user, int maxResult)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		List<NotificationJSON> notifications = session.createQuery("SELECT N.message, N.url, N.date, N.source.username, N.destination.username "
+				+ "FROM Notification N "
+				+ "WHERE N.destination = :user AND "
+					+ "read = true "
+				+ "ORDER BY N.date DESC ").setParameter("user", user).setMaxResults(5).list();
+		session.close();
+		return notifications;
 	}
 }

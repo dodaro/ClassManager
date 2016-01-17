@@ -10,26 +10,67 @@
 	</div>
 </div>
 <div class="row row-content">
-	<div class="col-sm-12 col-md-12 col-lg-12">
+	<div class="col-sm-12 col-md-5 col-lg-4">	
+		<p class="text-primary">
+			<span class="glyphicon glyphicon-search"></span> 
+			<spring:message code="message.attendance.idLiveSearch" text="idLiveSearch"/>
+		</p>
+		<input id="searchID" type="text" class="form-control" placeholder="<spring:message code="message.attendance.idLiveSearch" text="idLiveSearch"/>" >
+		</input>	
+	</div>
+	<div class="col-sm-12 col-md-5 col-lg-4">
+		<p class="text-primary">
+			<span class="glyphicon glyphicon-search"></span> <spring:message code="message.attendance.surnameLiveSearch" text="surnameLiveSearch"/>
+		</p>
+		<input id="searchLastName" type="text" class="form-control" placeholder="<spring:message code="message.attendance.surnameLiveSearch" text="surnameLiveSearch"/>">
+		</input>	
+	</div>
+</div>
+<div class="row row-content">
+	<div class="col-sm-12 col-md-12 col-lg-12">	
 		<div class="table-responsive">
 			<table class="tablesorter table table-condensed">
 				<thead>
 					<tr>
 						<th class="sortable">
-							<spring:message code="message.attendance.students" text="default text"/>
-							<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
-							<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+							<a href="#" style="text-decoration: none;">
+								<span class="glyphicon glyphicon-modal-window"></span> 
+								<spring:message code="message.attendance.matricola" text="ID"/>
+								<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
+								<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+							</a>
 						</th>
-						<th><spring:message code="message.attendance.lectures" text="default text"/></th>
+						<th class="sortable">
+							<a href="#" style="text-decoration: none;">
+								<span class="glyphicon glyphicon-user"></span> 
+								<spring:message code="message.attendance.students" text="Students"/>
+								<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
+								<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+							</a>
+						</th>
+						<th><spring:message code="message.attendance.firstName" text="Nome"/></th>
+						<th>
+							<span class="glyphicon glyphicon-book"></span>  
+							<spring:message code="message.attendance.lectures" text="Lecture"/>
+						</th>
 						<c:forEach items="${lectures}" var="lecture">
-							<th>${lecture.number}</th>
+							<form:form action="attendance" method="get"	modelAttribute="lectureToModify" id="modifyAttendance${lecture.id}">
+								<th>
+									<form:input path="id" value="${lecture.id}" hidden="true" />
+									<a href="javascript:{}" onclick="document.getElementById('modifyAttendance${lecture.id}').submit();" class="no-text-decoration" style="text-decoration: none;">
+										${lecture.number} <span class="glyphicon glyphicon-pencil fa-4x"></span>
+									</a>
+								</th>
+							</form:form>							
 						</c:forEach>
 					<tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${students}" var="student">
 						<tr>
-							<td>${student.username}</td>
+							<td>${student.identificationNumber}</td>
+							<td>${student.lastName}</td>
+							<td>${student.firstName}</td>
 							<td></td>
 	
 							<c:set var="count" value="0" scope="page" />
@@ -52,23 +93,19 @@
 								<td></td>
 							</c:forEach>
 						</tr>	
-					</c:forEach>				
+					</c:forEach>	
 				</tbody>
 				<tr>
-					<td></td>
-					<td></td>
+					<th></th>
+					<th></th>
+					<th></th>	
+					<th></th>				
 					<c:forEach items="${lectures}" var="lecture">
-						<td>
-							<form:form action="attendance" method="get"	modelAttribute="lecture" id="modifyAttendance">
-								<form:input path="id" value="${lecture.id}" hidden="true" />
-								<a href="javascript:{}" onclick="document.getElementById('modifyAttendance').submit();" class="no-text-decoration">
-									<span class="glyphicon glyphicon-pencil fa-4x"></span>
-								</a>
-								<input type="hidden" value="Modify" class="btn-link" />
-							</form:form>
-						</td>
+						<th>
+							
+						</th>
 					</c:forEach>
-				</tr>
+				</tr>		
 			</table>
 		</div>
 	</div>

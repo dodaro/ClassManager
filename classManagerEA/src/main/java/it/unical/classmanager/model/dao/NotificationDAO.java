@@ -16,7 +16,9 @@ public interface NotificationDAO
 
 	public Notification get(Integer id);
 	
-	public List<NotificationJSON> getNotifications(User user);	
+	public List<NotificationJSON> getNewNotifications(User user);	
 
 	public void setNotificationsRead(User user);
+	
+	public List<NotificationJSON> getOldNotifications(User user, int maxResult);	
 }

@@ -6,11 +6,11 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
  
 public class MyAdvancedEchoCreator implements WebSocketCreator 
 {  
-    private MySocket textEcho;
+    private MyWebSocket textEcho;
  
     public MyAdvancedEchoCreator() 
     {
-        this.textEcho = new MySocket();
+        this.textEcho = new MyWebSocket();
     }
  
     @SuppressWarnings("unused")

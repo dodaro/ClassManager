@@ -17,5 +17,3 @@
 	
 <script src="resources/script/nav-bar.js"></script>
 <script src="resources/script/layout.js"></script>
-
-<script src="resources/script/notifications.js"></script>

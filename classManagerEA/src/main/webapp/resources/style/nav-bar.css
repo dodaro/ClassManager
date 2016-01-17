@@ -4,7 +4,7 @@
 	padding-left: 0px;
 	width: 100%;
 	/* height: 100%;*/
-	margin-top: 50px;
+	margin-top:50px;
 }
 
 .row-content {
@@ -16,11 +16,10 @@
 	background-color: #FF6600;
 	border: none;
 	border-radius: 0px;
-	margin: 0px;
 }
 
 .navbar-default .navbar-brand {
-	color: #fff;
+	color: white;
 	font-weight: bold;
 	margin: 0;
 	line-height: 50px;
@@ -56,8 +55,7 @@
 
 /* NAV BAR BUTTONS */
 a.nav-bar-button {
-	margin-bottom: 8px;
-	margin: 0;
+	
 	padding: 15px 15px;
 	float: right;
 	transition: background-color 0.5s ease;
@@ -76,7 +74,7 @@ a:hover.nav-bar-button {
 #sidebar-wrapper {
 	background-color: #404040;
 	color: black;
-	z-index: 1;
+	z-index: 10;
 }
 
 .sidebar-nav {

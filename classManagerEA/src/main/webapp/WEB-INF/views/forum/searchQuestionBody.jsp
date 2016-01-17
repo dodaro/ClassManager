@@ -53,7 +53,7 @@
 													<form:input path="tags" type="text" class="form-control" id="tagsInp" placeholder="${tagsPlace }"></form:input>
 												</div>
 
-												<button type="submit" class="btn btn-primary">Submit</button>
+												<button type="submit" class="btn btn-primary"><spring:message code='message.forum.submit' /></button>
 											</form:form>
 
 										</div>

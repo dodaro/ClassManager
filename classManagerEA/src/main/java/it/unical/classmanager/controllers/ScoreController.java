@@ -1,11 +1,15 @@
 package it.unical.classmanager.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import it.unical.classmanager.model.AllScoresWrapper;
 import it.unical.classmanager.model.PartecipationWrapper;
 import it.unical.classmanager.model.ScoresPageTransformView;
 import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
@@ -111,7 +116,7 @@ public class ScoreController {
 
 	}
 
-	@RequestMapping(value = "/update_score", method = RequestMethod.POST)
+	@RequestMapping(value = "scores/update_score", method = RequestMethod.POST)
 	public @ResponseBody String updateHomework(@Valid @RequestBody HomeworkStudentSolving homeworkStudentSolving, BindingResult result, Model model) {
 
 		int id = homeworkStudentSolving.getId();
@@ -131,7 +136,7 @@ public class ScoreController {
 
 	}
 	
-	@RequestMapping(value = "/create_Partecipation", method = RequestMethod.POST)
+	@RequestMapping(value = "scores/create_Partecipation", method = RequestMethod.POST)
 	public @ResponseBody String updateExam(@Valid @RequestBody PartecipationWrapper part, BindingResult result, Model model) {
 
 		boolean praise = part.getPraise();
@@ -162,7 +167,7 @@ public class ScoreController {
 
 	}
 	
-	@RequestMapping(value = "/update_Partecipation", method = RequestMethod.POST)
+	@RequestMapping(value = "scores/update_Partecipation", method = RequestMethod.POST)
 	public @ResponseBody String updatePartecipation(@Valid @RequestBody StudentExamPartecipation studentExamPartecipation, BindingResult result,Model model) {
 
 		int id = studentExamPartecipation.getId();
@@ -185,5 +190,21 @@ public class ScoreController {
 		logger.info("update partecipation");
 		return "{errors:{'code': 200, 'msg': \"ok\"}}";
 
+	}
+	
+	@RequestMapping(value = "scores/update_all", method = RequestMethod.POST)
+	public @ResponseBody String updateAll(@RequestBody AllScoresWrapper data, BindingResult result, Model model) {
+		
+		for (HomeworkStudentSolving homeworkStudentSolving : data.getHss())			
+			updateHomework(homeworkStudentSolving, result, model);
+		
+		for (StudentExamPartecipation exam : data.getOldExams())
+			updatePartecipation(exam, result, model);
+		
+		for (PartecipationWrapper newExam : data.getNewExams())
+			updateExam(newExam, result, model);
+		
+		
+		return "200";
 	}
 }

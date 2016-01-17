@@ -22,12 +22,34 @@
 	<br>
 	
 	<div class="row-content">		
-		<div class="btn-group" data-toggle="buttons">		
-			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
-				<spring:message code="scores.moreFilters"/>
-			</button>
+		<div class="btn-group" data-toggle="buttons">	
+			<div class="btn-group" data-toggle="buttons">	
+				<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters_collapse" aria-expanded="false">
+					<spring:message code="scores.moreFilters"/>
+				</button>
+				<button id="colapse_upload" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#drop" aria-expanded="false">
+					<spring:message code="scores.upload"/>
+				</button>
+			</div>
+			<div class="btn-group" data-toggle="buttons">
+				<button id="updateTable_btn" type="button" class="btn btn-success" style="display:none">
+					<spring:message code="scores.save"/>
+				</button>
+				<button id="updateTableDismiss_btn" type="button" class="btn btn-danger" style="display:none" onclick="window.location.replace('/scores')">
+					<spring:message code="scores.dismiss"/>
+				</button>
+			</div>
 		</div>
 	</div>
+
+
+<div id="drop" class="row-content collapse" style="height: 20%;" draggable="true">
+	<spring:message code="scores.dropHere"/>
+	<span class="btn btn-default btn-file">
+   		 <spring:message code="scores.browse"/>
+   		 <input id="uploadInput" type="file" name="myFiles" onchange="uploadAndReplace(this.files);" multiple>
+	</span>
+</div>
 
 <div class="row collapse" id="filters_collapse">
 	  <div class="col-lg-8">
@@ -139,7 +161,7 @@
 										<c:if test="${homework.lecture.id == lectureId}">
 											<c:choose>
 												<c:when test="${solutionsArray[index].homework.id == homework.id}">
-													<td class="homework-td"><a data-type="address"class="homework" href="#" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</a></td>
+													<td class="homework-td homework" data-type="address" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</td>
 													<c:set var="index" value="${index + 1}" scope="page" />
 												</c:when>
 												<c:otherwise>
@@ -151,12 +173,14 @@
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${solutionsArray[index].homework.id == homework.id}">
-												<td class="homework-td"><a data-type="address" class="homework" href="#" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</a></td>
+												<%-- <td class="homework-td"><a data-type="address" class="homework" href="#" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</a></td>--%>
+												<td class="homework-td homework" data-type="address" data-pk="${solutionsArray[index].id}">${solutionsArray[index].score}</td>
 												<c:set var="index" value="${index + 1}" scope="page" />
 											</c:when>
 											<c:otherwise>
+													 
 												<!-- <td class="homework-td"><a data-type="address" class="newHomework" href="#" data-pk="${homework.id} ${student.username}"></a></td>-->
-												<td class="homework-td"></td>
+												<td class="homework-td empty"></td>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -164,9 +188,9 @@
 						</c:forEach>
 						
 						
-						<%-- ><c:forEach begin="${count}" end="${fn:length(homeworks) - 2}" varStatus="loop">
+						<!--<c:forEach begin="${count}" end="${fn:length(homeworks) - 1}" varStatus="loop">
 							<td></td>
-						</c:forEach>--%>
+						</c:forEach>-->
 						
 						<c:set var="count" value="0" scope="page" />
 						<c:set var="index" value="0" scope="page" />
@@ -182,12 +206,12 @@
 													<c:if test="${part.exam.id == exam.id && part.student.username == student.username}">
 														<c:if test="${part.praise}"><c:set var="praise" value="L" scope="page"/></c:if>
 														<c:if test="${not part.praise}"><c:set var="praise" value="" scope="page"/></c:if>
-														<td class="exam-td"><a data-type="address" class="exam" href="#" data-pk="${part.id}">${part.score} ${praise}</a></td>
+														<td class="exam-td exam" data-type="address" data-pk="${part.id}">${part.score} ${praise}</td>
 														<c:set var="check" value="true" scope="page" />
 													</c:if>
 											</c:forEach>	
 											<c:if test="${check == false}">
-												<td class="exam-td"><a data-type="address" class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
+												<td class="exam-td newExam" data-type="address" data-pk="${exam.id} ${student.username}"></td>
 											</c:if>	
 										</c:if>
 									</c:when>
@@ -198,12 +222,12 @@
 												<c:if test="${part.exam.id == exam.id && part.student.username == student.username}">
 													<c:if test="${part.praise}"><c:set var="praise" value="L" scope="page"/></c:if>
 													<c:if test="${not part.praise}"><c:set var="praise" value="" scope="page"/></c:if>
-													<td class="exam-td"><a data-type="address" class="exam" href="#" data-pk="${part.id}">${part.score} ${praise}</a></td>
+													<td class="exam-td exam" data-type="address" data-pk="${part.id}">${part.score} ${praise}</td>
 													<c:set var="check" value="true" scope="page" />
 												</c:if>
 										</c:forEach>	
 										<c:if test="${check == false}">
-											<td class="exam-td"><a data-type="address" class="newExam" href="#" data-pk="${exam.id} ${student.username}"></a></td>
+											<td class="exam-td newExam" data-type="address" data-pk="${exam.id} ${student.username}"></td>
 										</c:if>		
 																		
 									</c:otherwise>
@@ -235,3 +259,40 @@
 </div>
 </div>
 
+<style>
+td:hover{
+
+	color:#b3d9ff;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#drop{
+    height:500px;
+    line-height:100px;
+    border:5px dashed #CCC;
+
+    font-family:Verdana;
+    text-align:center;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>

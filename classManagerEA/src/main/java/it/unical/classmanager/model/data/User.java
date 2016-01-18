@@ -94,6 +94,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Event> events;
+//	private Set<Event> events;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -101,7 +102,7 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Answer> answers;
+	private List<Answer> answers;	
 		
 	public User(){
 		this.username = "";
@@ -256,8 +257,6 @@ public class User implements Serializable {
 	public String getHash() {
 		return hash;
 	}
-	
-	
 	
 	@Override
 	public int hashCode() {

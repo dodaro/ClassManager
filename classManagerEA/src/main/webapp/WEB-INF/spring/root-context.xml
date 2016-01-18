@@ -182,5 +182,9 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
 	</bean>
+	
+	<bean id="fileManager"
+		class="it.unical.classmanager.utils.FileManager">
+	</bean>
 
 </beans>

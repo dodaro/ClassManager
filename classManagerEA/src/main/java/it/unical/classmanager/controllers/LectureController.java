@@ -29,7 +29,6 @@ import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 import it.unical.classmanager.model.LectureControllerWrapper;
-import it.unical.classmanager.model.LectureWrapper;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.EventDAO;
@@ -72,6 +71,7 @@ public class LectureController {
 			model.addAttribute("canCreate", true);
 
 		model.addAttribute("lecture", new Lecture());
+		
 		return getLectures(model);
 	}
 
@@ -209,8 +209,9 @@ public class LectureController {
 	 * @return classPage.jsp
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
-	public String createLecture(@Valid @ModelAttribute("lecture") LectureWrapper lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
+	public String createLecture(@Valid @ModelAttribute("lecture") Lecture lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 	
+		model.addAttribute("lectureAction", "/lectures");
 		if(result.hasErrors()){
 
 			model.addAttribute("modalState", "_open");
@@ -222,7 +223,9 @@ public class LectureController {
 			return getLectures(model);
 		}
 
-		Lecture lecture = lectureWrapper.getLecture();
+		Lecture lecture = lectureWrapper;//.getLecture();
+		if(lecture.getId() > 0)
+			return updateLecture(lecture, result, request, model, redirect);
 		
 		//TODO Devo ricavarlo dalla sessione
 		int idCourse = 1;
@@ -233,7 +236,7 @@ public class LectureController {
 		//retrieves the owner course of the new lesson
 		CourseClassDAO courseClassDao = appContext.getBean("courseClassDAO",CourseClassDAOImpl.class);
 		CourseClass courseClass = courseClassDao.get(idCourse);
-
+		
 		lecture.setCourseClass(courseClass);
 
 		//creates the new lecture
@@ -293,6 +296,7 @@ public class LectureController {
 
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
+			model.addAttribute("lectureAction", "/lectures/update_lecture");
 			
 			if(canCreate(request))
 				model.addAttribute("canCreate", true);

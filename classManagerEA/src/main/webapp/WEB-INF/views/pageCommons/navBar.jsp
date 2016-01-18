@@ -8,7 +8,7 @@
 			<a id="menu-toggle" href="#" class="navbar-toggle"> <span
 				class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 				<span class="icon-bar"></span> <span class="icon-bar"></span>
-			</a> <a class="navbar-brand" href="#"> Class Manager </a>
+			</a> <a class="navbar-brand" href="/"> Class Manager </a>
 		</div>
 		<div class="navbar-header pull-right">
 			<a class="nav-bar-button logout" href="./db_init"><span

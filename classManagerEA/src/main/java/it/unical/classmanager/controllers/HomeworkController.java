@@ -256,7 +256,7 @@ public class HomeworkController {
 	 * allows to create a new directory in which store the files related to a particular homework
 	 * @param lecture the lecture to which this homework is referred
 	 */
-	@RequestMapping(value = "/lectures/create_homeworks", method = RequestMethod.POST)
+	@RequestMapping(value = "/lectures/homeworks", method = RequestMethod.POST)
 	public String addHomework(@Valid @ModelAttribute("homework") Homework homework, BindingResult result, @RequestParam("parentId") int lectureId, Model model, RedirectAttributes redirect, HttpServletRequest request) {
 
 		if(result.hasErrors()){
@@ -280,6 +280,9 @@ public class HomeworkController {
 
 		HomeworkDAO homeworkDAO = appContext.getBean("homeworkDAO",HomeworkDAOImpl.class);
 
+		if(homework.getId() > 0)
+			return updateHomework(homework, result, lectureId, request, model, redirect);
+		
 		String lessonName = Integer.toString(lectureId);
 		String currentPath = lecture.getCourseClass().getId() + File.separator + FileManager.LECTURES_PATH  + File.separator + lessonName + File.separator + FileManager.HOMEWORK_PATH;
 

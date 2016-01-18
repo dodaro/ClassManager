@@ -61,7 +61,7 @@ var ListenersManager = (function(){
 
 			$("#addHomework_btn").on("click", function() {
 
-				$("#homework-form").attr("action", "/lectures/create_homeworks");
+				//$("#homework-form").attr("action", "/lectures/create_homeworks");
 				$("#addHomework_modal").modal().show();
 			});
 
@@ -214,7 +214,6 @@ function update_lectures(event){
 	$("#lecture-form").find("input[name=beginHour]").val(bhour);
 	$("#lecture-form").find("input[name=endHour]").val(ehour);
 
-	$("#lecture-form").attr("action", "/lectures/update_lecture");
 	$("#createNewClass_modal").modal().show();
 
 }
@@ -234,7 +233,7 @@ function update_homeworks(event){
 	$("#homework-form").find("input[name=name]").val(name);
 	$("#homework-form").find("input[name=description]").val(description);
 
-	$("#homework-form").attr("action", "/lectures/update_homeworks");
+	//$("#homework-form").attr("action", "/lectures/update_homeworks");
 	$("#addHomework_modal").modal().show();
 
 }

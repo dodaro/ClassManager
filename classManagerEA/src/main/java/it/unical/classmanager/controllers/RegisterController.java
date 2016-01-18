@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Student;
@@ -85,15 +86,13 @@ public class RegisterController {
 		}
 		
 		UserDAO userDao = (UserDAO) context.getBean("userDao");
-			if ( userDao.exists(user.getUsername()) ) {
-			    Map<String ,String> errors = new HashMap<String, String>();
-			    String message = messageSource.getMessage("message.usernameTaken",null,locale);
-			    errors.put("username", message);
-			    userJsonResponse.setStatus("ERROR");
-			    userJsonResponse.setErrorsMap(errors);
-			    return userJsonResponse;
+			if ( userDao.get(user.getUsername()) != null ) {
+				return handleError(userJsonResponse, "username", locale);
+			}	else if ( userDao.getUserBySerialNumber(user.getSerialNumber()) != null ) {
+				return handleError(userJsonResponse, "serialNumber", locale);
 			} else {
-			    user.setHash(user.getPassword());
+				String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+			    user.setHash(hash);
 			    user.setRole("Student");
 			    Student student = new Student(user);
 			    student.setSubscriptionDate(new Date());
@@ -102,6 +101,15 @@ public class RegisterController {
 			    logger.info("registered");
 			    return userJsonResponse;
 			}
+    }
+    
+    private UserJsonResponse handleError(UserJsonResponse userJsonResponse,String type,Locale locale) {
+		Map<String ,String> errors = new HashMap<String, String>();
+	    String message = messageSource.getMessage("message."+type+"Taken",null,locale);
+	    errors.put(type, message);
+	    userJsonResponse.setStatus("ERROR");
+	    userJsonResponse.setErrorsMap(errors);
+	    return userJsonResponse;
     }
     
 }

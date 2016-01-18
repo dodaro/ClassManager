@@ -41,7 +41,7 @@ public class DBTests{
 			u.setLastName("userLastName "+1);
 			u.setRole("user");
 			u.setEmail("userEmail@email.it");
-			u.setAddress("");
+			u.setSerialNumber(""+i);
 			u.setBirthDate(new Date());
 			userDao.create(u);
 		}

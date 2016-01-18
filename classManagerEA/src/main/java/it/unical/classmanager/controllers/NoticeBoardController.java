@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,18 +45,9 @@ public class NoticeBoardController {
 	/**
 	 * returns the notice board
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/noticeboard", method = RequestMethod.GET)
 	public String noticeBoard(Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
-		
-		/**
-		 * handle errors like this, add the RedirectAttributes to the method and add the parameter to pass
-		 * this methods redirect passing parameters
-		 */
-		if ( request.getSession().getAttribute("loggedIn") == null || request.getSession().getAttribute("role") == null ) {
-			redirectAttributes.addAttribute("error", "session");
-			return "redirect:/sessionerror";
-		}
-		
 		
 		
 		String init = request.getParameter("init");
@@ -73,7 +63,7 @@ public class NoticeBoardController {
 			user.setRole("Professor");
 			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
-		
+			user.setSerialNumber("0001");
 			Professor professor = new Professor(user);
 			UserDAO userDao = (UserDAO) context.getBean("userDao");
 			userDao.create(professor);
@@ -217,67 +207,6 @@ public class NoticeBoardController {
 	}
 	
 	
-	/**
-	 * edits a notice
-	 */
-	@RequestMapping(value = "/editnotice", method = RequestMethod.POST)
-	public String editNotice(@Valid @ModelAttribute("edit-notice") Communications communication,BindingResult result,Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
-		
-		/**
-		 * handle errors like this, add the RedirectAttributes to the method and add the parameter to pass
-		 * this methods redirect passing parameters
-		 */
-		String username = (String) request.getSession().getAttribute("loggedIn");
-		String role = (String) request.getSession().getAttribute("role");
-		if ( username == null || role.equals("Student") ) {
-			redirectAttributes.addAttribute("error", "session");
-			return "redirect:/sessionerror";
-		}
-		
-		UserDAO userDao = DaoHelper.getUserDAO();
-		
-		if ( result.hasErrors() ) {
-			model.addAttribute("customHeader", NoticeBoardController.HEADER);
-			model.addAttribute("customBody", NoticeBoardController.BODY);
-			model.addAttribute("display",false);
-			model.addAttribute("display-edit",true);
-			model.addAttribute("new-notice",new Communications());
-			model.addAttribute("edit-notice",communication);
-			return "layout";
-		}
-		
-		
-		//check if this is a fake auth 
-		Professor professor = (Professor) userDao.get(username);
-		if ( professor == null ) {
-			return handleFakeAuth(model);
-		}
-		
-		int id = communication.getId();
-		CommunicationsDAO communicationsDAO = DaoHelper.getCommunicationsDAO();
-		Communications toEdit = communicationsDAO.get(id);
-		if ( toEdit == null || ( !role.equals("admin") && !communication.getProfessor().getUsername().equals(username)) ) {
-			model.addAttribute("customHeader", NoticeBoardController.HEADER);
-			model.addAttribute("customBody", NoticeBoardController.BODY);
-			model.addAttribute("display",true);
-			return "layout";
-		}
-		
-		
-		communication.setProfessor(professor);
-		
-		toEdit.setName(communication.getName());
-		toEdit.setDescription(communication.getDescription());
-		
-
-		
-		
-		logger.info(communication.toString());
-		communicationsDAO.update(toEdit);
-		
-		
-		return "redirect:/noticeboard";
-	}
 	
 	private String handleFakeAuth(Model model) {
 		model.addAttribute("customHeader", NoticeBoardController.HEADER);

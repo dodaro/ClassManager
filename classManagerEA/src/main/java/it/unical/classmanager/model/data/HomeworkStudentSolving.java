@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * Every time a student upload a file referred to an {@link Homework} an instance of this class is created.
@@ -33,6 +34,7 @@ public class HomeworkStudentSolving implements Serializable  {
 	private int id;
 	
 	@Column(name="score", nullable=false)
+	@Range(min = 0, max = 30)
 	private int score;
 	
 	@Column(name="date")

@@ -72,13 +72,12 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	 * 2014, Sunday, NumberLecture
 	 * 
 	 */
-		
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_Title",null,locale));
-	cart.setSubTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_SubTitle",null,locale));
-	cart.setyAxisTitle(messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_yAxisTitle",null,locale));
-	cart.setxAxisTitle("");
-	cart.setxAxisMinValue(0);
-	cart.setxAxisMaxValue(0);
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_Title",null,locale));
+	cart.setProperty("#subTitleText", messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_SubTitle",null,locale));
+	cart.setProperty("#yAxisTitle", messageSource.getMessage("message.statistics.Professor_ForYearLectureByWeekDaySingleProfessor_yAxisTitle",null,locale));
+	cart.setProperty("#xAxisTitle", "");
 	
 	StringBuilder categories = new StringBuilder("");
 	String lastYear = "";
@@ -93,22 +92,12 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 		}
 	    }
 	}	
-	cart.setxAxisCategories(categories.toString());
+	cart.setProperty("#xAxisCategories", categories.toString());
+	cart.setProperty("#yAxisMin", "0");
+	cart.setProperty("#yAxisMax", "0");
+	cart.setProperty("#tooltipValueSuffix", "");
 	
-	cart.setyAxisMinValue(0);
-	cart.setyAxisMaxValue(0);
-	cart.setyAxisCategories("");
-	cart.setCategories("");
-	StringBuilder categoriesDataContent = new StringBuilder("");
-	cart.setCategoriesDataContent(categoriesDataContent);
-	cart.setxPlotText("");
-	cart.setyPlotText("");
-	cart.setxPointTooltip("");
-	cart.setyPointTooltip("");
-	cart.setzPointTooltip("");
-	cart.setToolTipValueSuffix("");
 	StringBuilder seriesContent = new StringBuilder("");
-	
 	for(int i=0; i<queryData.size(); i++){
 	    //String day = queryData.get(i)[1].toString();
 	    int dayIndex = Integer.parseInt(queryData.get(i)[1].toString())-1;
@@ -136,10 +125,10 @@ public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQu
 	    }		    
 	    seriesContent.append("]}");
 	}
+	cart.setProperty("#series", seriesContent.toString());
 	
-	cart.setSeriesContent(seriesContent);
 	StringBuilder drilldownContent = new StringBuilder("");
-	cart.setDrilldownContent(drilldownContent);
+	cart.setProperty("#drilldownSeries", drilldownContent.toString());
 	
 	return cart;
     }

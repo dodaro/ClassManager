@@ -17,7 +17,9 @@ import javax.persistence.Table;
 @Table(name ="event")
 public class Event implements Serializable  {
 	private static final long serialVersionUID = -7308089602591068853L;
-	public static final short ID_EVENT_TEMP = -1;
+	public static final int ID_EVENT_TEMP = -1;
+	public static final int EVENT_LECTURE_TYPE = 0;
+	public static final int EVENT_USER_TYPE = 1;
 	
 	@Id
 	@Column(name="id", nullable=false, length=32)
@@ -48,11 +50,23 @@ public class Event implements Serializable  {
 	@Column(name="color", nullable=true)
 	private String color;
 	
+	@Column(name="dow", nullable=true)
+	private int[] dow;
+	
+	@Column(name="type", nullable=true)
+	private Integer type;
+	
+	@Column(name="editable", nullable=true)
+	private Boolean editable;
 	
 	//	Foreign key section	
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "courseClass")
+	private CourseClass courseClass;
 	
 	public Event(){
 		this.id = 0;
@@ -65,6 +79,8 @@ public class Event implements Serializable  {
 		this.hourEnd = null;
 		this.user = null;
 		this.color = null;
+		this.type = Event.EVENT_USER_TYPE;
+		this.setEditable(true);
 	}
 
 	public Event(int id, String title, String description, Date startDate, Date endDate, String place, Time hourBegin,
@@ -78,7 +94,10 @@ public class Event implements Serializable  {
 		this.hourBegin = hourBegin;
 		this.hourEnd = hourEnd;
 		this.user = user;
+		this.type = Event.EVENT_USER_TYPE;
+		this.setEditable(true);
 	}
+	
 
 	public int getId() {
 		return id;
@@ -159,6 +178,68 @@ public class Event implements Serializable  {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public CourseClass getCourseClass() {
+		return courseClass;
+	}
+
+	public void setCourseClass(CourseClass courseClass) {
+		this.courseClass = courseClass;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	public void update(Event event){
+		
+		if(event.getColor() != null)
+			this.setColor(event.getColor());
+		
+		if(event.getDescription() != null)
+			this.setCourseClass(event.getCourseClass());
+		
+		if(event.getEndDate() != null)
+			this.setEndDate(event.getEndDate());
+		
+		if(event.getStartDate() != null)
+			this.setStartDate(event.getStartDate());
+		
+		if(event.getHourBegin() != null)
+			this.setHourBegin(event.getHourBegin());
+		
+		if(event.getHourEnd() != null)
+			this.setHourBegin(event.getHourBegin());
+		
+		if(event.getPlace() != null)
+			this.setPlace(event.getPlace());
+		
+		if(event.getTitle() != null)
+			this.setTitle(event.getTitle());
+		
+		if(event.getDow() != null)
+			this.setDow(dow);
+	}
+
+	public int[] getDow() {
+		return dow;
+	}
+
+	public void setDow(int[] dow) {
+		this.dow = dow;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }

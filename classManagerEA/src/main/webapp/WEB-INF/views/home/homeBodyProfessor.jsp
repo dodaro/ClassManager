@@ -5,9 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	var events = ${events};
+	var events = $
+	{
+		events
+	};
 	$("#calendar").fullcalendar(events);
-	$("#calendar").fullcalendar({events:events, editable:false});
+	$("#calendar").fullcalendar({
+		events : events,
+		editable : false
+	});
 </script>
 
 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -34,7 +40,7 @@
 			<c:if test="${not empty courseList}">
 				<ul>
 					<c:forEach items="${courseList.list}" var="singleCourse">
-						<li><a href="#">${singleCourse.field1}</a></li>
+						<li><a href="/lectures?path=${singleCourse.field3}">${singleCourse.field1}</a></li>
 					</c:forEach>
 				</ul>
 			</c:if>

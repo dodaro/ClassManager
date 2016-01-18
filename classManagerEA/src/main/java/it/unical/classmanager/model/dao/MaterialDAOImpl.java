@@ -25,10 +25,10 @@ public class MaterialDAOImpl implements MaterialDAO
 	return dbHandler;
     }
     
-    public void create(Material material)
-    {
-	this.dbHandler.create(material);
-    }
+    public Material create(Material material)
+	{
+		return (Material) this.dbHandler.create(material);
+	}
     
     public void update(Material material)
     {

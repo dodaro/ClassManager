@@ -1,14 +1,8 @@
 package it.unical.classmanager.controllers;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,46 +10,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.unical.classmanager.model.AbstractFileBean;
-import it.unical.classmanager.model.LectureControllerWrapper;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
-import it.unical.classmanager.model.dao.EventDAO;
-import it.unical.classmanager.model.dao.EventDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkAttachedDAO;
-import it.unical.classmanager.model.dao.HomeworkAttachedDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAO;
 import it.unical.classmanager.model.dao.HomeworkAttachedStudentSolvingDAOImpl;
-import it.unical.classmanager.model.dao.HomeworkDAO;
-import it.unical.classmanager.model.dao.HomeworkDAOImpl;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
 import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAOImpl;
-import it.unical.classmanager.model.dao.LectureDAO;
-import it.unical.classmanager.model.dao.LectureDAOImpl;
-import it.unical.classmanager.model.dao.MaterialDAO;
-import it.unical.classmanager.model.dao.MaterialDAOImpl;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
-import it.unical.classmanager.model.data.Event;
-import it.unical.classmanager.model.data.Homework;
-import it.unical.classmanager.model.data.HomeworkAttached;
 import it.unical.classmanager.model.data.HomeworkAttachedStudentSolving;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
-import it.unical.classmanager.model.data.Lecture;
-import it.unical.classmanager.model.data.Material;
 import it.unical.classmanager.model.data.Student;
-import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
 //TODO reload of the page when creating new things, update lecture button not yet implemented, retrieve path from session, modal to create lecture (date and hour), deny upload exe
@@ -104,10 +77,10 @@ public class ProfessorHomeworkStudentSolvings {
 
 			int childs = student.getHomeworkStudentSolvings().size();
 
-			FolderBean folder = new FolderBean(student.getIdentificationNumber(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
+			FolderBean folder = new FolderBean(Integer.parseInt(student.getSerialNumber()), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
 			folder.setParentId(0);
 			folder.setAction("/studentHomeworks");
-			folder.setId(student.getIdentificationNumber());
+			folder.setId(Integer.parseInt( student.getSerialNumber()));
 			files.add(folder);
 		}	
 

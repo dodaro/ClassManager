@@ -47,9 +47,8 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 				<!-- create -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
@@ -182,6 +181,10 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
+	</bean>
+	
+	<bean id="fileManager"
+		class="it.unical.classmanager.utils.FileManager">
 	</bean>
 
 </beans>

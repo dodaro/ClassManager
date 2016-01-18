@@ -2,11 +2,8 @@ package it.unical.classmanager.forumData;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.context.ApplicationContext;
 
-import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.data.Question;
 
 public class QuestionManager {

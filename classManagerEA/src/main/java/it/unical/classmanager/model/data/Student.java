@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -77,7 +75,7 @@ public class Student extends User implements Serializable  {
 		this.registrationStudentClasses = registrationStudentClasses;
 		this.homeworkStudentSolvings = homeworkStudentSolvings;
 	}
-	
+
 	public Student(User user){
 		super(user);
 		this.subscriptionDate = null;
@@ -86,7 +84,7 @@ public class Student extends User implements Serializable  {
 		this.registrationStudentClasses = new ArrayList<RegistrationStudentClass>();
 		this.homeworkStudentSolvings = new ArrayList<HomeworkStudentSolving>();
 	}
-	
+
 	public Student(User user, int identificationNumber, Date subscriptionDate,
 			List<StudentExamPartecipation> studentExamPartecipations,
 			List<AttendanceStudentLecture> attendanceStudentLectures,

@@ -47,6 +47,11 @@ public class ProfessorCheckerFilter implements Filter {
 		UserDAO userDAO = DaoHelper.getUserDAO();
 		User user = userDAO.get(username);
 
+		if(user == null){
+			httpResponse.sendRedirect("/privilegeError");
+			return;
+		}
+		
 		if(user.getRole().equals(User.STUDENT) && httpRequest.getMethod().equalsIgnoreCase("POST")){
 			httpResponse.sendRedirect("/privilegeError");
 			return;

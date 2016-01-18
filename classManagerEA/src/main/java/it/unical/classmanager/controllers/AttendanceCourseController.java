@@ -1,9 +1,7 @@
 package it.unical.classmanager.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +16,8 @@ import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
 import it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
-import it.unical.classmanager.model.dao.LectureDAO;
-import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
-import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.dao.UserDAOImpl;
-import it.unical.classmanager.model.data.AttendanceStudentLecture;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Student;
@@ -42,6 +35,7 @@ public class AttendanceCourseController
 	private final static String HEADER = "attendance/attendanceCourseHeader.jsp";
 	private final static String BODY = "attendance/attendanceCourseBody.jsp";
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceLessonController.class);
 
 	@Autowired

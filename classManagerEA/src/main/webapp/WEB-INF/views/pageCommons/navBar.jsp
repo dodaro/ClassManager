@@ -9,7 +9,7 @@
 				class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 				<span class="icon-bar"></span> <span class="icon-bar"></span>
 			</a>
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="/">
 			<span class="glyphicon glyphicon-blackboard"></span> Class Manager 
 			</a>
 		</div>
@@ -46,11 +46,6 @@
 				<a class="nav-bar-button logout" href="logout"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
 			</c:if>
-			<c:if test="${not empty loggedIn && role == 'admin' }">
-				<a class="nav-bar-button logout" href="userslist"><span
-					class="glyphicon glyphicon-list"></span> User List</a>
-			</c:if>	
-		</ul>
 		</div>
 	</div>
 </nav>

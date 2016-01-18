@@ -47,7 +47,7 @@
 				</c:if>
 
 				<div id="uploadFile_div" style="display: none;">
-					<form id="upload" method="post" action="/upload_${pwd}"
+					<form id="upload" method="post" action="/lectures/upload_${pwd}"
 						enctype="multipart/form-data" onsubmit="return reload();">
 						<div id="drop">
 							<spring:message code="lectureManager.drophere"
@@ -92,7 +92,7 @@
 									
 									<c:if test="${not empty homework}"><input type="hidden" name="name" value="${contentsArray[index].name}"></input></c:if>
 									
-									<input type="hidden" name="description" value="${contentsArray[index].description}"></input>
+									<%-- <input type="hidden" name="description" value="${contentsArray[index].description}"></input> --%>
 									<input type="hidden" name="path" value="${file.path}"></input>
 									<input type="hidden" name="parentId" value="${file.parentId}"></input>
 									<input type="submit" style="display: none;"></input>
@@ -126,7 +126,7 @@
 											<span class="name">${file.name}</span>
 											<span class="details">${file.size} Bytes</span>
 											<c:if test="${not empty canCreate}"><span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span></c:if>
-											<span onclick="alert();" class="glyphicon glyphicon-download-alt" style="color: white"></span>
+											<span onclick="download(event)" class="glyphicon glyphicon-download-alt" style="color: white"></span>
 										</div>
 									</c:if>
 
@@ -153,11 +153,10 @@
 
 <script>
 $(document).ready(function() 
-{
+{	
+
 	$('#createNewClass_modal_open').modal('show');
-	$('#createNewClass_modal_open').attr("id","createNewClass_modal");
 	
 	$('#addHomework_modal_open').modal('show');
-	$('#addHomework_modal_open').attr("id","addHomework_modal");
 });
 </script>

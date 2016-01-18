@@ -16,6 +16,7 @@ public abstract class AbstractQueryCart {
     private User user;
     protected MessageSource messageSource;
     protected Locale locale;
+    protected String idContainer;
     
     public AbstractQueryCart(){
 	cart = null;
@@ -36,16 +37,29 @@ public abstract class AbstractQueryCart {
     protected abstract AbstractCart buildCartFromQuery();
     protected abstract AbstractCart buildCartFromQuery(AbstractCart cart);
     
-    public AbstractCart getCart(MessageSource messageSource, Locale locale) {
+    public AbstractCart getCart(MessageSource messageSource, String idContainer, Locale locale) {
 	this.messageSource = messageSource;
 	this.locale = locale;
+	this.idContainer = idContainer;
 	if(cart==null){
 	    cart = buildCartFromQuery();
+	    cart.getCartScript();
 	}
 	return cart;
     }
     
-    public void setCart( AbstractCart cart) {
+    public AbstractCart getCart(MessageSource messageSource, String idContainer, Locale locale, AbstractCart cart) {
+	this.messageSource = messageSource;
+	this.locale = locale;
+	this.idContainer = idContainer;
+	if(cart==null){
+	    cart = buildCartFromQuery(cart);
+	    cart.getCartScript();
+	}
+	return cart;
+    }
+    
+    public void setCart(AbstractCart cart) {
 	this.cart = cart;
     }
 

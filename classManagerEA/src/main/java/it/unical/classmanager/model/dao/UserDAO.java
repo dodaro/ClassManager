@@ -12,7 +12,7 @@ public interface UserDAO {
 
 	public void update(User user);
 
-	public void delete(User user);
+	public boolean delete(User user);
 
 	public void deleteAllUser();
 
@@ -26,12 +26,11 @@ public interface UserDAO {
 	
 	public User get(String username);
 
-	public boolean exists(String username);
+	public User getUserBySerialNumber(String serialNumber);
 	
 	public List<User> getUsersByLastName(String lastName);
 	
-	public void promoteUser(User user);
+	public boolean doAction(User user,String action);
 
 }
-
 

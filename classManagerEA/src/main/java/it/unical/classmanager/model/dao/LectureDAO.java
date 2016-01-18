@@ -8,7 +8,7 @@ import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 
 public interface LectureDAO {
-	public int create(Lecture lecture);
+	public Lecture create(Lecture lecture);
 
 	public void update(Lecture lecture);
 

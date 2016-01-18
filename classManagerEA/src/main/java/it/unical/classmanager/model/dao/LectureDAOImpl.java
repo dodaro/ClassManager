@@ -14,6 +14,7 @@ import it.unical.classmanager.model.data.Student;
 
 public class LectureDAOImpl implements LectureDAO
 {
+
     private DBHandler dbHandler;
     
     public void setDbHandler(DBHandler dbHandler)
@@ -26,10 +27,10 @@ public class LectureDAOImpl implements LectureDAO
 	return dbHandler;
     }
     
-    public int create(Lecture lecture)
-    {
-	return ((Lecture) this.dbHandler.create(lecture)).getId();
-    }
+	public Lecture create(Lecture lecture)
+	{
+		return ((Lecture) this.dbHandler.create(lecture));
+	}
     
     public void update(Lecture lecture)
     {

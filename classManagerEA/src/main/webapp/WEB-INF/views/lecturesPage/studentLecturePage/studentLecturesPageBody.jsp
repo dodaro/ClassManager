@@ -1,6 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="row row-content">
 	<div class="col-sm-12 col-md-12 col-lg-12">
@@ -62,7 +63,7 @@
 
 			<ul class="data">
 				<c:choose>
-					<c:when test="${not empty files}">
+					<c:when test="${not empty files && fn:length(files) gt 0}">
 						<c:set var="index" value="0" scope="page"/>  
 						<c:set var="contentsArray" value="${contents}" scope="page"/>
 						<c:forEach var="file" items="${files}">
@@ -102,7 +103,7 @@
 											<span class="icon ${file.type} f-${file.extension}">.${file.extension}</span>
 											<span class="name">${file.name}</span>
 											<span class="details">${file.size} Bytes</span>
-											<span onclick="alert();" class="glyphicon glyphicon-download-alt" style="color: white"></span>
+											<span onclick="download(event);" class="glyphicon glyphicon-download-alt" style="color: white"></span>
 											<c:if test="${pwd == 'homeworkStudentSolvingAttachment'}">
 												<span onclick="delete_${pwd}(event);" class="glyphicon glyphicon-trash" style="color: white"></span>
 											</c:if>
@@ -115,7 +116,7 @@
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<div class="nothingfound">
+						<div class="nothingfound" style="display:block;">
 							<div class="nofiles"></div>
 							<span><spring:message code="lectureManager.nofileshere"
 									text="default text" /></span>
@@ -134,7 +135,8 @@
 <script>
 $(document).ready(function() 
 {
-	$('#createNewClass_modal_open').modal('show');
 	$('#addHomework_modal_open').modal('show');
+	$('#addHomework_modal_open').attr("id","addHomework_modal");
+	$('#addHomework_modal_open').find("form").attr("action", "/lectures/update_homeworks");
 });
 </script>

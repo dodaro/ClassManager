@@ -17,9 +17,9 @@ import javax.persistence.Table;
 @Table(name ="event")
 public class Event implements Serializable  {
 	private static final long serialVersionUID = -7308089602591068853L;
-	public static final short ID_EVENT_TEMP = -1;
-	public static final short EVENT_LECTURE_TYPE = 0;
-	public static final short EVENT_USER_TYPE = 1;
+	public static final int ID_EVENT_TEMP = -1;
+	public static final int EVENT_LECTURE_TYPE = 0;
+	public static final int EVENT_USER_TYPE = 1;
 	
 	@Id
 	@Column(name="id", nullable=false, length=32)
@@ -54,7 +54,7 @@ public class Event implements Serializable  {
 	private int[] dow;
 	
 	@Column(name="type", nullable=true)
-	private int type;
+	private Integer type;
 	
 	@Column(name="editable", nullable=true)
 	private Boolean editable;
@@ -192,7 +192,7 @@ public class Event implements Serializable  {
 		return type;
 	}
 
-	public void setType(short type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	

@@ -95,12 +95,6 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
-	@Override
-	public boolean exists(String username) {
-		if ( get(username) != null ) 
-			return true;
-		return false;
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -112,6 +106,18 @@ public class UserDAOImpl implements UserDAO {
 		List<User> users = query.list();
 		session.close();
 		return users;
+	}
+	
+	
+	@Override
+	public User getUserBySerialNumber(String serialNumber) {
+		Session session = this.dbHandler.getSessionFactory().openSession();
+		String queryString = "FROM User WHERE serialNumber like :serialNumber";
+		Query query = session.createQuery(queryString);
+		query.setParameter("serialNumber",  "%" + serialNumber + "%");
+		User user = (User) query.uniqueResult();
+		session.close();
+		return user;
 	}
 	
 	@Override

@@ -26,7 +26,7 @@ public interface UserDAO {
 	
 	public User get(String username);
 
-	public boolean exists(String username);
+	public User getUserBySerialNumber(String serialNumber);
 	
 	public List<User> getUsersByLastName(String lastName);
 	

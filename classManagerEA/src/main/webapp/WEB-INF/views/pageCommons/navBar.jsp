@@ -27,10 +27,6 @@
 				<a class="nav-bar-button logout" href="logout"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
 			</c:if>
-			<c:if test="${not empty loggedIn && role == 'admin' }">
-				<a class="nav-bar-button logout" href="userslist"><span
-					class="glyphicon glyphicon-log-out"></span>User List</a>
-			</c:if>
 		</div>
 	</div>
 </nav>

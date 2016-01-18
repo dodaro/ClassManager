@@ -36,6 +36,8 @@ import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.DegreeCourse;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
  * Gestione view relativa ai corsi del professore loggato con la possibilità di aggiungere nuovi
@@ -61,10 +63,18 @@ public class CourseController
 
 	@RequestMapping(value = "/courses", method = RequestMethod.GET)
 	public String loadCourses(HttpServletRequest request, Model model, Locale locale, RedirectAttributes redirectAttributes)
-	{		
+	{	
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+		    return "redirect:/";
+		}
+		
 		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
-		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
-		professor = (Professor) userDAO.get("ProfAldo0");
+//		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
+//		professor = (Professor) userDAO.get("ProfAldo0");
+		
+		professor = (Professor) user;
 		model.addAttribute("professor", professor);
 		//model.addAttribute("courses", professor.getCourseClasses());
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
@@ -114,7 +124,11 @@ public class CourseController
 		{
 			CourseClassDAO courseDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
 			courseDAO.create(course);
-			return "redirect:courses";
+			
+			// Added session variable
+			request.getSession().setAttribute("ActiveCourse", course.getId());
+			
+			return "redirect:/lectures?path=lectures";
 		}
 	}
 	
@@ -130,7 +144,10 @@ public class CourseController
 		logger.info(course.toString());
 		
 		// TODO Redirect to course page
-		return "redirect:courses";
+		// Added session variable
+		request.getSession().setAttribute("ActiveCourse", course.getId());
+		
+		return "redirect:/lectures?path=lectures";
 	}
 
 	/**

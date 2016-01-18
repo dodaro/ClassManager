@@ -106,7 +106,7 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	// Course, Professor
 	Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 	
-	String hql = " select C.name, P.username "
+	String hql = " select C.name, P.username, C.id "
 		+ " from CourseClass C "
 		+ " join C.professor P "
 		+ " where P.username = :nameProfessor "

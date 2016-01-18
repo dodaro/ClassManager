@@ -23,8 +23,16 @@ public class Paths {
 	//cpp environments
 	public static String cppEnvironment = environments + "cppEnv"+sep;
 	
-	
 	//java environments
 	public static String javaEnvironment = environments + "javaEnv"+sep;
+	
+	//perl environments
+	public static String perlEnvironment = environments + "perlEnv"+sep;
+	
+	//python environments
+	public static String pythonEnvironment = environments + "pythonEnv"+sep;
+	
+	//DLV environments
+	public static String DLVEnvironment = environments + "DLVEnv"+sep;
 	
 }

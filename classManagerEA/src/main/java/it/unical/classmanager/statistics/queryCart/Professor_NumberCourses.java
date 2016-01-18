@@ -48,11 +48,12 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	 * Professor, numberCourse
 	 * 
 	 */
-		
-	cart.setTitle(messageSource.getMessage("message.statistics.Professor_NumberCourses_Title",null,locale));
+
+	cart.setProperty("#container", idContainer);
+	cart.setProperty("#titleText", messageSource.getMessage("message.statistics.Professor_NumberCourses_Title",null,locale));
+	
 	StringBuilder seriesContent = new StringBuilder("");
 	StringBuilder data = new StringBuilder("");
-	
 	for(int i=0; i<courseByProfessor.size(); i++){	    
 	    String currentData = "{name: \'"+
 		    courseByProfessor.get(i)[0]+"\', y: "+
@@ -64,7 +65,6 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 		data.append(", "+currentData);
 	    }
 	}
-	
 	seriesContent.append("{");
 	seriesContent.append("\n");
 	seriesContent.append("name: \'"+messageSource.getMessage("message.statistics.Professor_NumberCourses_SeriesContentName",null,locale)+"\',\n");
@@ -72,9 +72,8 @@ public class Professor_NumberCourses extends AbstractQueryCart {
 	seriesContent.append(data.toString());
 	seriesContent.append("]\n");
 	seriesContent.append("}");
-	
-	cart.setSeriesContent(seriesContent);
-	
+	cart.setProperty("#series", seriesContent.toString());
+
 	return cart;
     }
     

@@ -5,7 +5,7 @@
 		<!-- MODAL addHomework-->
 		<c:if test="${not empty homework}">
 			<div id="addHomework_modal${modalState}" class="modal fade" role="dialog">
-				<form:form id="homework-form" action="/addHomework" method="POST"
+				<form:form id="homework-form" action="/lectures/homeworks" method="POST"
 					commandName="homework" role="form">
 					<div class="modal-dialog">
 						<!-- Modal content-->

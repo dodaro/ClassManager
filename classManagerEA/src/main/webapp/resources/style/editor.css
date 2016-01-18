@@ -1,8 +1,4 @@
 
-.editorContainer {
-	background-color: #E6E6E6;
-}
-
 
 #editor { 
   height: 70%;
@@ -17,4 +13,9 @@
 
 #editorForm {
 	display: none;
+}
+
+
+body {
+	background-color: #E6E6E6;
 }

@@ -1,11 +1,17 @@
 package it.unical.classmanager.managers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.editorData.concrete.CPPEnvironment;
+import it.unical.classmanager.editorData.concrete.DLVEnvironment;
 import it.unical.classmanager.editorData.concrete.JavaEnvironment;
+import it.unical.classmanager.editorData.concrete.PerlEnvironment;
+import it.unical.classmanager.editorData.concrete.PythonEnvironment;
 import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 
 
@@ -67,18 +73,28 @@ public class EnvironmentManger {
 			this.environments.put(environmentEnum, new JavaEnvironment());
 			 break;
 			 
-		case HTML:
-			break;
-			
 		case PYTHON:
+			this.environments.put(environmentEnum, new PythonEnvironment());
 			break;
 			
 		case PERL:
+			this.environments.put(environmentEnum, new PerlEnvironment());
+			break;
+			
+		case DLV:
+			this.environments.put(environmentEnum, new DLVEnvironment());
 			break;
 
 		default:
 			break;
 		}
+	}
+	
+	
+	
+	public List<EnvironmentEnum> getAviableLanguage() {
+		
+		return Arrays.asList(EnvironmentEnum.class.getEnumConstants());
 	}
 	
 	

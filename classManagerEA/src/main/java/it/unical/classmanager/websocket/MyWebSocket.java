@@ -23,7 +23,14 @@ public class MyWebSocket
 	
     @OnWebSocketConnect
     public void onConnect(Session session) 
-    {}
+    {
+    	try {
+			session.getRemote().sendString("Hello Client");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) throws IOException 

@@ -43,7 +43,7 @@
 				<a class="nav-bar-button logout" href="#"><span
 					class="glyphicon glyphicon-user"></span> <spring:message
 						code="welcome.springmvc" text="default text" /> ${loggedIn}</a>
-				<a class="nav-bar-button logout" href="logout"><span
+				<a class="nav-bar-button logout" href="/logout"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
 			</c:if>
 		</div>

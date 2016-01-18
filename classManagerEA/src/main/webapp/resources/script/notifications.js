@@ -28,7 +28,7 @@ function takeNewNotifications()
 {
 	$.ajax(
 	{
-		url : 'getNewNotifications',
+		url : '/getNewNotifications',
 		datatype : 'text',
 		success : function(data) 
 		{
@@ -52,7 +52,7 @@ function takeOldNotifications()
 {
 	$.ajax(
 	{
-		url : 'getOldNotifications',
+		url : '/getOldNotifications',
 		datatype : 'text',
 		success : function(data) 
 		{
@@ -90,7 +90,7 @@ function resetBadge()
 	$('#badge').html('');
 	$.ajax(
 	{
-		url : 'setNoficationsRead',
+		url : '/setNoficationsRead',
 		datatype : 'text',
 		success : function(data) 
 		{}

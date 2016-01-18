@@ -11,4 +11,4 @@
 
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
-<script src="/resources/script/forum/questions.js"></script>
+<script src="/resources/script/forum/detailedQuestions.js"></script>

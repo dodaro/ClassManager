@@ -30,24 +30,7 @@ var QuestionsManager = (function(){
 		if(alreadyInitialized === false) {
 			alreadyInitialized = true;
 
-			$('#paginatorTop').bootpag({
-			    total: $("#pageCount").val(),
-			    page: $("#currPage").val(),
-			    maxVisible: $("#pageSize").val(),
-			    leaps: false
-			}).on("page", function(event, num){
-			    window.location.href = "questionsPage?page="+(num-1);
-			});
 			
-			
-			$('#paginatorBottom').bootpag({
-			    total: $("#pageCount").val(),
-			    page: $("#currPage").val(),
-			    maxVisible: $("#pageSize").val(),
-			    leaps: false
-			}).on("page", function(event, num){
-			    window.location.href = "questionsPage?page="+(num-1);
-			});
 			
 		}
 		else {

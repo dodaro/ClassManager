@@ -1,6 +1,7 @@
 package it.unical.classmanager.controllers.forum;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -21,14 +22,18 @@ import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.AnswerDAO;
 import it.unical.classmanager.model.dao.AnswerDAOImpl;
+import it.unical.classmanager.model.dao.NotificationDAO;
+import it.unical.classmanager.model.dao.NotificationDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Answer;
 import it.unical.classmanager.model.data.AnswerAttachedContent;
+import it.unical.classmanager.model.data.Notification;
 import it.unical.classmanager.model.data.Question;
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.websocket.JettyWebSocketClient;
 
 /**
  * Handles requests for the forum page.
@@ -136,8 +141,21 @@ public class InsertAnswerController {
 			}
 		}
 		
+		
+		NotificationDAO notificationDAO = appContext.getBean("notificationDAO", NotificationDAOImpl.class);
+		Notification n = new Notification();
+		n.setMessage("Your question has a new answer");
+		n.setUrl("http://localhost:8080/forum/detailedQuestion?qid=" + qid);
+		n.setSource(tmpUser);
+		
+		// Settare il giusto utente a cui la notifica è indirizzata
+		n.setDestination(tmpQuestion.getUser());
+		n.setDate(new Date());
+		notificationDAO.create(n);	
+		
+		JettyWebSocketClient.getInstance().sendNotification(n.getDestination());
 			
-		return "redirect:detailedQuestion?qid=" + qid;
+		return "redirect:/forum/detailedQuestion?qid=" + qid;
 	}
 	
 	

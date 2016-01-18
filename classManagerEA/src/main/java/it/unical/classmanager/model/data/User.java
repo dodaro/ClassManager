@@ -87,8 +87,10 @@ public class User implements Serializable {
 	@Past()	
 	private Date birthDate;
 	
-	@Column(name="address", nullable=true, length=256)
-	private String address;
+	@Column(name="serialNumber", nullable=false, length=4,unique=true)
+	@Pattern(regexp = "^[0-9]+$")
+	@Size(min=1, max=4)
+	private String serialNumber;
 	
 	//	Foreign key section
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
@@ -114,7 +116,7 @@ public class User implements Serializable {
 		this.lastName = "";
 		this.email = "";
 		this.birthDate = null;
-		this.address = null;
+		this.serialNumber = null;
 		this.events = new ArrayList<Event>();
 		this.questions = new ArrayList<Question>();
 		this.answers = new ArrayList<Answer>();
@@ -131,7 +133,7 @@ public class User implements Serializable {
 		this.lastName = lastName;
 		this.email = email;
 		this.birthDate = birthDate;
-		this.address = address;
+		this.serialNumber = address;
 		this.events = events;
 		this.questions = questions;
 		this.answers = answers;
@@ -147,7 +149,7 @@ public class User implements Serializable {
 		this.lastName = user.lastName;
 		this.email = user.email;
 		this.birthDate = user.birthDate;
-		this.address = user.address;
+		this.serialNumber = user.serialNumber;
 		this.events = new ArrayList<Event>(user.events);
 		this.questions = new ArrayList<Question>(user.questions);
 		this.answers = new ArrayList<Answer>(user.answers);
@@ -201,12 +203,12 @@ public class User implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getSerialNumber() {
+		return serialNumber;
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	public List<Event> getEvents() {
@@ -262,7 +264,7 @@ public class User implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((serialNumber == null) ? 0 : serialNumber.hashCode());
 		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
 		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
 		result = prime * result + ((confirmPassword == null) ? 0 : confirmPassword.hashCode());
@@ -287,10 +289,10 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (address == null) {
-			if (other.address != null)
+		if (serialNumber == null) {
+			if (other.serialNumber != null)
 				return false;
-		} else if (!address.equals(other.address))
+		} else if (!serialNumber.equals(other.serialNumber))
 			return false;
 		if (answers == null) {
 			if (other.answers != null)
@@ -357,6 +359,6 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + hash + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + address +"]";
+		return "[ " + this.username + ", " + hash + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + serialNumber +"]";
 	}
 }

@@ -200,7 +200,7 @@ public class HomeworkController {
 			int childs = solution.getHomeworkAttachedStudentSolvings().size();
 
 			FolderBean folder = new FolderBean(solution.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
-			folder.setParentId(solution.getStudent().getIdentificationNumber());
+			folder.setParentId(Integer.parseInt( solution.getStudent().getSerialNumber() ));
 			folder.setAction("/lectures/studentHomeworkAttachments");
 			folder.setId(solution.getId());
 			homeworksAttacheds.add(folder);

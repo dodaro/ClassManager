@@ -18,6 +18,11 @@
 				<div class="errors"></div>
 			</div>
 			
+			<div class="form-group">
+				<label for="serial-number"><spring:message code="message.serialNumber" text="default text" />:</label> 
+				<form:input type="text" name="serial-number" path="serialNumber" text="default text" class="form-control" />  
+				<div class="errors"></div>
+			</div>		
 				
 			<div class="form-group">
 				<label for="password">Password:</label> 
@@ -48,12 +53,6 @@
 			<div class="form-group">
 				<label for="email">Email:</label> 
 				<form:input type="text" name="email" path="email" class="form-control" text="default text"/> 
-				<div class="errors"></div>
-			</div>			
-			
-			<div class="form-group">
-				<label for="address"><spring:message code="message.address" text="default text" />:</label> 
-				<form:input type="text" name="address" path="address" text="default text" class="form-control" />  
 				<div class="errors"></div>
 			</div>			
 			

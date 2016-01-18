@@ -86,13 +86,10 @@ public class RegisterController {
 		}
 		
 		UserDAO userDao = (UserDAO) context.getBean("userDao");
-			if ( userDao.exists(user.getUsername()) ) {
-			    Map<String ,String> errors = new HashMap<String, String>();
-			    String message = messageSource.getMessage("message.usernameTaken",null,locale);
-			    errors.put("username", message);
-			    userJsonResponse.setStatus("ERROR");
-			    userJsonResponse.setErrorsMap(errors);
-			    return userJsonResponse;
+			if ( userDao.get(user.getUsername()) != null ) {
+				return handleError(userJsonResponse, "username", locale);
+			}	else if ( userDao.getUserBySerialNumber(user.getSerialNumber()) != null ) {
+				return handleError(userJsonResponse, "serialNumber", locale);
 			} else {
 				String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
 			    user.setHash(hash);
@@ -104,6 +101,15 @@ public class RegisterController {
 			    logger.info("registered");
 			    return userJsonResponse;
 			}
+    }
+    
+    private UserJsonResponse handleError(UserJsonResponse userJsonResponse,String type,Locale locale) {
+		Map<String ,String> errors = new HashMap<String, String>();
+	    String message = messageSource.getMessage("message."+type+"Taken",null,locale);
+	    errors.put(type, message);
+	    userJsonResponse.setStatus("ERROR");
+	    userJsonResponse.setErrorsMap(errors);
+	    return userJsonResponse;
     }
     
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.PasswordHashing;
-import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
@@ -34,6 +33,7 @@ public class AldoLoginController {
 	
 	@Autowired
 	private ApplicationContext context;
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AldoLoginController.class);
 	
 	
@@ -60,7 +60,9 @@ public class AldoLoginController {
 		user.setRole("admin");
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
+		user.setSerialNumber("0000");
 		String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+		
 		user.setHash(hash);
 		
 		Professor aldo = new Professor(user);

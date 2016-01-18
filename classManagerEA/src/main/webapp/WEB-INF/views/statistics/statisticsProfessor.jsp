@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<script type="text/javascript">
@@ -87,6 +88,29 @@
 				<div class="col-sm-6 col-md-6 col-lg-6">
 					<div id="idCartContainer6"></div>
 				</div>
+
+				<form class="form-inline" action="/statistics"
+					method="post">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+							</div>
+							<c:if test="${empty researchField}">
+								<input type="text" class="form-control" name="researchBar"
+									placeholder="Type a name...">
+							</c:if>
+							<c:if test="${not empty researchField}">
+								<input type="text" class="form-control" name="researchBar"
+									value="${researchField}" placeholder="Type a name...">
+							</c:if>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+					</button>
+				</form>
+
 			</div>
 		</div>
 

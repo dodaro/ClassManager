@@ -88,13 +88,15 @@ public class QuestionDAOImpl implements QuestionDAO
 				+ "q.user = u.username "
 				+ "AND LOWER(q.title) LIKE LOWER(:questionName) "
 				+ "AND LOWER(q.description) LIKE LOWER(:questionDescription) "
-				+ "AND LOWER(u.username) LIKE LOWER(:username)";
+				+ "AND LOWER(u.username) LIKE LOWER(:username)"
+				+ "AND LOWER(q.tags) LIKE LOWER(:tags)";
 		
 		Query query = session.createQuery(queryString);
 		
 		query.setParameter("questionName",  "%" + searchSettings.getQuestionName() + "%");
 		query.setParameter("questionDescription",  "%" + searchSettings.getQuestionDescription() + "%");
 		query.setParameter("username",  "%" + searchSettings.getUsername() + "%");
+		query.setParameter("tags", "%" + searchSettings.getTags() + "%");
 		
 		List<Question> questions = (List<Question>) query.list();
 		

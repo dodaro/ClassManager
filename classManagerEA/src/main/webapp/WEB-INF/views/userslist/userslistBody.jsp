@@ -76,7 +76,24 @@
 					        	</c:choose>
 					        	</a>
 					        </th>
-					        <th>Role
+					        <th>
+					        	<spring:message code="message.serialNumber" text="default text" /> 
+					        	<a href="sort?prop=serialNumber">
+					        		<c:choose>
+					        		<c:when test="${prop == 'serialNumber' && asc == true }">
+						        		<i class="sort fa fa-sort-asc"></i>
+					        		</c:when>
+					        		<c:when test="${prop == 'serialNumber' && asc != true }">
+						        		<i class="sort fa fa-sort-desc"></i>
+						        	</c:when>
+						        	<c:otherwise>
+						        		<i class="sort fa fa-sort"></i>
+						        	</c:otherwise>
+					        	</c:choose>
+					        	</a>
+					        </th>
+					        <th>
+					        	<spring:message code="message.role" text="default text" /> 
 					        	<a href="sort?prop=role">
 					        		<c:choose>
 					        		<c:when test="${prop == 'role' && asc == true }">
@@ -101,6 +118,7 @@
 								<td class="user">${user.username}</td>
 								<td class="firstname">${user.firstName}</td>
 								<td class="lastname">${user.lastName}</td>
+								<td class="serialNumber">${user.serialNumber}</td>
 								<td class="role">${user.role}</td>
 								
 								<td>

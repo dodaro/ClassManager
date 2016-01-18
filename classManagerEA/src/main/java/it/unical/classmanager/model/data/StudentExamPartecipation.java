@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Range;
+
 @Entity
 @Table(name ="studentExamPartecipation")
 public class StudentExamPartecipation implements Serializable  {
@@ -22,6 +24,7 @@ public class StudentExamPartecipation implements Serializable  {
 	private int id;
 
 	@Column(name="score", nullable=false)
+	@Range(min = 0, max = 30)
 	private int score;
 
 	@Column(name="praise", nullable=true)

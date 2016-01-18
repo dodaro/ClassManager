@@ -4,6 +4,7 @@
 <title>Class Manager</title>
 <jsp:include page="pageCommons/head.jsp" flush="true" />
 <jsp:include page="${customHeader}" flush="true" />
+	<script src="resources/script/notifications.js"></script>
 </head>
 <body>
 	<!-- NAVBAR -->

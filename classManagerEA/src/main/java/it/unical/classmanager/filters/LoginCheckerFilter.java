@@ -13,7 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;

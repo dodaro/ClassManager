@@ -1,10 +1,7 @@
 package it.unical.classmanager.model;
 
-import javax.validation.constraints.Size;
-
 public class LectureControllerWrapper {
 
-	@Size(min=1,max=100)
 	private String path;
 	private int parentId;
 	

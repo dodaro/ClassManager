@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class SessionErrorController {
@@ -24,6 +23,8 @@ public class SessionErrorController {
 	
 	@Autowired
 	ApplicationContext appContext;
+	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired

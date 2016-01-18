@@ -1,70 +1,148 @@
 package it.unical.classmanager.statistics.cart;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Aloisius92
  * This is the abstract cart class type.
  */
 public abstract class AbstractCart  {
-    private String idContainer;
-    private String name;
-    protected StringBuilder cartScript = null;
+    protected static final String pathToCartFiles = "src/main/webapp/resources/statistics/cartsHtml";
+    protected static final String extensionFiles = ".html";
+    private String cartName;
+    private List<String> dataCart;
+    private StringBuilder cartScript = null;
     // Data attribues
-    protected String title;
-    protected String subTitle;
-    protected String xAxisTitle;
-    protected String yAxisTitle;
-    protected int xAxisMinValue;
-    protected int xAxisMaxValue;
-    protected String xAxisCategories;
-    protected int yAxisMinValue;
-    protected int yAxisMaxValue;
-    protected String yAxisCategories;
-    protected StringBuilder seriesContent;
-    protected String categories;
-    protected StringBuilder categoriesDataContent;
-    protected StringBuilder drilldownContent;
-    protected String xPlotText;
-    protected String yPlotText;
-    protected String xPointTooltip;
-    protected String yPointTooltip;
-    protected String zPointTooltip;
-    protected String toolTipValueSuffix;
+    private Map<String, String> dataMap;    
+    private static String[] properties = {
+	    "#container",
+	    "#titleText",
+	    "#subTitleText",	
+	    "#tooltipPointFormat",
+	    "#tooltipValueSuffix",	
+	    "#xAxisCategories",
+	    "#xAxisLabelsFormat",
+	    "#xAxisPlotLinesLabelText",
+	    "#xAxisTitle",
+	    "#xAxisMin",
+	    "#xAxisMax",
+	    "#yAxisLabelsFormat",
+	    "#yAxisPlotLinesLabelText",
+	    "#yAxisTitle",
+	    "#yAxisMin",
+	    "#yAxisMax",
+	    "#series", 
+	    "#drilldownSeries"};     
+    private static String[] propertiesDefaultValue = {
+	    "#container",
+	    "titleText",
+	    "subTitleText",	
+	    "",
+	    "",	
+	    "",
+	    "",
+	    "",
+	    "xAxisTitle",
+	    "0",
+	    "0",
+	    "",
+	    "",
+	    "yAxisTitle",
+	    "0",
+	    "0",
+	    "", 
+	    ""}; 
     
-    public AbstractCart(){
-	idContainer = "";
-	name = "Generic Cart";
-	cartScript = null;
-	// Data attributes initialization
-	title = "";
-	subTitle = "";
-	xAxisTitle = "";
-	yAxisTitle = "";
-	xAxisMinValue = 0;
-	xAxisMaxValue = 0;
-	yAxisMinValue = 0;
-	yAxisMaxValue = 0;
-	seriesContent = new StringBuilder("");	
-	categories = "";
-	categoriesDataContent = new StringBuilder("");
-	drilldownContent = new StringBuilder("");	
-	xPlotText = "";
-	yPlotText = "";
-	xPointTooltip = "";
-	yPointTooltip = "";
-	zPointTooltip = "";
-	toolTipValueSuffix = "";
+    
+    public AbstractCart(String cartName){
+	setAllDefaultValue();	
+	this.cartName = cartName;	
+	readDataCart();
     }
     
-    /**
-     * This is a "Factory Method",
-     * the type of cart depends by the subclass.
-     * @return void
+    private void setAllDefaultValue(){
+	cartName = "";
+	dataCart = new ArrayList<String>();
+	cartScript = null;
+	dataMap = new HashMap<String, String>();
+	
+	for(int i=0; i<propertiesDefaultValue.length; i++){
+	    setProperty(properties[i], propertiesDefaultValue[i]);
+	}
+    }
+    
+    private void readDataCart() {	
+	BufferedReader reader;
+	try {
+	    String pathToFile = pathToCartFiles+"/"+getCartName()+extensionFiles;
+	    
+	    reader=new BufferedReader(new FileReader(pathToFile));
+	    String line;
+	    boolean exit = false;
+	    while(!exit && ((line=reader.readLine())!=null)){
+		dataCart.add(line+"\n");
+	    } 
+	    
+	    reader.close();
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e){
+	    e.printStackTrace();
+	}	
+    }
+    
+    private boolean replaceInData(String toReplace, String replacement){
+	boolean find = false;
+	for(int i=0; i<dataCart.size(); i++){
+	    if(dataCart.get(i).contains(toReplace)){
+		String replace = dataCart.get(i).replace(toReplace, replacement);
+		dataCart.set(i, replace);
+		find = true;
+	    }
+	}
+	return find;
+    }
+    
+    private void replaceAllPlaceholders(){	
+	for(int i=0; i<properties.length; i++){
+	    this.replaceInData(properties[i], getProperty(properties[i]));	
+	    
+	}
+    }
+    
+    /*
+     * Once all util data is setted
+     * the call to this function
+     * replace all placeholders 
+     * with real data.
+     * If no data is setted, 
+     * default values will be used.
      */
-    protected abstract void buildCart();
+    private String buildFinalCart(){
+	replaceAllPlaceholders();
+	
+	cartScript = new StringBuilder("");
+	for(int i=0; i<dataCart.size(); i++){
+	    cartScript.append(dataCart.get(i));
+	}
+	
+	return cartScript.toString();
+    }
+ 
+    /*********************/
+    /*	  SET AND GET	 */
+    /*********************/
     
     public StringBuilder getCartScript() {
 	if(cartScript==null){
-	    buildCart();
+	    buildFinalCart();
 	}
 	return cartScript;
     }
@@ -73,182 +151,23 @@ public abstract class AbstractCart  {
 	this.cartScript = cartScript;
     }
     
-    public String getIdContainer() {
-	return idContainer;
+    public String getCartName() {
+	return cartName;
     }
     
-    public void setIdContainer(String idContainer) {
-	this.idContainer = idContainer;
+    public void setCartName(String cartName) {
+	this.cartName = cartName;
+    } 
+    
+    public void setProperty(String key, String value){
+	dataMap.put(key, value);
     }
     
-    public String getName() {
-	return name;
-    }
-    
-    public void setName(String name) {
-	this.name = name;
-    }
-    
-    //	Data attributes set and get
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle( String title) {
-        this.title = title;
-    }
-
-    public String getSubTitle() {
-        return subTitle;
-    }
-
-    public void setSubTitle( String subTitle) {
-        this.subTitle = subTitle;
-    }
-
-    public String getxAxisTitle() {
-        return xAxisTitle;
-    }
-
-    public void setxAxisTitle( String xAxisTitle) {
-        this.xAxisTitle = xAxisTitle;
-    }
-
-    public String getyAxisTitle() {
-        return yAxisTitle;
-    }
-
-    public void setyAxisTitle( String yAxisTitle) {
-        this.yAxisTitle = yAxisTitle;
-    }
-
-    public int getxAxisMinValue() {
-        return xAxisMinValue;
-    }
-
-    public void setxAxisMinValue( int xAxisMinValue) {
-        this.xAxisMinValue = xAxisMinValue;
-    }
-
-    public int getxAxisMaxValue() {
-        return xAxisMaxValue;
-    }
-
-    public void setxAxisMaxValue( int xAxisMaxValue) {
-        this.xAxisMaxValue = xAxisMaxValue;
-    }
-
-    public String getxAxisCategories() {
-        return xAxisCategories;
-    }
-
-    public void setxAxisCategories( String xAxisCategories) {
-        this.xAxisCategories = xAxisCategories;
-    }
-
-    public int getyAxisMinValue() {
-        return yAxisMinValue;
-    }
-
-    public void setyAxisMinValue( int yAxisMinValue) {
-        this.yAxisMinValue = yAxisMinValue;
-    }
-
-    public int getyAxisMaxValue() {
-        return yAxisMaxValue;
-    }
-
-    public void setyAxisMaxValue( int yAxisMaxValue) {
-        this.yAxisMaxValue = yAxisMaxValue;
-    }
-
-    public String getyAxisCategories() {
-        return yAxisCategories;
-    }
-
-    public void setyAxisCategories( String yAxisCategories) {
-        this.yAxisCategories = yAxisCategories;
-    }
-
-    public StringBuilder getSeriesContent() {
-        return seriesContent;
-    }
-
-    public void setSeriesContent( StringBuilder seriesContent) {
-        this.seriesContent = seriesContent;
-    }
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories( String categories) {
-        this.categories = categories;
-    }
-
-    public StringBuilder getCategoriesDataContent() {
-        return categoriesDataContent;
-    }
-
-    public void setCategoriesDataContent( StringBuilder categoriesDataContent) {
-        this.categoriesDataContent = categoriesDataContent;
-    }
-
-    public StringBuilder getDrilldownContent() {
-        return drilldownContent;
-    }
-
-    public void setDrilldownContent( StringBuilder drilldownContent) {
-        this.drilldownContent = drilldownContent;
-    }
-
-    public String getxPlotText() {
-        return xPlotText;
-    }
-
-    public void setxPlotText( String xPlotText) {
-        this.xPlotText = xPlotText;
-    }
-
-    public String getyPlotText() {
-        return yPlotText;
-    }
-
-    public void setyPlotText( String yPlotText) {
-        this.yPlotText = yPlotText;
-    }
-
-    public String getxPointTooltip() {
-        return xPointTooltip;
-    }
-
-    public void setxPointTooltip( String xPointTooltip) {
-        this.xPointTooltip = xPointTooltip;
-    }
-
-    public String getyPointTooltip() {
-        return yPointTooltip;
-    }
-
-    public void setyPointTooltip( String yPointTooltip) {
-        this.yPointTooltip = yPointTooltip;
-    }
-
-    public String getzPointTooltip() {
-        return zPointTooltip;
-    }
-
-    public void setzPointTooltip( String zPointTooltip) {
-        this.zPointTooltip = zPointTooltip;
-    }
-
-    public String getToolTipValueSuffix() {
-	    return toolTipValueSuffix;
-    }
-
-    public void setToolTipValueSuffix( String toolTipValueSuffix) {
-	    this.toolTipValueSuffix = toolTipValueSuffix;
+    public String getProperty(String key){
+	if(dataMap.containsKey(key)){
+	    return dataMap.get(key);
+	}
+	return null;
     }
     
 }

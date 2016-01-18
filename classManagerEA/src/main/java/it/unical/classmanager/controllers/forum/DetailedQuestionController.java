@@ -23,6 +23,9 @@ public class DetailedQuestionController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "forum/detailedQuestionHead.jsp";
+	private final static String BODY = "forum/detailedQuestionBody.jsp";
+	
 	
 	@RequestMapping(value = "/forum/detailedQuestion", method = RequestMethod.GET)
 	public String getQuestion(Locale locale, Model model, HttpServletRequest request) {
@@ -46,8 +49,10 @@ public class DetailedQuestionController {
 		
 		model.addAttribute("loggedUser", username);
 		
+		model.addAttribute("customHeader", DetailedQuestionController.HEADER);
+		model.addAttribute("customBody", DetailedQuestionController.BODY);
 		
-		return "forum/detailedQuestion";
+		return "layout";
 	}
 	
 	

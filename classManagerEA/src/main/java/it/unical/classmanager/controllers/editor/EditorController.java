@@ -3,8 +3,6 @@ package it.unical.classmanager.controllers.editor;
 import java.util.List;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -25,6 +23,7 @@ import it.unical.classmanager.utils.enumative.EnvironmentEnum;
 @Controller
 public class EditorController {
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private ApplicationContext appContext;
 	

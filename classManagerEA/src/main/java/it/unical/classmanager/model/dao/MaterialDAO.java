@@ -7,7 +7,7 @@ import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 
 public interface MaterialDAO {
-	public void create(Material material);
+	public Material create(Material material);
 
 	public void update(Material material);
 

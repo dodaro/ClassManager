@@ -30,7 +30,7 @@ $(document).ready(function($)
 	    headers : {
 	        // set "sorter : false" (no quotes) to disable the column
 	        0: { sorter: "text" },
-	        1: { sorter: false },
+	        1: { sorter: "text" },
 	    },
 	    // extract text from the table - this is how is
 	    // it done by default
@@ -65,7 +65,7 @@ $(document).ready(function($)
 	        $(this).find('span').addClass('headerSpan');
 	    },
 	    // jQuery selectors used to find the header cells.
-	    selectorHeaders : 'thead th',
+	    selectorHeaders : 'thead th.sortable',
 
 	    // *** css classes to use ***
 	    cssAsc        : "headerSortUp",
@@ -80,5 +80,5 @@ $(document).ready(function($)
 	    // *** send messages to console ***
 	    debug : false
 	});
-}); 	  
-</script>
+}); 
+</script>		

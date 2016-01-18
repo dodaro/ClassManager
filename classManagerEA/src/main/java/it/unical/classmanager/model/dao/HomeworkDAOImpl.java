@@ -13,6 +13,7 @@ import it.unical.classmanager.model.data.Student;
 
 public class HomeworkDAOImpl implements HomeworkDAO
 {
+
     private DBHandler dbHandler;
     
     public void setDbHandler(DBHandler dbHandler)
@@ -25,10 +26,10 @@ public class HomeworkDAOImpl implements HomeworkDAO
 	return dbHandler;
     }
     
-    public int create(Homework homework)
-    {
-	return ((Homework) this.dbHandler.create(homework)).getId();
-    }
+    public Homework create(Homework homework)
+	{
+		return (Homework) this.dbHandler.create(homework);
+	}
     
     public void update(Homework homework)
     {

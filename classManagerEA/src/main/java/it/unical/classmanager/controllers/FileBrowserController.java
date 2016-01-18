@@ -1,12 +1,10 @@
 package it.unical.classmanager.controllers;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -21,24 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.databind.ser.std.FileSerializer;
-import com.google.gson.Gson;
 
 import it.unical.classmanager.model.AbstractFileBean;
-import it.unical.classmanager.model.FileBean;
-import it.unical.classmanager.model.FolderBean;
-import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.dao.UserDAOImpl;
-import it.unical.classmanager.model.data.Professor;
-import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.FileManager;
 
 /**

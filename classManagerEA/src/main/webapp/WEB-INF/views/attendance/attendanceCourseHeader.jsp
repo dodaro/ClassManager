@@ -27,7 +27,8 @@ $(document).ready(function($)
 	    // but you can change or disable them
 	    headers : {
 	        // set "sorter : false" (no quotes) to disable the column
-	        0: { sorter: "text" }
+	        0: { sorter: "text" },
+	        1: { sorter: "text" },
 	    },
 	    // extract text from the table - this is how is
 	    // it done by default
@@ -77,5 +78,40 @@ $(document).ready(function($)
 	    // *** send messages to console ***
 	    debug : false
 	});
-}); 	  
+}); 
+$( document ).ready(function() 
+{
+	$("#searchID").on("keyup", function() 
+	{
+	    var value = $(this).val();	
+	    $("table tr").each(function(index) 
+	    {
+	        if (index !== 0) 
+	        {	
+	            $row = $(this);	
+	            var id = $row.find("td:first").text();	
+	            if (id.indexOf(value) !== 0) 
+	                $row.hide();
+	            else 
+	                $row.show();
+	        }
+	    });
+	});	 
+	$("#searchLastName").on("keyup", function() 
+	{
+		var value = $(this).val();	
+		$("table tr").each(function(index) 
+		{
+			if (index !== 0) 
+			{	
+				$row = $(this);	
+			    var id = $row.find("td:nth-child(2)").text();	
+			    if (id.indexOf(value) !== 0) 
+			    	$row.hide();
+			    else 
+			        $row.show();
+			}
+	    });
+	});	 
+});
 </script>			

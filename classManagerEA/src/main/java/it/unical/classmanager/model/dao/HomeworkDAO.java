@@ -7,7 +7,7 @@ import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
 
 public interface HomeworkDAO {
-	public int create(Homework homework);
+	public Homework create(Homework homework);
 
 	public void update(Homework homework);
 

@@ -43,7 +43,7 @@
 			<c:if test="${not empty courseList}">
 				<ul>
 					<c:forEach items="${courseList.list}" var="singleCourse">
-						<li><a href="#">${singleCourse.field1}</a></li>
+						<li><a href="/lectures?path=${singleCourse.field3}">${singleCourse.field1}</a></li>
 					</c:forEach>
 				</ul>
 			</c:if>

@@ -117,7 +117,7 @@
 					
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<c:forEach var="answer" items="${question.getAnswers()}">
+							<c:forEach var="answer" items="${sortedAnswers}">
 								<div class="well">
 									<div class="row">
 								  		<div class="col-sm-12 col-md-12 col-lg-12">

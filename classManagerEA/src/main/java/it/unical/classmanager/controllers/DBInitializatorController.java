@@ -180,7 +180,7 @@ public class DBInitializatorController {
 			dbHomeworkStudentSolvingInit(locale, model, request);
 			dbExamInit(locale, model, request);
 			dbStudentExamPartecipationInit(locale, model, request);
-			dbEventInit(locale, model, request);
+			//dbEventInit(locale, model, request);
 
 			//dbCommunicationInit(locale, model, request);
 			//dbQuestionAnswerInit(locale, model, request);
@@ -301,7 +301,7 @@ public class DBInitializatorController {
 
 	private boolean createFolders(CourseClass courseClass){
 		boolean success = false;
-		success = new FileManager().mkDir("", courseClass.getId()+"");
+		success = new FileManager().mkDir(".", courseClass.getId()+"");
 		if(success){
 			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
 		}
@@ -886,7 +886,7 @@ public class DBInitializatorController {
 		UserDAO userDao = DaoHelper.getUserDAO();		
 		CourseClassDAO courseClassDao = DaoHelper.getCourseClassDAO();
 
-		Date date = courseClassDao.get(1).getActivationDate();
+		Date date = courseClassDao.get(0).getActivationDate();
 
 		int k = 0;
 		for(User user : userDao.getAllUsers()){

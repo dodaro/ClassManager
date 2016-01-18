@@ -16,81 +16,82 @@
 							</div>
 
 							<div class="modal-body">
-								<div class="form-group ${status.error ? 'has-error' : ''}">
-									<label for="topic"> <spring:message
-											code="lectureManager.topic" text="default text" />
-									</label>
-									<spring:bind path="topic">
-										<form:input type="text" name="topic" path="topic" class="form-control" />
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="topic">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="topic"> <spring:message
+												code="lectureManager.topic" text="default text" />
+										</label>
+										
+											<form:input type="text" name="topic" path="topic" class="form-control" />
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 								
-								<div class="form-group">
-									<label for="description"> <spring:message
-											code="lectureManager.description" text="default text" />
-									</label>
-									<spring:bind path="description">
-										<form:input type="text" name="description" path="description" class="form-control" />
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="description">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="description"> <spring:message
+												code="lectureManager.description" text="default text" />
+										</label>
+											<form:input type="text" name="description" path="description" class="form-control" />
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 
-								<div class="form-group">
-									<label for="classroom"> <spring:message
-											code="lectureManager.classroom" text="default text" />
-									</label>
-									<spring:bind path="classroom">
-										<form:input type="text" name="classroom" path="classroom" class="form-control" />
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="classroom">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="classroom">
+										<spring:message code="lectureManager.classroom" text="default text" />
+										</label>
+											<form:input type="text" name="classroom" path="classroom" class="form-control" />
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 
-								<div class="form-group">
-									<label for="date"> <spring:message
-											code="lectureManager.date" text="default text" />:
-									</label>
-									<spring:bind path="date">
-										<div class='input-group date'>
-											<form:input type="text" name="date" path="date"
-												class="datepicker form-control" />
-											<span class="input-group-addon"> <span
-												class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="date">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="date"> <spring:message
+												code="lectureManager.date" text="default text" />:
+										</label>
+											<div class='input-group date'>
+												<form:input type="text" name="date" path="date"
+													class="datepicker form-control" />
+												<span class="input-group-addon"> <span
+													class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 
-								<div class="form-group">
-									<label for="beginHour">
-										<spring:message code="lectureManager.beginHour" text="default text" />:
-									</label>
-									<spring:bind path="beginHour">
-										<div class='input-group date'>
-											<form:input  type="text" name="beginHour" path="beginHour" class="timepicker form-control" />
-											<span class="input-group-addon">
-                       		 					<span class="glyphicon glyphicon-time"></span>
-                    						</span>
-										</div>
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="beginHour">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="beginHour">
+											<spring:message code="lectureManager.beginHour" text="default text" />:
+										</label>
+											<div class='input-group date'>
+												<form:input  type="text" name="beginHour" path="beginHour" class="timepicker form-control" />
+												<span class="input-group-addon">
+	                       		 					<span class="glyphicon glyphicon-time"></span>
+	                    						</span>
+											</div>
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 								
-								<div class="form-group">
-									<label for="endHour">
-										<spring:message code="lectureManager.endHour" text="default text" />:
-									</label>
-									<spring:bind path="endHour">
-										<div class='input-group date'>
-											<form:input  type="text" name="endHour" path="endHour" class="timepicker form-control" />
-											<span class="input-group-addon">
-			                     		 		<span class="glyphicon glyphicon-time"></span>
-			                  				</span>
-										</div>
-										<span class="help-block">${status.errorMessages[0]}</span>
-									</spring:bind>
-								</div>
+								<spring:bind path="endHour">
+									<div class="form-group ${status.error ? 'has-error' : ''}">
+										<label for="endHour">
+											<spring:message code="lectureManager.endHour" text="default text" />:
+										</label>
+											<div class='input-group date'>
+												<form:input  type="text" name="endHour" path="endHour" class="timepicker form-control" />
+												<span class="input-group-addon">
+				                     		 		<span class="glyphicon glyphicon-time"></span>
+				                  				</span>
+											</div>
+											<span class="help-block">${status.errorMessages[0]}</span>
+									</div>
+								</spring:bind>
 								
 								<form:input id="createLectureModal_id" type="hidden" name="id" path="id"/>
 							</div>

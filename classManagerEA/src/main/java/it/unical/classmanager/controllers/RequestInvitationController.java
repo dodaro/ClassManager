@@ -33,200 +33,200 @@ import it.unical.classmanager.utils.UserSessionChecker;
  */
 @Controller
 public class RequestInvitationController {   
-    private static final Logger logger = LoggerFactory.getLogger(RequestInvitationController.class);
-    private final static String HEADER = "pageCommons/head.jsp";
-    private final static String BODY = "invitation/requestInvitation.jsp";
-    
-    @Autowired
-    ApplicationContext appContext;
-    
-    @Autowired  
-    MessageSource messageSource;
-    
-    @RequestMapping(value = "/requestInvitation", method = RequestMethod.GET)
-    public String requestInvitation(Locale locale, Model model,HttpServletRequest request) {
-	logger.info("RequestInvitation Page", locale);
-	
-	User user = UserSessionChecker.checkUserSession(model, request);
-	if ( user == null ) {			
-	    return "redirect:/";
-	}	
-	
-	processSelectableCourse(locale, model, request, (Student) user);
-	processCancellableCourse(locale, model, request, (Student) user);	
-	InvitationController.checkNewInvitations(model, user);		
-	CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-	
-	return "layout";
-    }
-    
-    @RequestMapping(value = "/requestInvitation_All", method = RequestMethod.POST)
-    public String requestAll(
-	    @RequestParam(value = "RequestAll", required = true) String value, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
-		System.err.println("Received: "+value);
-		
+	private static final Logger logger = LoggerFactory.getLogger(RequestInvitationController.class);
+	private final static String HEADER = "pageCommons/head.jsp";
+	private final static String BODY = "invitation/requestInvitation.jsp";
+
+	@Autowired
+	ApplicationContext appContext;
+
+	@Autowired  
+	MessageSource messageSource;
+
+	@RequestMapping(value = "/requestInvitation", method = RequestMethod.GET)
+	public String requestInvitation(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("RequestInvitation Page", locale);
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}	
-		
+
+		processSelectableCourse(locale, model, request, (Student) user);
+		processCancellableCourse(locale, model, request, (Student) user);	
+		InvitationController.checkNewInvitations(model, user);		
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
+
+		return "layout";
+	}
+
+	@RequestMapping(value = "/requestInvitation_All", method = RequestMethod.POST)
+	public String requestAll(
+			@RequestParam(value = "RequestAll", required = true) String value, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
+		System.err.println("Received: "+value);
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+			return "redirect:/";
+		}	
+
 		processRequestInvitationAll((Student) user);		
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    @RequestMapping(value = "/requestInvitation_Single", method = RequestMethod.POST)
-    public String requestSingle(
-	    @RequestParam(value = "CourseName", required = true) String courseName, 
-	    @RequestParam(value = "ProfessorName", required = false) String professorName,
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
+	}
+
+	@RequestMapping(value = "/requestInvitation_Single", method = RequestMethod.POST)
+	public String requestSingle(
+			@RequestParam(value = "CourseName", required = true) String courseName, 
+			@RequestParam(value = "ProfessorName", required = false) String professorName,
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
 		System.err.println("Received: "+courseName+", Professor: "+professorName);
-		
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}	
-		
+
 		processRequestInvitationSingle((Student) user, courseName, professorName);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    @RequestMapping(value = "/requestInvitation_CancelAll", method = RequestMethod.POST)
-    public String cancelAll(
-	    @RequestParam(value = "CancelAll", required = true) String value, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
+	}
+
+	@RequestMapping(value = "/requestInvitation_CancelAll", method = RequestMethod.POST)
+	public String cancelAll(
+			@RequestParam(value = "CancelAll", required = true) String value, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
 		System.err.println("Received: "+value);
-		
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}		
-		
+
 		processCancellInvitationAll((Student) user);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    @RequestMapping(value = "/requestInvitation_CancelSingle", method = RequestMethod.POST)
-    public String cancelSingle(
-	    @RequestParam(value = "CourseName", required = true) String courseName, 
-	    @RequestParam(value = "ProfessorName", required = false) String professorName, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
+	}
+
+	@RequestMapping(value = "/requestInvitation_CancelSingle", method = RequestMethod.POST)
+	public String cancelSingle(
+			@RequestParam(value = "CourseName", required = true) String courseName, 
+			@RequestParam(value = "ProfessorName", required = false) String professorName, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+
 		System.err.println("Cancel: "+courseName+", Professor: "+professorName);
-		
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}		
-		
+
 		processCancellInvitationSingle((Student) user, courseName, professorName);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-		
+
 		return "layout";
-    }
-    
-    private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
-	if(selectableCourse!=null){
-	    model.addAttribute("selectableCourse", selectableCourse);
 	}
-    }
-    
-    private GenericContainerBeanList getSelectableCourse(Student student){
-	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    return beanList;
-	}	
-	return null;
-    }
-    
-    private void processCancellableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	GenericContainerBeanList cancellableCourse = getCancellableCourse(student);
-	if(cancellableCourse!=null){
-	    model.addAttribute("cancellableCourse", cancellableCourse);
+
+	private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
+		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
+		if(selectableCourse!=null){
+			model.addAttribute("selectableCourse", selectableCourse);
+		}
 	}
-    }
-    
-    private GenericContainerBeanList getCancellableCourse(Student student){
-	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getCancellableCourse(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    return beanList;
+
+	private GenericContainerBeanList getSelectableCourse(Student student){
+		List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getSelectableCourse(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			return beanList;
+		}	
+		return null;
 	}
-	return null;
-    }    
-    
-    private void processRequestInvitationAll(Student student) {
-	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
-	for(int i=0; i<selectableCourse.size(); i++){
-	    processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
+
+	private void processCancellableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
+		GenericContainerBeanList cancellableCourse = getCancellableCourse(student);
+		if(cancellableCourse!=null){
+			model.addAttribute("cancellableCourse", cancellableCourse);
+		}
 	}
-    }
-    
-    private void processRequestInvitationSingle(Student student, String courseName, String professorName) {
-	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
-	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
-	int maxIndex = registrationStudentClassDAO.getMaxIndex();
-	Calendar cal = Calendar.getInstance();
-	
-	if(!registrationStudentClassDAO.existRegistration(student, courseClass)){
-	    RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
-		    maxIndex+1,
-		    null, 
-		    null, 
-		    cal.getTime(), 
-		    student, 
-		    courseClass);
-	    
-	    registrationStudentClassDAO.create(registrationStudentClass);	    
+
+	private GenericContainerBeanList getCancellableCourse(Student student){
+		List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getCancellableCourse(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			return beanList;
+		}
+		return null;
+	}    
+
+	private void processRequestInvitationAll(Student student) {
+		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
+		for(int i=0; i<selectableCourse.size(); i++){
+			processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
+		}
 	}
-    }   
-    
-    private void processCancellInvitationAll(Student student) {
-	GenericContainerBeanList selectableCourse = getSelectableCourse(student);
-	for(int i=0; i<selectableCourse.size(); i++){
-	    processCancellInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
+
+	private void processRequestInvitationSingle(Student student, String courseName, String professorName) {
+		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
+		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
+		int maxIndex = registrationStudentClassDAO.getMaxIndex();
+		Calendar cal = Calendar.getInstance();
+
+		if(!registrationStudentClassDAO.existRegistration(student, courseClass)){
+			RegistrationStudentClass registrationStudentClass = new RegistrationStudentClass(
+					maxIndex+1,
+					null, 
+					null, 
+					cal.getTime(), 
+					student, 
+					courseClass);
+
+			registrationStudentClassDAO.create(registrationStudentClass);	    
+		}
+	}   
+
+	private void processCancellInvitationAll(Student student) {
+		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
+		for(int i=0; i<selectableCourse.size(); i++){
+			processCancellInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
+		}
 	}
-    }
-    
-    private void processCancellInvitationSingle(Student student, String courseName, String professorName) {
-	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
-	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
-	
-	if(registrationStudentClassDAO.existRegistration(student, courseClass)){
-	    RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
-	    registrationStudentClassDAO.delete(registrationStudentClass);
-	}
-    } 
-    
+
+	private void processCancellInvitationSingle(Student student, String courseName, String professorName) {
+		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
+		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
+
+		if(registrationStudentClassDAO.existRegistration(student, courseClass)){
+			RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
+			registrationStudentClassDAO.delete(registrationStudentClass);
+		}
+	} 
+
 }

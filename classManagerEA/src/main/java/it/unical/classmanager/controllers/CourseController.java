@@ -31,7 +31,6 @@ import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.DegreeCourseDAO;
 import it.unical.classmanager.model.dao.DegreeCourseDAOImpl;
-import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.DegreeCourse;

@@ -4,7 +4,7 @@
 
 <li><a href="/courses"><span class="glyphicon glyphicon-book"></span>Courses</a></li>
 
-<c:if test="<%=session.getAttribute("ActiveCourse") != null%>">
+<c:if test="<%=session.getAttribute(\"ActiveCourse\") != null%>">
 	<li><a href="/lectures"><span
 			class="glyphicon glyphicon-folder-open"></span>Lectures</a></li>
 

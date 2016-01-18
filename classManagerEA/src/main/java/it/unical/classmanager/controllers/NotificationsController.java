@@ -1,8 +1,8 @@
 package it.unical.classmanager.controllers;
 
-import java.util.Locale;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,6 +31,7 @@ import it.unical.classmanager.websocket.JettyWebSocketClient;
 @Controller
 public class NotificationsController
 {
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceLessonController.class);
 
 	@Autowired

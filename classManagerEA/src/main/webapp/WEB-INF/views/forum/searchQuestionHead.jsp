@@ -11,7 +11,9 @@
 
 <link href="/resources/style/uploadFile_css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
+<link href="/resources/lib/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
 
+<script src="/resources/lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 <script src="/resources/lib/bootpag/jquery.bootpag.min.js"></script>
 <script src="/resources/script/forum/searchQuestions.js"></script>
 

@@ -84,19 +84,30 @@ public class QuestionDAOImpl implements QuestionDAO
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();
 		
+		String[] tags = searchSettings.getTags().split(",");
+		
 		String queryString = "SELECT q FROM Question as q, User as u WHERE "
 				+ "q.user = u.username "
 				+ "AND LOWER(q.title) LIKE LOWER(:questionName) "
 				+ "AND LOWER(q.description) LIKE LOWER(:questionDescription) "
-				+ "AND LOWER(u.username) LIKE LOWER(:username)"
-				+ "AND LOWER(q.tags) LIKE LOWER(:tags)";
+				+ "AND LOWER(u.username) LIKE LOWER(:username)";
+		
+		
+		for(int i=0; i < tags.length; i++) {
+			queryString += "AND LOWER(q.tags) LIKE LOWER(:tag"+ i +")";
+		}
+		
 		
 		Query query = session.createQuery(queryString);
 		
 		query.setParameter("questionName",  "%" + searchSettings.getQuestionName() + "%");
 		query.setParameter("questionDescription",  "%" + searchSettings.getQuestionDescription() + "%");
 		query.setParameter("username",  "%" + searchSettings.getUsername() + "%");
-		query.setParameter("tags", "%" + searchSettings.getTags() + "%");
+		
+		for(int i=0; i < tags.length; i++) {
+			query.setParameter("tag" + i, "%" + tags[i] + "%");
+		}
+		
 		
 		List<Question> questions = (List<Question>) query.list();
 		

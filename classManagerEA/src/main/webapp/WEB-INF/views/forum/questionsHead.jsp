@@ -11,5 +11,6 @@
 
 <link rel="stylesheet" type="text/css" href="/resources/style/questions.css" />
 
+
 <script src="/resources/lib/bootpag/jquery.bootpag.min.js"></script>
 <script src="/resources/script/forum/questions.js"></script>

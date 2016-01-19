@@ -5,6 +5,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="false"%>
 
+	<spring:htmlEscape defaultHtmlEscape="true" /> 
 	<div class="row row-content">
 		<div class="col-sm-12 col-md-12 col-lg-12">
 
@@ -26,7 +27,7 @@
 									</div>
 									<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 										<div class="panel-body">
-
+			
 											<form:form commandName="searchSettings" action="searchQuestion" method="POST" acceptCharset="utf-8">
 
 												<div class="form-group">
@@ -50,7 +51,9 @@
 												<div class="form-group">
 													<label for="authorInp"><spring:message code="message.forum.tags" /></label>
 													<spring:message code='message.forum.insertTags' var="tagsPlace" />
-													<form:input path="tags" type="text" class="form-control" id="tagsInp" placeholder="${tagsPlace }"></form:input>
+													<div id="tagRow">
+														<form:input path="tags" class="form-control" id="tagsInp" data-role="tagsinput" placeholder="${tagsPlace }"></form:input>
+													</div>
 												</div>
 
 												<button type="submit" class="btn btn-primary"><spring:message code='message.forum.submit' /></button>

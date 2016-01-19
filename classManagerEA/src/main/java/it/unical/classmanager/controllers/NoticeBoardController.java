@@ -50,41 +50,6 @@ public class NoticeBoardController {
 	public String noticeBoard(Model model,HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		
 		
-		String init = request.getParameter("init");
-		if ( init != null && init.equals("1") ) {
-			User user = new User();
-			user.setUsername("professorUser");
-			user.setFirstName("asd");
-			user.setLastName("Rullo");
-			user.setPassword("asdasdasd");
-			user.setConfirmPassword(user.getPassword());
-			user.setHash(PasswordHashing.getInstance().getHashAndSalt(user.getPassword()));
-			user.setEmail("email@email.it");
-			user.setRole("Professor");
-			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
-					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
-			user.setSerialNumber("0001");
-			Professor professor = new Professor(user);
-			UserDAO userDao = (UserDAO) context.getBean("userDao");
-			userDao.create(professor);
-			
-			CommunicationsDAO communicationsDAO = (CommunicationsDAO) context.getBean("communicationsDAO");
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy-HH:mm");
-			for ( int i = 0 ; i < 25 ; i++ ) {
-				String stringdate = sdf.format(Calendar.getInstance().getTime());
-				Communications comm;
-				try {
-					comm = new Communications(0, "nuovo messaggio", "testo del messaggio",professor,sdf.parse(stringdate),false);
-					communicationsDAO.create(comm);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			userDao.update(professor);
-		}
-		
-		
 		PagedListHolder<Communications> communicationsPage = (PagedListHolder<Communications>) request.getSession().getAttribute("noticesList");
 		CommunicationsDAO communicationsDao = (CommunicationsDAO) context.getBean("communicationsDAO");
 		if ( communicationsPage == null ) {

@@ -63,38 +63,6 @@ public class UsersListController {
 		UserDAO userDao = (UserDAO) appContext.getBean("userDao");
 		
 		
-		if ( request.getParameter("init") != null ) {  
-			for(int i=0; i<50; i++)	{
-				String username = "StudentAldo";
-				
-				User user = new User();
-				user.setUsername(username+i);
-				user.setFirstName("Aldo_FirstName");
-				user.setLastName("Aldo_LastName");
-				user.setRole("Student");				    	
-				user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
-					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
-				user.setEmail("studentaldo@profaldo.it");
-				user.setPassword(username+i);
-				user.setConfirmPassword(user.getPassword());
-				user.setHash(user.getPassword());
-				user.setSerialNumber(""+i);		
-				
-				Student student = new Student(user, 
-					i, 
-					DateTimeFactory.getRandomDate().getTime(), 
-					new ArrayList<StudentExamPartecipation>(), 
-					new ArrayList<AttendanceStudentLecture>(), 
-					new ArrayList<RegistrationStudentClass>(), 
-					new ArrayList<HomeworkStudentSolving>());
-				
-				User retrievedUser = userDao.get(username+i);
-					if(retrievedUser==null){
-					    userDao.create(student);
-					    logger.info("Created "+student, locale);						
-					} 
-		    }					
-		}
 		
 		PagedListHolder<User> usersList = (PagedListHolder<User>) request.getSession().getAttribute("UserListController_usersList");
 		if ( usersList == null ) {

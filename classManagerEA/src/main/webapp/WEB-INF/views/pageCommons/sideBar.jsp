@@ -20,8 +20,6 @@
 <li><a href="/calendar"><span
 		class="glyphicon glyphicon-calendar"></span> Calendar</a></li>
 
-<li><a href="#"><span class="glyphicon glyphicon-comment"></span>Forum</a></li>
-
 <li><a href="/statistics"><span
 		class="glyphicon glyphicon-stats"></span> Statistics</a></li>
 
@@ -32,21 +30,14 @@
 		</c:if>
 </a></li>
 
-<li><a href="/editor"><span
-		class="glyphicon glyphicon-modal-window"></span>Editor</a></li>
-
 <li><a href="/viewer3D"><span
 		class="glyphicon glyphicon-eye-open"></span> Viewer3D</a></li>
 
-<li><a href="./noticeboard?init=1"> <span
-		class="glyphicon glyphicon-send"></span> <spring:message
-			code="message.noticeboard" text="default text" /> con fake init
-</a></li>
-
 <li><a href="./noticeboard"> <span
 		class="glyphicon glyphicon-send"></span> <spring:message
-			code="message.noticeboard" text="default text" /> senza init
+			code="message.noticeboard" text="default text" />
 </a></li>
+
 <li><a href="/forum"> <span class="glyphicon glyphicon-book"></span>
 		Forum
 </a></li>

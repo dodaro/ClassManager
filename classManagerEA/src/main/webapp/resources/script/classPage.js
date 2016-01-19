@@ -123,14 +123,14 @@ function download(event){
 
 	event.stopPropagation();
 
-	var url = $(event.srcElement).closest("form").find("input[name=path]").val();
+	var url = $(event.currentTarget).closest("form").find("input[name=path]").val();
 	window.open("/download?path=" + url);
 }
 
 function delete_lectures(event){
 
 	event.stopPropagation();
-	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
+	var lectureId = $(event.currentTarget).closest("form").find("input[name=parentId]").val();
 
 	submit("/lectures/delete_lecture","lectureId",lectureId);
 }
@@ -138,7 +138,7 @@ function delete_lectures(event){
 function delete_homeworks(event){
 
 	event.stopPropagation();
-	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var homeworkId = $(event.currentTarget).closest("form").find("input[name=id]").val();
 
 	submit("/lectures/delete_homeworks","homeworkId",homeworkId);
 }
@@ -146,7 +146,7 @@ function delete_homeworks(event){
 function delete_homeworkAttached(event){
 
 	event.stopPropagation();
-	var homeworkAId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var homeworkAId = $(event.currentTarget).closest("form").find("input[name=id]").val();
 
 	submit("/lectures/delete_homeworkAttached","homeworkAttachedId",homeworkAId);
 }
@@ -154,7 +154,7 @@ function delete_homeworkAttached(event){
 function delete_homeworkStudentSolving(event){
 
 	event.stopPropagation();
-	var hssId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var hssId = $(event.currentTarget).closest("form").find("input[name=id]").val();
 
 	submit("/lectures/delete_homeworkStudentSolving","homeworkStudentSolvingId",hssId);
 }
@@ -162,7 +162,7 @@ function delete_homeworkStudentSolving(event){
 function delete_homeworkStudentSolvingAttachment(event){
 
 	event.stopPropagation();
-	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var homeworkId = $(event.currentTarget).closest("form").find("input[name=id]").val();
 
 	submit("/lectures/delete_homeworkStudentSolvingAttachment","homeworkStudentSolvingAttachedId",homeworkId);
 }
@@ -171,7 +171,7 @@ function delete_materials(event){
 
 
 	event.stopPropagation();
-	var materialId = $(event.srcElement).closest("form").find("input[name=id]").val();
+	var materialId = $(event.currentTarget).closest("form").find("input[name=id]").val();
 
 	submit("/lectures/delete_materials","materialId",materialId);
 }
@@ -193,13 +193,13 @@ function update_lectures(event){
 
 	event.stopImmediatePropagation();
 
-	var lectureId = $(event.srcElement).closest("form").find("input[name=parentId]").val();
-	var topic = $(event.srcElement).closest("form").find("input[name=topic]").val();
-	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
-	var classroom = $(event.srcElement).closest("form").find("input[name=classroom]").val();
-	var date = $(event.srcElement).closest("form").find("input[name=date]").val();
-	var bhour = $(event.srcElement).closest("form").find("input[name=beginHour]").val();
-	var ehour = $(event.srcElement).closest("form").find("input[name=endHour]").val();
+	var lectureId = $(event.currentTarget).closest("form").find("input[name=parentId]").val();
+	var topic = $(event.currentTarget).closest("form").find("input[name=topic]").val();
+	var description = $(event.currentTarget).closest("form").find("input[name=description]").val();
+	var classroom = $(event.currentTarget).closest("form").find("input[name=classroom]").val();
+	var date = $(event.currentTarget).closest("form").find("input[name=date]").val();
+	var bhour = $(event.currentTarget).closest("form").find("input[name=beginHour]").val();
+	var ehour = $(event.currentTarget).closest("form").find("input[name=endHour]").val();
 
 	$("#createLectureModal_id").val(lectureId);
 
@@ -223,9 +223,9 @@ function update_homeworks(event){
 
 	event.stopImmediatePropagation();
 
-	var homeworkId = $(event.srcElement).closest("form").find("input[name=id]").val();
-	var name = $(event.srcElement).closest("form").find("input[name=name]").val();
-	var description = $(event.srcElement).closest("form").find("input[name=description]").val();
+	var homeworkId = $(event.currentTarget).closest("form").find("input[name=id]").val();
+	var name = $(event.currentTarget).closest("form").find("input[name=name]").val();
+	var description = $(event.currentTarget).closest("form").find("input[name=description]").val();
 
 	$("#addHomeworkModal_id").val(homeworkId);
 

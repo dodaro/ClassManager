@@ -3,6 +3,7 @@ package it.unical.classmanager.controllers;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -52,10 +53,10 @@ public class ScoreController {
 	 */
 	//TODO ADD ALSO EXAM EVALUATION
 	@RequestMapping(value = "/scores", method = RequestMethod.GET)
-	public String getScores(Model model, Integer yearFilter, Integer lectureFilter, Integer pagination) {
+	public String getScores(Model model, Integer yearFilter, Integer lectureFilter, Integer pagination, HttpServletRequest request) {
 
 		//TODO prendere dalla sessione
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		
 		if(pagination == null)
 			pagination = 25;

@@ -142,6 +142,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processInviteAll((Professor) user, courseSelected);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -164,6 +165,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processInviteSingle((Professor) user, courseSelected, studentName);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -186,6 +188,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processCancellAll((Professor) user, courseSelected);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -208,6 +211,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processCancellSingle((Professor) user, courseSelected, studentName);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -315,7 +319,7 @@ public class SendInvitationController {
 			registrationStudentClassDAO.create(registrationStudentClass);
 			
 			String message = "Invito dal professore "+professor.getUsername()+" per il corso di "+courseSelected;
-			NotificationHelper.createNotification(professor, student, message);
+			NotificationHelper.createNotification(appContext, professor, student, message);
 			//System.err.println("Correct invitation for "+student.getUsername()+", Course: "+courseClass.getName()+"\n");
 		}
 	}  

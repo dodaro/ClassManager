@@ -213,12 +213,12 @@ public class RequestInvitationController {
 			
 			String message = "Richiesta dello studente"+student.getUsername()+" per il corso di "+courseName;
 			User professor = DaoHelper.getUserDAO().get(professorName);
-			NotificationHelper.createNotification(student, professor, message);
+			NotificationHelper.createNotification(appContext, student, professor, message);
 		}
 	}   
 
 	private void processCancellInvitationAll(Student student) {
-		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
+		GenericContainerBeanList selectableCourse = getCancellableCourse(student);
 		for(int i=0; i<selectableCourse.size(); i++){
 			processCancellInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
 		}

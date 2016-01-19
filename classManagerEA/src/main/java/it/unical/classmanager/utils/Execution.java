@@ -34,7 +34,7 @@ public class Execution implements Runnable{
 	/**
 	 * The timeout in second after that the execution invoke a break operation (Ctrl+C)
 	 */
-	private final long timeoutSecondExecution = 20;
+	private final long timeoutSecondExecution = 10;
 	
 	
 	public Execution(String directory, String... command) {
@@ -86,7 +86,7 @@ public class Execution implements Runnable{
 			if(timeElapsed) {
 				proc.destroy();
 				
-				String[] result = {"1", "ERROR: Time for the running is out...\nTIPS: Check for loops"};
+				String[] result = {"1", "ERROR: Time for the running is out..."};
 				return result;
 			}
 			

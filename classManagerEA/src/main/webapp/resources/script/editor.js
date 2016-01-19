@@ -197,11 +197,29 @@ var ListenersManager = (function(){
 
 			$('#tryCodeBtn').on("click", function() {
 				
-				$('#codeTextarea').val(EditorManager.getInstance().getAceEditor().getValue());
-				$('#themeInput').val(EditorManager.getInstance().getEditorStatusInfo().theme);
-				$('#languageInput').val(EditorManager.getInstance().getEditorStatusInfo().language);
-				$('#editorForm').submit();
+				var selectVal = $("#editorLang").val();
+				
+				if(selectVal === "javascript") {
+					
+					var editorContent = EditorManager.getInstance().getAceEditor().getValue();
+					var evalResult = eval(editorContent.toString()) || "";
+					
+					var console = EditorManager.getInstance().getAceConsole();
+					
+					console.setValue("");
+					console.session.insert(console.getCursorPosition(), JSON.stringify(evalResult, null, 4));
+				}
+				else {
+					
+					$('#codeTextarea').val(EditorManager.getInstance().getAceEditor().getValue());
+					$('#themeInput').val(EditorManager.getInstance().getEditorStatusInfo().theme);
+					$('#languageInput').val(EditorManager.getInstance().getEditorStatusInfo().language);
+					$('#editorForm').submit();
+				}
+				
+				
 			});
+			
 			
 		}
 		else {

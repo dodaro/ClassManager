@@ -168,7 +168,7 @@ public class HomeworkController {
 		User user = userDAO.get(username);
 
 		if(user.getRole().equals(User.STUDENT)){
-			getHomeworkStudentSolving(model, username, homeworksAttacheds, path);
+			getHomeworkStudentSolving(request, model, username, homeworksAttacheds, path);
 			model.addAttribute("canCreate",false);
 		}
 		else
@@ -184,10 +184,9 @@ public class HomeworkController {
 		return "/layout";
 	}
 
-	private void getHomeworkStudentSolving(Model model, String username, List<AbstractFileBean> homeworksAttacheds, String path) {
+	private void getHomeworkStudentSolving(HttpServletRequest request, Model model, String username, List<AbstractFileBean> homeworksAttacheds, String path) {
 
-		//TODO retrieve from session
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
 
 		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);
@@ -201,7 +200,7 @@ public class HomeworkController {
 			int childs = solution.getHomeworkAttachedStudentSolvings().size();
 
 			FolderBean folder = new FolderBean(solution.getId(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
-			folder.setParentId(solution.getStudent().getIdentificationNumber());
+			folder.setParentId(Integer.parseInt( solution.getStudent().getSerialNumber() ));
 			folder.setAction("/lectures/studentHomeworkAttachments");
 			folder.setId(solution.getId());
 			homeworksAttacheds.add(folder);
@@ -325,8 +324,7 @@ public class HomeworkController {
 	@RequestMapping(value = "/lectures/homeworksStudentSolving", method = RequestMethod.POST)
 	public String addHomeworkStudentSolving(@RequestParam("parentId") int homeworkId, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
-		//TODO Devo ricavarlo dalla sessione
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
 
 		//retrieving the logged student
@@ -372,9 +370,8 @@ public class HomeworkController {
 
 		if(result.hasErrors()){
 			
-			//TODO retrieve from session
-			int idCourse = 1;
-			
+			int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
+				
 			model.addAttribute("customHeader", HomeworkController.HEADER);
 			model.addAttribute("customBody", HomeworkController.BODY);
 			model.addAttribute("modalState", "_open");
@@ -452,9 +449,8 @@ public class HomeworkController {
 	 */
 	@RequestMapping(value="/lectures/upload_homeworkStudentSolvingAttachment", method=RequestMethod.POST)
 	public @ResponseBody String uploadHomeworkStudentSolving(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int homeworkStudentSolvingId, HttpServletRequest request) {
-
-		//TODO Devo ricavarlo dalla sessione
-		int idCourse = 1;
+		
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
 
 		HomeworkStudentSolvingDAO homeworkStudentSolvingDAO = appContext.getBean("homeworkStudentSolvingDAO", HomeworkStudentSolvingDAOImpl.class);

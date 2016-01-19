@@ -1,6 +1,11 @@
 package it.unical.classmanager.controllers.forum;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.comparators.AnswerComparator;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
+import it.unical.classmanager.model.data.Answer;
 import it.unical.classmanager.model.data.Question;
 
 /**
@@ -22,6 +29,9 @@ public class DetailedQuestionController {
 	
 	@Autowired
 	private ApplicationContext appContext;
+	
+	private final static String HEADER = "forum/detailedQuestionHead.jsp";
+	private final static String BODY = "forum/detailedQuestionBody.jsp";
 	
 	
 	@RequestMapping(value = "/forum/detailedQuestion", method = RequestMethod.GET)
@@ -44,10 +54,18 @@ public class DetailedQuestionController {
 			model.addAttribute("owner", false);
 		}
 		
+		Set<Answer> answersSet = question.getAnswers();
+		List<Answer> answersList = new ArrayList<Answer>(answersSet);
+		answersList.sort(new AnswerComparator());
+		
+		model.addAttribute("sortedAnswers", answersList);
+		
 		model.addAttribute("loggedUser", username);
 		
+		model.addAttribute("customHeader", DetailedQuestionController.HEADER);
+		model.addAttribute("customBody", DetailedQuestionController.BODY);
 		
-		return "forum/detailedQuestion";
+		return "layout";
 	}
 	
 	

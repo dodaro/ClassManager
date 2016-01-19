@@ -60,7 +60,9 @@ public class AldoLoginController {
 		user.setRole("admin");
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
+		user.setSerialNumber("0000");
 		String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+		
 		user.setHash(hash);
 		
 		Professor aldo = new Professor(user);

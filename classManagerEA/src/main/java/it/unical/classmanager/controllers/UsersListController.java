@@ -78,7 +78,7 @@ public class UsersListController {
 				user.setPassword(username+i);
 				user.setConfirmPassword(user.getPassword());
 				user.setHash(user.getPassword());
-				user.setAddress("address");		
+				user.setSerialNumber(""+i);		
 				
 				Student student = new Student(user, 
 					i, 

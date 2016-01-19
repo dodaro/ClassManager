@@ -71,7 +71,17 @@ public class JavaEnvironment extends Environment{
 				return result.getConsoleResult();
 			}
 			
-			result = this.terminal.executeCommand(tmpDir, "java", this.className);
+			result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro", "-m", "4m",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/bin/sh", "-c", "cd /home/docker" + tmpDir + "; java " + this.className );
+			
+			//remove warning message
+			String tmpExitConsole = result.getConsoleResult();
+			tmpExitConsole = tmpExitConsole.replace("WARNING: Your kernel does not support swap limit capabilities, memory limited without swap.\n", "");
+			result.setConsoleResult(tmpExitConsole);
+			
+			
+			//result = this.terminal.executeCommand(tmpDir, "java", this.className);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				
@@ -122,5 +132,6 @@ public class JavaEnvironment extends Environment{
 		
 		return "";
 	}
+	
 	
 }

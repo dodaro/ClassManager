@@ -1,5 +1,6 @@
-package it.unical.classmanager.controllers;
+package it.unical.classmanager.controllers.editor;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.controllers.CalendarController;
 import it.unical.classmanager.editorData.EditorStatus;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.managers.EnvironmentManger;
@@ -25,27 +27,49 @@ public class EditorController {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	private final static String HEADER = "editor/editorHeader.jsp";
+	private final static String BODY = "editor/editorBody.jsp";
+	
 	
 	@RequestMapping(value = "/editor", method = RequestMethod.GET)
+	public String redirecting(Locale locale, Model model) {
+		return "redirect:/editor/editor";
+	}
+	
+	
+	@RequestMapping(value = "/editor/editor", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		EditorStatus status = initEditorStatus();
+		List<EnvironmentEnum> envLangs = EnvironmentManger.getInstance().getAviableLanguage();
+		
 		model.addAttribute("status", status);
+		model.addAttribute("aviableLangs", envLangs);
 			
-		return "editor";
+		model.addAttribute("customHeader",EditorController.HEADER);
+		model.addAttribute("customBody",EditorController.BODY);
+		
+		return "layout";
 	}
 	
-	@RequestMapping(value = "/editor", method = RequestMethod.POST)
+	@RequestMapping(value = "/editor/editor", method = RequestMethod.POST)
 	public String compileSnippet(Locale locale, Model model, @ModelAttribute("status") EditorStatus status) {
 
 		String lang = status.getLanguage();
 
 		Environment env = EnvironmentManger.getInstance().getEnvironment(EnvironmentEnum.getEnumFromString(lang));
-		status.setConsoleContent(env.compile(status.getCode()));
+		List<EnvironmentEnum> envLangs = EnvironmentManger.getInstance().getAviableLanguage();
+
+		String tmpResult = env.compile(status.getCode());
+		status.setConsoleContent(tmpResult);
 		
 		model.addAttribute("status", status);
+		model.addAttribute("aviableLangs", envLangs);
+
+		model.addAttribute("customHeader",EditorController.HEADER);
+		model.addAttribute("customBody",EditorController.BODY);
 		
-		return "editor";
+		return "layout";
 	}
 	
 	

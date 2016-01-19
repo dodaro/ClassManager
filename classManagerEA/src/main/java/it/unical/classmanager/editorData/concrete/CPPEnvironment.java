@@ -45,7 +45,18 @@ public class CPPEnvironment extends Environment{
 				return result.getConsoleResult();
 			}
 			
-			result = this.terminal.executeCommand(tmpDir, "./"+tmpfileName);
+			
+			result = this.terminal.executeCommand(tmpDir, "docker", "run", "-v",
+					tmpDir + ":/home/docker"+ tmpDir +":ro", "-m", "4m",
+					"ubuntu_editor/sera", "timeout", "--signal=5", "20", "/home/docker" + tmpDir + tmpfileName);
+			
+			
+			//remove warning message
+			String tmpExitConsole = result.getConsoleResult();
+			tmpExitConsole = tmpExitConsole.replace("WARNING: Your kernel does not support swap limit capabilities, memory limited without swap.\n", "");
+			result.setConsoleResult(tmpExitConsole);
+			
+			//result = this.terminal.executeCommand(tmpDir, "./"+tmpfileName);
 			
 			if(result.getExitCode() != ExitCode.EXIT_OK.ordinal()) {
 				

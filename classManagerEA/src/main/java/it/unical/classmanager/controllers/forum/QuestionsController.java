@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.unical.classmanager.forumData.QuestionManager;
+import it.unical.classmanager.controllers.CalendarController;
+import it.unical.classmanager.controllers.forum.manager.QuestionManager;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.data.Question;
@@ -26,6 +28,9 @@ public class QuestionsController {
 	private ApplicationContext appContext;
 	
 	private QuestionManager questionManager;
+	
+	private final static String HEADER = "forum/questionsHead.jsp";
+	private final static String BODY = "forum/questionsBody.jsp";
 	
 
 	@RequestMapping(value = {"/questions", "/forum"}, method = RequestMethod.GET)
@@ -45,9 +50,16 @@ public class QuestionsController {
 		model.addAttribute("questions", this.questionManager.getCurrentPageQuestions());
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
 		
-		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()));
+		model.addAttribute("elemNum", this.questionManager.getElementCount());
 		
-		return "forum/questions";
+		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()+1));
+		model.addAttribute("pageSize", this.questionManager.getPageSize());
+		
+		
+		model.addAttribute("customHeader", QuestionsController.HEADER);
+		model.addAttribute("customBody", QuestionsController.BODY);
+		
+		return "layout";
 	}
 	
 	
@@ -63,9 +75,16 @@ public class QuestionsController {
 		
 		model.addAttribute("questions", this.questionManager.getSpecificPageQuestions(pageNumber));
 		model.addAttribute("pageCount", this.questionManager.getPageCount());
-		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()));
 		
-		return "forum/questions";
+		model.addAttribute("elemNum", this.questionManager.getElementCount());
+		
+		model.addAttribute("currPage", Integer.toString(this.questionManager.getCurrentPageNumber()+1));
+		model.addAttribute("pageSize", this.questionManager.getPageSize());
+		
+		model.addAttribute("customHeader", QuestionsController.HEADER);
+		model.addAttribute("customBody", QuestionsController.BODY);
+		
+		return "layout";
 	}
 	
 	

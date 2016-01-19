@@ -5,14 +5,14 @@ public class QuestionSearchSetting {
 	private String questionName;
 	private String questionDescription;
 	private String username;
-	private String lectureName;
+	private String tags;
 	
 	public QuestionSearchSetting() {
 
 		this.questionName = null;
 		this.questionDescription = null;
 		this.username = null;
-		this.lectureName = null;
+		this.tags = null;
 	}
 
 	public String getQuestionName() {
@@ -39,13 +39,12 @@ public class QuestionSearchSetting {
 		this.username = username;
 	}
 
-	public String getLectureName() {
-		return lectureName;
+	public String getTags() {
+		return tags;
 	}
 
-	public void setLectureName(String lectureName) {
-		this.lectureName = lectureName;
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
-	
 	
 }

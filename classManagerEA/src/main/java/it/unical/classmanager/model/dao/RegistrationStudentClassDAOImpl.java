@@ -207,7 +207,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 
 		Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 
-		String hql = "select S.username, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName "
+		String hql = "select S.username, S.serialNumber, S.subscriptionDate, S.firstName, S.lastName "
 				+ "from Student S  "
 				+ "where S.username not in ("
 				+ " select S1.username "
@@ -232,7 +232,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 
 		Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 
-		String hql = " select S.username, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName "
+		String hql = " select S.username, S.serialNumber, S.subscriptionDate, S.firstName, S.lastName "
 				+ " from RegistrationStudentClass R join R.student S "
 				+ " join R.courseClass C "
 				+ " where C.name = :nameCourse "
@@ -299,7 +299,7 @@ public class RegistrationStudentClassDAOImpl implements RegistrationStudentClass
 
 		Session session = DaoHelper.getDbHandler().getSessionFactory().openSession();
 
-		String hql = " select S.username, C.name, S.identificationNumber, S.subscriptionDate, S.firstName, S.lastName  "
+		String hql = " select S.username, C.name, S.serialNumber, S.subscriptionDate, S.firstName, S.lastName  "
 				+ " from RegistrationStudentClass R join R.student S "
 				+ " join R.courseClass C join C.professor P "
 				+ " where P.username = :nameProfessor "

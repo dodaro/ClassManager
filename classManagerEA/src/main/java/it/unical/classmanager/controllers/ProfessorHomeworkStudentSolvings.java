@@ -77,10 +77,10 @@ public class ProfessorHomeworkStudentSolvings {
 
 			int childs = student.getHomeworkStudentSolvings().size();
 
-			FolderBean folder = new FolderBean(student.getIdentificationNumber(), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
+			FolderBean folder = new FolderBean(Integer.parseInt(student.getSerialNumber()), name, AbstractFileBean.FOLDER_TYPE, folderPath, childs);
 			folder.setParentId(0);
 			folder.setAction("/studentHomeworks");
-			folder.setId(student.getIdentificationNumber());
+			folder.setId(Integer.parseInt( student.getSerialNumber()));
 			files.add(folder);
 		}	
 

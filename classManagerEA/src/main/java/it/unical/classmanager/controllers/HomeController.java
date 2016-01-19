@@ -38,172 +38,172 @@ import it.unical.classmanager.utils.UserSessionChecker;
  */
 @Controller
 public class HomeController {
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-    private final static String HEADER = "home/homeHead.jsp";
-    private final static String BODY_STUDENT = "home/homeBodyStudent.jsp";
-    private final static String BODY_PROFESSOR = "home/homeBodyProfessor.jsp";
-    
-    @Autowired
-    ApplicationContext appContext;
-    
-    @Autowired
-    MessageSource messageSource;
-    
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Locale locale, Model model,HttpServletRequest request) {
-	logger.info("Welcome home! The client locale is {}.", locale);	
-	
-	User user = UserSessionChecker.checkUserSession(model, request);
-	if (user == null) {			
-	    return "welcome";
-	} 	
-	
-	model.addAttribute("user",user);
-	String role = (String) request.getSession().getAttribute("role");
-	if ( role != null ) {
-	    model.addAttribute("role",role);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private final static String HEADER = "home/homeHead.jsp";
+	private final static String BODY_STUDENT = "home/homeBodyStudent.jsp";
+	private final static String BODY_PROFESSOR = "home/homeBodyProfessor.jsp";
+
+	@Autowired
+	ApplicationContext appContext;
+
+	@Autowired
+	MessageSource messageSource;
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("Welcome home! The client locale is {}.", locale);	
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if (user == null) {			
+			return "welcome";
+		} 	
+
+		model.addAttribute("user",user);
+		String role = (String) request.getSession().getAttribute("role");
+		if ( role != null ) {
+			model.addAttribute("role",role);
+		}
+
+		setWelcomeMessage(locale, model, request);
+		setCalendar(locale, model, request, user);
+
+		if(user instanceof Student){
+			model.addAttribute("student", (Student)user);
+			CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
+			setCourses(locale, model, request, (Student)user);
+			setLastLectures(locale, model, request, (Student)user);
+			setLastMaterials(locale, model, request, (Student)user);
+			setLastHomeworks(locale, model, request, (Student)user);
+		}
+
+		if(user instanceof Professor){
+			model.addAttribute("professor", (Professor)user);
+			CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
+			setCourses(locale, model, request, (Professor)user);
+			setLastLectures(locale, model, request, (Professor)user);
+			setLastMaterials(locale, model, request, (Professor)user);
+			setLastHomeworks(locale, model, request, (Professor)user);
+		}
+
+		return "layout";
 	}
-	
-	setWelcomeMessage(locale, model, request);
-	setCalendar(locale, model, request, user);
-	
-	if(user instanceof Student){
-	    model.addAttribute("student", (Student)user);
-	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
-	    setCourses(locale, model, request, (Student)user);
-	    setLastLectures(locale, model, request, (Student)user);
-	    setLastMaterials(locale, model, request, (Student)user);
-	    setLastHomeworks(locale, model, request, (Student)user);
+
+	@SuppressWarnings("deprecation")
+	private void setWelcomeMessage(Locale locale, Model model,HttpServletRequest request){
+		Time time = new Time(System.currentTimeMillis());
+		String message1="", message2="";
+		if(time.getHours()>=7 && time.getHours()<13){
+			message1 = messageSource.getMessage("message.homeGoodMorning1",null,locale);
+			message2 = messageSource.getMessage("message.homeGoodMorning2",null,locale);
+		} else if(time.getHours()>=13 && time.getHours()<18){
+			message1 = messageSource.getMessage("message.homeGoodAfternoon1",null,locale);
+			message2 = messageSource.getMessage("message.homeGoodAfternoon2",null,locale);	    
+		} else if(time.getHours()>=18 && time.getHours()<21){
+			message1 = messageSource.getMessage("message.homeGoodEvening1",null,locale);
+			message2 = messageSource.getMessage("message.homeGoodEvening2",null,locale);	    
+		} else {
+			message1 = messageSource.getMessage("message.homeGoodNight1",null,locale);
+			message2 = messageSource.getMessage("message.homeGoodNight2",null,locale);	    
+		}
+
+		model.addAttribute("welcomeMessage1", message1);
+		model.addAttribute("welcomeMessage2", message2);	
 	}
-	
-	if(user instanceof Professor){
-	    model.addAttribute("professor", (Professor)user);
-	    CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
-	    setCourses(locale, model, request, (Professor)user);
-	    setLastLectures(locale, model, request, (Professor)user);
-	    setLastMaterials(locale, model, request, (Professor)user);
-	    setLastHomeworks(locale, model, request, (Professor)user);
+
+	private void setCalendar(Locale locale, Model model,HttpServletRequest request, User user){
+		//is the string containing all the events of the calendar	
+		EventDAO eventDao = DaoHelper.getEventDAO();
+
+		//retrieves all the event of an user
+		List<Event> events = eventDao.getAllEventsOfUser(user.getUsername());
+
+		List<FullCalendarEventBean> eventsAdaped = new ArrayList<FullCalendarEventBean>();
+		for (Event event : events) {
+			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+		}
+
+		/*
+		 * Is necessary to retrieve create events related to the course schedule
+		 */
+
+		//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
+
+		if(user.getRole().equals(User.PROFESSOR)){
+			LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
+			List<Lecture> allLectures = lectureDAO.getAllLecturesOfAProfessor(user.getUsername());
+
+			for (Lecture lecture : allLectures) {
+				eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(lecture, user));
+			}
+		}
+
+		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
+
+		String json = new Gson().toJson(eventsAdaped);
+		model.addAttribute("events", json);
 	}
-	
-	return "layout";
-    }
-    
-    @SuppressWarnings("deprecation")
-    private void setWelcomeMessage(Locale locale, Model model,HttpServletRequest request){
-	Time time = new Time(System.currentTimeMillis());
-	String message1="", message2="";
-	if(time.getHours()>=7 && time.getHours()<13){
-	    message1 = messageSource.getMessage("message.homeGoodMorning1",null,locale);
-	    message2 = messageSource.getMessage("message.homeGoodMorning2",null,locale);
-	} else if(time.getHours()>=13 && time.getHours()<18){
-	    message1 = messageSource.getMessage("message.homeGoodAfternoon1",null,locale);
-	    message2 = messageSource.getMessage("message.homeGoodAfternoon2",null,locale);	    
-	} else if(time.getHours()>=18 && time.getHours()<21){
-	    message1 = messageSource.getMessage("message.homeGoodEvening1",null,locale);
-	    message2 = messageSource.getMessage("message.homeGoodEvening2",null,locale);	    
-	} else {
-	    message1 = messageSource.getMessage("message.homeGoodNight1",null,locale);
-	    message2 = messageSource.getMessage("message.homeGoodNight2",null,locale);	    
+
+	private void setCourses( Locale locale, Model model, HttpServletRequest request, Professor professor) {
+		List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(professor);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("courseList", beanList);
+		}	
 	}
-	
-	model.addAttribute("welcomeMessage1", message1);
-	model.addAttribute("welcomeMessage2", message2);	
-    }
-    
-    private void setCalendar(Locale locale, Model model,HttpServletRequest request, User user){
-	//is the string containing all the events of the calendar	
-	EventDAO eventDao = DaoHelper.getEventDAO();
-	
-	//retrieves all the event of an user
-	List<Event> events = eventDao.getAllEventsOfUser(user.getUsername());
-	
-	List<FullCalendarEventBean> eventsAdaped = new ArrayList<FullCalendarEventBean>();
-	for (Event event : events) {
-	    eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+
+	private void setCourses( Locale locale, Model model, HttpServletRequest request, Student student) {
+		List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("courseList", beanList);
+		}
 	}
-	
-	/*
-	 * Is necessary to retrieve create events related to the course schedule
-	 */
-	
-	//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
-	
-	if(user.getRole().equals(User.PROFESSOR)){
-	    LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
-	    List<Lecture> allLectures = lectureDAO.getAllLecturesOfAProfessor(user.getUsername());
-	    
-	    for (Lecture lecture : allLectures) {
-		eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(lecture, user));
-	    }
+
+	private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Student student){
+		List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastLectureList", beanList);
+		}	
 	}
-	
-	model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
-	
-	String json = new Gson().toJson(eventsAdaped);
-	model.addAttribute("events", json);
-    }
-    
-    private void setCourses( Locale locale, Model model, HttpServletRequest request, Professor professor) {
-	List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(professor);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("courseList", beanList);
-	}	
-    }
-    
-    private void setCourses( Locale locale, Model model, HttpServletRequest request, Student student) {
-	List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("courseList", beanList);
+
+	private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Professor professor){
+		List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(professor);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastLectureList", beanList);
+		}
 	}
-    }
-    
-    private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Student student){
-	List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastLectureList", beanList);
-	}	
-    }
-    
-    private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Professor professor){
-	List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(professor);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastLectureList", beanList);
+
+	private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Student student){
+		List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastMaterialList", beanList);
+		}
 	}
-    }
-    
-    private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Student student){
-	List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastMaterialList", beanList);
+
+	private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Professor professor){
+		List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(professor);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastMaterialList", beanList);
+		}
 	}
-    }
-    
-    private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Professor professor){
-	List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(professor);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastMaterialList", beanList);
+
+	private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Student student){
+		List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastHomeworkList", beanList);
+		}
 	}
-    }
-    
-    private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Student student){
-	List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastHomeworkList", beanList);
+
+	private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Professor professor){
+		List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(professor);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			model.addAttribute("lastHomeworkList", beanList);
+		}
 	}
-    }
-    
-    private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Professor professor){
-	List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(professor);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    model.addAttribute("lastHomeworkList", beanList);
-	}
-    }
 }

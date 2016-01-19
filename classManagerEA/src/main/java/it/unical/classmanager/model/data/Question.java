@@ -1,8 +1,8 @@
 package it.unical.classmanager.model.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,45 +30,47 @@ public class Question implements Serializable  {
 	private int id;
 		
 	@Column(name="title", nullable=false, length=100)
+	@Size(min=1, max=100)
 	private String title;
 	
-	@Column(name="description", nullable=false, length=10000)	
+	@Column(name="description", nullable=false, length=10000)
+	@Size(min=1, max=10000)
 	private String description;
+	
+	@Column(name="tags", length=100)
+	@Size(max=100)
+	private String tags;
 
 	//	Foreign key section
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name = "lecture")
-	private Lecture lecture;
+	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Set<Answer> answers;
 	
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Answer> answers;
-	
-	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<QuestionAttachedContent> questionAttachedContents;
+	private Set<QuestionAttachedContent> questionAttachedContents;
 	
 	public Question(){
 		this.id = 0;
 		this.title = "";
 		this.description = "";
+		this.tags = "";
 		this.user = null;
-		this.lecture = null;
-		this.answers = new ArrayList<Answer>();
-		this.questionAttachedContents = new ArrayList<QuestionAttachedContent>();
+		this.answers = new HashSet<Answer>();
+		this.questionAttachedContents = new HashSet<QuestionAttachedContent>();
 	}
 
-	public Question(int id, String title, String description, User user, Lecture lecture, List<Answer> answers,
-			List<QuestionAttachedContent> questionAttachedContents) {
+	public Question(int id, String title, String description, String tags, User user, Set<Answer> answers,
+			Set<QuestionAttachedContent> questionAttachedContents) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.tags = tags;
 		this.user = user;
-		this.lecture = lecture;
 		this.answers = answers;
 		this.questionAttachedContents = questionAttachedContents;
 	}
@@ -95,6 +98,15 @@ public class Question implements Serializable  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
 	public User getUser() {
 		return user;
@@ -104,27 +116,19 @@ public class Question implements Serializable  {
 		this.user = user;
 	}
 
-	public Lecture getLecture() {
-		return lecture;
-	}
-
-	public void setLecture(Lecture lecture) {
-		this.lecture = lecture;
-	}
-
-	public List<Answer> getAnswers() {
+	public Set<Answer> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(Set<Answer> answers) {
 		this.answers = answers;
 	}
 
-	public List<QuestionAttachedContent> getQuestionAttachedContents() {
+	public Set<QuestionAttachedContent> getQuestionAttachedContents() {
 		return questionAttachedContents;
 	}
 
-	public void setQuestionAttachedContents(List<QuestionAttachedContent> questionAttachedContents) {
+	public void setQuestionAttachedContents(Set<QuestionAttachedContent> questionAttachedContents) {
 		this.questionAttachedContents = questionAttachedContents;
 	}
 
@@ -135,7 +139,6 @@ public class Question implements Serializable  {
 		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((lecture == null) ? 0 : lecture.hashCode());
 		result = prime * result + ((questionAttachedContents == null) ? 0 : questionAttachedContents.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
@@ -162,11 +165,6 @@ public class Question implements Serializable  {
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
-			return false;
-		if (lecture == null) {
-			if (other.lecture != null)
-				return false;
-		} else if (!lecture.equals(other.lecture))
 			return false;
 		if (questionAttachedContents == null) {
 			if (other.questionAttachedContents != null)

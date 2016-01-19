@@ -17,6 +17,7 @@
 	<context:component-scan
 		base-package="it.unical.classmanager.controllers.CalendarController" />
 	<mvc:annotation-driven />
+	
 
 	<!-- Configure the multipart resolver -->
 	<bean id="multipartResolver"
@@ -46,9 +47,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<!-- create -->
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
@@ -143,6 +142,9 @@
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 	<!-- End CartQueryDAO -->
+	<bean id="notificationDAO" class="it.unical.classmanager.model.dao.NotificationDAOImpl">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
 
 	<!-- DAO Helper -->
 	<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
@@ -181,6 +183,10 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
+	</bean>
+	
+	<bean id="fileManager"
+		class="it.unical.classmanager.utils.FileManager">
 	</bean>
 
 </beans>

@@ -1,5 +1,6 @@
 package it.unical.classmanager.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ import it.unical.classmanager.model.data.Student;
 @Controller
 public class AttendanceLessonController
 {
-	private final static String HEADER = "attendance/attendanceLessonHeader.jsp";
+	private final static String HEADER = "attendance/attendanceCourseHeader.jsp";
 	private final static String BODY = "attendance/attendanceLessonBody.jsp";
 	
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceCourseController.class);
@@ -47,7 +48,8 @@ public class AttendanceLessonController
 	
 	private Lecture currentLecture;
 	private AttendanceStudentLectureDAO attendanceStudentLectureDAO;
-	private List<Student> initialStudends;
+	private List<String> initialStudends;
+	private UserDAO userDAO;
 	
 	@RequestMapping(value = "/attendance", method = RequestMethod.GET)
 	public String loadLessonAttendances(HttpServletRequest request, @ModelAttribute("lecture") Lecture lecture, Model model) 
@@ -65,10 +67,15 @@ public class AttendanceLessonController
 			currentLecture = lectureDAO.get(lecture.getId());
 		}
 			
+		userDAO = context.getBean("userDao", UserDAOImpl.class);
 		attendanceStudentLectureDAO = context.getBean("attendanceStudentLectureDAO", AttendanceStudentLectureDAOImpl.class);
 		List<Student> studentsNotPresent = attendanceStudentLectureDAO.getAllStudentsNotPresentOnALecture(currentLecture);
 		List<Student> studentsPresent = attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfALecture(currentLecture);
-		initialStudends = studentsPresent;
+		initialStudends = new ArrayList<String>();
+		for (Student student : studentsPresent)
+		{
+			initialStudends.add(student.getUsername());
+		}
 			
 		// TODO prendere corso e professore dalla session
 		//model.addAttribute("professor", lecture.getCourseClass().getProfessor());
@@ -95,15 +102,17 @@ public class AttendanceLessonController
 		
 		for (AttendanceStudentLecture asl : lecture.getAttendanceStudentLectures())
 		{
+			logger.info(asl.getStudent().getUsername());
 			Student currentStudent = asl.getStudent();
-			if(!initialStudends.contains(currentStudent))
+			if(!initialStudends.contains(currentStudent.getUsername()))
 				attendanceStudentLectureDAO.create(asl);
 			else
-				initialStudends.remove(currentStudent);
+				initialStudends.remove(currentStudent.getUsername());
 		}
-		for (Student student : initialStudends)
+		for (String student : initialStudends)
 		{
-			List<AttendanceStudentLecture> attendanceStudentLecture = attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfAStudentAndALecture(student, currentLecture);
+			Student s = (Student)userDAO.get(student);
+			List<AttendanceStudentLecture> attendanceStudentLecture = attendanceStudentLectureDAO.getAllAttendanceStudentLecturesOfAStudentAndALecture(s, currentLecture);
 			for (AttendanceStudentLecture asl : attendanceStudentLecture)
 			{
 				attendanceStudentLectureDAO.delete(asl);

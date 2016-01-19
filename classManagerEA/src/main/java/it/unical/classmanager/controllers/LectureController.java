@@ -29,7 +29,6 @@ import it.unical.classmanager.model.AbstractFileBean;
 import it.unical.classmanager.model.FileBean;
 import it.unical.classmanager.model.FolderBean;
 import it.unical.classmanager.model.LectureControllerWrapper;
-import it.unical.classmanager.model.LectureWrapper;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.EventDAO;
@@ -72,17 +71,16 @@ public class LectureController {
 			model.addAttribute("canCreate", true);
 
 		model.addAttribute("lecture", new Lecture());
-		
-		return getLectures(model);
+
+		return getLectures(model, request);
 	}
 
 
-	private String getLectures(Model model){
+	private String getLectures(Model model, HttpServletRequest request){
 
-		//TODO retrieve from session
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
-		
+
 		String currentPath = FileManager.RESOURCES_PATH + File.separator + courseName + File.separator + FileManager.LECTURES_PATH;
 
 		model.addAttribute("customHeader", LectureController.HEADER);
@@ -108,10 +106,9 @@ public class LectureController {
 	public String getLectureContent(@Valid LectureControllerWrapper params,	
 			BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
-		//TODO retrieve from session
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
-				
+
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 
@@ -141,10 +138,10 @@ public class LectureController {
 		lectureContent.add(materials);
 
 		model.addAttribute("files", lectureContent);
-		
+
 		String referred = "/lectures?path=lectures";
 		model.addAttribute("backPage", referred);
-		
+
 		logger.info("getLectureContent");
 
 		return "/layout";
@@ -160,10 +157,9 @@ public class LectureController {
 			return "redirect:/sessionerror";
 		}
 
-		//TODO retrieve from session
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		int idLecture = params.getParentId();
-		int idCourse = 1;
-		
+
 		model.addAttribute("customHeader", LectureController.HEADER);
 		model.addAttribute("customBody", LectureController.BODY);
 		model.addAttribute("pwd",FileManager.MATERIALS_PATH);
@@ -193,10 +189,10 @@ public class LectureController {
 
 		if(canCreate(request))
 			model.addAttribute("canCreate", true);
-		
+
 		String referred = "/lectures/lectureContent?parentId=" + idLecture;
 		model.addAttribute("backPage", referred);
-		
+
 		logger.info("getMaterials");
 
 		return "/layout";
@@ -211,7 +207,7 @@ public class LectureController {
 	 */
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
 	public String createLecture(@Valid @ModelAttribute("lecture") Lecture lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
-	
+
 		model.addAttribute("lectureAction", "/lectures");
 		if(result.hasErrors()){
 
@@ -220,16 +216,15 @@ public class LectureController {
 
 			if(canCreate(request))
 				model.addAttribute("canCreate", true);
-			
-			return getLectures(model);
+
+			return getLectures(model, request);
 		}
 
 		Lecture lecture = lectureWrapper;//.getLecture();
 		if(lecture.getId() > 0)
 			return updateLecture(lecture, result, request, model, redirect);
-		
-		//TODO Devo ricavarlo dalla sessione
-		int idCourse = 1;
+
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
 
 		String currentPath = courseName + File.separator + FileManager.LECTURES_PATH;
@@ -237,7 +232,7 @@ public class LectureController {
 		//retrieves the owner course of the new lesson
 		CourseClassDAO courseClassDao = appContext.getBean("courseClassDAO",CourseClassDAOImpl.class);
 		CourseClass courseClass = courseClassDao.get(idCourse);
-		
+
 		lecture.setCourseClass(courseClass);
 
 		//creates the new lecture
@@ -262,7 +257,7 @@ public class LectureController {
 		}
 
 		int newId = newLecture.getId();
-		
+
 		createCalendarEvent(lecture, courseClass);
 
 		//creates the corresponding folder
@@ -298,14 +293,13 @@ public class LectureController {
 			model.addAttribute("modalState", "_open");
 			model.addAttribute("lecture", lecture);
 			model.addAttribute("lectureAction", "/lectures/update_lecture");
-			
+
 			if(canCreate(request))
 				model.addAttribute("canCreate", true);
-			
-			return getLectures(model);
+
+			return getLectures(model, request);
 		}
 
-		//TODO
 		LectureDAO lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
 		Lecture old = lectureDao.get(lecture.getId());
 
@@ -344,19 +338,18 @@ public class LectureController {
 	 * @return
 	 */
 	@RequestMapping(value="/lectures/upload_materials", method=RequestMethod.POST)
-	public @ResponseBody String uploadMaterial(@RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
+	public @ResponseBody String uploadMaterial(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("parentId") int lectureId) {
 
-		//TODO retrieve from session
-		int idCourse = 1;
+		int idCourse =  (Integer) request.getSession().getAttribute("ActiveCourse");
 		String courseName = Integer.toString(idCourse);
-		
+
 		Lecture lecture = appContext.getBean("lectureDAO",LectureDAOImpl.class).get(lectureId);
 		String folder_name = Integer.toString(lectureId);
 
 		String path = courseName + File.separator + FileManager.LECTURES_PATH + File.separator + folder_name + File.separator + FileManager.MATERIALS_PATH;
 		String filePath = FileManager.RESOURCES_PATH + File.separator + path + File.separator;
 		String fileName = generateName(filePath, file);
-		
+
 		boolean success = new FileManager().mkMultipartFile(file, path, fileName);
 		if(!success){
 			logger.error("cannot save the file " + path + "/" + file.getOriginalFilename());
@@ -364,7 +357,7 @@ public class LectureController {
 		}
 
 		Material material = new Material();
-		
+
 		material.setName(fileName);
 		material.setFilePath(filePath + fileName);
 		material.setHidden(false);
@@ -374,11 +367,11 @@ public class LectureController {
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
 		Material newMaterial = materialDAO.create(material);
 		if(newMaterial == null){
-			
+
 			new FileManager().deleteDirectory(filePath + fileName);
 			return "400";
 		}
-			
+
 		logger.info("saving file");
 
 		return "200";
@@ -390,7 +383,7 @@ public class LectureController {
 
 		LectureDAOImpl lectureDao = appContext.getBean("lectureDAO",LectureDAOImpl.class);
 		Lecture lecture = lectureDao.get(id);
-		
+
 		if(lecture != null)
 			lectureDao.delete(lecture);
 		else
@@ -414,12 +407,12 @@ public class LectureController {
 
 		MaterialDAO materialDAO = appContext.getBean("materialDAO", MaterialDAOImpl.class);
 		Material material = materialDAO.get(id);
-		
+
 		if(material != null)
 			materialDAO.delete(material);
 		else
 			return "redirect:/lectures?path=lectures";
-		
+
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);
 
@@ -470,17 +463,17 @@ public class LectureController {
 		event.setType(Event.EVENT_LECTURE_TYPE);
 		//TODO
 		event.setCourseClass(courseClass);
-		
+
 		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
 		eventDao.create(event);
-	
+
 	}
-	
+
 	/*
 	 * checks if the logged student can create homeworks or lectures
 	 */
 	private boolean canCreate(HttpServletRequest request) {
-		
+
 		//retrieving the logged student
 		String username = (String) request.getSession().getAttribute("loggedIn");
 		UserDAO userDAO = appContext.getBean("userDao", UserDAO.class);
@@ -488,15 +481,15 @@ public class LectureController {
 
 		if(user.getRole().equals(User.STUDENT))
 			return false;
-		
+
 		return true;
 	}
-	
+
 	private String generateName(String filePath, MultipartFile file){
-		
+
 		String newFileName = file.getOriginalFilename();
 		if(new File(filePath + newFileName).exists()) {
-			
+
 			ArrayList<String> fileNameSplitted = new ArrayList<String>(Arrays.asList(file.getOriginalFilename().split("\\.(?=[^\\.]+$)")));
 			if(fileNameSplitted.size() == 1) {
 				fileNameSplitted.add("");
@@ -505,14 +498,14 @@ public class LectureController {
 				fileNameSplitted.add(1, "." + fileNameSplitted.get(1));
 			}
 
-			
+
 			String name = fileNameSplitted.get(0);
 			String extension = fileNameSplitted.get(1);
 			name += "_" + new Random(System.currentTimeMillis()).nextInt(1000000);
-			
+
 			newFileName = name + extension;
 		}
-		
+
 		return newFileName = StringEscapeUtils.escapeSql(newFileName);
 	}
 

@@ -63,7 +63,7 @@ public class NoticeBoardController {
 			user.setRole("Professor");
 			user.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
-		
+			user.setSerialNumber("0001");
 			Professor professor = new Professor(user);
 			UserDAO userDao = (UserDAO) context.getBean("userDao");
 			userDao.create(professor);

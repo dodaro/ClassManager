@@ -1,7 +1,9 @@
-package it.unical.classmanager.forumData;
+package it.unical.classmanager.controllers.forum.manager;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
 
 import it.unical.classmanager.model.data.Question;
@@ -18,14 +20,17 @@ public class QuestionManager {
 	public QuestionManager(List<Question> questions) {
 		
 		this.questions = questions;
+		
 		this.pageSize = INITIAL_PAGE_SIZE;
 		initPagination();
 	}
 
 	private void initPagination() {
 		
-		this.paginationHolder = new PagedListHolder<Question>(this.questions);
+		this.paginationHolder = new PagedListHolder<Question>(this.questions, new MutableSortDefinition("id", true, false));
 		this.paginationHolder.setPageSize(this.pageSize);
+		
+		this.paginationHolder.resort();
 	}
 	
 	
@@ -60,7 +65,9 @@ public class QuestionManager {
 		return this.paginationHolder.getPageCount();
 	}
 	
-	
+	public int getElementCount() {
+		return this.paginationHolder.getNrOfElements();
+	}
 	
 	
 	public List<Question> getSpecificPageQuestions(int index) {

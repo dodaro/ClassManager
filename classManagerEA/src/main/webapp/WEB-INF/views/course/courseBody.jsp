@@ -4,49 +4,55 @@
 
 <div class="row row-content">
 	<div class="col-sm-6 col-md-6 col-lg-6">
-		<h3 class="text-muted"><spring:message code="message.course.courses" text="default text"/> <small>- ${professor.username}</small></h3>
+		<h3 class="text-muted">
+			<spring:message code="message.course.courses" text="default text"/>
+		</h3>
 	</div>
 	<div class="col-sm-6 col-md-6 col-lg-6">
-		<div style="float:right;">
-			<a href="#" class="btn btn-success" data-toggle="modal" data-target="#${state}">
-		      	<span class="glyphicon glyphicon-plus"></span>
-		      	<spring:message code="message.course.addButton" text="default text"/>
-		    </a>
-	    </div>
+		<c:if test="${not empty loggedIn && role != 'Student' }">
+			<div style="float:right;">
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#${state}">
+			      	<span class="glyphicon glyphicon-plus"></span>
+			      	<spring:message code="message.course.addButton" text="default text"/>
+			    </a>
+		    </div>
+		</c:if>
 	</div>
 </div>
 <div class="row row-content">
 	<c:forEach items="${courses}" var="course">
 		<div class="col-md-4">			
-			<form:form action="selectCourse" method="post" modelAttribute="selectCourseForm" role="form" id="selectForm">			
-				
-				<form:input type="hidden" path="name" class="form-control" value="${course.name}" />
-				<form:input type="hidden" path="cfu" class="form-control" value="${course.cfu}" />			
-				<form:input type="hidden" path="activationDate" class="form-control" value="${course.activationDate}" />	
-				<form:input type="hidden" path="endDate" class="form-control" value="${course.endDate}" />
-				<form:input type="hidden" path="referenceYear" class="form-control" value="${course.referenceYear}" />
-				<form:input type="hidden" path="degreeCourse" class="form-control" value="${course.degreeCourse.id}" />	
-				<form:input type="hidden" path="professor" class="form-control" value="${professor.username}" />	
-										
-				<a href="javascript:{}" onclick="document.getElementById('selectForm').submit();" class="no-text-decoration">
+			<form:form action="selectCourse" method="post" modelAttribute="selectCourseForm" role="form" id="selectForm${course.id}">	
+				<form:input type="hidden" path="id" class="form-control" value="${course.id}" />													
+				<a href="javascript:{}" onclick="document.getElementById('selectForm${course.id}').submit();" class="no-text-decoration">
 					<div class="panel panel-default course">
 						<div class="panel-body">
+							<form:input type="hidden" path="name" class="form-control" value="${course.name}" />
 							<h4 class="text-info">${course.name}</h4>
 							<p class="text-muted">
 								<spring:message code="message.course.courseCFU" text="default text"/>: ${course.cfu}
+								<form:input type="hidden" path="cfu" class="form-control" value="${course.cfu}" />			
 							</p>
 							<p class="text-muted">
 								<spring:message code="message.course.courseActivationDate" text="default text"/>: ${course.activationDate}
+								<form:input type="hidden" path="activationDate" class="form-control" value="${course.activationDate}" />	
 							</p>
 							<p class="text-muted">
 								<spring:message code="message.course.courseEndDate" text="default text"/>: ${course.endDate}
+								<form:input type="hidden" path="endDate" class="form-control" value="${course.endDate}" />
 							</p>
 							<p class="text-muted">
 								<spring:message code="message.course.courseReferenceYear" text="default text"/>: ${course.referenceYear}
+								<form:input type="hidden" path="referenceYear" class="form-control" value="${course.referenceYear}" />
 							</p>
 							<p class="text-primary">
 								<spring:message code="message.course.degreeCourse" text="default text"/>: ${course.degreeCourse.name} (${course.degreeCourse.courseCode})
+								<form:input type="hidden" path="degreeCourse" class="form-control" value="${course.degreeCourse.id}" />	
 							</p>	
+							<p class="text-danger">
+								<form:input type="hidden" path="professor" class="form-control" value="${course.professor.username}" />	
+								<spring:message code="message.course.professor" text="default text"/>: ${course.professor.username}
+							</p>
 						</div>
 					</div>
 				</a>

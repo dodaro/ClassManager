@@ -97,6 +97,17 @@ public class CourseClassDAOImpl implements CourseClassDAO {
 	session.close();  
 	return courseClasses;  
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<CourseClass> getCourseClasses(Student student)
+    {  
+		Session session = this.dbHandler.getSessionFactory().openSession();		  
+		List<CourseClass> courseClasses = session.createQuery("SELECT courseClass FROM RegistrationStudentClass "  
+			+ "WHERE student = :student").setParameter("student", student).list();  
+		session.close();  
+		return courseClasses;  
+    }
 
     @SuppressWarnings("unchecked")
     @Override

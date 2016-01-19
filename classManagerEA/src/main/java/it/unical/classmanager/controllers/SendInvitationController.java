@@ -27,6 +27,7 @@ import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
 import it.unical.classmanager.utils.GenericContainerBeanList;
+import it.unical.classmanager.utils.NotificationHelper;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -41,8 +42,8 @@ public class SendInvitationController {
 
 	@Autowired
 	ApplicationContext appContext;
-
-	@Autowired  
+	
+	@Autowired
 	MessageSource messageSource;
 
 	@RequestMapping(value = "/sendInvitation", method = RequestMethod.GET)
@@ -86,7 +87,7 @@ public class SendInvitationController {
 			model.addAttribute("courseSelected", courseName);
 		}
 
-		processInviteStudentFromFile(model, sendFile, (Professor) user);
+		processInviteStudentFromFile(model, sendFile, (Professor) user, locale);
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseName);
 		processCancellableStudent(locale, model, request, courseName);
@@ -140,7 +141,8 @@ public class SendInvitationController {
 
 		model.addAttribute("courseSelected", courseSelected);
 
-		processInviteAll((Professor) user, courseSelected);
+		processInviteAll((Professor) user, courseSelected, locale);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -162,7 +164,8 @@ public class SendInvitationController {
 
 		model.addAttribute("courseSelected", courseSelected);
 
-		processInviteSingle((Professor) user, courseSelected, studentName);
+		processInviteSingle((Professor) user, courseSelected, studentName, locale);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -185,6 +188,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processCancellAll((Professor) user, courseSelected);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -207,6 +211,7 @@ public class SendInvitationController {
 		model.addAttribute("courseSelected", courseSelected);
 
 		processCancellSingle((Professor) user, courseSelected, studentName);
+		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
@@ -288,14 +293,14 @@ public class SendInvitationController {
 		return getCancellableStudent(courseName, null);
 	}
 
-	private void processInviteAll(Professor professor, String courseSelected) {
+	private void processInviteAll(Professor professor, String courseSelected, Locale locale) {
 		GenericContainerBeanList selectableStudent = getSelectableStudent(courseSelected);
 		for(int i=0; i<selectableStudent.size(); i++){
-			processInviteSingle(professor, courseSelected, selectableStudent.get(i).getField1());
+			processInviteSingle(professor, courseSelected, selectableStudent.get(i).getField1(), locale);
 		}
 	}
 
-	private void processInviteSingle(Professor professor, String courseSelected, String studentName) {
+	private void processInviteSingle(Professor professor, String courseSelected, String studentName, Locale locale) {
 		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
 		Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
 		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
@@ -312,11 +317,20 @@ public class SendInvitationController {
 					courseClass);
 
 			registrationStudentClassDAO.create(registrationStudentClass);
+			
+			String message = messageSource.getMessage("message.ProfessorNotification1",null,locale)
+					+" "					
+					+professor.getUsername()
+					+" "
+					+messageSource.getMessage("message.ProfessorNotification2",null,locale)
+					+" "
+					+courseSelected;
+			NotificationHelper.createNotification(professor, student, message);
 			//System.err.println("Correct invitation for "+student.getUsername()+", Course: "+courseClass.getName()+"\n");
 		}
 	}  
 
-	private void processInviteStudentFromFile(Model model, CommonsMultipartFile sendFile, Professor professor) {
+	private void processInviteStudentFromFile(Model model, CommonsMultipartFile sendFile, Professor professor, Locale locale) {
 		if(sendFile != null){
 			if (!sendFile.isEmpty()) {
 				byte[] bytes = sendFile.getBytes();
@@ -328,7 +342,7 @@ public class SendInvitationController {
 						String courseName = rowSplitted[0].trim();
 						String studentUsername = rowSplitted[1].trim();
 						//System.out.println("Send invitations to "+studentUsername+" for "+courseName);
-						processInviteSingle(professor, courseName, studentUsername);
+						processInviteSingle(professor, courseName, studentUsername, locale);
 					} else {
 						// File format wrong
 						System.err.println("Wrong file format! File:"+sendFile.getOriginalFilename());

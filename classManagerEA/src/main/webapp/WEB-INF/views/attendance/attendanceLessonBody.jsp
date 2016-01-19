@@ -69,7 +69,7 @@
 					<tbody>
 						<c:forEach items="${studentsPresent}" var="student">
 							<tr>
-								<td>${student.identificationNumber}</td>
+								<td>${student.serialNumber}</td>
 								<td>${student.lastName}</td>
 								<td>${student.firstName}</td>
 								<td><form:checkbox path="attendanceStudentLectures"	value="${student.username}" checked="checked" /></td>
@@ -77,7 +77,7 @@
 						</c:forEach>
 						<c:forEach items="${studentsNotPresent}" var="student">
 							<tr>
-								<td>${student.identificationNumber}</td>
+								<td>${student.serialNumber}</td>
 								<td>${student.lastName}</td>
 								<td>${student.firstName}</td>
 								<td><form:checkbox path="attendanceStudentLectures"	value="${student.username}" /></td>

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class NotificationJSON
 {
+	private int id;
 	private String message;
 	private String url;
 	private Date date;
@@ -12,6 +13,7 @@ public class NotificationJSON
 	
 	public NotificationJSON()
 	{
+		this.id = 0;
 		this.message = "";
 		this.url = "";
 		this.date = new Date();
@@ -19,13 +21,24 @@ public class NotificationJSON
 		this.destination = "";
 	}
 
-	public NotificationJSON(String message, String url, boolean read, Date date, String source, String destination)
+	public NotificationJSON(int id, String message, String url, boolean read, Date date, String source, String destination)
 	{
+		this.id = id;
 		this.message = message;
 		this.url = url;
 		this.date = date;
 		this.source = source;
 		this.destination = destination;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public String getMessage()

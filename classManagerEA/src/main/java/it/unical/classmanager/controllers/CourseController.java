@@ -35,6 +35,7 @@ import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.DegreeCourse;
 import it.unical.classmanager.model.data.Professor;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.UserSessionChecker;
 
@@ -63,33 +64,35 @@ public class CourseController
 	@RequestMapping(value = "/courses", method = RequestMethod.GET)
 	public String loadCourses(HttpServletRequest request, Model model, Locale locale, RedirectAttributes redirectAttributes)
 	{	
-
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
 		    return "redirect:/";
-		}
+		}		
+
+		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
 		
-		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
 //		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
 //		professor = (Professor) userDAO.get("ProfAldo0");
-		
-		professor = (Professor) user;
-		model.addAttribute("professor", professor);
-		//model.addAttribute("courses", professor.getCourseClasses());
-		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
-		courseClasses = courseClassDAO.getCourseClasses(professor);
-		model.addAttribute("courses", courseClasses);
-
-		DegreeCourseDAO degreeCourseDAO = context.getBean("degreeCourseDAO", DegreeCourseDAOImpl.class);
-		degreeCourses = degreeCourseDAO.getAllDegreeCourses();
-		model.addAttribute("degreeCourses", degreeCourses);
+		if(user.getRole().equals("Student"))
+		{
+			Student student = (Student) user;
+			courseClasses = courseClassDAO.getCourseClasses(student);
+		}
+		else
+		{
+			professor = (Professor) user;
+			model.addAttribute("professor", professor);
+			courseClasses = courseClassDAO.getCourseClasses(professor);
+			DegreeCourseDAO degreeCourseDAO = context.getBean("degreeCourseDAO", DegreeCourseDAOImpl.class);
+			degreeCourses = degreeCourseDAO.getAllDegreeCourses();
+			model.addAttribute("degreeCourses", degreeCourses);
+		}
 
 		courseForm = new CourseClass();
 		model.addAttribute("courseForm", courseForm); // To create new Course
-		
-		model.addAttribute("selectCourseForm", new CourseClass());
-
 		model.addAttribute("state", "modalClosed");
+		model.addAttribute("courses", courseClasses);
+		model.addAttribute("selectCourseForm", new CourseClass());
 		model.addAttribute("customHeader", CourseController.HEADER);
 		model.addAttribute("customBody", CourseController.BODY);
 		return "layout";
@@ -99,7 +102,7 @@ public class CourseController
 	public String saveCourse(HttpServletRequest request, @Valid @ModelAttribute("courseForm") CourseClass course, BindingResult result, Model model, Locale locale)
 	{
 		if (professor == null || degreeCourses == null)
-			return "redirect:courses";
+			return "redirect:/courses";
 
 		logger.info(course.toString());
 		if (result.hasErrors())
@@ -113,7 +116,7 @@ public class CourseController
 			model.addAttribute("professor", professor);
 			model.addAttribute("courses", courseClasses);
 			model.addAttribute("degreeCourses", degreeCourses);
-
+			model.addAttribute("selectCourseForm", new CourseClass());
 			model.addAttribute("state", "modalOpened");
 			model.addAttribute("customHeader", CourseController.HEADER);
 			model.addAttribute("customBody", CourseController.BODY);
@@ -133,17 +136,12 @@ public class CourseController
 	
 	@RequestMapping(value = "/selectCourse", method = RequestMethod.POST)
 	public String selectCourse(HttpServletRequest request, @ModelAttribute("selectCourseForm") CourseClass course, BindingResult result, Model model, Locale locale)
-	{
-		if (professor == null || degreeCourses == null)
-			return "redirect:courses";
-		
-		// Il corso non ha i riferimenti ai @OneToMany
-		// TODO Save course in session!
+	{		
+		if(course == null)
+			return "redirect:/courses";
 
 		logger.info(course.toString());
 		
-		// TODO Redirect to course page
-		// Added session variable
 		request.getSession().setAttribute("ActiveCourse", course.getId());
 		
 		return "redirect:/lectures?path=lectures";

@@ -1,6 +1,10 @@
 var ws = new WebSocket("ws://localhost:8080/wsexample");
+var numberOfNewNotifications;
 takeOldNotifications();
-var numberOfNewNotifications = 0;
+numberOfNewNotifications = 0;
+$( document ).ready(function() 
+{
+});
 
 ws.onopen = function() 
 {
@@ -26,6 +30,7 @@ ws.onerror = function(err)
 
 function takeNewNotifications() 
 {
+	$('#panelNotificationsNew').html("");
 	$.ajax(
 	{
 		url : '/getNewNotifications',
@@ -36,7 +41,7 @@ function takeNewNotifications()
 			console.log(notifications);
 			if(notifications.length > 0)
 			{
-				numberOfNewNotifications += notifications.length;
+				numberOfNewNotifications = notifications.length;
 				$('#badge').html('' + numberOfNewNotifications);
 			}
 			for (var i = 0; i < notifications.length; i++) 
@@ -50,6 +55,7 @@ function takeNewNotifications()
 
 function takeOldNotifications() 
 {
+	$('#panelNotificationsOld').html("");
 	$.ajax(
 	{
 		url : '/getOldNotifications',
@@ -69,32 +75,60 @@ function takeOldNotifications()
 
 function drawNotification(notification, isNew) 
 {
+	console.log(notification);
 	var label = '';
 	if(isNew)
-		label = '<span class="label label-success label-notifications">New</span>';
-	var source = label + '<span class="text-muted">' + notification[2] + '</span>, '
-			+ '<span class="text-danger">' + notification[3] + '</span>'
-			+ '<p class="text-info">' + notification[0] + '</p>';
+		label = '<span id="notification'+notification[0]+'" class="label label-success label-notifications">New</span> ';
+	var source = label + '<span class="text-muted">' + notification[3] + '</span>, '
+			+ '<span class="text-danger">' + notification[4] + '</span>'
+			+ '<p class="text-info">' + notification[1] + '</p>';
 	var div = '<div class="notificationRow">' + source + '</div>';
-	var a = '<a href="' + notification[1] + '">' + div + '<a>';
+	var a;
+	if(isNew)
+		a = '<a style="text-decoration:none;" href="' + notification[2] + '" onclick="setThisRead('+notification[0]+')">' + div + '<a>';
+	else 
+		a = '<a style="text-decoration:none;" href="' + notification[2] + '">' + div + '<a>';
 	var li = '<li>' + a + '</li>'
 	if(isNew)
-		$('#panelNotifications').prepend(li);
+		$('#panelNotificationsNew').append(li);
 	else
-		$('#panelNotifications').append(li);
+		$('#panelNotificationsOld').append(li);
+}
+
+function setThisRead(id)
+{
+	$.ajax(
+	{
+		url : '/setNoficationRead?id='+id,
+		method: "get",
+		datatype : 'text',
+		success : function(data) 
+		{}
+	});
+	numberOfNewNotifications--;
+	if(numberOfNewNotifications <= 0)
+	{
+		$('#badge').html('');
+		numberOfNewNotifications = 0;
+	}
+	else
+		$('#badge').html(''+numberOfNewNotifications);
+
+	console.log(id+ " " + numberOfNewNotifications);
+	$('#notification'+id).remove();
 }
 	
 function resetBadge()
 {
-	numberOfNewNotifications = 0;
-	$('#badge').html('');
-	$.ajax(
+	//numberOfNewNotifications = 0;
+	//$('#badge').html('');
+	/*$.ajax(
 	{
 		url : '/setNoficationsRead',
 		datatype : 'text',
 		success : function(data) 
 		{}
-	});
+	});*/
 }
 
 

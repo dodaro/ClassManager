@@ -27,8 +27,10 @@
 					</span>
 					<span id="badge" class="badge"></span>
 				</a>
-				<ul class="dropdown-menu notificationsWidth"  id="panelNotifications">
-				</ul>					
+				<ul class="dropdown-menu notificationsWidth" >
+					<div id="panelNotificationsNew"></div>
+					<div id="panelNotificationsOld"></div>
+				</ul>			
 			</li>
 			<a class="nav-bar-button logout" href="./db_init"><span
 				class="glyphicon glyphicon-hdd"></span> InitDB</a>

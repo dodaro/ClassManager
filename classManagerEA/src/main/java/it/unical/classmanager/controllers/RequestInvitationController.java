@@ -75,7 +75,7 @@ public class RequestInvitationController {
 			return "redirect:/";
 		}	
 
-		processRequestInvitationAll((Student) user);		
+		processRequestInvitationAll((Student) user, locale);		
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
@@ -99,7 +99,7 @@ public class RequestInvitationController {
 			return "redirect:/";
 		}	
 
-		processRequestInvitationSingle((Student) user, courseName, professorName);
+		processRequestInvitationSingle((Student) user, courseName, professorName, locale);
 		processSelectableCourse(locale, model, request, (Student) user);
 		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
@@ -187,14 +187,14 @@ public class RequestInvitationController {
 		return null;
 	}    
 
-	private void processRequestInvitationAll(Student student) {
+	private void processRequestInvitationAll(Student student, Locale locale) {
 		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
 		for(int i=0; i<selectableCourse.size(); i++){
-			processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2());
+			processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2(), locale);
 		}
 	}
 
-	private void processRequestInvitationSingle(Student student, String courseName, String professorName) {
+	private void processRequestInvitationSingle(Student student, String courseName, String professorName, Locale locale) {
 		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
 		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 		int maxIndex = registrationStudentClassDAO.getMaxIndex();
@@ -210,10 +210,17 @@ public class RequestInvitationController {
 					courseClass);
 
 			registrationStudentClassDAO.create(registrationStudentClass);	
+
+			String message =  messageSource.getMessage("message.StudentNotification1",null,locale)
+					+" "
+					+student.getUsername()
+					+" "
+					+messageSource.getMessage("message.StudentNotification2",null,locale)
+					+" "
+					+courseName;
 			
-			String message = "Richiesta dello studente"+student.getUsername()+" per il corso di "+courseName;
 			User professor = DaoHelper.getUserDAO().get(professorName);
-			NotificationHelper.createNotification(appContext, student, professor, message);
+			NotificationHelper.createNotification(student, professor, message);
 		}
 	}   
 

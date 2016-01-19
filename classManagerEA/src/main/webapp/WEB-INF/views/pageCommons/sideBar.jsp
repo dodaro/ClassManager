@@ -33,7 +33,7 @@
 <li><a href="/viewer3D"><span
 		class="glyphicon glyphicon-eye-open"></span> Viewer3D</a></li>
 
-<li><a href="./noticeboard"> <span
+<li><a href="/noticeboard"> <span
 		class="glyphicon glyphicon-send"></span> <spring:message
 			code="message.noticeboard" text="default text" />
 </a></li>

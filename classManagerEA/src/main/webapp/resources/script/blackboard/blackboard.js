@@ -105,15 +105,15 @@ $(document).ready(function() {
 	    y: e.pageY - this.offsetTop
 	  };
 	  
-	  //ATTENTION HERE ho cambiato con -338 e -100 per via dello sfasamento aggiustare
+	  //ATTENTION HERE ho cambiato con -330 e -87 per via dello sfasamento aggiustare
 	  // Translates the coordinates from the local canvas size to 1140x400:
 	  sendMouse = {
-	    x: ((1140/canvas.width)*mouse.x)-338,
-	    y: ((400/canvas.height)*mouse.y)-100
+	    x: ((1140/canvas.width)*mouse.x)-330,
+	    y: ((400/canvas.height)*mouse.y)-87
 	  };
 	  sendLastMouse = {
-	    x: ((1140/canvas.width)*lastMouse.x)-338,
-	    y: ((400/canvas.height)*lastMouse.y)-100
+	    x: ((1140/canvas.width)*lastMouse.x)-330,
+	    y: ((400/canvas.height)*lastMouse.y)-87
 	  };
 	  draw(sendLastMouse, sendMouse, context.strokeStyle, context.lineWidth, context.globalCompositeOperation, true);
 	  if (TogetherJS.running) {

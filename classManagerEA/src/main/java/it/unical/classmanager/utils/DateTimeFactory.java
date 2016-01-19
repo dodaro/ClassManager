@@ -99,7 +99,7 @@ public class DateTimeFactory {
 	}
 	
 	public static int getRandomYearBetween(int beginYear, int endYear){
-		int diff = endYear - beginYear;
+		int diff = Math.abs(endYear - beginYear);
 		int randomYear = beginYear + random.nextInt(diff);
 		System.out.println("Random Year Between ("+beginYear+","+endYear+"): "+randomYear);			
 		return randomYear;

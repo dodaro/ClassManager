@@ -2,6 +2,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 				<h3>Users List</h3>
+				
+				
+				<div class="row row-content" style="text-align:right">
+					<a href="/gc"><button class="btn btn-primary">Garbage Collector</button></a>
+				</div>
+				
 				<form class="form-inline" action="searchusers" method="GET" role="form">
 				  <div class="form-group">
 				    <label for="lastname"><spring:message code="message.lastName" text="default text"/></label>

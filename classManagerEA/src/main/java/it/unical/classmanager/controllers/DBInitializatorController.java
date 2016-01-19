@@ -879,7 +879,7 @@ public class DBInitializatorController {
 	/**
 	 * Functions that insert values in table Event.
 	 */
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused" })
 	private void dbEventInit(Locale locale, Model model, HttpServletRequest request){
 		logger.info("Events creation...", locale);	
 		EventDAO eventDAO = DaoHelper.getEventDAO();	

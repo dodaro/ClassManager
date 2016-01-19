@@ -6,9 +6,7 @@ import org.hibernate.Session;
 
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.NotificationJSON;
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Notification;
-import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 
 public class NotificationDAOImpl implements NotificationDAO

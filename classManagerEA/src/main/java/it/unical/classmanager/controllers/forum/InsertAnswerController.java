@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.controllers.forum.xss.EscapeManager;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.AnswerDAO;
@@ -70,6 +71,9 @@ public class InsertAnswerController {
 	
 	@RequestMapping(value = "/forum/insertAnswer", method = RequestMethod.POST)
 	public String insertAnswer(@Valid @ModelAttribute("answer") Answer answer, BindingResult result, Locale locale, Model model, HttpServletRequest request) {
+		
+		escapizeAnswerModel(answer);
+		
 		
 		if(result.hasErrors()) {
 			
@@ -157,6 +161,19 @@ public class InsertAnswerController {
 			
 		return "redirect:/forum/detailedQuestion?qid=" + qid;
 	}
+	
+	
+	
+	
+	private void escapizeAnswerModel(Answer answer) {
+		
+		answer.setDescription(EscapeManager.escapizeString(answer.getDescription()));
+		if(answer.getDescription().equals("")) {
+			answer.setDescription("Description not inserted");
+		}
+		
+	}
+	
 	
 	
 }

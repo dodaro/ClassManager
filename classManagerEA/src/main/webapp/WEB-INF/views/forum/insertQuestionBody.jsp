@@ -8,7 +8,7 @@
 	<div class="row row-content">
 		<div class="col-sm-12 col-md-12 col-lg-12">
 			
-			<form:form id="questionForm" action="/forum/insertQuestion" enctype="multipart/form-data" commandName="question" method="POST" accept-charset="utf-8" htmlEscape="true">
+			<form:form id="questionForm" action="/forum/insertQuestion" enctype="multipart/form-data" commandName="question" method="POST" accept-charset="utf-8" >
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						<div class="panel panel-default">

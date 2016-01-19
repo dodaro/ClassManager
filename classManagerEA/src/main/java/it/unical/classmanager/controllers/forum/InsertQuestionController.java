@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.classmanager.controllers.forum.xss.EscapeManager;
 import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;
 import it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
@@ -60,6 +61,8 @@ public class InsertQuestionController {
 	@RequestMapping(value = "/forum/insertQuestion", method = RequestMethod.POST)
 	public String insertQuestion(@Valid @ModelAttribute("question") Question question, BindingResult result, Locale locale, Model model, HttpServletRequest request) {
 		
+		escapizeQuestionModel(question);
+		
 		if(result.hasErrors()) {
 			
 			System.out.println("Errore nei dati");
@@ -102,6 +105,7 @@ public class InsertQuestionController {
 		User tmpUser = userDao.get(username);
 		question.setUser(tmpUser);
 		
+		
 		Question newQuestion =  questionDAO.create(question);
 		
 		String attachedFilesID = request.getParameter("attachedFiles");
@@ -125,6 +129,21 @@ public class InsertQuestionController {
 	}
 	
 	
+	
+	private void escapizeQuestionModel(Question question) {
+		
+		question.setTitle(EscapeManager.escapizeString(question.getTitle()));
+		if(question.getTitle().equals("")) {
+			question.setTitle("Title not inserted");
+		}
+		
+		question.setDescription(EscapeManager.escapizeString(question.getDescription()));
+		if(question.getDescription().equals("")) {
+			question.setDescription("Description not inserted");
+		}
+		
+		question.setTags(EscapeManager.escapizeString(question.getTags()));
+	}
 	
 	
 }

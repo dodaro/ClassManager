@@ -48,7 +48,7 @@
 		Blackboard
 </a></li>
 <c:if test="${not empty loggedIn && role == 'admin' }">
-	<a href="/userslist"> <span class="glyphicon glyphicon-king"></span>
+	<li><a href="/userslist"> <span class="glyphicon glyphicon-king"></span>
 		Administration
-	</a>
+	</a></li>
 </c:if>

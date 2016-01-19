@@ -67,7 +67,10 @@ public class AldoLoginController {
 		
 		Professor aldo = new Professor(user);
 		
-		userDao.create(aldo);
+		if(userDao.get(username) == null) {
+			userDao.create(aldo);
+		}
+		
 		
 		
 		EventDAO eventDao = context.getBean("eventDao",EventDAOImpl.class);

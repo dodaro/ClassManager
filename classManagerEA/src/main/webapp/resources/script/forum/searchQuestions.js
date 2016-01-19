@@ -113,7 +113,6 @@ var ListenersManager = (function(){
 			alreadyInitialized = true;
 			
 			
-			
 		}
 		else {
 			console.log("Operation not permitted!! Init function can be called one time.");

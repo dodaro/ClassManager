@@ -36,6 +36,8 @@
     <url-pattern>/searchusers/*</url-pattern>
     <url-pattern>/edituser/*</url-pattern>
     <url-pattern>/sort/*</url-pattern>
+    <url-pattern>/blackboard/*</url-pattern>
+    <url-pattern>/editor/*</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>ProfessorCheckerFilter</display-name>
@@ -67,4 +69,22 @@
     <servlet-name>MyServlet</servlet-name>
     <url-pattern>/MyServlet</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>ClearSession</display-name>
+    <filter-name>ClearSession</filter-name>
+    <filter-class>it.unical.classmanager.filters.ClearSession</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ClearSession</filter-name>
+    <url-pattern>/ClearSession</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>XSSFilter</display-name>
+    <filter-name>XSSFilter</filter-name>
+    <filter-class>it.unical.classmanager.filters.XSSFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>XSSFilter</filter-name>
+    <url-pattern>/forum/*</url-pattern>
+  </filter-mapping>
 </web-app>

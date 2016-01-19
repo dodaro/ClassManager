@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.OnDelete;
@@ -43,12 +44,15 @@ public class Lecture implements Serializable  {
 	private String description;
 	
 	@Column(name="date", nullable=false, length=32)
+	@NotNull
 	private Date date;
 	
 	@Column(name="beginHour", nullable=false, length=32)
+	@NotNull
 	private Time beginHour;
 	
 	@Column(name="endHour", nullable=false, length=32)
+	@NotNull
 	private Time endHour;
 	
 	@Column(name="classroom", nullable=false, length=32)

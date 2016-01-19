@@ -63,7 +63,7 @@
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-12">answer</div>
+														<div class="col-md-12"><spring:message code="message.forum.answers"/></div>
 													</div>
 									  			</div>
 								  			</div>

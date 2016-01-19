@@ -22,7 +22,7 @@
 												code="lectureManager.topic" text="default text" />
 										</label>
 										
-											<form:input type="text" name="topic" path="topic" class="form-control" />
+											<form:input type="text" name="topic" path="topic" class="form-control" required="required" />
 											<span class="help-block">${status.errorMessages[0]}</span>
 									</div>
 								</spring:bind>
@@ -54,7 +54,7 @@
 										</label>
 											<div class='input-group date'>
 												<form:input type="text" name="date" path="date"
-													class="datepicker form-control" />
+													class="datepicker form-control" required="required" />
 												<span class="input-group-addon"> <span
 													class="glyphicon glyphicon-calendar"></span>
 												</span>
@@ -69,7 +69,7 @@
 											<spring:message code="lectureManager.beginHour" text="default text" />:
 										</label>
 											<div class='input-group date'>
-												<form:input  type="text" name="beginHour" path="beginHour" class="timepicker form-control" />
+												<form:input  type="text" name="beginHour" path="beginHour" class="timepicker form-control" required="required" />
 												<span class="input-group-addon">
 	                       		 					<span class="glyphicon glyphicon-time"></span>
 	                    						</span>
@@ -84,7 +84,7 @@
 											<spring:message code="lectureManager.endHour" text="default text" />:
 										</label>
 											<div class='input-group date'>
-												<form:input  type="text" name="endHour" path="endHour" class="timepicker form-control" />
+												<form:input  type="text" name="endHour" path="endHour" class="timepicker form-control" required="required" />
 												<span class="input-group-addon">
 				                     		 		<span class="glyphicon glyphicon-time"></span>
 				                  				</span>

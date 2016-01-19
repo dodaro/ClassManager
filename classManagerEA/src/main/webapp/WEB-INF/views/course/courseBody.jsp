@@ -106,7 +106,7 @@
 							<option value="${professor.username}">${professor.username}</option>
 						</form:select>
 					</div>
-	      	 		<button type="button" class="btn btn-success"><spring:message code="message.course.submit" text="default text"/></button>
+	      	 		<button type="submit" class="btn btn-success"><spring:message code="message.course.submit" text="default text"/></button>
 	      	 	</form:form>
 	      	</div>
 	      	<div class="modal-footer">

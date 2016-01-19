@@ -3,6 +3,8 @@ package it.unical.classmanager.controllers;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,15 @@ import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
 import it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.CourseClassDAOImpl;
+import it.unical.classmanager.model.dao.LectureDAO;
+import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAO;
 import it.unical.classmanager.model.dao.RegistrationStudentClassDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
  * Gestisce la view per le presenze degli studenti di un corso
@@ -42,15 +48,17 @@ public class AttendanceCourseController
 	private ApplicationContext context;
 	
 	@RequestMapping(value = "/view_attendance", method = RequestMethod.GET)
-	public String loadCourseAttendances(Model model, Locale locale) 
+	public String loadCourseAttendances(HttpServletRequest request, Model model, Locale locale) 
 	{
-		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null || user.getRole().equals("Student")) {			
+		    return "redirect:/";
+		}	
 		
-		// TODO Prendere il corso selezionato in precedenza
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
-		CourseClass course = courseClassDAO.get(7);	
-		//LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
-		List<Lecture> lectures = course.getLectures();//lectureDAO.getAllLecturesOfACourse(course);
+		CourseClass course = courseClassDAO.get((Integer) request.getSession().getAttribute("ActiveCourse"));	
+		LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
+		List<Lecture> lectures = lectureDAO.getAllLecturesOfACourse(course.getId());
 
 		//UserDAO userDao = context.getBean("userDao", UserDAOImpl.class);
 		RegistrationStudentClassDAO userDao = context.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);

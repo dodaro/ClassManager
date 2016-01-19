@@ -56,7 +56,7 @@ public class NotificationDAOImpl implements NotificationDAO
 	public List<NotificationJSON> getNewNotifications(User user)
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();		
-		List<NotificationJSON> notifications = session.createQuery("SELECT N.message, N.url, N.date, N.source.username, N.destination.username "
+		List<NotificationJSON> notifications = session.createQuery("SELECT N.id, N.message, N.url, N.date, N.source.username, N.destination.username "
 				+ "FROM Notification N "
 				+ "WHERE N.destination = :user AND "
 					+ "read = false "
@@ -81,12 +81,24 @@ public class NotificationDAOImpl implements NotificationDAO
 	public List<NotificationJSON> getOldNotifications(User user, int maxResult)
 	{
 		Session session = this.dbHandler.getSessionFactory().openSession();		
-		List<NotificationJSON> notifications = session.createQuery("SELECT N.message, N.url, N.date, N.source.username, N.destination.username "
+		List<NotificationJSON> notifications = session.createQuery("SELECT N.id, N.message, N.url, N.date, N.source.username, N.destination.username "
 				+ "FROM Notification N "
 				+ "WHERE N.destination = :user AND "
 					+ "read = true "
 				+ "ORDER BY N.date DESC ").setParameter("user", user).setMaxResults(5).list();
 		session.close();
 		return notifications;
+	}
+	
+	@Override
+	public void setNotificationRead(User user, int id)
+	{
+		Session session = this.dbHandler.getSessionFactory().openSession();		
+		session.createQuery("UPDATE Notification  "
+				+ "SET read = true "
+				+ "WHERE destination = :user AND " 
+					+ "read = false AND "
+					+ "id = :id").setParameter("user", user).setParameter("id", id).executeUpdate();
+		session.close();
 	}
 }

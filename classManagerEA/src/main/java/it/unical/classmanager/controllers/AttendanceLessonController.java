@@ -20,13 +20,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.dao.AttendanceStudentLectureDAO;
 import it.unical.classmanager.model.dao.AttendanceStudentLectureDAOImpl;
+import it.unical.classmanager.model.dao.CourseClassDAO;
+import it.unical.classmanager.model.dao.CourseClassDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.AttendanceStudentLecture;
+import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
+import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
  * Gestisce la view per le presenze
@@ -54,7 +60,10 @@ public class AttendanceLessonController
 	@RequestMapping(value = "/attendance", method = RequestMethod.GET)
 	public String loadLessonAttendances(HttpServletRequest request, @ModelAttribute("lecture") Lecture lecture, Model model) 
 	{
-		// TODO Controllare che l'utente corrente non è uno studente o che sia loggato
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null || user.getRole().equals("Student")) {			
+		    return "redirect:/";
+		}	
 		
 		if(lecture == null)
 		{
@@ -78,8 +87,9 @@ public class AttendanceLessonController
 		}
 			
 		// TODO prendere corso e professore dalla session
-		//model.addAttribute("professor", lecture.getCourseClass().getProfessor());
-		//model.addAttribute("course", lecture.getCourseClass());
+		model.addAttribute("professor", (Professor) user);
+		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
+		model.addAttribute("course", courseClassDAO.get((Integer) request.getSession().getAttribute("ActiveCourse")));
 		
 		model.addAttribute("lecture", currentLecture);
 		model.addAttribute("studentsPresent", studentsPresent);
@@ -130,7 +140,7 @@ public class AttendanceLessonController
 		//model.addAttribute("customHeader", AttendanceLessonController.HEADER);
 		//model.addAttribute("customBody", AttendanceLessonController.BODY);
 		model.addAttribute("id", currentLecture.getId());
-		return "redirect:attendance";
+		return "redirect:/attendance";
 	}
 	
 	/**

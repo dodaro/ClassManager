@@ -57,7 +57,7 @@
 							<form:form action="attendance" method="get"	modelAttribute="lectureToModify" id="modifyAttendance${lecture.id}">
 								<th>
 									<form:input path="id" value="${lecture.id}" hidden="true" />
-									<a href="javascript:{}" onclick="document.getElementById('modifyAttendance${lecture.id}').submit();" class="no-text-decoration" style="text-decoration: none;">
+									<a href="#" onclick="document.getElementById('modifyAttendance${lecture.id}').submit();" class="no-text-decoration" style="text-decoration: none;">
 										${lecture.number} <span class="glyphicon glyphicon-pencil fa-4x"></span>
 									</a>
 								</th>
@@ -68,7 +68,7 @@
 				<tbody>
 					<c:forEach items="${students}" var="student">
 						<tr>
-							<td>${student.identificationNumber}</td>
+							<td>${student.serialNumber}</td>
 							<td>${student.lastName}</td>
 							<td>${student.firstName}</td>
 							<td></td>

@@ -90,15 +90,18 @@ a:hover.nav-bar-button {
 
 .sidebar-nav li a {
 	transition: background-color 0.3s ease;
+	transition: padding 0.5s ease;
 	color: white;
 	display: block;
 	text-decoration: none;
+	padding: 0px 0px 0px 0px;
 }
 
 .sidebar-nav li a:hover {
 	background: rgba(255, 255, 255, 0.25);
 	color: white;
 	text-decoration: none;
+	padding: 0px 0px 0px 10px;
 }
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
@@ -160,8 +163,6 @@ a:hover.nav-bar-button {
 }
 
 /* NOTIFICATIONS */
-.
-
 li.nav-bar-button 
 {
 	color: #fff;
@@ -198,6 +199,8 @@ li.open > a > span
 .notificationsWidth
 {
 	min-width: 350px;
+	max-height: 500px;
+	overflow: auto;
 }
 
 .badge
@@ -209,4 +212,20 @@ li.open > a > span
 {
 	width:100%;
 	text-decoration: none;
+	transition: background-color 0.5s ease;
+	transition: padding 0.5s ease;
+	padding: 10px 10px 10px 20px;
+}
+
+:hover.notificationRow
+{
+	width:100%;
+	text-decoration: none;
+	background: #F2F2F2;
+	padding: 10px 10px 10px 40px;
+}
+
+.textdecorationNone
+{
+	text-decoration: none;	
 }

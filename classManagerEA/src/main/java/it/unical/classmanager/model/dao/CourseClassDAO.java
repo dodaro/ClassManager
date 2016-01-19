@@ -24,6 +24,8 @@ public interface CourseClassDAO {
 	public List<CourseClass> getAllCourseClasses();	
 
 	public List<CourseClass> getCourseClasses(Professor professor);
+	
+	public List<CourseClass> getCourseClasses(Student studente);
 
 	public List<Object[]> getCourses(Professor professor);
 	

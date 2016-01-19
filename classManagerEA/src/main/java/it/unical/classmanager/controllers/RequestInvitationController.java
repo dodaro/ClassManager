@@ -25,6 +25,7 @@ import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
 import it.unical.classmanager.utils.GenericContainerBeanList;
+import it.unical.classmanager.utils.NotificationHelper;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -208,7 +209,11 @@ public class RequestInvitationController {
 					student, 
 					courseClass);
 
-			registrationStudentClassDAO.create(registrationStudentClass);	    
+			registrationStudentClassDAO.create(registrationStudentClass);	
+			
+			String message = "Richiesta dello studente"+student.getUsername()+" per il corso di "+courseName;
+			User professor = DaoHelper.getUserDAO().get(professorName);
+			NotificationHelper.createNotification(student, professor, message);
 		}
 	}   
 

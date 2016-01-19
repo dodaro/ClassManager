@@ -27,6 +27,7 @@ import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.CustomHeaderAndBody;
 import it.unical.classmanager.utils.GenericContainerBeanList;
+import it.unical.classmanager.utils.NotificationHelper;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
@@ -312,6 +313,9 @@ public class SendInvitationController {
 					courseClass);
 
 			registrationStudentClassDAO.create(registrationStudentClass);
+			
+			String message = "Invito dal professore "+professor.getUsername()+" per il corso di "+courseSelected;
+			NotificationHelper.createNotification(professor, student, message);
 			//System.err.println("Correct invitation for "+student.getUsername()+", Course: "+courseClass.getName()+"\n");
 		}
 	}  

@@ -36,8 +36,6 @@ public class AldoLoginController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AldoLoginController.class);
 	
-	
-	
 	/**
 	 * Manages the request related to the calendar
 	 */

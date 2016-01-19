@@ -6,17 +6,14 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jboss.logging.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -27,7 +24,6 @@ import it.unical.classmanager.model.dao.NotificationDAO;
 import it.unical.classmanager.model.dao.NotificationDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
-import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Notification;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.websocket.JettyWebSocketClient;
@@ -35,7 +31,6 @@ import it.unical.classmanager.websocket.JettyWebSocketClient;
 @Controller
 public class NotificationsController
 {
-	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceLessonController.class);
 
 	@Autowired

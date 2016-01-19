@@ -170,6 +170,7 @@
 		<property name="registrationStudentClassDAO" ref="registrationStudentClassDAO" />
 		<property name="studentExamPartecipationDAO" ref="studentExamPartecipationDAO" />
 		<property name="userDAO" ref="userDao" />
+		<property name="notificationDAO" ref="notificationDAO" />
 		<property name="instance" ref="daoHelper" />
 	</bean>
 	<!-- DATABASE -->

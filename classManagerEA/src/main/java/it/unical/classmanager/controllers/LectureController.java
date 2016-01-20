@@ -67,7 +67,6 @@ public class LectureController {
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
 	public String getClasses(Model model, HttpServletRequest request) {
 
-		
 		if(request.getParameter("path") != null) {
 			Integer idCourse = Integer.parseInt(request.getParameter("path"));
 			request.getSession().setAttribute("ActiveCourse", idCourse);

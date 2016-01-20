@@ -146,7 +146,7 @@ public class LectureController {
 
 		model.addAttribute("files", lectureContent);
 
-		String referred = "/lectures?path=lectures";
+		String referred = "/lectures?path=";
 		model.addAttribute("backPage", referred);
 
 		logger.info("getLectureContent");
@@ -286,7 +286,7 @@ public class LectureController {
 
 		logger.info("createClass");
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures?path=";
 
 	}
 
@@ -335,7 +335,7 @@ public class LectureController {
 
 		logger.info("update lecture");
 
-		return "redirect:/lectures?path=lectures"; 
+		return "redirect:/lectures?path="; 
 	}
 
 	/**
@@ -394,7 +394,7 @@ public class LectureController {
 		if(lecture != null)
 			lectureDao.delete(lecture);
 		else
-			return "redirect:/lectures?path=lectures";
+			return "redirect:/lectures?path=";
 
 		String name = Integer.toString(lecture.getId());
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
@@ -406,7 +406,7 @@ public class LectureController {
 		}
 
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures?path=";
 	}
 
 	@RequestMapping(value="/lectures/delete_materials", method=RequestMethod.POST)
@@ -418,7 +418,7 @@ public class LectureController {
 		if(material != null)
 			materialDAO.delete(material);
 		else
-			return "redirect:/lectures?path=lectures";
+			return "redirect:/lectures?path=";
 
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);

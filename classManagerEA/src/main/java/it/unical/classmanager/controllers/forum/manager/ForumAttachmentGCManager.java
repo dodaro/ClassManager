@@ -41,7 +41,7 @@ public class ForumAttachmentGCManager {
 				
 				long daysDiff = TimeUnit.MILLISECONDS.toSeconds(millisDiff);
 				
-				if(daysDiff >= DAY_TIMEOUT) {
+				if(daysDiff >= TimeUnit.DAYS.toSeconds(DAY_TIMEOUT)) {
 					
 					questionDAO.delete(tmpAttachment);
 					FileManager fm = new FileManager();
@@ -61,7 +61,7 @@ public class ForumAttachmentGCManager {
 				
 				long daysDiff = TimeUnit.MILLISECONDS.toSeconds(millisDiff);
 				
-				if(daysDiff >= DAY_TIMEOUT) {
+				if(daysDiff >= TimeUnit.DAYS.toSeconds(DAY_TIMEOUT)) {
 					
 					answerDAO.delete(tmpAttachment);
 					FileManager fm = new FileManager();

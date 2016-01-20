@@ -128,7 +128,6 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
-		this.hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(confirmPassword);
 		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -144,7 +143,7 @@ public class User implements Serializable {
 		this.username = user.username;
 		this.password = user.password;
 		this.confirmPassword = user.confirmPassword;
-		this.hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(this.confirmPassword);
+		this.hash = user.hash;
 		this.role = user.role;
 		this.firstName = user.firstName;
 		this.lastName = user.lastName;
@@ -360,6 +359,10 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[ " + this.username + ", " + hash + ", " + role + ", " + firstName + ", " + lastName + ", " + email + ", " + birthDate + ", " + serialNumber +"]";
+		return "User [username=" + username + ", password=" + password + ", confirmPassword=" + confirmPassword
+				+ ", hash=" + hash + ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", birthDate=" + birthDate + ", serialNumber=" + serialNumber + "]";
 	}
+
+	
 }

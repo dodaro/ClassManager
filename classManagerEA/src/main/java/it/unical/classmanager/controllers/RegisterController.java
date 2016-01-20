@@ -93,13 +93,13 @@ public class RegisterController {
 				return handleError(userJsonResponse, "serialNumber", locale);
 			} else {
 				String hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(user.getPassword());
-			    user.setHash(hash);
+				user.setHash(hash);
 			    user.setRole("Student");
 			    Student student = new Student(user);
 			    student.setSubscriptionDate(new Date());
+			    logger.info(student.toString());
 			    userDao.create(student);
 			    userJsonResponse.setStatus("SUCCESS");
-			    logger.info("registered");
 			    return userJsonResponse;
 			}
     }

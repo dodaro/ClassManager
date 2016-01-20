@@ -29,7 +29,7 @@ public class Communications implements Serializable  {
 	private int id;
 	
 	@Column(name="name", nullable=false, length=32)
-	@Size(min=4,max=20)
+	@Size(min=4,max=32)
 	private String name;
 	
 	@Column(name="description", nullable=false, length=256)

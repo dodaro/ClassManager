@@ -164,6 +164,21 @@ public class InsertAnswerController {
 	
 	
 	
+	@RequestMapping(value = "/forum/deleteAnswer", method = RequestMethod.POST)
+	public String deleteAnswer(Locale locale, Model model, HttpServletRequest request) {
+		
+		AnswerDAO answerDAO = (AnswerDAOImpl) appContext.getBean("answerDAO", AnswerDAOImpl.class);
+		int answerID = Integer.parseInt(request.getParameter("aid"));
+		
+		int qid = Integer.parseInt((String) request.getParameter("qid"));
+		
+		Answer answer = answerDAO.get(answerID);
+		answerDAO.delete(answer);
+		
+		return "redirect:/forum/detailedQuestion?qid=" + qid;
+	}
+	
+	
 	
 	private void escapizeAnswerModel(Answer answer) {
 		

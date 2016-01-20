@@ -90,8 +90,12 @@
 					  	<c:if test="${owner == true}">
 							<div class="row">
 						  		<div class="col-sm-12 col-md-12 col-lg-12">
-						  			<form action="/forum/modifyQuestion" method="POST">
+						  			<form action="/forum/modifyQuestion" method="POST" style="float: left;">
 						  				<input type="submit" class="btn btn-sm btn-warning" value="<spring:message code="message.forum.modifyQuestionBtn"/>"/>
+						  				<input name="qid" value="${question.getId() }" style="display:none;"/>
+						  			</form>
+						  			<form action="/forum/deleteQuestion" method="POST">
+						  				<input type="submit" class="btn btn-sm btn-danger" value="<spring:message code="message.forum.deleteQuestion"/>"  style="margin-left: 10px"/>
 						  				<input name="qid" value="${question.getId() }" style="display:none;"/>
 						  			</form>
 						  		</div>
@@ -171,8 +175,13 @@
 								  		<c:choose>
 										  <c:when test="${answer.getUser().getUsername() eq loggedUser}">
 										    <div class="col-sm-6 col-md-6 col-lg-6">
-									  			<form action="/forum/modifyAnswer" method="POST">
+									  			<form action="/forum/modifyAnswer" method="POST" style="float:left">
 									  				<input type="submit" class="btn btn-sm btn-warning" value="<spring:message code="message.forum.modifyAnswer"/>"/>
+									  				<input name="qid" value="${question.getId() }" style="display:none;"/>
+									  				<input name="aid" value="${answer.getId() }" style="display:none;"/>
+									  			</form>
+									  			<form action="/forum/deleteAnswer" method="POST" >
+									  				<input type="submit" class="btn btn-sm btn-danger" value="<spring:message code="message.forum.deleteAnswer"/>" style="margin-left: 10px"/>
 									  				<input name="qid" value="${question.getId() }" style="display:none;"/>
 									  				<input name="aid" value="${answer.getId() }" style="display:none;"/>
 									  			</form>

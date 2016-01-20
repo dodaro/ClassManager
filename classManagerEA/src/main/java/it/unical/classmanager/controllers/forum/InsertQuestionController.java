@@ -129,6 +129,20 @@ public class InsertQuestionController {
 	}
 	
 	
+	@RequestMapping(value = "/forum/deleteQuestion", method = RequestMethod.POST)
+	public String deleteQuestion(Locale locale, Model model, HttpServletRequest request) {
+		
+		QuestionDAO questionDAO = (QuestionDAOImpl) appContext.getBean("questionDAO", QuestionDAOImpl.class);
+		
+		int questionID = Integer.parseInt(request.getParameter("qid"));
+		
+		Question question = questionDAO.get(questionID);
+		questionDAO.delete(question);
+		
+		return "redirect:questions";
+	}
+	
+	
 	
 	private void escapizeQuestionModel(Question question) {
 		

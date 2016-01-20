@@ -14,7 +14,7 @@ import it.unical.classmanager.websocket.JettyWebSocketClient;
  * @author Aloisius92
  */
 public class NotificationHelper {
-	
+
 	/**
 	 * This function create a notification.
 	 * 
@@ -25,7 +25,7 @@ public class NotificationHelper {
 	public static void createNotification(User sendUser, User destinationUser, String message){
 		createNotification(sendUser, destinationUser, message, "#");
 	}
-	
+
 	/**
 	 * This function create a notification.
 	 * 

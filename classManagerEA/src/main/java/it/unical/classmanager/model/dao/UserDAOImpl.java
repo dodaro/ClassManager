@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void deleteAllUser(){
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		session.createSQLQuery("DELETE FROM user").executeUpdate();
+		session.createQuery("DELETE FROM User").executeUpdate();
 		session.close();		
 	}
 

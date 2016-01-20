@@ -36,7 +36,8 @@ public class JettyWebSocketClient
 			ClientUpgradeRequest request1 = new ClientUpgradeRequest();
 			client.connect(socket, echoUri, request1);
 			socket.getLatch().await();
-			socket.sendMessage(NOTIFICATION_MESSAGE + user.getUsername());
+			String username = user.getUsername();
+			socket.sendMessage(NOTIFICATION_MESSAGE + username);
 		}
 		catch (Throwable t)
 		{

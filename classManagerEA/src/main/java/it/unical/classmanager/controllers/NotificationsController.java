@@ -49,7 +49,7 @@ public class NotificationsController
 		n.setMessage("Notification " + ms++);
 		n.setUrl("#");
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
-		User currentUser = userDAO.get("studente1");//((String)request.getSession().getAttribute("loggedIn"));
+		User currentUser = userDAO.get((String)request.getSession().getAttribute("loggedIn"));
 		n.setSource(currentUser);
 		// Settare il giusto utente a cui la notifica è indirizzata
 		n.setDestination(currentUser);
@@ -70,7 +70,6 @@ public class NotificationsController
 	@RequestMapping(value = "/getNewNotifications", method = RequestMethod.GET)
 	public @ResponseBody String getNewNotifications(HttpServletRequest request, Model model, Locale locale) 
 	{	 
-		// TODO mettere filtro
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
 		User currentUser = userDAO.get((String)request.getSession().getAttribute("loggedIn"));
 		NotificationDAO notificationDAO = context.getBean("notificationDAO", NotificationDAOImpl.class);
@@ -90,7 +89,6 @@ public class NotificationsController
 	@RequestMapping(value = "/getOldNotifications", method = RequestMethod.GET)
 	public @ResponseBody String getOldNotifications(HttpServletRequest request, Model model, Locale locale) 
 	{	 
-		// TODO mettere filtro
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
 		User currentUser = userDAO.get((String)request.getSession().getAttribute("loggedIn"));
 		NotificationDAO notificationDAO = context.getBean("notificationDAO", NotificationDAOImpl.class);
@@ -110,7 +108,6 @@ public class NotificationsController
 	@RequestMapping(value = "/setNoficationsRead", method = RequestMethod.GET)
 	public @ResponseBody String setNoficationsRead(HttpServletRequest request, Model model, Locale locale) 
 	{	 
-		// TODO mettere filtro
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
 		User currentUser = userDAO.get((String)request.getSession().getAttribute("loggedIn"));
 		NotificationDAO notificationDAO = context.getBean("notificationDAO", NotificationDAOImpl.class);
@@ -118,10 +115,16 @@ public class NotificationsController
 		return "";
 	}
 	
+	/**
+	 * Setta solo la notifica ricevuta in GET come letta
+	 * @param request
+	 * @param model
+	 * @param locale
+	 * @return
+	 */
 	@RequestMapping(value = "/setNoficationRead", method = RequestMethod.GET)
 	public @ResponseBody String setNoficationRead(HttpServletRequest request, Model model, Locale locale) 
 	{	 
-		// TODO mettere filtro
 		int id = Integer.parseInt(request.getParameter("id"));
 		logger.info("Id: " + id);
 		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);

@@ -136,6 +136,16 @@ public class Student extends User implements Serializable  {
 
 	public void setHomeworkStudentSolvings(List<HomeworkStudentSolving> homeworkStudentSolvings) {
 		this.homeworkStudentSolvings = homeworkStudentSolvings;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [getUsername()=" + getUsername() + ", getRole()=" + getRole() + ", getFirstName()="
+				+ getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()=" + getEmail()
+				+ ", getBirthDate()=" + getBirthDate() + ", getSerialNumber()=" + getSerialNumber() + ", getPassword()="
+				+ getPassword() + ", getConfirmPassword()=" + getConfirmPassword() + ", getHash()=" + getHash() + "]";
 	}	
+	
+	
 
 }

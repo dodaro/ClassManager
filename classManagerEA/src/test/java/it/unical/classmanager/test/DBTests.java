@@ -76,7 +76,10 @@ public class DBTests{
 	@Test @Ignore
 	public void deleteAllUsers() {
 		UserDAO userDao = ((UserDAO) context.getBean("userDao"));
-		userDao.deleteAllUser();
+		ArrayList<User> users = (ArrayList<User>) userDao.getAllUsers();
+		for ( User user : users ) {
+			userDao.delete(user);
+		}
 		assertEquals(0, userDao.getAllUsers().size());
 	}
 	
@@ -89,7 +92,7 @@ public class DBTests{
 		}
 	}
 
-	@Test
+	@Test 
 	public void testNumberOfUsers() {
 		int users = ((UserDAO) context.getBean("userDao")).getAllUsers().size();
 		assertEquals(10, users);

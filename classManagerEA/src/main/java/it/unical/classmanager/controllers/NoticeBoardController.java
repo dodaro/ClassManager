@@ -205,7 +205,7 @@ public class NoticeBoardController {
 			
 			Communications communication = communicationsDAO.get(postId);
 			//I am the owner and I can delete my post
-			if ( communication.getProfessor().getUsername().equals("loggedIn") ) {
+			if ( communication.getProfessor().getUsername().equals(username) ) {
 				communicationsDAO.delete(communication);
 			}
 			

@@ -2,6 +2,7 @@ package it.unical.classmanager.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -10,6 +11,7 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
+import org.aspectj.weaver.IUnwovenClassFile;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -23,6 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.unical.classmanager.model.dao.CourseClassDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Homework;
 import it.unical.classmanager.model.data.HomeworkStudentSolving;
@@ -40,11 +43,16 @@ import sun.util.logging.resources.logging;
 @ContextConfiguration(locations = {"file:**/WEB-INF/spring/root-context.xml"})
 public class DBTests{
 
+	private ArrayList<User> newUsersids;
+	
 	@Autowired
 	private ApplicationContext context;
 
 	@Before
 	public void init() {
+		
+		this.newUsersids = new ArrayList<User>();
+		
 		UserDAO userDao  = (UserDAO) context.getBean("userDao");
 		for ( int i = 0 ; i < 10 ; i++ ) {
 			User u = new User();
@@ -60,22 +68,25 @@ public class DBTests{
 			u.setBirthDate(DateTimeFactory.getRandomDateLessThanYear(
 					Calendar.getInstance().get(Calendar.YEAR)-18).getTime());
 			userDao.create(u);
+			newUsersids.add(u);
 		}
 	}
 	
 	
-	@Test  
+	@Test @Ignore
 	public void deleteAllUsers() {
 		UserDAO userDao = ((UserDAO) context.getBean("userDao"));
 		userDao.deleteAllUser();
 		assertEquals(0, userDao.getAllUsers().size());
 	}
 	
-	@Test 
 
 	@After
 	public void delete() {
-		((UserDAO) context.getBean("userDao")).deleteAllUser();
+		UserDAO userDao = ((UserDAO) context.getBean("userDao"));
+		for ( User user : newUsersids ) {
+			userDao.delete(user);
+		}
 	}
 
 	@Test

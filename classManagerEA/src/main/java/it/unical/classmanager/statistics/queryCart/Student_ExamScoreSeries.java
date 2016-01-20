@@ -14,8 +14,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.SplineIrregularTimeCart;
 
 /**
- * @author Aloisius92
  * Query: "Voti esami"
+ * 
+ * @author Aloisius92
  */
 public class Student_ExamScoreSeries extends AbstractQueryCart {
     
@@ -27,7 +28,7 @@ public class Student_ExamScoreSeries extends AbstractQueryCart {
 	super(user);
     }
     
-    /* (non-Javadoc)
+    /**
      * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery()
      */
     @Override

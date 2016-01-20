@@ -16,11 +16,12 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnStackedAndGroupedCart;
 
 /**
- * @author Aloisius92
  * Query: "Chi prende i voti migliori? 
  * Per ogni corso tra gli studenti iscritti 
  * calcola la media tra le valutazioni dei compiti, 
  * (se uno studente non svolge il compito valutazione 0)."
+ * 
+ * @author Aloisius92
  */
 public class Professor_AvgScoreHomework extends AbstractQueryCart {
 	private String research;

@@ -16,11 +16,12 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnStackedCart;
 
 /**
- * @author Aloisius92
  * Query: "Chi consegna prima? 
  * Per ogni corso tra gli studenti iscritti calcola 
  * la media tra le differenze del giorno di asseganzione 
  * del compito e il giorno di consegna."
+ * 
+ * @author Aloisius92
  */
 public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 

@@ -13,8 +13,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.LineBasicCart;
 
 /**
- * @author Aloisius92
  * Query: "Voti compiti per corso"
+ * 
+ * @author Aloisius92
  */
 public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 
@@ -26,7 +27,7 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 		super(user);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery()
 	 */
 	@Override

@@ -13,8 +13,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.PolarSpiderCart;
 
 /**
- * @author Aloisius92
  * Query: "Media compiti per corso"
+ * 
+ * @author Aloisius92
  */
 public class Student_AvgHomeworks extends AbstractQueryCart {
     

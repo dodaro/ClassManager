@@ -13,8 +13,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnStackedPercentCart;
 
 /**
- * @author Aloisius92
  * Query: "Negli anni il numero medio di lezioni per ogni giorno della settimana"
+ * 
+ * @author Aloisius92
  */
 public class Professor_AvgLectureByWeekDayAllProfessor extends AbstractQueryCart {
     

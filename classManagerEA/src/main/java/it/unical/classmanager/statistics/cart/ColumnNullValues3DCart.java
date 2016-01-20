@@ -1,8 +1,9 @@
 package it.unical.classmanager.statistics.cart;
 
 /**
- * @author Aloisius92
  * This is a cart class type.
+ * 
+ * @author Aloisius92
  */
 public class ColumnNullValues3DCart extends AbstractCart {
     public ColumnNullValues3DCart(){

@@ -15,8 +15,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnBasicCart;
 
 /**
- * @author Aloisius92
  * Query: "Per ogni anno il numero totale di lezioni per ogni giorno della settimana"
+ * 
+ * @author Aloisius92
  */
 public class Professor_ForYearLectureByWeekDaySingleProfessor extends AbstractQueryCart {
     

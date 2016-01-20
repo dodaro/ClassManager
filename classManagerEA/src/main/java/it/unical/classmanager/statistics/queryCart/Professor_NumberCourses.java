@@ -13,8 +13,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.PieGradientCart;
 
 /**
- * @author Aloisius92
  * Query: "Professori/numero corsi che sostengono"
+ * 
+ * @author Aloisius92
  */
 public class Professor_NumberCourses extends AbstractQueryCart {
     

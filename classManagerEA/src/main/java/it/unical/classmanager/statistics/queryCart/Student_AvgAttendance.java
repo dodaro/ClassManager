@@ -13,8 +13,9 @@ import it.unical.classmanager.statistics.cart.AbstractCart;
 import it.unical.classmanager.statistics.cart.ColumnDrilldownCart;
 
 /**
- * @author Aloisius92
  * Query: "Per ogni corso la media delle presenze"
+ * 
+ * @author Aloisius92
  */
 public class Student_AvgAttendance extends AbstractQueryCart {
     

@@ -145,6 +145,9 @@
 	<bean id="notificationDAO" class="it.unical.classmanager.model.dao.NotificationDAOImpl">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
+	
+	<bean id="passwordHashing" class="it.unical.classmanager.model.PasswordHashing">
+	</bean>
 
 	<!-- DAO Helper -->
 	<bean id="daoHelper" class="it.unical.classmanager.model.dao.DaoHelper">
@@ -171,9 +174,14 @@
 		<property name="studentExamPartecipationDAO" ref="studentExamPartecipationDAO" />
 		<property name="userDAO" ref="userDao" />
 		<property name="notificationDAO" ref="notificationDAO" />
+		<property name="passwordHashing" ref="passwordHashing" />
 		<property name="instance" ref="daoHelper" />
 	</bean>
 	<!-- DATABASE -->
+	
+	
+	
+	
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">

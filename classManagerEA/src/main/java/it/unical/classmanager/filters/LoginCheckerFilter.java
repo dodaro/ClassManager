@@ -68,7 +68,7 @@ public class LoginCheckerFilter implements Filter {
 		String dateString = sdf.format(Calendar.getInstance().getTime());
 		
 		String composedHashAndDate = userHash+":"+dateString;
-		String hashAndDateComputed = PasswordHashing.getInstance().getHash(composedHashAndDate, salt);
+		String hashAndDateComputed = DaoHelper.getInstance().getPasswordHashing().getHash(composedHashAndDate, salt);
 		
 		if( !hashAndDateComputed.equals(hashAndDateFromSession) ) {
 			httpResponse.sendRedirect("/privilegeError");

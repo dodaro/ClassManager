@@ -1,6 +1,7 @@
 package it.unical.classmanager.model.dao;
 
 import it.unical.classmanager.model.DBHandler;
+import it.unical.classmanager.model.PasswordHashing;
 
 /**
  * @author Aloisius92
@@ -32,6 +33,8 @@ public class DaoHelper {
 	private  StudentExamPartecipationDAO studentExamPartecipationDAO;
 	private  NotificationDAO notificationDAO;
 	private  UserDAO userDAO;
+	
+	private PasswordHashing passwordHashing;
 
 	public DaoHelper() {
 
@@ -229,6 +232,14 @@ public class DaoHelper {
 
 	public void setNotificationDAO(NotificationDAO notificationDAO) {
 		this.notificationDAO = notificationDAO;
+	}
+	
+	public void setPasswordHashing(PasswordHashing passwordHashing) {
+		this.passwordHashing = passwordHashing;
+	}
+	
+	public PasswordHashing getPasswordHashing() {
+		return passwordHashing;
 	}
 
 }

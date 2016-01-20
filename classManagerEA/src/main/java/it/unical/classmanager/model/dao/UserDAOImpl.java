@@ -41,11 +41,10 @@ public class UserDAOImpl implements UserDAO {
 		return this.dbHandler.delete(user) == null;
 	}
 
-
 	@Override
 	public void deleteAllUser(){
 		Session session = this.dbHandler.getSessionFactory().openSession();
-		session.createQuery("DELETE FROM User").executeUpdate();
+		session.createSQLQuery("DELETE FROM user").executeUpdate();
 		session.close();		
 	}
 

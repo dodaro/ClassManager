@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.UserJsonResponse;
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -91,7 +92,7 @@ public class RegisterController {
 			}	else if ( userDao.getUserBySerialNumber(user.getSerialNumber()) != null ) {
 				return handleError(userJsonResponse, "serialNumber", locale);
 			} else {
-				String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+				String hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(user.getPassword());
 			    user.setHash(hash);
 			    user.setRole("Student");
 			    Student student = new Student(user);

@@ -10,23 +10,15 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHashing {
-
-	private static PasswordHashing instance;
 	
-	public static PasswordHashing getInstance() {
-		if (instance == null)
-			instance = new PasswordHashing();
-		return instance;
-	}
-	
-	private PasswordHashing() {
+	public PasswordHashing() {
 	}
 	
 	
 	/**
 	 * Iterations for the hash
 	 */
-	private static final int ITERATIONS = 4096;
+	private int ITERATIONS = 4096;
 	
 	/**
 	 * 32 bytes key and salt length for 256 bit keys and salt

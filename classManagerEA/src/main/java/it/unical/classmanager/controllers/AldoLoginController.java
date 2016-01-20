@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.classmanager.model.PasswordHashing;
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
 import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
@@ -59,7 +60,7 @@ public class AldoLoginController {
 		user.setPassword("ginopaoli");
 		user.setConfirmPassword(user.getPassword());
 		user.setSerialNumber("0000");
-		String hash = PasswordHashing.getInstance().getHashAndSalt(user.getPassword());
+		String hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(user.getPassword());
 		
 		user.setHash(hash);
 		
@@ -83,7 +84,7 @@ public class AldoLoginController {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 		String dateString = sdf.format(Calendar.getInstance().getTime());
 		String toHash = aldoUser.getHash().split(":")[0] +":"+ dateString;
-		String toSaveInSession = PasswordHashing.getInstance().getHashAndSalt(toHash);
+		String toSaveInSession = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(toHash);
 		request.getSession().setAttribute("hash", toSaveInSession);
 		request.getSession().setAttribute("loggedIn",username);
 		request.getSession().setAttribute("role",user.getRole());

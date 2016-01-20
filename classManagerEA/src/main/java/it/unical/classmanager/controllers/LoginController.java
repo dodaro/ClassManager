@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.UserLogin;
+import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.User;
@@ -102,14 +103,14 @@ public class LoginController {
 	String salt = passwordField.substring(separator+1,passwordField.length());
 	
 	
-	String calculated = PasswordHashing.getInstance().getHash(givenPassword,salt);
+	String calculated = DaoHelper.getInstance().getPasswordHashing().getHash(givenPassword,salt);
 	
 	if ( calculated.equals(hash) ) {
 	    
 	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 	    String dateString = sdf.format(Calendar.getInstance().getTime());
 	    String toHash = calculated+":"+dateString;
-	    String toSaveInSession = PasswordHashing.getInstance().getHashAndSalt(toHash);
+	    String toSaveInSession = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(toHash);
 	    request.getSession().setAttribute("hash", toSaveInSession);
 	    request.getSession().setAttribute("loggedIn", user.getUsername());
 	    request.getSession().setAttribute("role", userfromDB.getRole());

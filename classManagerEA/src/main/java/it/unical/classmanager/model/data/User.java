@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import it.unical.classmanager.model.FieldMatch;
 import it.unical.classmanager.model.MaxDate;
 import it.unical.classmanager.model.PasswordHashing;
+import it.unical.classmanager.model.dao.DaoHelper;
 
 @Entity
 @Table(name ="user")
@@ -127,7 +128,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
-		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
+		this.hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(confirmPassword);
 		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -143,7 +144,7 @@ public class User implements Serializable {
 		this.username = user.username;
 		this.password = user.password;
 		this.confirmPassword = user.confirmPassword;
-		this.hash = PasswordHashing.getInstance().getHashAndSalt(this.password);
+		this.hash = DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(this.confirmPassword);
 		this.role = user.role;
 		this.firstName = user.firstName;
 		this.lastName = user.lastName;

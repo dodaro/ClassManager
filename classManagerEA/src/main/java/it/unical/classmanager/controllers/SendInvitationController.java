@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,17 +30,15 @@ import it.unical.classmanager.utils.NotificationHelper;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
- * @author Aloisius92
  * Handles requests for send invitation to students.
+ * 
+ * @author Aloisius92
  */
 @Controller
 public class SendInvitationController {
 	private static final Logger logger = LoggerFactory.getLogger(SendInvitationController.class);
 	private final static String HEADER = "invitation/invitationHead.jsp";
 	private final static String BODY = "invitation/sendInvitation.jsp";
-
-	@Autowired
-	ApplicationContext appContext;
 	
 	@Autowired
 	MessageSource messageSource;
@@ -50,7 +47,7 @@ public class SendInvitationController {
 	public String sendInvitation(
 			@RequestParam(value = "courseName", required = false) String courseName,
 			Locale locale, Model model, HttpServletRequest request) {
-		logger.info("SendInvitation Page", locale);
+		logger.info("SendInvitation Page (GET)", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -66,7 +63,6 @@ public class SendInvitationController {
 		processCancellableStudent(locale, model, request, courseName);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
@@ -75,7 +71,7 @@ public class SendInvitationController {
 			@RequestParam(value = "courseName", required = false) String courseName,
 			@RequestParam(value = "sendFile", required = false) CommonsMultipartFile sendFile,
 			Locale locale, Model model, HttpServletRequest request) {
-		logger.info("SendInvitation Page", locale);
+		logger.info("SendInvitation Page - FileUpload (POST)", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -88,12 +84,12 @@ public class SendInvitationController {
 		}
 
 		processInviteStudentFromFile(model, sendFile, (Professor) user, locale);
+
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseName);
 		processCancellableStudent(locale, model, request, courseName);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
@@ -102,7 +98,7 @@ public class SendInvitationController {
 			@RequestParam(value = "courseName", required = false) String courseName,
 			@RequestParam(value = "researchBar", required = true) String research,
 			Locale locale, Model model, HttpServletRequest request) {
-		logger.info("SendInvitation Page", locale);
+		logger.info("SendInvitation Page - Research (POST)", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -110,11 +106,9 @@ public class SendInvitationController {
 		}		
 
 		if(courseName!=null){
-			System.err.println("CourseName received: "+courseName.trim());
 			model.addAttribute("courseSelected", courseName);
 		}
 
-		System.out.println("Research: "+research);		
 		model.addAttribute("researchField", research);
 
 		processSelectableCourse(locale, model, request, user.getUsername());
@@ -122,7 +116,6 @@ public class SendInvitationController {
 		processCancellableStudent(locale, model, request, courseName, research);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
@@ -133,6 +126,7 @@ public class SendInvitationController {
 			@RequestParam(value = "courseSelected", required = true) String courseSelected,
 			@RequestParam(value = "InviteAll", required = true) String value, 
 			Locale locale, Model model, HttpServletRequest request){
+		logger.info("SendInvitation Page - Invite All (POST)", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -140,14 +134,13 @@ public class SendInvitationController {
 		}	
 
 		model.addAttribute("courseSelected", courseSelected);
-
 		processInviteAll((Professor) user, courseSelected, locale);
+
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}    
 
@@ -155,7 +148,8 @@ public class SendInvitationController {
 	public String inviteSingle(
 			@RequestParam(value = "courseSelected", required = true) String courseSelected,
 			@RequestParam(value = "StudentName", required = true) String studentName, 
-			Locale locale, Model model, HttpServletRequest request){		
+			Locale locale, Model model, HttpServletRequest request){	
+		logger.info("SendInvitation Page - Invite Single (POST)", locale);	
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -163,14 +157,13 @@ public class SendInvitationController {
 		}	
 
 		model.addAttribute("courseSelected", courseSelected);
-
 		processInviteSingle((Professor) user, courseSelected, studentName, locale);
+
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
@@ -178,7 +171,8 @@ public class SendInvitationController {
 	public String cancelAll(
 			@RequestParam(value = "courseSelected", required = true) String courseSelected,
 			@RequestParam(value = "CancelAll", required = true) String value, 
-			Locale locale, Model model, HttpServletRequest request){	
+			Locale locale, Model model, HttpServletRequest request){
+		logger.info("SendInvitation Page - Cancel All (POST)", locale);	
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -186,14 +180,13 @@ public class SendInvitationController {
 		}	
 
 		model.addAttribute("courseSelected", courseSelected);
-
 		processCancellAll((Professor) user, courseSelected);
+	
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
@@ -201,7 +194,8 @@ public class SendInvitationController {
 	public String cancelSingle(
 			@RequestParam(value = "courseSelected", required = true) String courseSelected,
 			@RequestParam(value = "StudentName", required = true) String studentName, 
-			Locale locale, Model model, HttpServletRequest request){		
+			Locale locale, Model model, HttpServletRequest request){	
+		logger.info("SendInvitation Page - Cancel Single (POST)", locale);		
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
@@ -209,17 +203,24 @@ public class SendInvitationController {
 		}	
 
 		model.addAttribute("courseSelected", courseSelected);
-
 		processCancellSingle((Professor) user, courseSelected, studentName);
+		
 		processSelectableCourse(locale, model, request, user.getUsername());
 		processSelectableStudent(locale, model, request, courseSelected);
 		processCancellableStudent(locale, model, request, courseSelected);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-
 		return "layout";
 	}
 
+
+	/**
+	 * This function add to the model the courses
+	 * supported by a professor.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 */
 	private void processSelectableCourse(Locale locale, Model model,HttpServletRequest request, String professorName){
 		GenericContainerBeanList list = getSelectableCourse(professorName);
 		if(list!=null){
@@ -227,6 +228,13 @@ public class SendInvitationController {
 		}
 	}
 
+	/**
+	 * This function load the courses
+	 * supported by a professor.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 */
 	private GenericContainerBeanList getSelectableCourse(String professorName){
 		if(professorName!=null){
 			Professor professor = (Professor) DaoHelper.getUserDAO().get(professorName);
@@ -239,10 +247,25 @@ public class SendInvitationController {
 		return null;
 	}
 
+	/**
+	 * This function add to the model the students 
+	 * that a professor can invite to its course.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 */
 	private void processSelectableStudent(Locale locale, Model model,HttpServletRequest request, String courseName){
 		processSelectableStudent(locale, model, request, courseName, null);
 	}
 
+	/**
+	 * This function add to the model the students 
+	 * that a professor can invite to its course.
+	 * 
+	 * @param professorName the professor's username
+	 * @param research String which contains filtering data
+	 *  
+	 */
 	private void processSelectableStudent(Locale locale, Model model, HttpServletRequest request, String courseName, String research) {
 		GenericContainerBeanList list = getSelectableStudent(courseName, research);
 		if(list!=null){
@@ -250,6 +273,16 @@ public class SendInvitationController {
 		} 
 	}
 
+	/**
+	 * This function load the students 
+	 * that a professor can invite to its course.
+	 * 
+	 * @param professorName the professor's username
+	 * @param research String which contains filtering data 
+	 * 
+	 * @return A GenericContainerBeanList which contains the selectable students
+	 * @see it.unical.classmanager.utils.GenericContainerBeanList
+	 */
 	private GenericContainerBeanList getSelectableStudent(String courseName, String research){
 		if(courseName!=null){
 			CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
@@ -262,14 +295,38 @@ public class SendInvitationController {
 		return null;
 	}
 
+	/**
+	 * This function load the students 
+	 * that a professor can invite to its course.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 * @return A GenericContainerBeanList which contains the selectable students
+	 * @see it.unical.classmanager.utils.GenericContainerBeanList
+	 */
 	private GenericContainerBeanList getSelectableStudent(String courseName){
 		return getSelectableStudent(courseName, null);
 	}
 
+	/**
+	 * This function add to the model the students 
+	 * that a professor can cancel from its invitations.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 */
 	private void processCancellableStudent(Locale locale, Model model,HttpServletRequest request, String courseName){
 		processCancellableStudent(locale, model, request, courseName, null);   
 	}
 
+	/**
+	 * This function add to the model the students 
+	 * that a professor can cancel from its invitations.
+	 * 
+	 * @param professorName the professor's username
+	 * @param research String which contains filtering data
+	 * 
+	 */
 	private void processCancellableStudent(Locale locale, Model model, HttpServletRequest request, String courseName, String research) {
 		GenericContainerBeanList list = getCancellableStudent(courseName, research);
 		if(list!=null){
@@ -277,6 +334,17 @@ public class SendInvitationController {
 		} 		
 	}
 
+	/**
+	 * This function load the students 
+	 * that a professor can cancel 
+	 * from its invitations
+	 * 
+	 * @param professorName the professor's username
+	 * @param research String which contains filtering data 
+	 * 
+	 * @return A GenericContainerBeanList which contains the cancellable students
+	 * @see it.unical.classmanager.utils.GenericContainerBeanList
+	 */
 	private GenericContainerBeanList getCancellableStudent(String courseName, String research){
 		if(courseName!=null){
 			CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName.substring(1, courseName.length()-1));
@@ -289,10 +357,29 @@ public class SendInvitationController {
 		return null;
 	}
 
+	/**
+	 * This function load the students 
+	 * that a professor can cancel 
+	 * from its invitations.
+	 * 
+	 * @param professorName the professor's username
+	 * 
+	 * @return A GenericContainerBeanList which contains the cancellable students
+	 * @see it.unical.classmanager.utils.GenericContainerBeanList
+	 */
 	private GenericContainerBeanList getCancellableStudent(String courseName){
 		return getCancellableStudent(courseName, null);
 	}
 
+	/**
+	 * This function send invitations to
+	 * all selectable students for the
+	 * selected course.
+	 * 
+	 * @param professor the professor who send invitations
+	 * @param courseSelected the course seleted by a professor
+	 * 
+	 */
 	private void processInviteAll(Professor professor, String courseSelected, Locale locale) {
 		GenericContainerBeanList selectableStudent = getSelectableStudent(courseSelected);
 		for(int i=0; i<selectableStudent.size(); i++){
@@ -300,6 +387,16 @@ public class SendInvitationController {
 		}
 	}
 
+	/**
+	 * This function send invitations 
+	 * to the selected student for the
+	 * selected course.
+	 * 
+	 * @param professor the professor who send invitations
+	 * @param courseSelected the course seleted by a professor
+	 * @param studentName the of the student to which send invitations
+	 * 
+	 */
 	private void processInviteSingle(Professor professor, String courseSelected, String studentName, Locale locale) {
 		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
 		Student student = (Student)  DaoHelper.getUserDAO().get(studentName);
@@ -330,6 +427,14 @@ public class SendInvitationController {
 		}
 	}  
 
+	/**
+	 * This function send invitations to
+	 * all students readed from the specified file.
+	 * 
+	 * @param sendFile the script file which contains the student to invite
+	 * @param professor the professor who send invitations
+	 * 
+	 */
 	private void processInviteStudentFromFile(Model model, CommonsMultipartFile sendFile, Professor professor, Locale locale) {
 		if(sendFile != null){
 			if (!sendFile.isEmpty()) {
@@ -354,6 +459,16 @@ public class SendInvitationController {
 		}
 	}
 
+	/**
+	 * This function cancel invitations sended 
+	 * to all cancellable students for the
+	 * selected course.
+	 * 
+	 * @param professor the professor who cancel invitations
+	 * @param courseSelected the course seleted by a professor
+	 * @param studentName the of the student to which cancel sended invitations
+	 * 
+	 */
 	private void processCancellAll(Professor professor, String courseSelected) {
 		GenericContainerBeanList cancellableStudent = getCancellableStudent(courseSelected);
 		for(int i=0; i<cancellableStudent.size(); i++){
@@ -361,6 +476,15 @@ public class SendInvitationController {
 		}
 	}
 
+	/**
+	 * This function cancel invitations sended 
+	 * to the selected student 
+	 * for the selected course.
+	 * 
+	 * @param professor the professor who cancel invitations
+	 * @param courseSelected the course seleted by a professor
+	 * 
+	 */
 	private void processCancellSingle(Professor professor, String courseSelected, String studentName) {
 		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseSelected);
 		Student student = (Student)  DaoHelper.getUserDAO().get(studentName);

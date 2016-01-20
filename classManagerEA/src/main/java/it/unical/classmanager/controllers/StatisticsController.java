@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +36,9 @@ import it.unical.classmanager.utils.CustomHeaderAndBody;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
- * @author Aloisius92
  * Handles requests for the statistics page.
+ * 
+ * @author Aloisius92
  */
 @Controller
 public class StatisticsController {    
@@ -47,18 +47,16 @@ public class StatisticsController {
 	private final static String BODY_STUDENT = "statistics/statisticsStudent.jsp";
 	private final static String BODY_PROFESSOR = "statistics/statisticsProfessor.jsp";
 
-	@Autowired
-	ApplicationContext appContext;
-
 	@Autowired  
 	MessageSource messageSource;
 
 	/**
-	 * Show statistics based on the kind of user.
+	 * Show statistics based on the kind of user (student or professor).
+	 * 
 	 */
 	@RequestMapping(value = "/statistics", method = RequestMethod.GET)
 	public String statistics(Locale locale, Model model,HttpServletRequest request) {
-		logger.info("Statistics Page", locale);
+		logger.info("Statistics Page (GET)", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if (user != null) {			
@@ -84,22 +82,30 @@ public class StatisticsController {
 	public String statistics(
 			@RequestParam(value = "researchBar", required = true) String research,
 			Locale locale, Model model,HttpServletRequest request) {
-		logger.info("Statistics Page", locale);
+		logger.info("Statistics Page - Research (POST)", locale);
+		logger.info("Parameter researchBar: "+research, locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user != null ) {
 			if(user instanceof Professor){
-				logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
 				model.addAttribute("professor", (Professor)user);
 				CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
-				statisticsForProfessor(locale, model, request, (Professor)user, research);		
+				statisticsForProfessor(locale, model, request, (Professor)user, research);	
+				return "layout";	
 			}
-			return "layout";
 		}
 
 		return "redirect:/";
 	}
 
+	/**
+	 * Build the carts for student statistics.
+	 * 
+	 * @param locale the locale
+	 * @param request he http request
+	 * @param student the student whose statistics should be constructed.
+	 * 
+	 */
 	public void statisticsForStudent(Locale locale, Model model,HttpServletRequest request, Student student) {
 		Student_AvgHomeworks q1 = new Student_AvgHomeworks(student);
 		Student_AvgAttendance q2 = new Student_AvgAttendance(student);
@@ -110,6 +116,15 @@ public class StatisticsController {
 		setCartList(model, locale, q1, q2, q3, q4, q5);
 	}
 
+	/**
+	 * Build the carts for professor statistics.
+	 * 
+	 * @param locale the locale
+	 * @param request he http request
+	 * @param professor the professor whose statistics should be constructed.
+	 * @param research the research string whose result should be filtered.
+	 * 
+	 */
 	public void statisticsForProfessor(Locale locale, Model model,HttpServletRequest request, Professor professor, String research) {
 		Professor_NumberCourses q1 = new Professor_NumberCourses(professor);
 		Professor_ForYearLectureByWeekDaySingleProfessor q2 = new Professor_ForYearLectureByWeekDaySingleProfessor(professor);
@@ -124,6 +139,15 @@ public class StatisticsController {
 		model.addAttribute("researchField", research);
 	}
 
+	/**
+	 * Function that add to the model the carts list builded.
+	 * 
+	 * @param model the model
+	 * @param locale the locale
+	 * @param queryCarts the list of queryCarts
+	 * 
+	 * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart 
+	 */
 	private void setCartList(Model model, Locale locale, AbstractQueryCart... queryCarts){
 		CartsList carts = new CartsList();
 		for(int i=1; i<=queryCarts.length; i++){

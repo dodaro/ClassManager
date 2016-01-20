@@ -34,7 +34,9 @@ import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the home page.
+ * 
+ * @author Aloisius92
  */
 @Controller
 public class HomeController {
@@ -49,6 +51,17 @@ public class HomeController {
 	@Autowired
 	MessageSource messageSource;
 
+	/**
+	 * Show the home page of a user if it is logged.
+	 * Otherwise redirect to the welcome page.
+	 * 
+	 * Some useful informations are loaded for a user.
+	 * They are:
+	 * - ActiveCourses,
+	 * - Last added lectures,
+	 * - Last added materials,
+	 * - Last added homeworks.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);	
@@ -88,6 +101,12 @@ public class HomeController {
 		return "layout";
 	}
 
+	/**
+	 * This function set a welcome message 
+	 * in function of the time
+	 * a user log into the web site. 
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	private void setWelcomeMessage(Locale locale, Model model,HttpServletRequest request){
 		Time time = new Time(System.currentTimeMillis());
@@ -110,10 +129,15 @@ public class HomeController {
 		model.addAttribute("welcomeMessage2", message2);	
 	}
 
+	/**
+	 * This function load the events for the user who is logged.
+	 * 
+	 */
 	private void setCalendar(Locale locale, Model model,HttpServletRequest request, User user){
+		// TODO check if student
+		
 		//is the string containing all the events of the calendar	
 		EventDAO eventDao = DaoHelper.getEventDAO();
-
 		//retrieves all the event of an user
 		List<Event> events = eventDao.getAllEventsOfUser(user.getUsername());
 
@@ -121,13 +145,10 @@ public class HomeController {
 		for (Event event : events) {
 			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
 		}
-
 		/*
 		 * Is necessary to retrieve create events related to the course schedule
 		 */
-
 		//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
-
 		if(user.getRole().equals(User.PROFESSOR)){
 			LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
 			List<Lecture> allLectures = lectureDAO.getAllLecturesOfAProfessor(user.getUsername());
@@ -143,6 +164,12 @@ public class HomeController {
 		model.addAttribute("events", json);
 	}
 
+	/**
+	 * This function load the active course for a professor.
+	 * 
+	 * @param professor the professor
+	 * 
+	 */
 	private void setCourses( Locale locale, Model model, HttpServletRequest request, Professor professor) {
 		List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(professor);
 		if(objectList.size()>0){
@@ -150,7 +177,13 @@ public class HomeController {
 			model.addAttribute("courseList", beanList);
 		}	
 	}
-
+	
+	/**
+	 * This function load the active course for a student.
+	 * 
+	 * @param student the student
+	 * 
+	 */
 	private void setCourses( Locale locale, Model model, HttpServletRequest request, Student student) {
 		List<Object[]> objectList = DaoHelper.getCourseClassDAO().getCourses(student);
 		if(objectList.size()>0){
@@ -159,6 +192,13 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * This function load the last lectures added
+	 * which are interesting for a student.
+	 * 
+	 * @param student the student
+	 * 
+	 */
 	private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Student student){
 		List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(student);
 		if(objectList.size()>0){
@@ -167,6 +207,13 @@ public class HomeController {
 		}	
 	}
 
+	/**
+	 * This function load the last lectures added
+	 * which are interesting for a professor.
+	 * 
+	 * @param professor the professor
+	 * 
+	 */
 	private void setLastLectures(Locale locale, Model model,HttpServletRequest request, Professor professor){
 		List<Object[]> objectList = DaoHelper.getLectureDAO().getLastLectures(professor);
 		if(objectList.size()>0){
@@ -175,6 +222,13 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * This function load the last materials added
+	 * which are interesting for a student.
+	 * 
+	 * @param student the student
+	 * 
+	 */
 	private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Student student){
 		List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(student);
 		if(objectList.size()>0){
@@ -183,6 +237,13 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * This function load the last materials added
+	 * which are interesting for a professor.
+	 * 
+	 * @param professor the professor
+	 * 
+	 */
 	private void setLastMaterials(Locale locale, Model model,HttpServletRequest request, Professor professor){
 		List<Object[]> objectList = DaoHelper.getMaterialDAO().getLastMaterials(professor);
 		if(objectList.size()>0){
@@ -191,6 +252,14 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * This function load the last homeworks
+	 * added by a professor which are interesting 
+	 * for a student.
+	 * 
+	 * @param student the student
+	 * 
+	 */
 	private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Student student){
 		List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(student);
 		if(objectList.size()>0){
@@ -199,6 +268,14 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * This function load the last homeworks 
+	 * solved by student which are interesting 
+	 * for a professor.
+	 * 
+	 * @param professor the professor
+	 * 
+	 */
 	private void setLastHomeworks(Locale locale, Model model,HttpServletRequest request, Professor professor){
 		List<Object[]> objectList = DaoHelper.getHomeworkDAO().getLastHomeworks(professor);
 		if(objectList.size()>0){

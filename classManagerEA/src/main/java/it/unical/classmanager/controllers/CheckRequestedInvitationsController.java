@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,114 +27,143 @@ import it.unical.classmanager.utils.GenericContainerBeanList;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
- * @author Aloisius92
  * Handles requests for checking the requested invitations.
+ * 
+ * @author Aloisius92
  */
 @Controller
 public class CheckRequestedInvitationsController {
-    private static final Logger logger = LoggerFactory.getLogger(CheckRequestedInvitationsController.class);
-    private final static String HEADER = "pageCommons/head.jsp";
-    private final static String BODY = "invitation/checkRequestedInvitations.jsp";
-    
-    @Autowired
-    ApplicationContext appContext;
-    
-    @Autowired  
-    MessageSource messageSource;
-    
-    @RequestMapping(value = "/checkRequestedInvitations", method = RequestMethod.GET)
-    public String checkRequestedInvitations(Locale locale, Model model,HttpServletRequest request) {
-	logger.info("CheckRequestedInvitations Page", locale);
+	private static final Logger logger = LoggerFactory.getLogger(CheckRequestedInvitationsController.class);
+	private final static String HEADER = "pageCommons/head.jsp";
+	private final static String BODY = "invitation/checkRequestedInvitations.jsp";
 
-	User user = UserSessionChecker.checkUserSession(model, request);
-	if ( user == null ) {			
-	    return "redirect:/";
-	}	
-	
-	processAcceptableCourse(locale, model, request, (Student) user);
-	InvitationController.checkNewInvitations(model, user);
-	CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
-	
-	return "layout";
-    }
-    
-    @RequestMapping(value = "/checkRequestedInvitations_All", method = RequestMethod.POST)
-    public String acceptAll(
-	    @RequestParam(value = "AcceptAll", required = true) String value, 
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
-		System.err.println("Accept: "+value);
-		
+	@Autowired  
+	MessageSource messageSource;
+
+	@RequestMapping(value = "/checkRequestedInvitations", method = RequestMethod.GET)
+	public String checkRequestedInvitations(Locale locale, Model model,HttpServletRequest request) {
+		logger.info("CheckRequestedInvitations Page (GET)", locale);
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}	
-		
+
+		processAcceptableCourse(locale, model, request, (Student) user);
+		InvitationController.checkNewInvitations(model, user);
+		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
+
+		return "layout";
+	}
+
+	@RequestMapping(value = "/checkRequestedInvitations_All", method = RequestMethod.POST)
+	public String acceptAll(
+			@RequestParam(value = "AcceptAll", required = true) String value, 
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+		logger.info("CheckRequestedInvitations Page - Accept All (POST)", locale);
+
+		User user = UserSessionChecker.checkUserSession(model, request);
+		if ( user == null ) {			
+			return "redirect:/";
+		}	
+
 		processAcceptInvitationAll((Student) user);
 		processAcceptableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 
 		return "layout";
-    }
-    
-    @RequestMapping(value = "/checkRequestedInvitations_Single", method = RequestMethod.POST)
-    public String acceptSingle(
-	    @RequestParam(value = "CourseName", required = true) String courseName, 
-	    @RequestParam(value = "ProfessorName", required = false) String professorName,
-	    Locale locale,
-	    Model model,
-	    HttpServletRequest request){
-		
-		System.err.println("Accept: "+courseName+", Professor: "+professorName);
-		
+	}
+
+	@RequestMapping(value = "/checkRequestedInvitations_Single", method = RequestMethod.POST)
+	public String acceptSingle(
+			@RequestParam(value = "CourseName", required = true) String courseName, 
+			@RequestParam(value = "ProfessorName", required = false) String professorName,
+			Locale locale,
+			Model model,
+			HttpServletRequest request){
+		logger.info("CheckRequestedInvitations Page - Accept Single (POST)", locale);
+
 		User user = UserSessionChecker.checkUserSession(model, request);
 		if ( user == null ) {			
-		    return "redirect:/";
+			return "redirect:/";
 		}	
-		
+
 		processAcceptInvitationSingle((Student) user, courseName, professorName);
 		processAcceptableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 
 		return "layout";
-    }
-    
-    private void processAcceptableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
-	GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
-	if(acceptableCourse!=null){
-	    model.addAttribute("acceptableCourse", acceptableCourse);
 	}
-    }
-    
-    private GenericContainerBeanList getAcceptableCourse(Student student){
-	List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getAcceptableCourse(student);
-	if(objectList.size()>0){
-	    GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
-	    return beanList;
+
+	/**
+	 * This function add to the model the courses 
+	 * for which a student can accept invitations
+	 * sended from the professor.
+	 * 
+	 * @param student the student
+	 * 
+	 */
+	private void processAcceptableCourse(Locale locale, Model model,HttpServletRequest request, Student student){
+		GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
+		if(acceptableCourse!=null){
+			model.addAttribute("acceptableCourse", acceptableCourse);
+		}
 	}
-	return null;
-    }
-    
-    private void processAcceptInvitationAll(Student student) {
-	GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
-	for(int i=0; i<acceptableCourse.size(); i++){
-	    processAcceptInvitationSingle(student, acceptableCourse.get(i).getField1(), acceptableCourse.get(i).getField2());
+
+	/**
+	 * This function load the courses for which
+	 * a student can accept invitations sended
+	 * from the professor.
+	 * 
+	 * @param student the student
+	 * 
+	 * @return A GenericContainerBeanList which contains the acceptable courses
+	 * @see it.unical.classmanager.utils.GenericContainerBeanList
+	 */
+	private GenericContainerBeanList getAcceptableCourse(Student student){
+		List<Object[]> objectList = DaoHelper.getRegistrationStudentClassDAO().getAcceptableCourse(student);
+		if(objectList.size()>0){
+			GenericContainerBeanList beanList = new GenericContainerBeanList(objectList);
+			return beanList;
+		}
+		return null;
 	}
-    }
-    
-    private void processAcceptInvitationSingle(Student student, String courseName, String professorName) {
-	CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);	
-	RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
-	
-	if(registrationStudentClassDAO.existRegistration(student, courseClass)){
-	    RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
-	    registrationStudentClass.setAcceptedDate(Calendar.getInstance().getTime());
-	    registrationStudentClassDAO.update(registrationStudentClass);
+
+	/**
+	 * This function accept all acceptable
+	 * invitations sended by a professor
+	 * 
+	 * @param student the student
+	 * 
+	 */
+	private void processAcceptInvitationAll(Student student) {
+		GenericContainerBeanList acceptableCourse = getAcceptableCourse(student);
+		for(int i=0; i<acceptableCourse.size(); i++){
+			processAcceptInvitationSingle(student, acceptableCourse.get(i).getField1(), acceptableCourse.get(i).getField2());
+		}
 	}
-    } 
-    
+
+	/**
+	 * This function accept a single
+	 * invitation sended by a professor
+	 * 
+	 * @param student the student
+	 * @param professorName the professor's username who send invitation
+	 * 
+	 */
+	private void processAcceptInvitationSingle(Student student, String courseName, String professorName) {
+		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);	
+		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
+
+		if(registrationStudentClassDAO.existRegistration(student, courseClass)){
+			RegistrationStudentClass registrationStudentClass = registrationStudentClassDAO.getRegistration(student, courseClass);
+			registrationStudentClass.setAcceptedDate(Calendar.getInstance().getTime());
+			registrationStudentClassDAO.update(registrationStudentClass);
+		}
+	} 
+
 }

@@ -12,9 +12,9 @@
 			class="glyphicon glyphicon-equalizer"></span> Scores</a></li>
 
 	<li><a href="/students"><span class="glyphicon glyphicon-edit"></span> Homework
-			Student Solving</a></li>
-
-	<li><a href="#"><span class="glyphicon glyphicon-blackboard"></span> Blackboard</a></li>
+			Student</a></li>
+	
+	<li><a href="/view_attendance"><span class="glyphicon glyphicon-list"></span> Attendances</a></li>
 </c:if>
 
 <li><a href="/calendar"><span

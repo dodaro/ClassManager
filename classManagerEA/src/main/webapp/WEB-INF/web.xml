@@ -43,6 +43,7 @@
     <url-pattern>/getNewNotifications</url-pattern>
     <url-pattern>/getOldNotifications</url-pattern>
     <url-pattern>/setNoficationRead</url-pattern>
+    <url-pattern>/selectCourse</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>ProfessorCheckerFilter</display-name>

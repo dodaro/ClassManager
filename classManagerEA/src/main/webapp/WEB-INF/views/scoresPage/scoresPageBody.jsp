@@ -110,15 +110,21 @@
 	
 		<div class="row">
 			<div class="col-md-12 table-responsive">
-		<table id="scores_table" class="table table-bordered table-condensed" style="white-space:nowrap;}">
+		<table id="scores_table" class="table table-bordered table-condensed tablesorter" style="white-space:nowrap;}">
 			<thead>
 				<tr>
-					<th></th>
+					<th class="sortable">	
+						<a href="#" style="text-decoration: none;">
+							<span class="glyphicon glyphicon-chevron-up headerSortDown"></span>
+							<span class="glyphicon glyphicon-chevron-down headerSortUp"></span>
+						</a>
+					</th>
 					<c:forEach items="${homeworks}" var="homework">
 						<c:choose>
 							<c:when test="${not empty lectureId}">
 								<c:if test="${homework.lecture.id == lectureId}">
-									<th class="homework-td">${homework.name}</th>
+									<th class="homework-td">${homework.name}									
+									</th>
 								</c:if>
 							</c:when>
 							<c:otherwise>

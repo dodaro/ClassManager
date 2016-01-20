@@ -9,11 +9,13 @@ import org.hibernate.Session;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;
+import it.unical.classmanager.model.data.User;
 
 /**
- * @author Aloisius92
  * This is a DAO for perform queries related to statistics.
  * This is the implementation.
+ * 
+ * @author Aloisius92
  */
 public class CartQueryDAOImpl implements CartQueryDAO
 {
@@ -53,11 +55,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgAttendanceStudent("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    System.out.println("Prof: "+objects[0]+", NumCourse: "+objects[1]);
-		//	}
+		//printResultSet(result, professor);
 
 		return result;
 	}
@@ -108,17 +106,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getForYearLectureByWeekDay("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, professor);
 
 		return result;
 	}
@@ -158,17 +146,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgLectureByWeekDaySingleProfessor("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, professor);
 
 		return result;
 	}
@@ -203,17 +181,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgLectureByWeekDayAllProfessor()");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, null);
 
 		return result;
 	}
@@ -248,20 +216,9 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgTimeDeliveryHomework("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, professor);
 
-		return filterResultSet(result, research);		
-		//		return result;
+		return filterResultSet(result, research);	
 	}
 
 	/* (non-Javadoc)
@@ -292,40 +249,9 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgScoreHomework("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, professor);
 
-		return filterResultSet(result, research);		
-		//		return result;
-	}
-
-	private List<Object[]> filterResultSet(List<Object[]> resultSet, String research){
-		// Filter by search string
-		if(research != null){
-			List<Object[]> result = new ArrayList<Object[]>();			
-			for(int i=0; i<resultSet.size(); i++){
-				boolean matchResearch = false;
-				for(int j=0; j<resultSet.get(i).length; j++){
-					if(resultSet.get(i)[j].toString().contains(research)){
-						matchResearch = true;
-					}
-				}
-				if(matchResearch){
-					result.add(resultSet.get(i));
-				}
-			}
-			return result;
-		}
-		return resultSet;
+		return filterResultSet(result, research);
 	}
 
 	/* (non-Javadoc)
@@ -362,17 +288,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgAttendanceStudent("+professor.getUsername()+")");
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, professor);
 
 		return result;
 	}    
@@ -406,12 +322,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgHomeworksByStudent(student)");
-		//	System.out.println("Student: "+student.getUsername());
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    System.out.println("CourseName: "+objects[0]+", AvgScore: "+objects[1]);
-		//	}
+		//printResultSet(result, student);
 
 		return result;
 	}
@@ -449,13 +360,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgTimeDeliveryHomeworksByStudent(student)");
-		//	System.out.println("Student: "+student.getUsername());
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    //System.out.println("CourseName: "+objects[0]+", HSS: "+objects[1]+", DayWeek: "+objects[2]+", L: "+objects[3]+", DIFF: "+objects[4]);
-		//	    System.out.println("CourseName: "+objects[0]+", Avg: "+objects[1]);
-		//	}
+		//printResultSet(result, student);
 
 		return result;
 	}    
@@ -489,18 +394,7 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getHomeworkScoreSeriesByStudent(student)");
-		//	System.out.println("Student: "+student.getUsername());
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
+		//printResultSet(result, student);
 
 		return result;
 	}
@@ -539,19 +433,8 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getExamScoreSeriesByStudent(student)");
-		//	System.out.println("Student: "+student.getUsername());
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
-
+		//printResultSet(result, student);
+		
 		return result;
 	}    
 
@@ -576,20 +459,43 @@ public class CartQueryDAOImpl implements CartQueryDAO
 		result = query.list();
 		session.close();
 
-		//	System.err.println("getAvgAttendanceByStudent(student)");
-		//	System.out.println("Student: "+student.getUsername());
-		//	for(int i=0; i<result.size(); i++){
-		//	    Object[] objects = result.get(i);
-		//	    for(int j=0; j<objects.length; j++){
-		//		if(j>0){
-		//		    System.out.print(", ");
-		//		}
-		//		System.out.print("Prop "+(j+1)+": "+objects[j]);		
-		//	    }
-		//	    System.out.println();
-		//	}
-
+		//printResultSet(result, student);
+		
 		return result;
+	}
+	
+	private List<Object[]> filterResultSet(List<Object[]> resultSet, String research){
+		// Filter by search string
+		if(research != null){
+			List<Object[]> result = new ArrayList<Object[]>();			
+			for(int i=0; i<resultSet.size(); i++){
+				boolean matchResearch = false;
+				for(int j=0; j<resultSet.get(i).length; j++){
+					if(resultSet.get(i)[j].toString().contains(research)){
+						matchResearch = true;
+					}
+				}
+				if(matchResearch){
+					result.add(resultSet.get(i));
+				}
+			}
+			return result;
+		}
+		return resultSet;
+	}
+
+	protected void printResultSet(List<Object[]> resultSet, User user){
+		System.out.println("Student: "+user.getUsername());
+		for(int i=0; i<resultSet.size(); i++){
+			Object[] objects = resultSet.get(i);
+			for(int j=0; j<objects.length; j++){
+				if(j>0){
+					System.out.print(", ");
+				}
+				System.out.print("Prop "+(j+1)+": "+objects[j]);		
+			}
+			System.out.println();
+		}
 	}
 
 }

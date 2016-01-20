@@ -105,7 +105,7 @@ public class LectureController {
 
 		logger.info("getLectures");
 
-		return "/layout";
+		return "layout";
 	}
 
 	@RequestMapping(value = "/lectures/lectureContent", method = RequestMethod.GET)
@@ -150,7 +150,7 @@ public class LectureController {
 
 		logger.info("getLectureContent");
 
-		return "/layout";
+		return "layout";
 	}
 
 
@@ -201,7 +201,7 @@ public class LectureController {
 
 		logger.info("getMaterials");
 
-		return "/layout";
+		return "layout";
 	}
 
 
@@ -280,7 +280,7 @@ public class LectureController {
 		if(!success){
 			logger.error("failed to create directory " + name + " in " + currentPath);
 			lectureDao.delete(lectureDao.get(newId));
-			return "/layout";
+			return "layout";
 		}
 
 		logger.info("createClass");

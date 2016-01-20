@@ -92,9 +92,10 @@ public class RequestInvitationController {
 			return "redirect:/";
 		}	
 
-		processRequestInvitationSingle((Student) user, courseName, professorName, locale);
-		processSelectableCourse(locale, model, request, (Student) user);
-		processCancellableCourse(locale, model, request, (Student) user);
+		Student s = (Student) user;
+		processRequestInvitationSingle(s, courseName, professorName, locale);
+		processSelectableCourse(locale, model, request, s);
+		processCancellableCourse(locale, model, request, s);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		return "layout";

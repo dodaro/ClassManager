@@ -2,7 +2,6 @@ package it.unical.classmanager.controllers.forum.manager;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
 

@@ -61,15 +61,15 @@ public class StatisticsController {
 		logger.info("Statistics Page", locale);
 
 		User user = UserSessionChecker.checkUserSession(model, request);
-		if ( user != null ) {			
+		if (user != null) {			
 			if(user instanceof Student){
-				logger.info("Student statistics page accessed by "+user.getUsername(), locale);
+				logger.info("Statistics, student: "+user.getUsername(), locale);
 				model.addAttribute("student", (Student)user);
 				CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_STUDENT);
 				statisticsForStudent(locale, model, request, (Student)user);	  
 			}
 			if(user instanceof Professor){
-				logger.info("Professor statistics page accessed by "+user.getUsername(), locale);	
+				logger.info("Statistics, professor: "+user.getUsername(), locale);	
 				model.addAttribute("professor", (Professor)user);
 				CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY_PROFESSOR);
 				statisticsForProfessor(locale, model, request, (Professor)user, null);		
@@ -120,7 +120,7 @@ public class StatisticsController {
 		Professor_AvgAttendanceStudent q7 = new Professor_AvgAttendanceStudent(professor);
 
 		setCartList(model, locale, q1, q2, q3, q4, q5, q6, q7);
-		
+
 		model.addAttribute("researchField", research);
 	}
 

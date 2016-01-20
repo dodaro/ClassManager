@@ -5,6 +5,13 @@ import java.util.List;
 
 import it.unical.classmanager.statistics.cart.AbstractCart;
 
+/**
+ * Helper class which represetn a list of AbstractCarts.
+ *
+ * @see it.unical.classmanager.statistics.cart.AbstractCart
+ * 
+ * @author Aloisius92
+ */
 public class CartsList {
 	private List<AbstractCart> carts;
 

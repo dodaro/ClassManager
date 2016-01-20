@@ -26,8 +26,10 @@
 	</div>
 	<div class="row">
 		<hr>
+		<!----------------------->
+		<!--   Active Course   -->
+		<!----------------------->
 		<div class="col-sm-3 col-md-3 col-lg-3">
-
 			<p>
 				<strong><spring:message code="message.homeProfessorCourses" /></strong>
 			</p>
@@ -44,8 +46,13 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-
 		</div>
+		<!----------------------->
+		<!-- End Active Course -->
+		<!----------------------->
+		<!----------------------->
+		<!--      Calendar     -->
+		<!----------------------->
 		<div class="col-sm-9 col-md-9 col-lg-9">
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -53,12 +60,18 @@
 				</div>
 			</div>
 		</div>
+		<!----------------------->
+		<!--    End Calendar   -->
+		<!----------------------->
 		<br>
 	</div>
 	<div class="row">
 		<hr>
 		<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true">
+			<!----------------------->
+			<!--   Last Homeworks  -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingOne">
 					<h4 class="panel-title">
@@ -107,7 +120,13 @@
 
 					</div>
 				</div>
-			</div>
+			</div>			
+			<!----------------------->
+			<!--End Last Homeworks -->
+			<!----------------------->
+			<!----------------------->
+			<!--   Last Lectures   -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingTwo">
 					<h4 class="panel-title">
@@ -156,6 +175,12 @@
 					</div>
 				</div>
 			</div>
+			<!----------------------->
+			<!-- End Last Lectures -->
+			<!----------------------->
+			<!----------------------->
+			<!--   Last Materials  -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingThree">
 					<h4 class="panel-title">
@@ -201,11 +226,12 @@
 								</tbody>
 							</table>
 						</c:if>
-
 					</div>
 				</div>
 			</div>
+			<!----------------------->
+			<!--End Last Materials -->
+			<!----------------------->
 		</div>
-
 	</div>
 </div>

@@ -5,9 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	var events = ${events};
+	var events = $
+	{
+		events
+	};
 	$("#calendar").fullcalendar(events);
-	$("#calendar").fullcalendar({events:events, editable:false});
+	$("#calendar").fullcalendar({
+		events : events,
+		editable : false
+	});
 </script>
 
 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -22,6 +28,9 @@
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		<hr>
+		<!----------------------->
+		<!--      Calendar     -->
+		<!----------------------->
 		<div class="col-sm-9 col-md-9 col-lg-9">
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -29,8 +38,13 @@
 				</div>
 			</div>
 		</div>
+		<!----------------------->
+		<!--    End Calendar   -->
+		<!----------------------->
+		<!----------------------->
+		<!--   Active Course   -->
+		<!----------------------->
 		<div class="col-sm-3 col-md-3 col-lg-3">
-
 			<p>
 				<strong><spring:message code="message.homeStudentCourses" /></strong>
 			</p>
@@ -47,8 +61,10 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-
 		</div>
+		<!----------------------->
+		<!-- End Active Course -->
+		<!----------------------->
 	</div>
 </div>
 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -56,6 +72,9 @@
 		<hr>
 		<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true">
+			<!----------------------->
+			<!--   Last Lectures   -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingOne">
 					<h4 class="panel-title">
@@ -69,7 +88,6 @@
 				<div id="collapseOne" class="panel-collapse collapse in"
 					role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
-
 						<c:if test="${empty lastLectureList}">
 							<br>
 							<div class="alert alert-info" role="alert">
@@ -102,10 +120,15 @@
 								</tbody>
 							</table>
 						</c:if>
-
 					</div>
 				</div>
 			</div>
+			<!----------------------->
+			<!-- End Last Lectures -->
+			<!----------------------->
+			<!----------------------->
+			<!--   Last Materials  -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingTwo">
 					<h4 class="panel-title">
@@ -119,7 +142,6 @@
 				<div id="collapseTwo" class="panel-collapse collapse"
 					role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
-
 						<c:if test="${empty lastMaterialList}">
 							<br>
 							<div class="alert alert-info" role="alert">
@@ -157,6 +179,12 @@
 					</div>
 				</div>
 			</div>
+			<!----------------------->
+			<!--End Last Materials -->
+			<!----------------------->
+			<!----------------------->
+			<!--   Last Homeworks  -->
+			<!----------------------->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingThree">
 					<h4 class="panel-title">
@@ -206,11 +234,12 @@
 								</tbody>
 							</table>
 						</c:if>
-
 					</div>
 				</div>
-			</div>
+			</div>			
+			<!----------------------->
+			<!--End Last Homeworks -->
+			<!----------------------->
 		</div>
-
 	</div>
 </div>

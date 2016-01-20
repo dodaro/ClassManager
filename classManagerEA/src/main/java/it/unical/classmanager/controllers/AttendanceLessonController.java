@@ -27,7 +27,6 @@ import it.unical.classmanager.model.dao.LectureDAOImpl;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.AttendanceStudentLecture;
-import it.unical.classmanager.model.data.CourseClass;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.Student;

@@ -4,7 +4,6 @@ package it.unical.classmanager.editorData.concrete;
 import it.unical.classmanager.editorData.Environment;
 import it.unical.classmanager.utils.ExecutionResult;
 import it.unical.classmanager.utils.enumative.ExitCode;
-import it.unical.classmanager.utils.enumative.TerminalErrorSignal;
 import it.unical.classmanager.utils.general.Paths;
 
 

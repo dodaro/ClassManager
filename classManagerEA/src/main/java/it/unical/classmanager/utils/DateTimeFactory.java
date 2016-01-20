@@ -6,14 +6,20 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
+ * This is a utility class for generate some temporal values.
+ * 
  * @author Aloisius92
- * This is a utility class for get some temporal values.
  */
 public class DateTimeFactory {
 	private static int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	private static int startYear = 1970;
 	private static Random random = new Random();
 		
+	/**
+	 * This function creates a random date.
+	 * 
+	 * @return A random Calendar Date
+	 */
 	public static Calendar getRandomDate(){
 		int month = random.nextInt(12);
 		int day = random.nextInt(daysInMonth[month]);
@@ -22,6 +28,13 @@ public class DateTimeFactory {
 		return new GregorianCalendar(year, month, day);
 	}	
 	
+	/**
+	 * This function creates a random date in a specified year.
+	 * 
+	 * @param year the specified year
+	 * 
+	 * @return A Calendar Date
+	 */
 	public static Calendar getRandomDate(int year){
 		int month = random.nextInt(12);
 		int day = random.nextInt(daysInMonth[month]);
@@ -30,8 +43,15 @@ public class DateTimeFactory {
 		System.out.println("Created Date: "+date.getTime());
 		
 		return date;
-	}	
+	}		
 	
+	/**
+	 * This function creates a random date less than the specified year.
+	 * 
+	 * @param year the specified year
+	 * 
+	 * @return A Calendar Date
+	 */	
 	public static Calendar getRandomDateLessThanYear(int year){
 		int month = random.nextInt(12);
 		int day = random.nextInt(daysInMonth[month]);
@@ -39,6 +59,14 @@ public class DateTimeFactory {
 		return new GregorianCalendar(randomYear, month, day);
 	}	
 	
+	/**
+	 * This function creates a random date in a specified year and month.
+	 * 
+	 * @param year the specified year
+	 * @param month the specified month
+	 * 
+	 * @return A Calendar Date
+	 */
 	public static Calendar getRandomDate(int year, int month){
 		month = month >= 12 ? 11 : month;
 		month = month < 0 ? 0 : month;		
@@ -46,10 +74,27 @@ public class DateTimeFactory {
 		return new GregorianCalendar(year, month, day);
 	}
 	
+	/**
+	 * This function creates a date in the specified year, month and day.
+	 * 
+	 * @param year the specified year
+	 * @param month the specified month
+	 * @param day the specified day
+	 * 
+	 * @return A Calendar Date
+	 */
 	public static Calendar getDate(int year, int month, int day){
 		return new GregorianCalendar(year, month, day);
 	}
 	
+	/**
+	 * This function creates a date between two months.
+	 * 
+	 * @param beginMonth the start month
+	 * @param endMonth the end month
+	 * 
+	 * @return A Calendar Date
+	 */
 	public static Calendar getRandomDateBetweenMonths(int beginMonth, int endMonth){	
 		int month;
 		if(beginMonth>endMonth){	
@@ -69,6 +114,15 @@ public class DateTimeFactory {
 		return new GregorianCalendar(year, month, day);
 	}
 	
+	/**
+	 * This function creates a date between two months, in the specified year.
+	 * 
+	 * @param year the specified year
+	 * @param beginMonth the start month
+	 * @param endMonth the end month
+	 * 
+	 * @return A Calendar Date
+	 */
 	public static Calendar getRandomDateBetweenMonths(int year, int beginMonth, int endMonth){
 		int month;
 		if(beginMonth>endMonth){	
@@ -91,6 +145,11 @@ public class DateTimeFactory {
 		return date;
 	}
 	
+	/**
+	 * This function create a random year.
+	 * 
+	 * @return A random year
+	 */
 	public static int getRandomYear(){
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int randomYear = startYear + random.nextInt(currentYear-startYear);
@@ -98,6 +157,14 @@ public class DateTimeFactory {
 		return startYear + random.nextInt(currentYear-startYear);
 	}
 	
+	/**
+	 * This function create a random year between two years.
+	 * 
+	 * @param beginYear the startYear
+	 * @param endYear the endYear
+	 * 
+	 * @return A random year
+	 */
 	public static int getRandomYearBetween(int beginYear, int endYear){
 		int diff = Math.abs(endYear - beginYear);
 		int randomYear = beginYear + random.nextInt(diff);
@@ -105,11 +172,24 @@ public class DateTimeFactory {
 		return randomYear;
 	}
 	
+	/**
+	 * This function create a random time.
+	 * 
+	 * @return A random time
+	 */
 	@SuppressWarnings("deprecation")
 	public static Time getRandomTime(){
 		return new Time(random.nextInt(24), random.nextInt(60), random.nextInt(60));
 	}
 	
+	/**
+	 * This function create a random time between two times.
+	 * 
+	 * @param beginTime the start time
+	 * @param endTime the end time
+	 * 
+	 * @return A random time
+	 */
 	public static Time getRandomTimeBetween(Time beginTime, Time endTime){
 		long diff = endTime.getTime()-beginTime.getTime();
 		return new Time(diff);

@@ -14,6 +14,9 @@
 			<div class="row col-sm-12 col-md-12 col-lg-12"></div>
 			<div class="row col-sm-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
+					<!----------------------->
+					<!--Selectable Courses -->
+					<!----------------------->
 					<c:if test="${empty selectableCourse}">
 						<br>
 						<div class="alert alert-danger" role="alert">
@@ -26,15 +29,20 @@
 							<caption>
 								<spring:message code="message.invitation.requestHelpInfo1" />
 							</caption>
+							<!-- Table Header -->
 							<thead>
 								<tr>
 									<th>#</th>
+									<!-- Course Name -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField1" /></th>
+									<!-- Cfu -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField4" /></th>
+									<!-- Reference Year -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField5" /></th>
+									<!-- Professor Name -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField2" /></th>
 									<th><form:form id="requestAll"
@@ -49,15 +57,20 @@
 								</tr>
 							</thead>
 							<!-- Generated content -->
+							<!-- Table Body -->
 							<tbody>
 								<c:set var="k" value="0" />
 								<c:forEach items="${selectableCourse.list}" var="singleCourse">
 									<tr>
 										<c:set var="k" value="${k+1}" />
 										<th scope="row">${k}</th>
+										<!-- Course Name -->
 										<td>${singleCourse.field1}</td>
+										<!-- Cfu -->
 										<td>${singleCourse.field2}</td>
+										<!-- Reference Year -->
 										<td>${singleCourse.field3}</td>
+										<!-- Professor Name -->
 										<td>${singleCourse.field4}</td>
 										<td><form:form id="request${k}"
 												action="requestInvitation_Single" method="POST">
@@ -76,6 +89,9 @@
 							</tbody>
 						</table>
 					</c:if>
+					<!---------------------------->
+					<!-- End Selectable Courses -->
+					<!---------------------------->
 				</div>
 			</div>
 			<br>
@@ -84,6 +100,9 @@
 			<div class="row col-sm-12 col-md-12 col-lg-12"></div>
 			<div class="row col-sm-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
+					<!------------------------>
+					<!--Cancellable Courses -->
+					<!------------------------>
 					<c:if test="${empty cancellableCourse}">
 						<div class="alert alert-danger" role="alert">
 							<strong>Ops!</strong>
@@ -95,15 +114,20 @@
 							<caption>
 								<spring:message code="message.invitation.requestHelpInfo2" />
 							</caption>
+							<!-- Table Header -->
 							<thead>
 								<tr>
 									<th>#</th>
+									<!-- Course Name -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField1" /></th>
+									<!-- Cfu -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField4" /></th>
+									<!-- Reference Year -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField5" /></th>
+									<!-- Professor Name -->
 									<th><spring:message
 											code="message.invitation.requestTableHeadField2" /></th>
 									<th><form:form id="cancelAll"
@@ -118,15 +142,20 @@
 								</tr>
 							</thead>
 							<!-- Generated content -->
+							<!-- Table Body -->
 							<tbody>
 								<c:set var="k" value="0" />
 								<c:forEach items="${cancellableCourse.list}" var="singleCourse">
 									<tr>
 										<c:set var="k" value="${k+1}" />
 										<th scope="row">${k}</th>
+										<!-- Course Name -->
 										<td>${singleCourse.field1}</td>
+										<!-- Cfu -->
 										<td>${singleCourse.field2}</td>
+										<!-- Reference Year -->
 										<td>${singleCourse.field3}</td>
+										<!-- Professor Name -->
 										<td>${singleCourse.field4}</td>
 										<td><form:form id="cancel${k}"
 												action="requestInvitation_CancelSingle" method="POST">
@@ -145,9 +174,11 @@
 							</tbody>
 						</table>
 					</c:if>
+					<!----------------------------->
+					<!-- End Cancellable Courses -->
+					<!----------------------------->
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

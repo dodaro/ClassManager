@@ -8,7 +8,9 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-7 col-md-7 col-lg-7">
-			<!-- RESEARCH BAR -->
+			<!----------------------->
+			<!--   Research Bar    -->
+			<!----------------------->
 			<c:if test="${not empty courseSelected}">
 				<form class="form-inline" action="/sendInvitation_research"
 					method="post">
@@ -37,6 +39,12 @@
 						aria-expanded="false" aria-controls="fileUpload">FileUpload</button>
 				</form>
 			</c:if>
+			<!----------------------->
+			<!-- End Research Bar  -->
+			<!----------------------->
+			<!----------------------->
+			<!--File Upload Button -->
+			<!----------------------->
 			<c:if test="${empty courseSelected}">
 				<button class="btn invitationActionButton" type="button"
 					data-toggle="collapse" data-target="#fileUpload"
@@ -44,6 +52,9 @@
 			</c:if>
 		</div>
 		<div class="col-sm-5 col-md-5 col-lg-5">
+			<!----------------------->
+			<!--    File Upload    -->
+			<!----------------------->
 			<div class="collapse" id="fileUpload">
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -82,10 +93,12 @@
 					</div>
 				</div>
 			</div>
+			<!----------------------->
+			<!--  End File Upload  -->
+			<!----------------------->
 		</div>
 	</div>
 </div>
-
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="panel panel-default">
@@ -107,12 +120,18 @@
 						<spring:message code="message.invitation.sendHelpInfo8" />
 						<span class="caret"></span>
 					</button>
+					<!----------------------->
+					<!--    Course List    -->
+					<!----------------------->
 					<ul class="dropdown-menu" aria-labelledby="courseSelector">
 						<c:forEach items="${courseList.list}" var="singleCourse">
 							<li><a
 								href="/sendInvitation?courseName='${singleCourse.field1}'">${singleCourse.field1}</a></li>
 						</c:forEach>
 					</ul>
+					<!----------------------->
+					<!--  End Course List  -->
+					<!----------------------->
 				</div>
 				<c:if test="${not empty courseSelected}">
 					<button type="button" class="btn btn-success pull-right">${courseSelected}</button>
@@ -122,6 +141,9 @@
 			<c:if test="${not empty courseSelected}">
 				<div class="row col-sm-12 col-md-12 col-lg-12">
 					<div class="panel panel-default">
+						<!----------------------->
+						<!--Selectable Student -->
+						<!----------------------->
 						<c:if test="${empty studentList}">
 							<br>
 							<div class="alert alert-danger" role="alert">
@@ -134,17 +156,23 @@
 								<caption>
 									<spring:message code="message.invitation.sendHelpInfo1" />
 								</caption>
+								<!-- Table Header -->
 								<thead>
 									<tr>
 										<th>#</th>
+										<!-- Username -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField1" /></th>
+										<!-- Serial Number -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField3" /></th>
+										<!-- Subscription Date -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField4" /></th>
+										<!-- First Name -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField5" /></th>
+										<!-- Second Name -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField6" /></th>
 										<th><form:form id="inviteAll"
@@ -161,16 +189,23 @@
 									</tr>
 								</thead>
 								<!-- Generated content -->
+								<!-- Table Body -->
 								<tbody>
 									<c:set var="k" value="0" />
 									<c:forEach items="${studentList.list}" var="singleStudent">
+										<!-- Table Row -->
 										<tr>
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
+											<!-- Student Name -->
 											<td>${singleStudent.field1}</td>
+											<!-- Serial Number -->
 											<td>${singleStudent.field2}</td>
+											<!-- Subscription Date -->
 											<td>${singleStudent.field3}</td>
+											<!-- First Name -->
 											<td>${singleStudent.field4}</td>
+											<!-- Second Name -->
 											<td>${singleStudent.field5}</td>
 											<td><form:form id="invite${k}"
 													action="sendInvitation_InviteSingle" method="POST">
@@ -189,6 +224,9 @@
 								</tbody>
 							</table>
 						</c:if>
+						<!---------------------------->
+						<!-- End Selectable Student -->
+						<!---------------------------->
 					</div>
 				</div>
 
@@ -198,6 +236,9 @@
 
 				<div class="row col-sm-12 col-md-12 col-lg-12">
 					<div class="panel panel-default">
+						<!------------------------>
+						<!--Cancellable Student -->
+						<!------------------------>
 						<c:if test="${empty invitedStudent}">
 							<br>
 							<div class="alert alert-danger" role="alert">
@@ -210,17 +251,23 @@
 								<caption>
 									<spring:message code="message.invitation.sendHelpInfo4" />
 								</caption>
+								<!-- Table Header -->
 								<thead>
 									<tr>
 										<th>#</th>
+										<!-- Username -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField1" /></th>
+										<!-- Serial Number -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField3" /></th>
+										<!-- Subscription Date -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField4" /></th>
+										<!-- First Name -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField5" /></th>
+										<!-- Second Name -->
 										<th><spring:message
 												code="message.invitation.sendTableHeadField6" /></th>
 										<th><form:form id="cancelAll"
@@ -237,16 +284,22 @@
 									</tr>
 								</thead>
 								<!-- Generated content -->
+								<!-- Table Body -->
 								<tbody>
 									<c:set var="k" value="0" />
 									<c:forEach items="${invitedStudent.list}" var="singleStudent">
 										<tr>
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
+											<!-- Username -->
 											<td>${singleStudent.field1}</td>
+											<!-- Serial Number -->
 											<td>${singleStudent.field2}</td>
+											<!-- Subscription Date -->
 											<td>${singleStudent.field3}</td>
+											<!-- First Name -->
 											<td>${singleStudent.field4}</td>
+											<!-- Second Name -->
 											<td>${singleStudent.field5}</td>
 											<td><form:form id="cancel${k}"
 													action="sendInvitation_CancelSingle" method="POST">
@@ -265,11 +318,12 @@
 								</tbody>
 							</table>
 						</c:if>
+						<!----------------------------->
+						<!-- End Cancellable Student -->
+						<!----------------------------->
 					</div>
 				</div>
-
 			</c:if>
-
 		</div>
 	</div>
 </div>

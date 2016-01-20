@@ -1,7 +1,5 @@
 package it.unical.classmanager.controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -23,13 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.classmanager.model.UserJsonResponse;
 import it.unical.classmanager.model.dao.UserDAO;
-import it.unical.classmanager.model.data.AttendanceStudentLecture;
-import it.unical.classmanager.model.data.HomeworkStudentSolving;
-import it.unical.classmanager.model.data.RegistrationStudentClass;
-import it.unical.classmanager.model.data.Student;
-import it.unical.classmanager.model.data.StudentExamPartecipation;
 import it.unical.classmanager.model.data.User;
-import it.unical.classmanager.utils.DateTimeFactory;
 
 @Controller
 public class UsersListController {

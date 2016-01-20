@@ -22,14 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import it.unical.classmanager.model.PasswordHashing;
 import it.unical.classmanager.model.dao.CommunicationsDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Communications;
 import it.unical.classmanager.model.data.Professor;
-import it.unical.classmanager.model.data.User;
-import it.unical.classmanager.utils.DateTimeFactory;
 
 
 @Controller

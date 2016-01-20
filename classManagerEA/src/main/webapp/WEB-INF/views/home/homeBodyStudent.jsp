@@ -112,7 +112,7 @@
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
 											<td>${singleLecture.field1}</td>
-											<td><a href="#">${singleLecture.field2}</a></td>
+											<td>${singleLecture.field2}</td>
 											<td>${singleLecture.field3}</td>
 											<td>${singleLecture.field4}</td>
 										</tr>
@@ -167,7 +167,7 @@
 											<c:set var="k" value="${k+1}" />
 											<th scope="row">${k}</th>
 											<td>${singleMaterial.field1}</td>
-											<td><a href="#">${singleMaterial.field2}</a></td>
+											<td>${singleMaterial.field2}</td>
 											<td>${singleMaterial.field3}</td>
 											<td>${singleMaterial.field4}</td>
 										</tr>
@@ -226,7 +226,7 @@
 											<th scope="row">${k}</th>
 											<td>${singleHomework.field1}</td>
 											<td>${singleHomework.field2}</td>
-											<td><a href="#">${singleHomework.field3}</a></td>
+											<td>${singleHomework.field3}</td>
 											<td>${singleHomework.field4}</td>
 											<td>${singleHomework.field5}</td>
 										</tr>

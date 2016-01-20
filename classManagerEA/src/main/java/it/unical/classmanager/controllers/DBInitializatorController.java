@@ -69,8 +69,9 @@ import it.unical.classmanager.utils.DateTimeFactory;
 import it.unical.classmanager.utils.FileManager;
 
 /**
- * @author Aloisius92
  * This is a controller for the creation of the entire db.
+ * 
+ * @author Aloisius92
  */
 @Controller
 public class DBInitializatorController {
@@ -298,22 +299,6 @@ public class DBInitializatorController {
 				new ArrayList<CourseClass>(), 
 				departement);
 		degreeCourseDAO.create(degreeCourse2);		
-	}
-
-	private boolean createFolders(CourseClass courseClass){
-		boolean success = false;
-		success = new FileManager().mkDir(".", courseClass.getId()+"");
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
-		}
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
-		}
-		if(!success){
-			logger.error("failed to create directory " + courseClass.getId()+"");
-			DaoHelper.getCourseClassDAO().delete(courseClass);
-		}
-		return success;
 	}
 
 	/**
@@ -632,21 +617,6 @@ public class DBInitializatorController {
 				k++;
 			}
 		}
-	}
-
-	private boolean createFolders(CourseClass courseClass, Lecture lecture, Homework homework){
-		boolean success = false;
-		String currentPath = lecture.getCourseClass().getId() 
-				+ File.separator 
-				+ FileManager.LECTURES_PATH  + File.separator 
-				+ lecture.getId() + File.separator + FileManager.HOMEWORK_PATH;
-
-		success = new FileManager().mkDir(currentPath, homework.getId()+"");
-		if(!success){
-			logger.error("failed to create directory " + homework.getId()+"");
-			DaoHelper.getHomeworkDAO().delete(homework);
-		}
-		return success;
 	}
 
 	/**
@@ -1051,6 +1021,38 @@ public class DBInitializatorController {
 				k++;		
 			}
 		}
+	}
+
+
+	private boolean createFolders(CourseClass courseClass){
+		boolean success = false;
+		success = new FileManager().mkDir(".", courseClass.getId()+"");
+		if(success){
+			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
+		}
+		if(success){
+			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
+		}
+		if(!success){
+			logger.error("failed to create directory " + courseClass.getId()+"");
+			DaoHelper.getCourseClassDAO().delete(courseClass);
+		}
+		return success;
+	}
+
+	private boolean createFolders(CourseClass courseClass, Lecture lecture, Homework homework){
+		boolean success = false;
+		String currentPath = lecture.getCourseClass().getId() 
+				+ File.separator 
+				+ FileManager.LECTURES_PATH  + File.separator 
+				+ lecture.getId() + File.separator + FileManager.HOMEWORK_PATH;
+
+		success = new FileManager().mkDir(currentPath, homework.getId()+"");
+		if(!success){
+			logger.error("failed to create directory " + homework.getId()+"");
+			DaoHelper.getHomeworkDAO().delete(homework);
+		}
+		return success;
 	}
 
 }

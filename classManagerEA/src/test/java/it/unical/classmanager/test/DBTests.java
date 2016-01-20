@@ -2,7 +2,12 @@ package it.unical.classmanager.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +20,19 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import it.unical.classmanager.model.dao.CourseClassDAO;
+import it.unical.classmanager.model.dao.DaoHelper;
+import it.unical.classmanager.model.dao.HomeworkStudentSolvingDAO;
+import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.UserDAO;
+import it.unical.classmanager.model.data.CourseClass;
+import it.unical.classmanager.model.data.Homework;
+import it.unical.classmanager.model.data.HomeworkStudentSolving;
+import it.unical.classmanager.model.data.Lecture;
+import it.unical.classmanager.model.data.RegistrationStudentClass;
+import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
+import sun.util.logging.resources.logging;
 
 
 
@@ -26,8 +42,8 @@ import it.unical.classmanager.model.data.User;
 public class DBTests{
 
 	@Autowired
-	private ApplicationContext context;	
-	
+	private ApplicationContext context;
+
 	@Before
 	public void init() {
 		UserDAO userDao  = (UserDAO) context.getBean("userDao");
@@ -46,16 +62,16 @@ public class DBTests{
 			userDao.create(u);
 		}
 	}
-	
+
 	@After
 	public void delete() {
-		//((UserDAO) context.getBean("userDao")).deleteAllUser();
+		((UserDAO) context.getBean("userDao")).deleteAllUser();
 	}
-	
+
 	@Test
 	public void testNumberOfUsers() {
 		int users = ((UserDAO) context.getBean("userDao")).getAllUsers().size();
 		assertEquals(10, users);
 	}
-	
+
 }

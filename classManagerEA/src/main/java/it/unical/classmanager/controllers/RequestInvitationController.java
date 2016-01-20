@@ -92,10 +92,9 @@ public class RequestInvitationController {
 			return "redirect:/";
 		}	
 
-		Student s = (Student) user;
-		processRequestInvitationSingle(s, courseName, professorName, locale);
-		processSelectableCourse(locale, model, request, s);
-		processCancellableCourse(locale, model, request, s);
+		processRequestInvitationSingle((Student) user, courseName, locale);
+		processSelectableCourse(locale, model, request, (Student) user);
+		processCancellableCourse(locale, model, request, (Student) user);
 		InvitationController.checkNewInvitations(model, user);		
 		CustomHeaderAndBody.setCustomHeadAndBody(model, HEADER, BODY);
 		return "layout";
@@ -220,7 +219,7 @@ public class RequestInvitationController {
 	private void processRequestInvitationAll(Student student, Locale locale) {
 		GenericContainerBeanList selectableCourse = getSelectableCourse(student);
 		for(int i=0; i<selectableCourse.size(); i++){
-			processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), selectableCourse.get(i).getField2(), locale);
+			processRequestInvitationSingle(student, selectableCourse.get(i).getField1(), locale);
 		}
 	}
 
@@ -234,7 +233,7 @@ public class RequestInvitationController {
 	 * @param professorName the professor's username
 	 * 
 	 */
-	private void processRequestInvitationSingle(Student student, String courseName, String professorName, Locale locale) {
+	private void processRequestInvitationSingle(Student student, String courseName, Locale locale) {
 		CourseClass courseClass = DaoHelper.getCourseClassDAO().get(courseName);
 		RegistrationStudentClassDAO registrationStudentClassDAO = DaoHelper.getRegistrationStudentClassDAO();
 		int maxIndex = registrationStudentClassDAO.getMaxIndex();
@@ -259,8 +258,7 @@ public class RequestInvitationController {
 					+" "
 					+courseName;
 			
-			User professor = DaoHelper.getUserDAO().get(professorName);
-			NotificationHelper.createNotification(student, professor, message);
+			NotificationHelper.createNotification(student, courseClass.getProfessor(), message);
 		}
 	}   
 

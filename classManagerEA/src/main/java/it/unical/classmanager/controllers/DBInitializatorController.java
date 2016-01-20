@@ -542,7 +542,7 @@ public class DBInitializatorController {
 
 				Lecture lecture = new Lecture(
 						k,
-						i+1, 
+						(i+1), 
 						"TopicLecture"+(i+1), 
 						"DescriptionLecture"+(i+1), 
 						lectureDateStart.getTime(), 

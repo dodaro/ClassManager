@@ -65,18 +65,18 @@ public class CourseController
 	public String loadCourses(HttpServletRequest request, Model model, Locale locale, RedirectAttributes redirectAttributes)
 	{	
 		User user = UserSessionChecker.checkUserSession(model, request);
-		if ( user == null ) {			
+		if ( user == null ) 
+		{			
 		    return "redirect:/";
 		}		
 
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
 		
-//		UserDAO userDAO = context.getBean("userDao", UserDAOImpl.class);
-//		professor = (Professor) userDAO.get("ProfAldo0");
 		if(user.getRole().equals("Student"))
 		{
 			Student student = (Student) user;
 			courseClasses = courseClassDAO.getCourseClasses(student);
+			professor = null;
 		}
 		else
 		{

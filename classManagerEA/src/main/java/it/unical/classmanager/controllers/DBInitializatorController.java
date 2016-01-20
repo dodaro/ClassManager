@@ -542,9 +542,9 @@ public class DBInitializatorController {
 
 				Lecture lecture = new Lecture(
 						k,
-						i, 
-						"TopicLecture"+i, 
-						"DescriptionLecture"+i, 
+						(i+1), 
+						"TopicLecture"+(i+1), 
+						"DescriptionLecture"+(i+1), 
 						lectureDateStart.getTime(), 
 						beginTime, 
 						endTime, 
@@ -1035,7 +1035,7 @@ public class DBInitializatorController {
 		}
 		if(!success){
 			logger.error("failed to create directory " + courseClass.getId()+"");
-			DaoHelper.getCourseClassDAO().delete(courseClass);
+			//DaoHelper.getCourseClassDAO().delete(courseClass);
 		}
 		return success;
 	}
@@ -1050,7 +1050,7 @@ public class DBInitializatorController {
 		success = new FileManager().mkDir(currentPath, homework.getId()+"");
 		if(!success){
 			logger.error("failed to create directory " + homework.getId()+"");
-			DaoHelper.getHomeworkDAO().delete(homework);
+			//DaoHelper.getHomeworkDAO().delete(homework);
 		}
 		return success;
 	}

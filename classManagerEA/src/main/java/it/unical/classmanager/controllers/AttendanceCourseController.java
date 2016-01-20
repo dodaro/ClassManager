@@ -50,11 +50,6 @@ public class AttendanceCourseController
 	@RequestMapping(value = "/view_attendance", method = RequestMethod.GET)
 	public String loadCourseAttendances(HttpServletRequest request, Model model, Locale locale) 
 	{
-		User user = UserSessionChecker.checkUserSession(model, request);
-		if ( user == null || user.getRole().equals("Student")) {			
-		    return "redirect:/";
-		}	
-		
 		CourseClassDAO courseClassDAO = context.getBean("courseClassDAO", CourseClassDAOImpl.class);
 		CourseClass course = courseClassDAO.get((Integer) request.getSession().getAttribute("ActiveCourse"));	
 		LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);

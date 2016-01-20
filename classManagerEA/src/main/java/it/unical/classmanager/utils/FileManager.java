@@ -34,7 +34,6 @@ public class FileManager {
 	 * @return boolean : false if the operation fails
 	 */
 	public boolean mkDir(String path, String name){
-
 		new File(RESOURCES_PATH + File.separator + path).mkdirs();
 		final String completePath = RESOURCES_PATH + File.separator + path + File.separator + name;
 		return new File(completePath).mkdir();

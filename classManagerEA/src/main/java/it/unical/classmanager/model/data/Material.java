@@ -17,14 +17,14 @@ public class Material implements Serializable  {
 	private static final long serialVersionUID = -7994141386221102256L;
 
 	@Id
-	@Column(name="id", nullable=false, length=20)
+	@Column(name="id", nullable=false, length=250)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="name", nullable=false, length=20)
+	@Column(name="name", nullable=false, length=250)
 	private String name;
 	
-	@Column(name="type", nullable=false, length=8)
+	@Column(name="type", nullable=false, length=250)
 	private String type;
 
 	@Column(name="hidden", nullable=false)

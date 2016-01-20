@@ -40,7 +40,7 @@ import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.utils.UserSessionChecker;
 
 /**
- * Gestione view relativa ai corsi del professore loggato con la possibilità di aggiungere nuovi
+ * Gestione view relativa ai corsi del professore loggato con la possibilitï¿½ di aggiungere nuovi
  * corsi
  * 
  * @author Alessandro *
@@ -130,7 +130,7 @@ public class CourseController
 			// Added session variable
 			request.getSession().setAttribute("ActiveCourse", course.getId());
 			
-			return "redirect:/lectures?path=lectures";
+			return "redirect:/lectures?path=" + course.getId();
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class CourseController
 		
 		request.getSession().setAttribute("ActiveCourse", course.getId());
 		
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures?path=" + course.getId();
 	}
 
 	/**

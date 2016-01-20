@@ -67,9 +67,8 @@ public class LectureController {
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
 	public String getClasses(Model model, HttpServletRequest request) {
 
-		Integer idCourse = Integer.parseInt(request.getParameter("path"));	
-		
-		if(idCourse != null) {
+		if(request.getParameter("path") != null) {
+			Integer idCourse = Integer.parseInt(request.getParameter("path"));
 			request.getSession().setAttribute("ActiveCourse", idCourse);
 		}
 		
@@ -146,7 +145,7 @@ public class LectureController {
 
 		model.addAttribute("files", lectureContent);
 
-		String referred = "/lectures?path=lectures";
+		String referred = "/lectures";
 		model.addAttribute("backPage", referred);
 
 		logger.info("getLectureContent");
@@ -286,7 +285,7 @@ public class LectureController {
 
 		logger.info("createClass");
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures";
 
 	}
 
@@ -335,7 +334,7 @@ public class LectureController {
 
 		logger.info("update lecture");
 
-		return "redirect:/lectures?path=lectures"; 
+		return "redirect:/lectures"; 
 	}
 
 	/**
@@ -394,7 +393,7 @@ public class LectureController {
 		if(lecture != null)
 			lectureDao.delete(lecture);
 		else
-			return "redirect:/lectures?path=lectures";
+			return "redirect:/lectures";
 
 		String name = Integer.toString(lecture.getId());
 		String path = FileManager.RESOURCES_PATH + File.separator + "enterpriseApplication" + File.separator + FileManager.LECTURES_PATH + File.separator + name;
@@ -406,7 +405,7 @@ public class LectureController {
 		}
 
 
-		return "redirect:/lectures?path=lectures";
+		return "redirect:/lectures";
 	}
 
 	@RequestMapping(value="/lectures/delete_materials", method=RequestMethod.POST)
@@ -418,7 +417,7 @@ public class LectureController {
 		if(material != null)
 			materialDAO.delete(material);
 		else
-			return "redirect:/lectures?path=lectures";
+			return "redirect:/lectures";
 
 		String path = material.getFilePath();
 		boolean success = new FileManager().deleteFile(path);

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import it.unical.classmanager.model.dao.CartQueryDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.Professor;
 import it.unical.classmanager.model.data.User;
@@ -36,7 +35,7 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 		this.research = research;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery()
 	 */
 	@Override
@@ -44,13 +43,15 @@ public class Professor_AvgTimeDeliveryHomework extends AbstractQueryCart {
 		return buildCartFromQuery(new ColumnStackedCart());
 	}
 
+	/**
+	 * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery(AbstractCart)
+	 */
 	@Override
 	protected AbstractCart buildCartFromQuery(AbstractCart cart) {
-		// Query
-		CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
-		List<Object[]> avgTimeDeliveryHomework = cartQueryDAO.getAvgTimeDeliveryHomework((Professor)this.getUser(), research);
+		List<Object[]> avgTimeDeliveryHomework = DaoHelper.getCartQueryDAO().getAvgTimeDeliveryHomework((Professor)this.getUser(), research);
 
-		/*
+		/* ResultSet content
+		 * 
 		 * CourseClass, AvgTime
 		 * CourseClass, AvgTime
 		 * CourseClass, AvgTime

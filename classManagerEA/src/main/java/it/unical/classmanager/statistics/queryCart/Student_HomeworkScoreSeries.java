@@ -5,7 +5,6 @@ package it.unical.classmanager.statistics.queryCart;
 
 import java.util.List;
 
-import it.unical.classmanager.model.dao.CartQueryDAO;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.data.Student;
 import it.unical.classmanager.model.data.User;
@@ -34,15 +33,16 @@ public class Student_HomeworkScoreSeries extends AbstractQueryCart {
 	protected AbstractCart buildCartFromQuery() {
 		return buildCartFromQuery(new LineBasicCart());
 	}
-
+	
+	/**
+	 * @see it.unical.classmanager.statistics.queryCart.AbstractQueryCart#buildCartFromQuery(AbstractCart)
+	 */
 	@Override
 	protected AbstractCart buildCartFromQuery(AbstractCart cart) {
-		//	Query
-		CartQueryDAO cartQueryDAO = DaoHelper.getCartQueryDAO();
-		List<Object[]> homeworkScoreSeriesByStudent = cartQueryDAO.getHomeworkScoreSeriesByStudent((Student)this.getUser());
+		List<Object[]> homeworkScoreSeriesByStudent = DaoHelper.getCartQueryDAO().getHomeworkScoreSeriesByStudent((Student)this.getUser());
 
-		/*
-		 * homeworkScoreSeriesByStudent
+		/* ResultSet content
+		 * 
 		 * Course, Homework, Score
 		 * Course, Homework, Score
 		 * Course, Homework, Score

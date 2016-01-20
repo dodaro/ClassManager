@@ -36,10 +36,7 @@ public class ClearSession implements Filter {
 		// place your code here
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-
-		
 		httpRequest.getSession().removeAttribute("ActiveCourse");
-		
 		
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

@@ -38,6 +38,11 @@
     <url-pattern>/sort/*</url-pattern>
     <url-pattern>/blackboard/*</url-pattern>
     <url-pattern>/editor/*</url-pattern>
+    <url-pattern>/lecture/*</url-pattern>
+    <url-pattern>/scores/*</url-pattern>
+    <url-pattern>/getNewNotifications</url-pattern>
+    <url-pattern>/getOldNotifications</url-pattern>
+    <url-pattern>/setNoficationRead</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>ProfessorCheckerFilter</display-name>
@@ -46,18 +51,18 @@
   </filter>
   <filter-mapping>
     <filter-name>ProfessorCheckerFilter</filter-name>
-    <url-pattern>/lectures</url-pattern>
-    <url-pattern>/update_lecture</url-pattern>
-    <url-pattern>/delete_lecture</url-pattern>
-    <url-pattern>/upload_materials</url-pattern>
-    <url-pattern>/delete_materials</url-pattern>
-    <url-pattern>/homeworks</url-pattern>
-    <url-pattern>/update_homeworks</url-pattern>
-    <url-pattern>/delete_homeworks</url-pattern>
+    <url-pattern>/lectures/update_lecture</url-pattern>
+    <url-pattern>/lectures/delete_lecture</url-pattern>
+    <url-pattern>/lectures/upload_materials</url-pattern>
+    <url-pattern>/lectures/delete_materials</url-pattern>
+    <url-pattern>/lectures/update_homeworks</url-pattern>
+    <url-pattern>/lectures/delete_homeworks</url-pattern>
     <url-pattern>/scores</url-pattern>
     <url-pattern>/update_scores</url-pattern>
     <url-pattern>/create_Partecipation</url-pattern>
     <url-pattern>/update_Partecipation</url-pattern>
+    <url-pattern>/view_attendance</url-pattern>
+	<url-pattern>/attendance</url-pattern>
   </filter-mapping>
   <servlet>
     <description></description>
@@ -76,7 +81,7 @@
   </filter>
   <filter-mapping>
     <filter-name>ClearSession</filter-name>
-    <url-pattern>/ClearSession</url-pattern>
+    <url-pattern>/courses</url-pattern>
   </filter-mapping>
   <filter>
     <display-name>XSSFilter</display-name>

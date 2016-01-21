@@ -219,7 +219,7 @@ public class DBInitializatorController {
 				user.setEmail("profaldo@profaldo.it");
 				user.setPassword(username+i);
 				user.setConfirmPassword(user.getPassword());
-				user.setHash(user.getPassword());
+				user.setHash(DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(user.getPassword()));
 				user.setSerialNumber(""+i);
 				Professor professor = new Professor(user,
 						i, new ArrayList<Communications>(),
@@ -243,7 +243,7 @@ public class DBInitializatorController {
 				user.setEmail("studentaldo@profaldo.it");
 				user.setPassword(username+i);
 				user.setConfirmPassword(user.getPassword());
-				user.setHash(user.getPassword());
+				user.setHash(DaoHelper.getInstance().getPasswordHashing().getHashAndSalt(user.getPassword()));
 				user.setSerialNumber(""+i);
 
 				Student student = new Student(user, 
@@ -1027,16 +1027,16 @@ public class DBInitializatorController {
 	private boolean createFolders(CourseClass courseClass){
 		boolean success = false;
 		success = new FileManager().mkDir(".", courseClass.getId()+"");
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
-		}
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
-		}
-		if(!success){
-			logger.error("failed to create directory " + courseClass.getId()+"");
-			//DaoHelper.getCourseClassDAO().delete(courseClass);
-		}
+		//		if(success){
+		success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
+		//		}
+		//		if(success){
+		success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
+		//		}
+		//		if(!success){
+		//			logger.error("failed to create directory " + courseClass.getId()+"");
+		//DaoHelper.getCourseClassDAO().delete(courseClass);
+		//		}
 		return success;
 	}
 
@@ -1048,10 +1048,10 @@ public class DBInitializatorController {
 				+ lecture.getId() + File.separator + FileManager.HOMEWORK_PATH;
 
 		success = new FileManager().mkDir(currentPath, homework.getId()+"");
-		if(!success){
-			logger.error("failed to create directory " + homework.getId()+"");
-			//DaoHelper.getHomeworkDAO().delete(homework);
-		}
+		//		if(!success){
+		//			logger.error("failed to create directory " + homework.getId()+"");
+		//			//DaoHelper.getHomeworkDAO().delete(homework);
+		//		}
 		return success;
 	}
 

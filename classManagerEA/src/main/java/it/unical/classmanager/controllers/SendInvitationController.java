@@ -422,7 +422,7 @@ public class SendInvitationController {
 					+messageSource.getMessage("message.ProfessorNotification2",null,locale)
 					+" "
 					+courseSelected;
-			NotificationHelper.createNotification(professor, student, message);
+			NotificationHelper.createNotification(professor, student, message, "/checkInvitations");
 			//System.err.println("Correct invitation for "+student.getUsername()+", Course: "+courseClass.getName()+"\n");
 		}
 	}  

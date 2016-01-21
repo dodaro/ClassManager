@@ -248,7 +248,7 @@ public class LectureController {
 		Lecture lastLecture = lectureDao.getLastLectureAdded(courseClass.getId());
 
 		//One more than the last lecture
-		int number = 0;
+		int number = 1;
 		if(lastLecture != null)
 			number = lastLecture.getNumber() + 1;
 

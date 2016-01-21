@@ -1027,16 +1027,10 @@ public class DBInitializatorController {
 	private boolean createFolders(CourseClass courseClass){
 		boolean success = false;
 		success = new FileManager().mkDir(".", courseClass.getId()+"");
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
-		}
-		if(success){
-			success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
-		}
-		if(!success){
-			logger.error("failed to create directory " + courseClass.getId()+"");
-			//DaoHelper.getCourseClassDAO().delete(courseClass);
-		}
+		success = new FileManager().mkDir(courseClass.getId()+"", FileManager.LECTURES_PATH);
+		success = new FileManager().mkDir(courseClass.getId()+"", FileManager.STUDENTS_PATH);
+		//logger.error("failed to create directory " + courseClass.getId()+"");
+		//DaoHelper.getCourseClassDAO().delete(courseClass);
 		return success;
 	}
 
@@ -1048,10 +1042,8 @@ public class DBInitializatorController {
 				+ lecture.getId() + File.separator + FileManager.HOMEWORK_PATH;
 
 		success = new FileManager().mkDir(currentPath, homework.getId()+"");
-		if(!success){
-			logger.error("failed to create directory " + homework.getId()+"");
-			//DaoHelper.getHomeworkDAO().delete(homework);
-		}
+		logger.error("failed to create directory " + homework.getId()+"");
+		//DaoHelper.getHomeworkDAO().delete(homework);
 		return success;
 	}
 

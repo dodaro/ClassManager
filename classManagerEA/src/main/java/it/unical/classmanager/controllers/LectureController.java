@@ -214,6 +214,8 @@ public class LectureController {
 	@RequestMapping(value = "/lectures", method = RequestMethod.POST)
 	public String createLecture(@Valid @ModelAttribute("lecture") Lecture lectureWrapper, BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
+		checkLogin();
+		
 		model.addAttribute("lectureAction", "/lectures");
 		if(result.hasErrors()){
 
@@ -289,6 +291,12 @@ public class LectureController {
 
 	}
 
+
+
+	private void checkLogin() {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 	@RequestMapping(value = "/lectures/update_lecture", method = RequestMethod.POST)

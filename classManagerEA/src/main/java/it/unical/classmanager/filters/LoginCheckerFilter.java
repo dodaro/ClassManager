@@ -48,6 +48,7 @@ public class LoginCheckerFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		
+		
 		String hash = (String) httpRequest.getSession().getAttribute("hash");
 		String username = (String) httpRequest.getSession().getAttribute("loggedIn");
 		if ( hash == null || username == null ) {

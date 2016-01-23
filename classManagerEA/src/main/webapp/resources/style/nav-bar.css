@@ -13,7 +13,7 @@
 
 /* NAVBAR */
 .navbar {
-	background-color: #FF6600;
+	background-color: #ff9933;
 	border: none;
 	border-radius: 0px;
 }
@@ -153,7 +153,7 @@ a:hover.nav-bar-button {
 }
 
 .invitationActionButton {
-	background-color: #FF6600;
+	background-color: #ff9933;
 	color: #FFFFFF;
 }
 
@@ -188,7 +188,7 @@ li:hover.open
 
 li.open > a > span
 {
-	color: #FF6600;
+	color: #ff9933;
 }
 
 .dropdown-toggle
@@ -205,7 +205,7 @@ li.open > a > span
 
 .badge
 {
-	background-color: white; color: #FF6600;
+	background-color: white; color: #ff9933;
 }
 
 .notificationRow

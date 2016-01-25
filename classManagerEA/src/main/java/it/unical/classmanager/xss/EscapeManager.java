@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers.forum.xss;
+package it.unical.classmanager.xss;
 
 import java.util.regex.Pattern;
 

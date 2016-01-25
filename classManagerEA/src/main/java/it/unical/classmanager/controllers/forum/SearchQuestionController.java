@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
-import it.unical.classmanager.controllers.forum.manager.QuestionManager;
+import it.unical.classmanager.forumData.data.QuestionSearchSetting;
+import it.unical.classmanager.forumData.manager.QuestionManager;
 import it.unical.classmanager.model.dao.QuestionDAO;
 import it.unical.classmanager.model.dao.QuestionDAOImpl;
 import it.unical.classmanager.model.data.Question;

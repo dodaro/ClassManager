@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.unical.classmanager.controllers.forum.manager.ForumAttachmentGCManager;
+import it.unical.classmanager.forumData.manager.ForumAttachmentGCManager;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;

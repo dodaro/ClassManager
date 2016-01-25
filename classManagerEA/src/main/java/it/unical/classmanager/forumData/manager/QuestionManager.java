@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers.forum.manager;
+package it.unical.classmanager.forumData.manager;
 
 import java.util.List;
 

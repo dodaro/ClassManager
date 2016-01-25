@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.controllers.forum.xss.EscapeManager;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAO;
 import it.unical.classmanager.model.dao.AnswerAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.AnswerDAO;
@@ -35,6 +34,7 @@ import it.unical.classmanager.model.data.Notification;
 import it.unical.classmanager.model.data.Question;
 import it.unical.classmanager.model.data.User;
 import it.unical.classmanager.websocket.JettyWebSocketClient;
+import it.unical.classmanager.xss.EscapeManager;
 
 /**
  * Handles requests for the forum page.

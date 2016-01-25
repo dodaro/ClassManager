@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers.forum.xss;
+package it.unical.classmanager.xss;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

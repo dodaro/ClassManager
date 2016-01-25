@@ -1,4 +1,4 @@
-package it.unical.classmanager.controllers.forum.data;
+package it.unical.classmanager.forumData.data;
 
 public class QuestionSearchSetting {
 

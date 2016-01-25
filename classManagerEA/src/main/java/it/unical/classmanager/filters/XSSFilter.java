@@ -9,7 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import it.unical.classmanager.controllers.forum.xss.XSSRequestWrapper;
+import it.unical.classmanager.xss.XSSRequestWrapper;
 
 /**
  * Servlet Filter implementation class XSSFilter

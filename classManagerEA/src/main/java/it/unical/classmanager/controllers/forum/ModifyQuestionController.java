@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.classmanager.controllers.forum.xss.EscapeManager;
 import it.unical.classmanager.model.dao.QuestionAttachedContentDAO;
 import it.unical.classmanager.model.dao.QuestionAttachedContentDAOImpl;
 import it.unical.classmanager.model.dao.QuestionDAO;
@@ -27,6 +26,7 @@ import it.unical.classmanager.model.dao.UserDAOImpl;
 import it.unical.classmanager.model.data.Question;
 import it.unical.classmanager.model.data.QuestionAttachedContent;
 import it.unical.classmanager.model.data.User;
+import it.unical.classmanager.xss.EscapeManager;
 
 
 /**

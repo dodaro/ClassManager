@@ -2,7 +2,7 @@ package it.unical.classmanager.model.dao;
 
 import java.util.List;
 
-import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
+import it.unical.classmanager.forumData.data.QuestionSearchSetting;
 import it.unical.classmanager.model.data.Question;
 
 public interface QuestionDAO {

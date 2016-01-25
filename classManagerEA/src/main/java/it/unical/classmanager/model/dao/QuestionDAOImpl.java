@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import it.unical.classmanager.controllers.forum.data.QuestionSearchSetting;
+import it.unical.classmanager.forumData.data.QuestionSearchSetting;
 import it.unical.classmanager.model.DBHandler;
 import it.unical.classmanager.model.data.Question;
 

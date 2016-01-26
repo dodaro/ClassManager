@@ -24,10 +24,12 @@ public class MyWebSocket
     @OnWebSocketConnect
     public void onConnect(Session session) 
     {
-    	try {
+    	try 
+    	{
 			session.getRemote().sendString("Hello Client");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+    	catch (IOException e) 
+    	{
 			e.printStackTrace();
 		}
     }

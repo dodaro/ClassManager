@@ -18,14 +18,12 @@ public class ClientWebSocket
 	@OnWebSocketMessage
 	public void onText(Session session, String message) throws IOException
 	{
-		//System.out.println("Message received from server:" + message);
 		latch.countDown();
 	}
 
 	@OnWebSocketConnect
 	public void onConnect(Session session)
 	{
-		//System.out.println("Connected to server");
 		this.session = session;
 	}
 
@@ -38,7 +36,6 @@ public class ClientWebSocket
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -132,5 +132,51 @@ public class Homework implements Serializable {
 	public void setHomeworkStudentSolvings(List<HomeworkStudentSolving> homeworkStudentSolvings) {
 		this.homeworkStudentSolvings = homeworkStudentSolvings;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((lecture == null) ? 0 : lecture.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Homework other = (Homework) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (filePath == null) {
+			if (other.filePath != null)
+				return false;
+		} else if (!filePath.equals(other.filePath))
+			return false;
+		if (id != other.id)
+			return false;
+		if (lecture == null) {
+			if (other.lecture != null)
+				return false;
+		} else if (!lecture.equals(other.lecture))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 	
 }

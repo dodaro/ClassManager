@@ -8,5 +8,4 @@
 <script src='resources/lib/fullcalendar-2.5.0/lib/moment.min.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/fullcalendar.min.js'></script>
 <script src='resources/lib/fullcalendar-2.5.0/lang-all.js'></script>
-<script src='resources/script/calendar_functions.js'></script>
 <!-- End Calendar Links -->

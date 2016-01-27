@@ -26,7 +26,7 @@ import it.unical.classmanager.utils.UserSessionChecker;
 @Controller
 public class InvitationController {    
 	private static final Logger logger = LoggerFactory.getLogger(InvitationController.class);
-	private final static String HEADER = "pageCommons/head.jsp";
+	private final static String HEADER = "invitation/invitationHead.jsp";
 	private final static String BODY_STUDENT = "invitation/invitationStudent.jsp";
 	private final static String BODY_PROFESSOR = "invitation/invitationProfessor.jsp";
 

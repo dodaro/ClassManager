@@ -31,6 +31,7 @@ public class UserSessionChecker {
 			model.addAttribute("user",user.getUsername());
 			InvitationController.checkNewInvitations(model, user);
 		}			
+		
 		return user;
 	}
 

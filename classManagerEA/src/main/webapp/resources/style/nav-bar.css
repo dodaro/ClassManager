@@ -3,7 +3,6 @@
 .page-content {
 	padding-left: 0px;
 	width: 100%;
-	/* height: 100%;*/
 	margin-top:50px;
 }
 
@@ -13,7 +12,7 @@
 
 /* NAVBAR */
 .navbar {
-	background-color: #FF6600;
+	background-color: #ff9933;
 	border: none;
 	border-radius: 0px;
 }
@@ -67,7 +66,7 @@ a.nav-bar-button {
 }
 
 a:hover.nav-bar-button {
-	background: #FF9900;
+	background: #DF7401;
 }
 
 /* SIDEBAR */
@@ -153,7 +152,7 @@ a:hover.nav-bar-button {
 }
 
 .invitationActionButton {
-	background-color: #FF6600;
+	background-color: #ff9933;
 	color: #FFFFFF;
 }
 
@@ -188,7 +187,7 @@ li:hover.open
 
 li.open > a > span
 {
-	color: #FF6600;
+	color: #ff9933;
 }
 
 .dropdown-toggle
@@ -198,14 +197,14 @@ li.open > a > span
 
 .notificationsWidth
 {
-	min-width: 350px;
+	min-width: 400px;
 	max-height: 500px;
 	overflow: auto;
 }
 
 .badge
 {
-	background-color: white; color: #FF6600;
+	background-color: white; color: #ff9933;
 }
 
 .notificationRow
@@ -222,10 +221,16 @@ li.open > a > span
 	width:100%;
 	text-decoration: none;
 	background: #F2F2F2;
-	padding: 10px 10px 10px 40px;
+	padding: 10px 10px 10px 30px;
 }
 
 .textdecorationNone
 {
 	text-decoration: none;	
+}
+
+/* SECOND NAVBAR MENU */
+.navbar-menu-custom
+{
+	background-color: #ff9933 !important;
 }

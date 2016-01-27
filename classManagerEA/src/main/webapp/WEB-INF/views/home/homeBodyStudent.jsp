@@ -5,21 +5,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	var events = $
-	{
-		events
-	};
-	$("#calendar").fullcalendar(events);
-	$("#calendar").fullcalendar({
-		events : events,
-		editable : false
+	$(document).ready(function() {
+		
+		var events = $
+		{
+			events
+		};
+		$("#calendar").fullCalendar({
+			events : events,
+			editable : false
+		});
 	});
+
 </script>
 
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		<br>
-		<h3>${welcomeMessage1}<strong> ${user.username}</strong>,
+		<h3 style="margin-left: 10px">${welcomeMessage1}<strong> ${user.username}</strong>,
 			${welcomeMessage2}
 		</h3>
 		<br>

@@ -258,7 +258,7 @@ public class RequestInvitationController {
 					+" "
 					+courseName;
 			
-			NotificationHelper.createNotification(student, courseClass.getProfessor(), message);
+			NotificationHelper.createNotification(student, courseClass.getProfessor(), message, "/checkInvitations");
 		}
 	}   
 

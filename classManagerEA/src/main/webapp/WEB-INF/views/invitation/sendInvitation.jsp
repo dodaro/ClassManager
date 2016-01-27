@@ -2,8 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="../pageCommons/head.jsp" flush="true" />
-
 <div class="col-sm-12 col-md-12 col-lg-12">
 	<br>
 	<div class="row">

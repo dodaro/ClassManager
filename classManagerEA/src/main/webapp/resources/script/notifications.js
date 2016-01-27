@@ -8,7 +8,7 @@ $( document ).ready(function()
 
 ws.onopen = function() 
 {
-	ws.send("helo:" + document.getElementById("websocketUser").value);
+	ws.send("helo:" + $("#websocketUser").val());
 	console.log("Connect");
 };
 

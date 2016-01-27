@@ -13,7 +13,7 @@
 			<span class="glyphicon glyphicon-blackboard"></span> Class Manager 
 			</a>
 		</div>
-		<button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".navbar-collapse">	      
+		<button type="button" class="navbar-toggle pull-right navbar-menu-custom" data-toggle="collapse" data-target=".navbar-collapse">	      
 	      	<span class="icon-bar"></span>
 	      	<span class="icon-bar"></span>
 	      	<span class="icon-bar"></span>

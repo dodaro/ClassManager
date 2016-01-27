@@ -1,6 +1,8 @@
 package it.unical.classmanager.controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -57,7 +59,9 @@ public class CalendarController {
 		 */
 		model.addAttribute("customHeader",CalendarController.HEADER);
 		model.addAttribute("customBody",CalendarController.BODY);
-
+		
+		String[] days = {"Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"};
+		model.addAttribute("days",days);
 		logger.info("getCalendar");
 		return "layout";
 
@@ -133,6 +137,13 @@ public class CalendarController {
 				}
 			}
 			else{
+				if(event.getEndDate() == null){
+					
+					Calendar c = Calendar.getInstance(); 
+					c.setTime(event.getStartDate()); 
+					c.add(Calendar.DATE, 1);
+					event.setEndDate(c.getTime());
+				}
 				event.setCourseClass(null);
 				event.setUser(user);
 				eventDao.create(event);

@@ -92,12 +92,12 @@
 									every:</label>
 								<div class="col-md-7" id="dow-group">
 									<c:forEach var="i" begin="1" end="7">
-										<input name="${i}" type="hidden" value="0" />
+										<input name="${i-1}" type="hidden" value="0" />
 									</c:forEach>
 									<div class="btn-group-horizontal"
 										data-toggle="buttons-checkbox">
 										<c:forEach var="i" begin="1" end="7">
-											<button type="button" class="btn btn-default" data-checkbox-name="${i}">${i}</button>
+											<button type="button" class="btn btn-default" data-checkbox-name="${i-1}">${days[i-1]}</button>
 										</c:forEach>
 									</div>
 								</div>
@@ -165,25 +165,24 @@
 						</select>
 						
 						<div class="row" id="checkboxes">
-							<div class="col-xs-12">
-								<div class="form-group">
-									<label for="" class="col-md-4 control-label">repeat
-										every:</label>
-									<div class="col-md-7" id="dow-group">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label for="" class="col-md-4 control-label">repeat
+									every:</label>
+								<div class="col-md-7" id="dow-group">
+									<c:forEach var="i" begin="1" end="7">
+										<input name="${i-1}" type="hidden" value="0" />
+									</c:forEach>
+									<div class="btn-group-horizontal"
+										data-toggle="buttons-checkbox">
 										<c:forEach var="i" begin="1" end="7">
-											<input name="${i}" type="hidden" value="0" />
+											<button type="button" class="btn btn-default" data-checkbox-name="${i-1}">${days[i-1]}</button>
 										</c:forEach>
-										<div class="btn-group-horizontal"
-											data-toggle="buttons-checkbox">
-											<c:forEach var="i" begin="1" end="7">
-												<button type="button" class="btn btn-default"
-													data-checkbox-name="${i}">${i}</button>
-											</c:forEach>
-										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 						
 					</div>
 				</div>

@@ -87,7 +87,10 @@ function createCalendar(editable, currentDate){
 				
 				$("#updateEvent_modal").modal('show');
 				$("#eventStart_update").val(calEvent.start.format());
-				$("#eventEnd_update").val(calEvent.end.format());
+				if(calEvent.end === null){
+					calEvent.end = calEvent.start.format();
+				}
+				$("#eventEnd_update").val(calEvent.end);
 				$("#eventId_update").val(calEvent.id)
 				$("#eventTitle_update").val(calEvent.title)
 				$('#colorPicker_update').simplecolorpicker('selectColor', calEvent.color);
@@ -148,6 +151,9 @@ $(document).ready(function(){
 			})
 			
 			var eventJson;
+			
+			if(typeof end.split("T")[1] == "undefined")
+				end = end.concat("T00:00:00");
 			
 			if(dow.length != 0)
 				eventJson = {"id" : id,"title":title,"start":start,"end":end,"color":color, "dow":dow, "editable":true};
@@ -216,10 +222,6 @@ $(document).ready(function(){
 
 	$("#confirm_btn").click(function(event){
 
-		if (!confirm("Are you sure about this change?")) {
-			window.redirect("/calendar");
-		}
-
 		var toSend = [];
 		var calendar = $('#calendar').fullCalendar('clientEvents');
 		$.each(calendar, function( index, value ) {
@@ -230,7 +232,12 @@ $(document).ready(function(){
 			event.title = value.title;
 			event.startDate = value.start.format();
 			if(value.end != null)
-			event.endDate = value.end.format();
+				event.endDate = value.end.format();
+//			else{
+//				event.endDate = new Date(event.startDate);
+//				var dayafter = event.endDate.getDate() + 1;
+//				event.endDate = dayafter.format();
+//			}
 			event.color = value.color;
 			event.dow = value.dow;
 

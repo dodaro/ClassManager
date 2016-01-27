@@ -133,21 +133,16 @@ public class LectureController {
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		
-		if(listOfFiles[0]==null){
-			String currentPath = idCourse
-					+ File.separator 
-					+ FileManager.LECTURES_PATH  + File.separator;
-
-			fileManager.mkDir(currentPath, FileManager.HOMEWORK_PATH);
-
-		}
 		
-		if(listOfFiles[1]==null){
+		if(listOfFiles.length == 1){
 			String currentPath = idCourse
 					+ File.separator 
-					+ FileManager.LECTURES_PATH  + File.separator;
+					+ FileManager.LECTURES_PATH  + File.separator + lectureId;
 
-			fileManager.mkDir(currentPath, FileManager.MATERIALS_PATH);
+			boolean mkDir = fileManager.mkDir(currentPath, FileManager.MATERIALS_PATH);
+			
+			folder = new File(path);
+			listOfFiles = folder.listFiles();
 
 		}
 

@@ -360,8 +360,8 @@ public class HomeworkController {
 			logger.error("failed to create directory " + homework.getName() + " in " + folderPath);
 			return "/layout";
 		}
-
-		return "redirect:/lectures/homeworkAttached?path=" + homework.getFilePath() + "&parentId=" + homework.getLecture().getId();
+//TODO
+		return "redirect:/lectures/homeworkAttached?path=" + homework.getFilePath() + "&parentId=" + homework.getId();
 	}
 
 

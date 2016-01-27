@@ -22,8 +22,10 @@ import com.google.gson.Gson;
 import it.unical.classmanager.model.FullCalendarEventBean;
 import it.unical.classmanager.model.dao.DaoHelper;
 import it.unical.classmanager.model.dao.EventDAO;
+import it.unical.classmanager.model.dao.EventDAOImpl;
 import it.unical.classmanager.model.dao.LectureDAO;
 import it.unical.classmanager.model.dao.LectureDAOImpl;
+import it.unical.classmanager.model.dao.UserDAO;
 import it.unical.classmanager.model.data.Event;
 import it.unical.classmanager.model.data.Lecture;
 import it.unical.classmanager.model.data.Professor;
@@ -136,6 +138,7 @@ public class HomeController {
 	private void setCalendar(Locale locale, Model model,HttpServletRequest request, User user){
 		// TODO check if student
 		
+		/*
 		//is the string containing all the events of the calendar	
 		EventDAO eventDao = DaoHelper.getEventDAO();
 		//retrieves all the event of an user
@@ -145,9 +148,9 @@ public class HomeController {
 		for (Event event : events) {
 			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
 		}
-		/*
-		 * Is necessary to retrieve create events related to the course schedule
-		 */
+		
+		//  Is necessary to retrieve create events related to the course schedule
+		 
 		//professor side. We retrieve all the lessons of a professor from the "CourseClassDAO"
 		if(user.getRole().equals(User.PROFESSOR)){
 			LectureDAO lectureDAO = appContext.getBean("lectureDAO", LectureDAOImpl.class);
@@ -161,6 +164,45 @@ public class HomeController {
 		model.addAttribute("FullCalendarEventBean", appContext.getBean("event",Event.class));
 
 		String json = new Gson().toJson(eventsAdaped);
+		model.addAttribute("events", json);
+		*/
+		
+
+		//is the string containing all the events of the calendar
+		EventDAO eventDao = appContext.getBean("eventDao",EventDAOImpl.class);
+
+		//retrieves all the event of an user
+		String username = (String) request.getSession().getAttribute("loggedIn");
+		List<Event> events = eventDao.getAllEventsOfUser(username);
+
+		List<FullCalendarEventBean> eventsAdaped = new ArrayList<FullCalendarEventBean>();
+		for (Event event : events) 
+			eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+
+		/*
+		 * Is necessary retrieve created events related to the course schedule
+		 */
+
+		//We retrieve the lectures of all the courses where the student is registered
+//		UserDAO userDAO = DaoHelper.getUserDAO();
+//		User user = userDAO.get(username);
+
+		/*if(user.getRole().equals(User.STUDENT)){
+
+			Student student = new Student(user);
+			List<RegistrationStudentClass> registrationStudentClasses = student.getRegistrationStudentClasses();
+
+			for (RegistrationStudentClass registrationStudentClass : registrationStudentClasses) {
+				for (Event event : registrationStudentClass.getCourseClass().getEvents()) {
+
+					eventsAdaped.add(FullCalendarEventBean.toFullCalendarEventBean(event));
+				}	
+			}
+		}*/
+
+		String json = new Gson().toJson(eventsAdaped);
+		model.addAttribute("FullCalendarEventBean", new Event());
+
 		model.addAttribute("events", json);
 	}
 

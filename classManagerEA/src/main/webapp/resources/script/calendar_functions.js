@@ -58,7 +58,7 @@ function createCalendar(editable, currentDate){
 			right: 'month,agendaWeek,agendaDay'
 		},
 		lang: 'it',
-		defaultDate: '2015-12-12',
+		defaultDate: new Date(),
 
 		//allows to modify the event shown
 		editable: editable,
@@ -70,7 +70,7 @@ function createCalendar(editable, currentDate){
 		},
 		
 		views:{
-			titleFormat: 'MMM D YYYY'
+			titleFormat: 'MM DD YYYY'
 		},
 
 		/*

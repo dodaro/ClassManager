@@ -50,8 +50,9 @@ public class LoginCheckerFilter implements Filter {
 		
 		String hash = (String) httpRequest.getSession().getAttribute("hash");
 		String username = (String) httpRequest.getSession().getAttribute("loggedIn");
-		if ( hash == null || username == null ) {
+		if ( hash == null || username == null) {
 			httpResponse.sendRedirect("/privilegeError");
+			return;
 		}
 		
 		String hashAndDateFromSession = hash.split(":")[0];

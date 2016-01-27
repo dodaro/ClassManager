@@ -48,6 +48,10 @@
 				<a class="nav-bar-button logout" href="/logout"><span
 					class="glyphicon glyphicon-log-out"></span> Logout</a>
 			</c:if>
+			<a class="nav-bar-button logout" href="?locale=it"><span
+					class=""></span> It</a>
+			<a class="nav-bar-button logout" href="?locale=en"><span
+					class=""></span> En</a>
 		</div>
 	</div>
 </nav>

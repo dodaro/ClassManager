@@ -7,13 +7,11 @@
 <script>
 	$(document).ready(function() {
 		
-		var events = $
-		{
-			events
-		};
+		var events = ${events};
 		$("#calendar").fullCalendar({
 			events : events,
-			editable : false
+			editable : false,
+			lang : "it"
 		});
 	});
 

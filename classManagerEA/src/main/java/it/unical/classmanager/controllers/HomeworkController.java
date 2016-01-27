@@ -177,7 +177,7 @@ public class HomeworkController {
 
 		//BACK PAGE
 		HomeworkDAO homeworkDAO = DaoHelper.getHomeworkDAO();
-		String referred = "/lectures/homeworks?parentId=" + homeworkDAO.get(idHomework).getLecture().getId();;
+		String referred = "/lectures/homeworks?parentId=" + homeworkDAO.get(idHomework).getLecture().getId();
 		model.addAttribute("backPage", referred);
 
 		logger.info("getHomeworkAttached");
@@ -361,7 +361,7 @@ public class HomeworkController {
 			return "/layout";
 		}
 
-		return "redirect:/lectures/homeworks?path=" + homework.getFilePath() + "&parentId=" + homework.getLecture().getId();
+		return "redirect:/lectures/homeworkAttached?path=" + homework.getFilePath() + "&parentId=" + homework.getLecture().getId();
 	}
 
 

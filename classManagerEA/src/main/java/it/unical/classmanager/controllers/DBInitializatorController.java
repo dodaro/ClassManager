@@ -86,7 +86,7 @@ public class DBInitializatorController {
 	/**
 	 * The total number of users
 	 */
-	private static int numUser = numProfessors*numProfessors;
+	private static int numUser = 7;//numProfessors*numProfessors;
 	/**
 	 * The minimum age for be a Professor
 	 */
@@ -613,6 +613,7 @@ public class DBInitializatorController {
 						"files/materialFile.txt", // In future change this adding several files
 						lecture);
 				materialDAO.create(material);
+				createFolders(lecture.getCourseClass(), lecture, material);
 				logger.info("Created "+material, locale);
 				k++;
 			}
@@ -1040,6 +1041,21 @@ public class DBInitializatorController {
 		return success;
 	}
 
+	private boolean createFolders(CourseClass courseClass, Lecture lecture, Material material){
+		boolean success = false;
+		String currentPath = lecture.getCourseClass().getId() 
+				+ File.separator 
+				+ FileManager.LECTURES_PATH  + File.separator 
+				+ lecture.getId() + File.separator + FileManager.MATERIALS_PATH;
+
+		success = new FileManager().mkDir(currentPath, material.getId()+"");
+		//		if(!success){
+		//			logger.error("failed to create directory " + homework.getId()+"");
+		//			//DaoHelper.getHomeworkDAO().delete(homework);
+		//		}
+		return success;
+	}
+	
 	private boolean createFolders(CourseClass courseClass, Lecture lecture, Homework homework){
 		boolean success = false;
 		String currentPath = lecture.getCourseClass().getId() 

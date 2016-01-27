@@ -63,6 +63,8 @@ public class LectureController {
 	ApplicationContext appContext;
 	private static final Logger logger = LoggerFactory.getLogger(LectureController.class);
 
+	@Autowired
+	FileManager fileManager;
 
 	@RequestMapping(value = "/lectures", method = RequestMethod.GET)
 	public String getClasses(Model model, HttpServletRequest request) {
@@ -130,6 +132,24 @@ public class LectureController {
 
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
+		
+		if(listOfFiles[0]==null){
+			String currentPath = idCourse
+					+ File.separator 
+					+ FileManager.LECTURES_PATH  + File.separator;
+
+			fileManager.mkDir(currentPath, FileManager.HOMEWORK_PATH);
+
+		}
+		
+		if(listOfFiles[1]==null){
+			String currentPath = idCourse
+					+ File.separator 
+					+ FileManager.LECTURES_PATH  + File.separator;
+
+			fileManager.mkDir(currentPath, FileManager.MATERIALS_PATH);
+
+		}
 
 		FolderBean homeworks = new FolderBean(lectureId,listOfFiles[0].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[0].getPath(), listOfFiles[0].listFiles().length);
 		FolderBean materials = new FolderBean(lectureId,listOfFiles[1].getName(),AbstractFileBean.FOLDER_TYPE, listOfFiles[1].getPath(), listOfFiles[1].listFiles().length);

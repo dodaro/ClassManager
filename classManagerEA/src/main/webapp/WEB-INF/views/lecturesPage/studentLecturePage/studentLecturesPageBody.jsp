@@ -30,7 +30,7 @@
 					</div>
 				</c:if>
 				<c:if test="${not empty pwd && pwd == 'homeworkStudentSolving'}">
-					<form action="/homeworksStudentSolving" method="POST" >
+					<form action="/lectures/homeworksStudentSolving" method="POST" >
 						<input type="hidden" name="parentId" value="${parentId}"></input>
 						<div class="btn btn-default" onclick="this.parentNode.submit()">
 							<spring:message code="lectureManager.addHomeworkSolution" text="default text" />
@@ -39,7 +39,7 @@
 				</c:if>
 
 				<div id="uploadFile_div" style="display: none;">
-					<form id="upload" method="post" action="/upload_${pwd}"
+					<form id="upload" method="post" action="/lectures/upload_${pwd}"
 						enctype="multipart/form-data" onsubmit="return reload();">
 						<div id="drop">
 							<spring:message code="lectureManager.drophere"

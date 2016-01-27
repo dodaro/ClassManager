@@ -43,6 +43,7 @@ public class ProfessorCheckerFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		String username = (String) httpRequest.getSession().getAttribute("loggedIn");
+		
 
 		UserDAO userDAO = DaoHelper.getUserDAO();
 		User user = userDAO.get(username);
@@ -55,7 +56,8 @@ public class ProfessorCheckerFilter implements Filter {
 		if(user.getRole().equals(User.STUDENT) && httpRequest.getMethod().equalsIgnoreCase("POST")){
 			httpResponse.sendRedirect("/privilegeError");
 			return;
-		}
+		} 
+		
 		
 		chain.doFilter(request, response);
 	}

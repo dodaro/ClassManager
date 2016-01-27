@@ -38,7 +38,7 @@
     <url-pattern>/sort/*</url-pattern>
     <url-pattern>/blackboard/*</url-pattern>
     <url-pattern>/editor/*</url-pattern>
-    <url-pattern>/lecture/*</url-pattern>
+    <url-pattern>/lectures/*</url-pattern>
     <url-pattern>/scores/*</url-pattern>
     <url-pattern>/getNewNotifications</url-pattern>
     <url-pattern>/getOldNotifications</url-pattern>

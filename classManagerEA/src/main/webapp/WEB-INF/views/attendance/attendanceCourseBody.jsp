@@ -1,4 +1,3 @@
-<!-- Se non le includo qui non funziona -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -15,15 +14,13 @@
 			<span class="glyphicon glyphicon-search"></span> 
 			<spring:message code="message.attendance.idLiveSearch" text="idLiveSearch"/>
 		</p>
-		<input id="searchID" type="text" class="form-control" placeholder="<spring:message code="message.attendance.idLiveSearch" text="idLiveSearch"/>" >
-		</input>	
+		<input id="searchID" type="text" class="form-control" placeholder="<spring:message code="message.attendance.idLiveSearch" text="idLiveSearch"/>" />	
 	</div>
 	<div class="col-sm-12 col-md-5 col-lg-4">
 		<p class="text-primary">
 			<span class="glyphicon glyphicon-search"></span> <spring:message code="message.attendance.surnameLiveSearch" text="surnameLiveSearch"/>
 		</p>
-		<input id="searchLastName" type="text" class="form-control" placeholder="<spring:message code="message.attendance.surnameLiveSearch" text="surnameLiveSearch"/>">
-		</input>	
+		<input id="searchLastName" type="text" class="form-control" placeholder="<spring:message code="message.attendance.surnameLiveSearch" text="surnameLiveSearch"/>" />	
 	</div>
 </div>
 <div class="row row-content">
@@ -94,18 +91,7 @@
 							</c:forEach>
 						</tr>	
 					</c:forEach>	
-				</tbody>
-				<tr>
-					<th></th>
-					<th></th>
-					<th></th>	
-					<th></th>				
-					<c:forEach items="${lectures}" var="lecture">
-						<th>
-							
-						</th>
-					</c:forEach>
-				</tr>		
+				</tbody>		
 			</table>
 		</div>
 	</div>

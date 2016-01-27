@@ -55,7 +55,6 @@ public class AttendanceCourseController
 		LectureDAO lectureDAO = context.getBean("lectureDAO", LectureDAOImpl.class);
 		List<Lecture> lectures = lectureDAO.getAllLecturesOfACourse(course.getId());
 
-		//UserDAO userDao = context.getBean("userDao", UserDAOImpl.class);
 		RegistrationStudentClassDAO userDao = context.getBean("registrationStudentClassDAO", RegistrationStudentClassDAOImpl.class);
 		AttendanceStudentLectureDAO attendanceStudentLectureDAO = context.getBean("attendanceStudentLectureDAO", AttendanceStudentLectureDAOImpl.class);
 		List<Student> students = userDao.getStudentsRegisteredToACourse(course);
